@@ -6,7 +6,7 @@ import gumdrop.test.TestUtil;
 
 import java.util.List;
 
-public class JsonReaderTest extends Test {
+class JsonReaderTest extends Test {
 
   public static void main(String[] args) {
     JsonReaderTest test = new JsonReaderTest();

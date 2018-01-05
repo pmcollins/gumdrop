@@ -4,7 +4,7 @@ import gumdrop.json.CharIterator;
 import gumdrop.test.Test;
 import gumdrop.test.TestUtil;
 
-public class CharIteratorTest extends Test {
+class CharIteratorTest extends Test {
 
   public static void main(String[] args) {
     new CharIteratorTest().run();

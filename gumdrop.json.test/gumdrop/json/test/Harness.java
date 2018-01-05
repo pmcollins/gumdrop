@@ -2,7 +2,7 @@ package gumdrop.json.test;
 
 import gumdrop.test.TestHarness;
 
-public class Harness extends TestHarness {
+class Harness extends TestHarness {
 
   public static void main(String[] args) {
     new Harness().run();

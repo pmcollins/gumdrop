@@ -12,7 +12,7 @@ import static gumdrop.server.HttpMethod.GET;
 import static gumdrop.server.HttpMethod.POST;
 import static gumdrop.test.TestUtil.*;
 
-public class DispatcherTest extends Test {
+class DispatcherTest extends Test {
 
   public static void main(String[] args) {
     DispatcherTest test = new DispatcherTest();

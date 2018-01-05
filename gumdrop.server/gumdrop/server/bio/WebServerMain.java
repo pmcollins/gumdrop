@@ -2,7 +2,7 @@ package gumdrop.server.bio;
 
 import java.io.IOException;
 
-public class WebServerMain {
+class WebServerMain {
 
   public static void main(String[] args) throws IOException {
     HttpRequestHandler httpRequestHandler = new HttpRequestHandler();

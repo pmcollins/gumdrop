@@ -6,7 +6,7 @@ import gumdrop.test.TestUtil;
 
 import java.util.List;
 
-public class BuilderDelegateTest extends Test {
+class BuilderDelegateTest extends Test {
 
   public static void main(String[] args) {
     new BuilderDelegateTest().run();

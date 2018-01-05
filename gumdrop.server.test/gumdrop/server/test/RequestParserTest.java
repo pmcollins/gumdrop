@@ -7,7 +7,7 @@ import gumdrop.test.Test;
 
 import static gumdrop.test.TestUtil.assertEquals;
 
-public class RequestParserTest extends Test {
+class RequestParserTest extends Test {
 
   public static void main(String[] args) {
     RequestParserTest test = new RequestParserTest();

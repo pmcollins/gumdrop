@@ -13,14 +13,19 @@ public class JsonReader {
   public void readValue() {
     skipWhiteSpace();
     char curr = it.current();
-    if (curr == '"') {
-      readQuotedString();
-    } else if (curr == '{') {
-      readObject();
-    } else if (curr == '[') {
-      readArray();
-    } else {
-      readBareword();
+    switch (curr) {
+      case '"':
+        readQuotedString();
+        break;
+      case '{':
+        readObject();
+        break;
+      case '[':
+        readArray();
+        break;
+      default:
+        readBareword();
+        break;
     }
     skipWhiteSpace();
   }

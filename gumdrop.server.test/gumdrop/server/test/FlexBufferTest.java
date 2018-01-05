@@ -7,7 +7,7 @@ import gumdrop.test.TestUtil;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 
-public class FlexBufferTest extends Test {
+class FlexBufferTest extends Test {
 
   public static void main(String[] args) {
     FlexBufferTest test = new FlexBufferTest();

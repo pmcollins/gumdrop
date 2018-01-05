@@ -8,7 +8,7 @@ import gumdrop.test.TestUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ObjectBuilderTest extends Test {
+class ObjectBuilderTest extends Test {
 
   public static void main(String[] args) {
     new ObjectBuilderTest().run();

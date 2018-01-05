@@ -10,7 +10,7 @@ import java.util.Optional;
 import static gumdrop.test.TestUtil.assertEquals;
 import static gumdrop.test.TestUtil.assertTrue;
 
-public class MethodDispatcherTest extends Test {
+class MethodDispatcherTest extends Test {
 
   public static void main(String[] args) {
     new MethodDispatcherTest().run();

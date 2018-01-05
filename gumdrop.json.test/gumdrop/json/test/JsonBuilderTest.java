@@ -8,7 +8,7 @@ import java.time.Instant;
 
 import static gumdrop.test.TestUtil.assertEquals;
 
-public class JsonBuilderTest extends Test {
+class JsonBuilderTest extends Test {
 
   public static void main(String[] args) {
     new JsonBuilderTest().run();

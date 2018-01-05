@@ -8,7 +8,7 @@ import java.io.IOException;
 import static gumdrop.server.HttpHeader.EOL;
 import static gumdrop.test.TestUtil.assertEquals;
 
-public class HttpHeaderTest extends Test {
+class HttpHeaderTest extends Test {
 
   public static void main(String[] args) {
     HttpHeaderTest test = new HttpHeaderTest();

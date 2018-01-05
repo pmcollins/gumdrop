@@ -3,7 +3,7 @@ package gumdrop.json.test;
 import java.time.Instant;
 import java.util.Objects;
 
-public class Person {
+class Person {
 
   private String name;
   private int age;

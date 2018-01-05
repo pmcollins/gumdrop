@@ -1,6 +1,6 @@
 package gumdrop.test;
 
-public class PerfUtil {
+class PerfUtil {
 
   public static int time(Runnable runnable, int iterations) {
     long start = System.currentTimeMillis();

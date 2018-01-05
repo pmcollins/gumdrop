@@ -7,7 +7,7 @@ import gumdrop.test.TestUtil;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 
-public class GettersTest extends Test {
+class GettersTest extends Test {
 
   private final Getters<FullNamePerson> complexPersonJsonGetters;
   private final Getters<Person> personJsonGetters;

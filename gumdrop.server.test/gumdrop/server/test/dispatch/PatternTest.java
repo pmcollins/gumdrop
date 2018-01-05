@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 import static gumdrop.test.TestUtil.assertEquals;
 import static gumdrop.test.TestUtil.assertFalse;
 
-public class PatternTest extends Test {
+class PatternTest extends Test {
 
   private static final String DIGITS = "(\\d+)";
 
