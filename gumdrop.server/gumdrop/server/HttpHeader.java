@@ -3,26 +3,24 @@ package gumdrop.server;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.ByteBuffer;
 import java.util.Map;
 
-import static gumdrop.server.WebServer.EOL;
+public class HttpHeader {
 
-class HttpHeader {
-
+  public static final String EOL = "\r\n";
   private int length;
 
-  void setLength(int length) {
+  public void setLength(int length) {
     this.length = length;
   }
 
-  byte[] bytes() throws IOException {
+  public byte[] bytes() throws IOException {
     ByteArrayOutputStream os = new ByteArrayOutputStream();
     writeTo(os);
     return os.toByteArray();
   }
 
-  void writeTo(OutputStream os) throws IOException {
+  public void writeTo(OutputStream os) throws IOException {
     StringOutputStream sos = new StringOutputStream(os);
     HttpHeaderData h = createHeaderData();
     sos.write(h.getProtocol()).write(" ").write(h.getStatus()).write(EOL);

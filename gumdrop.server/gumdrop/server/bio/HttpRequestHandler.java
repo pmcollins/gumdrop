@@ -1,4 +1,6 @@
-package gumdrop.server;
+package gumdrop.server.bio;
+
+import gumdrop.server.HttpHeader;
 
 import java.io.IOException;
 import java.io.OutputStream;

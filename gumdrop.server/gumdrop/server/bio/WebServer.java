@@ -1,4 +1,6 @@
-package gumdrop.server;
+package gumdrop.server.bio;
+
+import gumdrop.server.HttpHeader;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,8 +9,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 class WebServer {
-
-  static final String EOL = "\r\n";
 
   private final int port;
   private final RequestHandler<String> stringRequestHandler;
@@ -43,7 +43,7 @@ class WebServer {
       in.read(chunk);
       String chunkString = new String(chunk);
       sb.append(chunkString);
-      if (chunkString.endsWith(EOL + EOL)) break;
+      if (chunkString.endsWith(HttpHeader.EOL + HttpHeader.EOL)) break;
     }
     return sb.toString();
   }
