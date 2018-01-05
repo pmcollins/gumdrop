@@ -13,10 +13,11 @@ import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.Function;
 
 import static java.net.StandardSocketOptions.SO_RCVBUF;
 
-class NioServer {
+public class NioServer {
 
   private static final int N_THREADS = 10;
 
@@ -24,8 +25,10 @@ class NioServer {
   private final ByteBuffer bb;
   private final Selector selector;
   private final ServerSocketChannel serverSocketChannel;
+  private final Function<byte[], byte[]> mainFcn;
 
-  NioServer(int port) throws IOException {
+  public NioServer(Function<byte[], byte[]> mainFcn, int port) throws IOException {
+    this.mainFcn = mainFcn;
     serverSocketChannel = ServerSocketChannel.open();
     int receiveBufferSize = serverSocketChannel.getOption(SO_RCVBUF);
     bb = ByteBuffer.allocate(receiveBufferSize);
@@ -36,7 +39,7 @@ class NioServer {
     serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
   }
 
-  void run() throws IOException {
+  public void run() throws IOException {
     while (true) {
       selector.select();
       Set<SelectionKey> selectionKeys = selector.selectedKeys();
@@ -77,14 +80,14 @@ class NioServer {
     int bytesRead = socketChannel.read(bb);
     if (bytesRead == -1) {
       socketChannel.close();
-      System.err.println("end of stream reached on socket read");
+      System.err.println("premature end of stream reached on socket read");
     } else {
       bb.flip();
       exchange.addRequestChunk(bb);
       bb.clear();
       if (exchange.isDoneReading()) {
         executorService.submit(
-          new ResponseHandler(selector, selectionKey, exchange)
+          new ResponseHandler(mainFcn, selector, selectionKey, exchange)
         );
       }
     }

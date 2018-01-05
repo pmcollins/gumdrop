@@ -1,6 +1,6 @@
 package gumdrop.server.bio;
 
-import gumdrop.server.HttpHeader;
+import gumdrop.server.HttpResponseHeader;
 import gumdrop.server.HttpRequest;
 
 import java.io.IOException;
@@ -27,7 +27,7 @@ class HttpRequestHandler implements RequestHandler<HttpRequest> {
   }
 
   private void writeHeader(OutputStream out, int length) throws IOException {
-    HttpHeader httpHeader = new HttpHeader();
+    HttpResponseHeader httpHeader = new HttpResponseHeader();
     httpHeader.setLength(length);
     httpHeader.writeTo(out);
   }

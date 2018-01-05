@@ -1,6 +1,6 @@
 package gumdrop.server.bio;
 
-import gumdrop.server.HttpHeader;
+import gumdrop.server.HttpResponseHeader;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,7 +43,7 @@ class WebServer {
       in.read(chunk);
       String chunkString = new String(chunk);
       sb.append(chunkString);
-      if (chunkString.endsWith(HttpHeader.EOL + HttpHeader.EOL)) break;
+      if (chunkString.endsWith(HttpResponseHeader.EOL + HttpResponseHeader.EOL)) break;
     }
     return sb.toString();
   }

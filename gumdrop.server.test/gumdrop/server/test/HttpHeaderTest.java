@@ -1,11 +1,11 @@
 package gumdrop.server.test;
 
-import gumdrop.server.HttpHeader;
+import gumdrop.server.HttpResponseHeader;
 import gumdrop.test.Test;
 
 import java.io.IOException;
 
-import static gumdrop.server.HttpHeader.EOL;
+import static gumdrop.server.HttpResponseHeader.EOL;
 import static gumdrop.test.TestUtil.assertEquals;
 
 class HttpHeaderTest extends Test {
@@ -21,7 +21,7 @@ class HttpHeaderTest extends Test {
     String expected = "HTTP/1.1 200 OK" + EOL +
       "Content-Type: text/plain; charset=UTF-8" + EOL +
       "Content-Length: " + len + EOL + EOL;
-    HttpHeader httpHeader = new HttpHeader();
+    HttpResponseHeader httpHeader = new HttpResponseHeader();
     httpHeader.setLength(len);
     FakeOutputStream out = new FakeOutputStream();
     try {

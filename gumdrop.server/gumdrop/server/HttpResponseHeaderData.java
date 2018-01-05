@@ -3,7 +3,7 @@ package gumdrop.server;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-class HttpHeaderData {
+class HttpResponseHeaderData {
 
   private String protocol;
   private String status;

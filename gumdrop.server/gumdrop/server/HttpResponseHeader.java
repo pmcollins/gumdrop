@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Map;
 
-public class HttpHeader {
+public class HttpResponseHeader {
 
   public static final String EOL = "\r\n";
   private int length;
@@ -22,7 +22,7 @@ public class HttpHeader {
 
   public void writeTo(OutputStream os) throws IOException {
     StringOutputStream sos = new StringOutputStream(os);
-    HttpHeaderData h = createHeaderData();
+    HttpResponseHeaderData h = createHeaderData();
     sos.write(h.getProtocol()).write(" ").write(h.getStatus()).write(EOL);
     for (Map.Entry<String, String> e : h.getAttrs().entrySet()) {
       sos.write(e.getKey()).write(": ").write(e.getValue()).write(EOL);
@@ -30,8 +30,8 @@ public class HttpHeader {
     sos.write(EOL);
   }
 
-  private HttpHeaderData createHeaderData() {
-    HttpHeaderData h = new HttpHeaderData();
+  private HttpResponseHeaderData createHeaderData() {
+    HttpResponseHeaderData h = new HttpResponseHeaderData();
     h.setProtocol("HTTP/1.1");
     h.setStatus("200 OK");
     h.putAttr("Content-Type", "text/plain; charset=UTF-8");

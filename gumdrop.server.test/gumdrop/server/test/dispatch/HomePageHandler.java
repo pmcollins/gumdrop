@@ -1,6 +1,6 @@
 package gumdrop.server.test.dispatch;
 
-import gumdrop.server.nio.RestHandler;
+import gumdrop.server.nio.PageHandler;
 
-class HomePageHandler extends RestHandler {
+class HomePageHandler extends PageHandler {
 }
