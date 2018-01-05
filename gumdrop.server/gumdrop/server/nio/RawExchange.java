@@ -13,7 +13,7 @@ class RawExchange {
     }
   }
 
-  private String getRequest() {
+  String getRequest() {
     return request.toString();
   }
 

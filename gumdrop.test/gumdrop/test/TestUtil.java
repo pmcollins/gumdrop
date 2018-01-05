@@ -9,17 +9,31 @@ public class TestUtil {
     }
   }
 
+  public static void assertNull(Object o) {
+    print();
+    if (o != null) {
+      throw new FailedTestException("assertNull failed");
+    }
+  }
+
   public static void assertTrue(boolean condition) {
     print();
     if (!condition) {
-      throw new FailedTestException("condition not met");
+      throw new FailedTestException("assertTrue condition not met");
+    }
+  }
+
+  public static void assertFalse(boolean condition) {
+    print();
+    if (condition) {
+      throw new FailedTestException("assertFalse condition not met");
     }
   }
 
   public static void assertEquals(Object expected, Object actual) {
     print();
     if (!expected.equals(actual)) {
-      throw new FailedTestException("expected [" + expected + "], got [" + actual + "]");
+      throw new FailedTestException("assertEquals expected [" + expected + "], got [" + actual + "]");
     }
   }
 
@@ -32,7 +46,7 @@ public class TestUtil {
       caught = e;
     }
     if (caught == null || !caught.getClass().equals(klass)) {
-      throw new FailedTestException("expected exception [" + klass + "], got [" + caught + "]");
+      throw new FailedTestException("assertThrows expected exception [" + klass + "], got [" + caught + "]");
     }
   }
 

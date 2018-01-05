@@ -1,4 +1,4 @@
-package gumdrop.server.bio;
+package gumdrop.server;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,12 +11,12 @@ public class FlexBuffer {
 
   private int size = 0;
 
-  void put(byte[] bytes) {
+  public void put(byte[] bytes) {
     size += bytes.length;
     chunks.add(bytes);
   }
 
-  void putInt(int n) {
+  public void putInt(int n) {
     byte[] chunk = new byte[4];
     for (int i = Integer.BYTES - 1; i >= 0; i--) {
       byte b = (byte) (BYTE_MASK & n);
@@ -26,11 +26,11 @@ public class FlexBuffer {
     put(chunk);
   }
 
-  void put(byte b) {
+  public void put(byte b) {
     put(new byte[]{b});
   }
 
-  byte[] array() {
+  public byte[] array() {
     byte[] out = new byte[size];
     int pos = 0;
     for (byte[] chunk : chunks) {

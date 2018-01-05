@@ -5,6 +5,7 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.channels.spi.AbstractSelector;
@@ -22,7 +23,7 @@ class NioServer {
 
   private final ExecutorService executorService = Executors.newFixedThreadPool(N_THREADS);
   private final ByteBuffer bb;
-  private final AbstractSelector selector;
+  private final Selector selector;
   private final ServerSocketChannel serverSocketChannel;
 
   NioServer() throws IOException {

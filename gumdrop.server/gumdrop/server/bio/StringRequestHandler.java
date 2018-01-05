@@ -1,5 +1,8 @@
 package gumdrop.server.bio;
 
+import gumdrop.server.HttpRequest;
+import gumdrop.server.RequestParser;
+
 import java.io.IOException;
 import java.io.OutputStream;
 

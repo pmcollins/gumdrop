@@ -1,14 +1,14 @@
-package gumdrop.server.bio;
+package gumdrop.server;
 
-class RequestParser {
+public class RequestParser {
 
   private final String[] lines;
 
-  RequestParser(String requestString) {
+  public RequestParser(String requestString) {
     lines = requestString.split("\r\n");
   }
 
-  HttpRequest parse() {
+  public HttpRequest parse() {
     HttpRequest request = new HttpRequest();
     parseFirstLine(request);
     parseAttributes(request);

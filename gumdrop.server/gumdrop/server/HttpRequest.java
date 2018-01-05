@@ -1,32 +1,40 @@
-package gumdrop.server.bio;
+package gumdrop.server;
 
 import java.util.HashMap;
 import java.util.Map;
 
-class HttpRequest {
+public class HttpRequest {
 
-  private String path;
-  private HttpMethod httpMethod;
   private final Map<String, String> headers = new HashMap<>();
+  private HttpMethod httpMethod;
+  private String path;
   private String protocol;
 
-  HttpMethod getHttpMethod() {
-    return httpMethod;
-  }
-
-  void setHttpMethod(HttpMethod httpMethod) {
+  public HttpRequest(HttpMethod httpMethod, String path) {
     this.httpMethod = httpMethod;
-  }
-
-  String getPath() {
-    return path;
-  }
-
-  void setPath(String path) {
     this.path = path;
   }
 
-  String getProtocol() {
+  public HttpRequest() {
+  }
+
+  public HttpMethod getHttpMethod() {
+    return httpMethod;
+  }
+
+  public void setHttpMethod(HttpMethod httpMethod) {
+    this.httpMethod = httpMethod;
+  }
+
+  public String getPath() {
+    return path;
+  }
+
+  public void setPath(String path) {
+    this.path = path;
+  }
+
+  public String getProtocol() {
     return protocol;
   }
 
@@ -42,7 +50,7 @@ class HttpRequest {
     return headers;
   }
 
-  String getAttr(String key) {
+  public String getAttr(String key) {
     return headers.get(key);
   }
 

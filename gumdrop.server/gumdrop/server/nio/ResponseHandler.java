@@ -1,19 +1,22 @@
 package gumdrop.server.nio;
 
 import gumdrop.server.HttpHeader;
+import gumdrop.server.HttpRequest;
+import gumdrop.server.RequestParser;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
 import java.nio.channels.spi.AbstractSelector;
 
 class ResponseHandler implements Runnable {
 
-  private final AbstractSelector selector;
+  private final Selector selector;
   private final SelectionKey selectionKey;
   private final RawExchange exchange;
 
-  ResponseHandler(AbstractSelector selector, SelectionKey selectionKey, RawExchange exchange) {
+  ResponseHandler(Selector selector, SelectionKey selectionKey, RawExchange exchange) {
     this.selector = selector;
     this.selectionKey = selectionKey;
     this.exchange = exchange;
@@ -21,15 +24,19 @@ class ResponseHandler implements Runnable {
 
   @Override
   public void run() {
-    String body = Thread.currentThread().toString() + '\n';
+    String requestStr = exchange.getRequest();
+    RequestParser requestParser = new RequestParser(requestStr);
+    HttpRequest httpRequest = requestParser.parse();
+
+    String body = "path: [" + httpRequest.getPath() + "]\n";
     HttpHeader httpHeader = new HttpHeader();
     int bodyLength = body.length();
     httpHeader.setLength(bodyLength);
-    byte[] headerBytes = new byte[0];
+    byte[] headerBytes;
     try {
       headerBytes = httpHeader.bytes();
     } catch (IOException e) {
-      e.printStackTrace();
+      throw new RuntimeException(e);
     }
     ByteBuffer bb = ByteBuffer.allocate(headerBytes.length + bodyLength);
     bb.put(headerBytes);
