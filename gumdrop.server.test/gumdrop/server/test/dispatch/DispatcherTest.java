@@ -1,6 +1,8 @@
 package gumdrop.server.test.dispatch;
 
 import gumdrop.server.HttpRequest;
+import gumdrop.server.nio.Dispatcher;
+import gumdrop.server.nio.RestHandler;
 import gumdrop.test.Test;
 
 import java.util.Arrays;

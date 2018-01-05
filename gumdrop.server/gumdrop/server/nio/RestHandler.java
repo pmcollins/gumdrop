@@ -1,10 +1,10 @@
-package gumdrop.server.test.dispatch;
+package gumdrop.server.nio;
 
-abstract class RestHandler {
+public abstract class RestHandler {
 
   private String[] matches;
 
-  String[] getMatches() {
+  public String[] getMatches() {
     return matches;
   }
 

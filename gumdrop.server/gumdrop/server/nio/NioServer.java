@@ -26,13 +26,13 @@ class NioServer {
   private final Selector selector;
   private final ServerSocketChannel serverSocketChannel;
 
-  NioServer() throws IOException {
+  NioServer(int port) throws IOException {
     serverSocketChannel = ServerSocketChannel.open();
     int receiveBufferSize = serverSocketChannel.getOption(SO_RCVBUF);
     bb = ByteBuffer.allocate(receiveBufferSize);
     serverSocketChannel.configureBlocking(false);
     ServerSocket serverSocket = serverSocketChannel.socket();
-    serverSocket.bind(new InetSocketAddress(8080));
+    serverSocket.bind(new InetSocketAddress(port));
     selector = SelectorProvider.provider().openSelector();
     serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
   }
