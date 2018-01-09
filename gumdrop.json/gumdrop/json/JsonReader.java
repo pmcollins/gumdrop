@@ -1,5 +1,7 @@
 package gumdrop.json;
 
+import gumdrop.common.CharIterator;
+
 public class JsonReader {
 
   private final CharIterator it;

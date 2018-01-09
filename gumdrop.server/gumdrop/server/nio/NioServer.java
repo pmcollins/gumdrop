@@ -1,5 +1,7 @@
 package gumdrop.server.nio;
 
+import gumdrop.common.HttpRequest;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
@@ -19,15 +21,15 @@ import static java.net.StandardSocketOptions.SO_RCVBUF;
 
 public class NioServer {
 
-  private static final int N_THREADS = 10;
+  private static final int N_THREADS = 4;
 
   private final ExecutorService executorService = Executors.newFixedThreadPool(N_THREADS);
   private final ByteBuffer bb;
   private final Selector selector;
   private final ServerSocketChannel serverSocketChannel;
-  private final Function<byte[], byte[]> mainFcn;
+  private final Function<HttpRequest, byte[]> mainFcn;
 
-  public NioServer(Function<byte[], byte[]> mainFcn, int port) throws IOException {
+  public NioServer(Function<HttpRequest, byte[]> mainFcn, int port) throws IOException {
     this.mainFcn = mainFcn;
     serverSocketChannel = ServerSocketChannel.open();
     int receiveBufferSize = serverSocketChannel.getOption(SO_RCVBUF);

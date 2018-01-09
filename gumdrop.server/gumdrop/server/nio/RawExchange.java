@@ -1,24 +1,26 @@
 package gumdrop.server.nio;
 
+import gumdrop.common.HttpRequest;
+
 import java.nio.ByteBuffer;
 
 class RawExchange {
 
-  private final StringBuilder request = new StringBuilder(1024);
+  private final RequestBuildingReaderDelegate delegate = new RequestBuildingReaderDelegate();
+  private final IncrementalRequestParser parser = new IncrementalRequestParser(delegate);
   private ByteBuffer response;
 
   void addRequestChunk(ByteBuffer bb) {
-    while (bb.hasRemaining()) {
-      request.append((char) bb.get());
-    }
+    parser.append(bb);
+    parser.readLines();
   }
 
-  String getRequest() {
-    return request.toString();
+  HttpRequest getRequest() {
+    return delegate.getRequest();
   }
 
   boolean isDoneReading() {
-    return request.substring(request.length() - 4).equals("\r\n\r\n");
+    return delegate.getRequest().isCompleted();
   }
 
   ByteBuffer getResponse() {

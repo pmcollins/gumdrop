@@ -11,7 +11,6 @@ class Harness extends TestHarness {
   @Override
   public void run() {
     test(new BuilderDelegateTest());
-    test(new CharIteratorTest());
     test(new GettersTest());
     test(new JsonBuilderTest());
     test(new JsonReaderTest());

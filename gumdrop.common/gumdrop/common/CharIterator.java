@@ -1,25 +1,29 @@
-package gumdrop.json;
+package gumdrop.common;
 
 public class CharIterator {
 
   /**
-   * From Character Iterator:
+   * From CharacterIterator:
    * Constant that is returned when the iterator has reached either the end
    * or the beginning of the text. The value is '\\uFFFF', the "not a
    * character" value which should not occur in any valid Unicode string.
    */
   public static final char DONE = '\uFFFF';
 
-  private final String s;
+  private final StringBuilder sb;
   private int i;
   private int mark;
 
-  public CharIterator(String s) {
-    this.s = s;
+  public CharIterator(String str) {
+    sb = new StringBuilder(str);
+  }
+
+  public void append(String string) {
+    sb.append(string);
   }
 
   public char current() {
-    return i == s.length() ? DONE : s.charAt(i);
+    return i == sb.length() ? DONE : sb.charAt(i);
   }
 
   public void mark() {
@@ -27,11 +31,15 @@ public class CharIterator {
   }
 
   public String substring() {
-    return s.substring(mark, i);
+    return sb.substring(mark, i);
+  }
+
+  public String substring(int offset) {
+    return sb.substring(mark, Math.max(mark, i + offset));
   }
 
   public void increment() {
-    if (i < s.length()) {
+    if (i < sb.length()) {
       ++i;
     } else {
       throw new IllegalStateException("already at end of string");
@@ -47,6 +55,10 @@ public class CharIterator {
   public char next() {
     increment();
     return current();
+  }
+
+  public boolean done() {
+    return current() == CharIterator.DONE;
   }
 
 }
