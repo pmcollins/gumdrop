@@ -154,32 +154,31 @@ public class IncrementalRequestParserTest extends Test {
     assertEquals(s, string);
   }
 
+  private static class FakeLineReaderDelegate implements LineReaderDelegate {
+
+    private final List<String> lines = new ArrayList<>();
+
+    @Override
+    public void line(String line) {
+      lines.add(line);
+    }
+
+    @Override
+    public void endOfDoc(String remainder) {
+    }
+
+    int getLineCount() {
+      return lines.size();
+    }
+
+    List<String> getLines() {
+      return lines;
+    }
+
+    String getLine(int i) {
+      return lines.get(i);
+    }
+
+  }
+
 }
-
-class FakeLineReaderDelegate implements LineReaderDelegate {
-
-  private final List<String> lines = new ArrayList<>();
-
-  @Override
-  public void line(String line) {
-    lines.add(line);
-  }
-
-  @Override
-  public void endOfDoc(String remainder) {
-  }
-
-  int getLineCount() {
-    return lines.size();
-  }
-
-  List<String> getLines() {
-    return lines;
-  }
-
-  String getLine(int i) {
-    return lines.get(i);
-  }
-
-}
-

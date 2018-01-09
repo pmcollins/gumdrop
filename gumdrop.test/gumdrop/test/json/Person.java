@@ -1,4 +1,4 @@
-package gumdrop.json.test;
+package gumdrop.test.json;
 
 import java.time.Instant;
 import java.util.Objects;
