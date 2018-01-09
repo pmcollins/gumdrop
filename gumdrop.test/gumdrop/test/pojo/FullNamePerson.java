@@ -1,25 +1,25 @@
-package gumdrop.test.json;
+package gumdrop.test.pojo;
 
 import java.util.Objects;
 
-class FullNamePerson {
+public class FullNamePerson {
 
   private Name name;
   private int age;
 
-  Name getName() {
+  public Name getName() {
     return name;
   }
 
-  void setName(Name name) {
+  public void setName(Name name) {
     this.name = name;
   }
 
-  int getAge() {
+  public int getAge() {
     return age;
   }
 
-  void setAge(int age) {
+  public void setAge(int age) {
     this.age = age;
   }
 

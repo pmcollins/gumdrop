@@ -1,13 +1,15 @@
 package gumdrop.json;
 
+import gumdrop.common.Creator;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListSetters<T> extends Setters<List<T>> {
+public class ListCreator<T> extends Creator<List<T>> {
 
   static final String ARRAY_ADD_KEY = "add";
 
-  protected ListSetters(Setters<T> refs) {
+  protected ListCreator(Creator<T> refs) {
     super(ArrayList::new);
     addMember(ARRAY_ADD_KEY, List::add, refs);
   }

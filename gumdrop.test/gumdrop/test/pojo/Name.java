@@ -1,32 +1,32 @@
-package gumdrop.test.json;
+package gumdrop.test.pojo;
 
 import java.util.Objects;
 
-class Name {
+public class Name {
 
   private String first, last;
 
-  Name() {
+  public Name() {
   }
 
-  Name(String first, String last) {
+  public Name(String first, String last) {
     this.first = first;
     this.last = last;
   }
 
-  String getFirst() {
+  public String getFirst() {
     return first;
   }
 
-  void setFirst(String first) {
+  public void setFirst(String first) {
     this.first = first;
   }
 
-  String getLast() {
+  public String getLast() {
     return last;
   }
 
-  void setLast(String last) {
+  public void setLast(String last) {
     this.last = last;
   }
 

@@ -1,8 +1,8 @@
 package gumdrop.test.json;
 
 import gumdrop.json.JsonReader;
-import gumdrop.test.Test;
-import gumdrop.test.TestUtil;
+import gumdrop.test.util.Test;
+import gumdrop.test.util.TestUtil;
 
 import java.util.List;
 

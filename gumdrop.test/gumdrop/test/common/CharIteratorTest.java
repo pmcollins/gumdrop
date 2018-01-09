@@ -1,10 +1,12 @@
-package gumdrop.test;
+package gumdrop.test.common;
 
 import gumdrop.common.CharIterator;
+import gumdrop.test.util.Test;
+import gumdrop.test.util.TestUtil;
 
-import static gumdrop.test.TestUtil.assertEquals;
-import static gumdrop.test.TestUtil.assertFalse;
-import static gumdrop.test.TestUtil.assertTrue;
+import static gumdrop.test.util.TestUtil.assertEquals;
+import static gumdrop.test.util.TestUtil.assertFalse;
+import static gumdrop.test.util.TestUtil.assertTrue;
 
 class CharIteratorTest extends Test {
 

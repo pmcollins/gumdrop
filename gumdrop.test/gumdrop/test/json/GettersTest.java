@@ -1,8 +1,11 @@
 package gumdrop.test.json;
 
 import gumdrop.json.Getters;
-import gumdrop.test.Test;
-import gumdrop.test.TestUtil;
+import gumdrop.test.pojo.FullNamePerson;
+import gumdrop.test.pojo.Name;
+import gumdrop.test.pojo.Person;
+import gumdrop.test.util.Test;
+import gumdrop.test.util.TestUtil;
 
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;

@@ -1,26 +1,26 @@
-package gumdrop.test.json;
+package gumdrop.test.pojo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class Room {
+public class Room {
 
   private String name;
   private List<FullNamePerson> people = new ArrayList<>();
 
-  String getName() {
+  public String getName() {
     return name;
   }
 
-  void setName(String name) {
+  public void setName(String name) {
     this.name = name;
   }
 
-  List<FullNamePerson> getPeople() {
+  public List<FullNamePerson> getPeople() {
     return people;
   }
 
-  void setPeople(List<FullNamePerson> people) {
+  public void setPeople(List<FullNamePerson> people) {
     this.people = people;
   }
 
