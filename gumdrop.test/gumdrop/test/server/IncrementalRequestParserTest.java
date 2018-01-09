@@ -1,19 +1,20 @@
-package gumdrop.test;
+package gumdrop.test.server;
 
 import gumdrop.common.HttpMethod;
 import gumdrop.common.HttpRequest;
 import gumdrop.server.nio.IncrementalRequestParser;
 import gumdrop.server.nio.LineReaderDelegate;
 import gumdrop.server.nio.RequestBuildingReaderDelegate;
+import gumdrop.test.util.Test;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static gumdrop.test.TestUtil.assertEquals;
-import static gumdrop.test.TestUtil.assertFalse;
-import static gumdrop.test.TestUtil.assertTrue;
+import static gumdrop.test.util.TestUtil.assertEquals;
+import static gumdrop.test.util.TestUtil.assertFalse;
+import static gumdrop.test.util.TestUtil.assertTrue;
 
 public class IncrementalRequestParserTest extends Test {
 

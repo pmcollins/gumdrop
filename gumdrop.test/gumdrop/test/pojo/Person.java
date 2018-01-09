@@ -1,9 +1,9 @@
-package gumdrop.test.json;
+package gumdrop.test.pojo;
 
 import java.time.Instant;
 import java.util.Objects;
 
-class Person {
+public class Person {
 
   private String name;
   private int age;

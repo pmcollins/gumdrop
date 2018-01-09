@@ -1,16 +1,19 @@
 package gumdrop.json;
 
+import gumdrop.common.CreatedInstance;
+import gumdrop.common.Creator;
+
 import java.util.Stack;
 
 public class BuilderDelegate<T> implements JsonDelegate {
 
-  private final Stack<ObjectBuilder<?>> builders = new Stack<>();
-  private final ObjectBuilder<Holder<T>> rootBuilder;
-  private String key = HolderSetters.HOLDER_SET_KEY;
+  private final Stack<CreatedInstance<?>> creatorStack = new Stack<>();
+  private final CreatedInstance<Holder<T>> rootCreator;
+  private String key = HolderCreator.HOLDER_SET_KEY;
 
-  public BuilderDelegate(Setters<T> setters) {
-    rootBuilder = new ObjectBuilder<>(new HolderSetters<>(setters));
-    builders.add(rootBuilder);
+  public BuilderDelegate(Creator<T> creator) {
+    rootCreator = new CreatedInstance<>(new HolderCreator<>(creator));
+    creatorStack.add(rootCreator);
   }
 
   @Override
@@ -29,12 +32,12 @@ public class BuilderDelegate<T> implements JsonDelegate {
 
   @Override
   public void objectStart() {
-    pushSubBuilder(key == null ? ListSetters.ARRAY_ADD_KEY : key);
+    pushSubBuilder(key == null ? ListCreator.ARRAY_ADD_KEY : key);
   }
 
   @Override
   public void objectEnd() {
-    builders.pop();
+    creatorStack.pop();
   }
 
   @Override
@@ -44,24 +47,24 @@ public class BuilderDelegate<T> implements JsonDelegate {
 
   @Override
   public void arrayEnd() {
-    builders.pop();
+    creatorStack.pop();
   }
 
   private void setValue(String string) {
-    ObjectBuilder<?> currentBuilder = builders.peek();
+    CreatedInstance<?> currentBuilder = creatorStack.peek();
     currentBuilder.applyString(key, string);
     key = null;
   }
 
   private void pushSubBuilder(String memberKey) {
-    ObjectBuilder<?> currentBuilder = builders.peek();
-    ObjectBuilder<?> subBuilder = currentBuilder.constructMember(memberKey);
-    builders.push(subBuilder);
+    CreatedInstance<?> currentBuilder = creatorStack.peek();
+    CreatedInstance<?> subBuilder = currentBuilder.constructMember(memberKey);
+    creatorStack.push(subBuilder);
     key = null;
   }
 
   public T getObject() {
-    Holder<T> holder = rootBuilder.getObject();
+    Holder<T> holder = rootCreator.getObject();
     return holder.getContents();
   }
 

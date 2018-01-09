@@ -1,8 +1,13 @@
 package gumdrop.test.json;
 
 import gumdrop.json.BuilderDelegate;
-import gumdrop.test.Test;
-import gumdrop.test.TestUtil;
+import gumdrop.json.JsonReader;
+import gumdrop.test.*;
+import gumdrop.test.pojo.FullNamePerson;
+import gumdrop.test.pojo.Name;
+import gumdrop.test.pojo.Room;
+import gumdrop.test.util.Test;
+import gumdrop.test.util.TestUtil;
 
 import java.util.List;
 
@@ -19,8 +24,8 @@ class BuilderDelegateTest extends Test {
   }
 
   private void manual() {
-    RoomSetters setters = new RoomSetters();
-    BuilderDelegate<Room> delegate = new BuilderDelegate<>(setters);
+    RoomCreator creator = new RoomCreator();
+    BuilderDelegate<Room> delegate = new BuilderDelegate<>(creator);
     delegate.objectStart();
     delegate.quotedString("name");
     delegate.quotedString("703");
@@ -60,8 +65,11 @@ class BuilderDelegateTest extends Test {
       "{ \"age\" : 42,  \"name\" : { \"first\" : \"foo\",   \"last\" : \"bar\" } }, " +
       "{ \"age\" : 110, \"name\" : { \"first\" : \"bilbo\", \"last\" : \"baggins\" } } " +
     "] }";
-    RoomSetters roomSetters = new RoomSetters();
-    Room room = roomSetters.fromJson(json);
+    RoomCreator roomCreator = new RoomCreator();
+    BuilderDelegate<Room> delegate = new BuilderDelegate<>(roomCreator);
+    JsonReader jsonReader = new JsonReader(json, delegate);
+    jsonReader.readValue();
+    Room room = delegate.getObject();
     checkRoom(room);
   }
 

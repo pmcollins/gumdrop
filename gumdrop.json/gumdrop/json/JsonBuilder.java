@@ -1,5 +1,7 @@
 package gumdrop.json;
 
+import gumdrop.common.Creator;
+
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -7,29 +9,29 @@ import java.util.function.Supplier;
 public class JsonBuilder<T> {
 
   private final Getters<T> getters = new Getters<>();
-  private final Setters<T> setters;
+  private final Creator<T> creator;
 
   public JsonBuilder(Supplier<T> constructor) {
-    setters = new Setters<>(constructor);
+    creator = new Creator<>(constructor);
   }
 
   public void addStringField(String name, Function<T, String> getter, BiConsumer<T, String> setter) {
-    setters.addSetter(name, setter);
+    creator.addSetter(name, setter);
     getters.addStringGetter(name, getter);
   }
 
   public void addIntField(String name, Function<T, Integer> getter, BiConsumer<T, Integer> setter) {
-    setters.addIntSetter(name, setter);
+    creator.addIntSetter(name, setter);
     getters.addNumericGetter(name, getter);
   }
 
   public <U> void addField(String name, Function<T, U> getter, BiConsumer<T, U> setter, Converter<U> converter) {
-    setters.addSetter(name, (t, str) -> setter.accept(t, converter.convertFromString(str)));
+    creator.addSetter(name, (t, str) -> setter.accept(t, converter.convertFromString(str)));
     getters.addStringGetter(name, (t) -> converter.convertToString(getter.apply(t)));
   }
 
   public <U> void addSubFields(String name, Function<T, U> fieldGetter, BiConsumer<T, U> fieldSetter, JsonBuilder<U> jsonBuilder) {
-    setters.addMember(name, fieldSetter, jsonBuilder.setters);
+    creator.addMember(name, fieldSetter, jsonBuilder.creator);
     getters.addMember(name, fieldGetter, jsonBuilder.getters);
   }
 
@@ -38,7 +40,10 @@ public class JsonBuilder<T> {
   }
 
   public T fromJson(String json) {
-    return setters.fromJson(json);
+    BuilderDelegate<T> delegate = new BuilderDelegate<>(creator);
+    JsonReader jsonReader = new JsonReader(json, delegate);
+    jsonReader.readValue();
+    return delegate.getObject();
   }
 
 }

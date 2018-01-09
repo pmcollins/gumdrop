@@ -1,6 +1,6 @@
 package gumdrop.test.json;
 
-import gumdrop.test.TestHarness;
+import gumdrop.test.util.TestHarness;
 
 class Harness extends TestHarness {
 
@@ -14,7 +14,6 @@ class Harness extends TestHarness {
     test(new GettersTest());
     test(new JsonBuilderTest());
     test(new JsonReaderTest());
-    test(new ObjectBuilderTest());
   }
 
 }

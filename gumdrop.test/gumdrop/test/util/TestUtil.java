@@ -1,4 +1,4 @@
-package gumdrop.test;
+package gumdrop.test.util;
 
 public class TestUtil {
 
