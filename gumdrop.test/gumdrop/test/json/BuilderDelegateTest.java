@@ -24,7 +24,7 @@ class BuilderDelegateTest extends Test {
   }
 
   private void manual() {
-    RoomCreator creator = new RoomCreator();
+    RoomBuilder creator = new RoomBuilder();
     BuilderDelegate<Room> delegate = new BuilderDelegate<>(creator);
     delegate.objectStart();
     delegate.quotedString("name");
@@ -65,7 +65,7 @@ class BuilderDelegateTest extends Test {
       "{ \"age\" : 42,  \"name\" : { \"first\" : \"foo\",   \"last\" : \"bar\" } }, " +
       "{ \"age\" : 110, \"name\" : { \"first\" : \"bilbo\", \"last\" : \"baggins\" } } " +
     "] }";
-    RoomCreator roomCreator = new RoomCreator();
+    RoomBuilder roomCreator = new RoomBuilder();
     BuilderDelegate<Room> delegate = new BuilderDelegate<>(roomCreator);
     JsonReader jsonReader = new JsonReader(json, delegate);
     jsonReader.readValue();

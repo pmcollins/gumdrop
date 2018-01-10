@@ -6,4 +6,8 @@ public class TextBox extends InputWidget {
     super("text", label, name);
   }
 
+  public TextBox() {
+    setType("text");
+  }
+
 }

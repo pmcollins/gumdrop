@@ -1,7 +1,7 @@
 package gumdrop.test.common;
 
-import gumdrop.common.CreatedInstance;
-import gumdrop.common.Creator;
+import gumdrop.common.Builder;
+import gumdrop.common.BuilderInstance;
 import gumdrop.test.*;
 import gumdrop.test.pojo.FullNamePerson;
 import gumdrop.test.pojo.Name;
@@ -27,47 +27,47 @@ class CreatedInstanceTest extends Test {
   }
 
   private void simple() {
-    Creator<Y> y3Creator = new Creator<>(Y::new);
-    Creator<Y> y2Creator = new Creator<>(Y::new);
-    y2Creator.addMember("y", Y::setY, y3Creator);
-    Creator<Y> y1Creator = new Creator<>(Y::new);
-    y1Creator.addMember("y", Y::setY, y2Creator);
-    Creator<Z> zCreator = new Creator<>(Z::new);
-    Creator<X> xCreator = new Creator<>(X::new);
-    xCreator.addMember("y", X::setY, y1Creator);
-    xCreator.addMember("z", X::setZ, zCreator);
-    CreatedInstance<X> xInstance = new CreatedInstance<>(xCreator);
-    CreatedInstance<?> zInstance = xInstance.constructMember("z");
+    Builder<Y> y3Builder = new Builder<>(Y::new);
+    Builder<Y> y2Builder = new Builder<>(Y::new);
+    y2Builder.addMember("y", Y::setY, y3Builder);
+    Builder<Y> y1Builder = new Builder<>(Y::new);
+    y1Builder.addMember("y", Y::setY, y2Builder);
+    Builder<Z> zBuilder = new Builder<>(Z::new);
+    Builder<X> xBuilder = new Builder<>(X::new);
+    xBuilder.addMember("y", X::setY, y1Builder);
+    xBuilder.addMember("z", X::setZ, zBuilder);
+    BuilderInstance<X> xInstance = new BuilderInstance<>(xBuilder);
+    BuilderInstance<?> zInstance = xInstance.constructMember("z");
     TestUtil.assertNotNull(zInstance);
-    CreatedInstance<?> y1Instance = xInstance.constructMember("y");
+    BuilderInstance<?> y1Instance = xInstance.constructMember("y");
     TestUtil.assertNotNull(y1Instance);
-    CreatedInstance<?> y2Instance = y1Instance.constructMember("y");
+    BuilderInstance<?> y2Instance = y1Instance.constructMember("y");
     TestUtil.assertNotNull(y2Instance);
-    CreatedInstance<?> y3Instance = y2Instance.constructMember("y");
+    BuilderInstance<?> y3Instance = y2Instance.constructMember("y");
     TestUtil.assertNotNull(y3Instance);
     // TODO better exception
     TestUtil.assertThrows(() -> y3Instance.constructMember("y"), NullPointerException.class);
   }
 
   private void apply() {
-    Creator<Name> nameCreator = new Creator<>(Name::new);
-    nameCreator.addSetter("first", Name::setFirst);
+    Builder<Name> nameBuilder = new Builder<>(Name::new);
+    nameBuilder.addSetter("first", Name::setFirst);
     Name name = new Name();
-    nameCreator.apply(name, "first", "Bilbo");
+    nameBuilder.apply(name, "first", "Bilbo");
     TestUtil.assertEquals("Bilbo", name.getFirst());
   }
 
   private void topLevelArray() {
-    Creator<Name> nameCreator = new Creator<>(Name::new);
-    nameCreator.addSetter("first", Name::setFirst);
-    nameCreator.addSetter("last", Name::setLast);
-    Creator<List<Name>> listCreator = new Creator<>(ArrayList::new);
-    listCreator.addMember("name", List::add, nameCreator);
-    CreatedInstance<List<Name>> listInstance = new CreatedInstance<>(listCreator);
-    CreatedInstance<?> nb1 = listInstance.constructMember("name");
+    Builder<Name> nameBuilder = new Builder<>(Name::new);
+    nameBuilder.addSetter("first", Name::setFirst);
+    nameBuilder.addSetter("last", Name::setLast);
+    Builder<List<Name>> listBuilder = new Builder<>(ArrayList::new);
+    listBuilder.addMember("name", List::add, nameBuilder);
+    BuilderInstance<List<Name>> listInstance = new BuilderInstance<>(listBuilder);
+    BuilderInstance<?> nb1 = listInstance.constructMember("name");
     nb1.applyString("first", "foo");
     nb1.applyString("last", "bar");
-    CreatedInstance<?> nb2 = listInstance.constructMember("name");
+    BuilderInstance<?> nb2 = listInstance.constructMember("name");
     nb2.applyString("first", "baz");
     nb2.applyString("last", "glarch");
     List<Name> list = listInstance.getObject();
@@ -75,12 +75,12 @@ class CreatedInstanceTest extends Test {
   }
 
   private void memberArray() {
-    CreatedInstance<Room> roomInstance = new CreatedInstance<>(new RoomCreator());
+    BuilderInstance<Room> roomInstance = new BuilderInstance<>(new RoomBuilder());
     roomInstance.applyString("name", "land of 702");
-    CreatedInstance<?> peopleInstance = roomInstance.constructMember("people");
-    CreatedInstance<?> personInstance = peopleInstance.constructMember("add");
+    BuilderInstance<?> peopleInstance = roomInstance.constructMember("people");
+    BuilderInstance<?> personInstance = peopleInstance.constructMember("add");
     personInstance.applyString("age", "42");
-    CreatedInstance<?> nameInstance = personInstance.constructMember("name");
+    BuilderInstance<?> nameInstance = personInstance.constructMember("name");
     nameInstance.applyString("first", "pablo");
     nameInstance.applyString("last", "collins");
     Room room = roomInstance.getObject();
