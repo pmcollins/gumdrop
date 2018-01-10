@@ -1,18 +1,18 @@
 package gumdrop.json;
 
-import gumdrop.common.CreatedInstance;
-import gumdrop.common.Creator;
+import gumdrop.common.Builder;
+import gumdrop.common.BuilderInstance;
 
 import java.util.Stack;
 
 public class BuilderDelegate<T> implements JsonDelegate {
 
-  private final Stack<CreatedInstance<?>> creatorStack = new Stack<>();
-  private final CreatedInstance<Holder<T>> rootCreator;
-  private String key = HolderCreator.HOLDER_SET_KEY;
+  private final Stack<BuilderInstance<?>> creatorStack = new Stack<>();
+  private final BuilderInstance<Holder<T>> rootCreator;
+  private String key = HolderBuilder.HOLDER_SET_KEY;
 
-  public BuilderDelegate(Creator<T> creator) {
-    rootCreator = new CreatedInstance<>(new HolderCreator<>(creator));
+  public BuilderDelegate(Builder<T> builder) {
+    rootCreator = new BuilderInstance<>(new HolderBuilder<>(builder));
     creatorStack.add(rootCreator);
   }
 
@@ -32,7 +32,7 @@ public class BuilderDelegate<T> implements JsonDelegate {
 
   @Override
   public void objectStart() {
-    pushSubBuilder(key == null ? ListCreator.ARRAY_ADD_KEY : key);
+    pushSubBuilder(key == null ? ListBuilder.ARRAY_ADD_KEY : key);
   }
 
   @Override
@@ -51,14 +51,14 @@ public class BuilderDelegate<T> implements JsonDelegate {
   }
 
   private void setValue(String string) {
-    CreatedInstance<?> currentBuilder = creatorStack.peek();
+    BuilderInstance<?> currentBuilder = creatorStack.peek();
     currentBuilder.applyString(key, string);
     key = null;
   }
 
   private void pushSubBuilder(String memberKey) {
-    CreatedInstance<?> currentBuilder = creatorStack.peek();
-    CreatedInstance<?> subBuilder = currentBuilder.constructMember(memberKey);
+    BuilderInstance<?> currentBuilder = creatorStack.peek();
+    BuilderInstance<?> subBuilder = currentBuilder.constructMember(memberKey);
     creatorStack.push(subBuilder);
     key = null;
   }
