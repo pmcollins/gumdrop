@@ -28,24 +28,22 @@ public class FormReader<T> {
   public FormReadResult<T> read(String q) {
     BuilderInstance<T> instance = new BuilderInstance<>(builder);
     String[] pairs = q.split("&");
-    FormReadResult<T> formReadResult = new FormReadResult<>();
+    FormReadResult<T> out = new FormReadResult<>();
     for (String pair : pairs) {
-      parsePair(instance, formReadResult, pair);
+      Optional<ValidationFailure> validationFailure = parsePair(instance, pair);
+      validationFailure.ifPresent(out::addFailure);
     }
-    formReadResult.setT(instance.getObject());
-    return formReadResult;
+    out.setT(instance.getObject());
+    return out;
   }
 
-  private void parsePair(BuilderInstance<T> instance, FormReadResult<T> formReadResult, String pair) {
+  private Optional<ValidationFailure> parsePair(BuilderInstance<T> instance, String pair) {
     int idx = pair.indexOf('=');
     String key = pair.substring(0, idx);
     String value = pair.substring(idx + 1, pair.length());
     Validator validator = validators.get(key);
-    if (validator != null) {
-      Optional<ValidationFailure> validationFailure = validator.validate(value);
-      validationFailure.ifPresent(formReadResult::addFailure);
-    }
     instance.applyString(key, value);
+    return validator == null ? Optional.empty() : validator.validate(value);
   }
 
 }
