@@ -43,7 +43,8 @@ public class Builder<T> {
   }
 
   SetterBinding<T, ?> getMember(String name) {
-    return members.get(name);
+    SetterBinding<T, ?> namedMember = members.get(name);
+    return namedMember != null ? namedMember : members.get("*");
   }
 
   public T construct() {

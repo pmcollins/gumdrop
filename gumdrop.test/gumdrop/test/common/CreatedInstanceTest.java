@@ -30,26 +30,7 @@ class CreatedInstanceTest extends Test {
     topLevelArray();
     memberArray();
     map();
-  }
-
-  private void map() {
-    Builder<Name> nameBuilder = new Builder<>(Name::new);
-    nameBuilder.addSetter("first", Name::setFirst);
-    nameBuilder.addSetter("last", Name::setLast);
-
-    Builder<Map<String, Name>> mapBuilder = new Builder<>(HashMap::new);
-    mapBuilder.addMapMember("name", Map::put, nameBuilder);
-
-    InstanceBuilder<Map<String, Name>> instanceBuilder = new InstanceBuilder<>(mapBuilder);
-
-    InstanceBuilder<?> nameInstanceBuilder = instanceBuilder.constructAndSet("name");
-    assertNotNull(nameInstanceBuilder);
-
-    nameInstanceBuilder.applyString("first", "foo");
-    nameInstanceBuilder.applyString("last", "bar");
-
-    Map<String, Name> map = instanceBuilder.getObject();
-    assertEquals("foo", map.get("name").getFirst());
+    wildcardMap();
   }
 
   private void simple() {
@@ -119,6 +100,46 @@ class CreatedInstanceTest extends Test {
     Name name = person.getName();
     assertEquals("pablo", name.getFirst());
     assertEquals("collins", name.getLast());
+  }
+
+  private void map() {
+    Builder<Name> nameBuilder = new Builder<>(Name::new);
+    nameBuilder.addSetter("first", Name::setFirst);
+    nameBuilder.addSetter("last", Name::setLast);
+
+    Builder<Map<String, Name>> mapBuilder = new Builder<>(HashMap::new);
+    mapBuilder.addMapMember("name", Map::put, nameBuilder);
+
+    InstanceBuilder<Map<String, Name>> instanceBuilder = new InstanceBuilder<>(mapBuilder);
+
+    InstanceBuilder<?> nameInstanceBuilder = instanceBuilder.constructAndSet("name");
+    assertNotNull(nameInstanceBuilder);
+
+    nameInstanceBuilder.applyString("first", "foo");
+    nameInstanceBuilder.applyString("last", "bar");
+
+    Map<String, Name> map = instanceBuilder.getObject();
+    assertEquals("foo", map.get("name").getFirst());
+  }
+
+  private void wildcardMap() {
+    Builder<Name> nameBuilder = new Builder<>(Name::new);
+    nameBuilder.addSetter("first", Name::setFirst);
+    nameBuilder.addSetter("last", Name::setLast);
+
+    Builder<Map<String, Name>> mapBuilder = new Builder<>(HashMap::new);
+    mapBuilder.addMapMember("*", Map::put, nameBuilder);
+
+    InstanceBuilder<Map<String, Name>> instanceBuilder = new InstanceBuilder<>(mapBuilder);
+
+    InstanceBuilder<?> nameInstanceBuilder = instanceBuilder.constructAndSet("baz");
+    assertNotNull(nameInstanceBuilder);
+
+    nameInstanceBuilder.applyString("first", "foo");
+    nameInstanceBuilder.applyString("last", "bar");
+
+    Map<String, Name> map = instanceBuilder.getObject();
+    assertEquals("foo", map.get("baz").getFirst());
   }
 
   private static class X {
