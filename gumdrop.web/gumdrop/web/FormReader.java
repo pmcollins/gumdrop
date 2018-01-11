@@ -1,7 +1,7 @@
 package gumdrop.web;
 
 import gumdrop.common.Builder;
-import gumdrop.common.BuilderInstance;
+import gumdrop.common.InstanceBuilder;
 
 import java.util.*;
 import java.util.function.BiConsumer;
@@ -26,7 +26,7 @@ public class FormReader<T> {
   }
 
   public FormReadResult<T> read(String q) {
-    BuilderInstance<T> instance = new BuilderInstance<>(builder);
+    InstanceBuilder<T> instance = new InstanceBuilder<>(builder);
     String[] pairs = q.split("&");
     FormReadResult<T> out = new FormReadResult<>();
     for (String pair : pairs) {
@@ -37,7 +37,7 @@ public class FormReader<T> {
     return out;
   }
 
-  private Optional<ValidationFailure> parsePair(BuilderInstance<T> instance, String pair) {
+  private Optional<ValidationFailure> parsePair(InstanceBuilder<T> instance, String pair) {
     int idx = pair.indexOf('=');
     String key = pair.substring(0, idx);
     String value = pair.substring(idx + 1, pair.length());

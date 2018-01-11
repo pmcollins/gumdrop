@@ -1,6 +1,6 @@
 package gumdrop.common;
 
-public class BuilderInstance<T> {
+public class InstanceBuilder<T> {
 
   private final Builder<T> builder;
   private final T t;
@@ -8,14 +8,14 @@ public class BuilderInstance<T> {
   /**
    * Binds a Builder object to an instance whose type corresponds to the Builder
    */
-  public BuilderInstance(Builder<T> builder) {
+  public InstanceBuilder(Builder<T> builder) {
     this.builder = builder;
     t = builder.construct();
   }
 
-  public BuilderInstance<?> constructMember(String key) {
-    SetterBinding<T, ?> memberBinding = builder.getMember(key);
-    return memberBinding.construct(t);
+  public InstanceBuilder<?> constructAndSet(String key) {
+    SetterBinding<T, ?> setterBinding = builder.getMember(key);
+    return setterBinding.constructAndSet(t, key);
   }
 
   public void applyString(String key, String value) {

@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 public class Builder<T> {
 
   private final Supplier<T> constructor;
-  private final Map<String, BiConsumer<T, String>> setters = new HashMap<>();
+  private final Map<String, TriConsumer<T, String>> setters = new HashMap<>();
   private final Map<String, SetterBinding<T, ?>> members = new HashMap<>();
 
   public Builder(Supplier<T> constructor) {
@@ -27,10 +27,18 @@ public class Builder<T> {
   }
 
   public void addSetter(String key, BiConsumer<T, String> setter) {
+    setters.put(key, (t, k, v) -> setter.accept(t, v));
+  }
+
+  public void addSetter(String key, TriConsumer<T, String> setter) {
     setters.put(key, setter);
   }
 
   public <U> void addMember(String name, BiConsumer<T, U> fieldSetter, Builder<U> subSetters) {
+    members.put(name, new SetterBinding<>(fieldSetter, subSetters));
+  }
+
+  public <U> void addMapMember(String name, TriConsumer<T, U> fieldSetter, Builder<U> subSetters) {
     members.put(name, new SetterBinding<>(fieldSetter, subSetters));
   }
 
@@ -43,7 +51,12 @@ public class Builder<T> {
   }
 
   public void apply(T t, String key, String value) {
-    setters.get(key).accept(t, value);
+    TriConsumer<T, String> setter = setters.get(key);
+    if (setter != null) {
+      setter.accept(t, key, value);
+    } else {
+      setters.get("*").accept(t, key, value);
+    }
   }
 
 }
