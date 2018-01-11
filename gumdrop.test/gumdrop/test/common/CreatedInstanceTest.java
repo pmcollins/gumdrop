@@ -1,8 +1,8 @@
 package gumdrop.test.common;
 
 import gumdrop.common.Builder;
-import gumdrop.common.BuilderInstance;
-import gumdrop.test.*;
+import gumdrop.common.InstanceBuilder;
+import gumdrop.test.RoomBuilder;
 import gumdrop.test.pojo.FullNamePerson;
 import gumdrop.test.pojo.Name;
 import gumdrop.test.pojo.Room;
@@ -10,7 +10,12 @@ import gumdrop.test.util.Test;
 import gumdrop.test.util.TestUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static gumdrop.test.util.TestUtil.assertEquals;
+import static gumdrop.test.util.TestUtil.assertNotNull;
 
 class CreatedInstanceTest extends Test {
 
@@ -24,6 +29,27 @@ class CreatedInstanceTest extends Test {
     apply();
     topLevelArray();
     memberArray();
+    map();
+  }
+
+  private void map() {
+    Builder<Name> nameBuilder = new Builder<>(Name::new);
+    nameBuilder.addSetter("first", Name::setFirst);
+    nameBuilder.addSetter("last", Name::setLast);
+
+    Builder<Map<String, Name>> mapBuilder = new Builder<>(HashMap::new);
+    mapBuilder.addMapMember("name", Map::put, nameBuilder);
+
+    InstanceBuilder<Map<String, Name>> instanceBuilder = new InstanceBuilder<>(mapBuilder);
+
+    InstanceBuilder<?> nameInstanceBuilder = instanceBuilder.constructAndSet("name");
+    assertNotNull(nameInstanceBuilder);
+
+    nameInstanceBuilder.applyString("first", "foo");
+    nameInstanceBuilder.applyString("last", "bar");
+
+    Map<String, Name> map = instanceBuilder.getObject();
+    assertEquals("foo", map.get("name").getFirst());
   }
 
   private void simple() {
@@ -36,17 +62,18 @@ class CreatedInstanceTest extends Test {
     Builder<X> xBuilder = new Builder<>(X::new);
     xBuilder.addMember("y", X::setY, y1Builder);
     xBuilder.addMember("z", X::setZ, zBuilder);
-    BuilderInstance<X> xInstance = new BuilderInstance<>(xBuilder);
-    BuilderInstance<?> zInstance = xInstance.constructMember("z");
-    TestUtil.assertNotNull(zInstance);
-    BuilderInstance<?> y1Instance = xInstance.constructMember("y");
-    TestUtil.assertNotNull(y1Instance);
-    BuilderInstance<?> y2Instance = y1Instance.constructMember("y");
-    TestUtil.assertNotNull(y2Instance);
-    BuilderInstance<?> y3Instance = y2Instance.constructMember("y");
-    TestUtil.assertNotNull(y3Instance);
+
+    InstanceBuilder<X> xInstance = new InstanceBuilder<>(xBuilder);
+    InstanceBuilder<?> zInstance = xInstance.constructAndSet("z");
+    assertNotNull(zInstance);
+    InstanceBuilder<?> y1Instance = xInstance.constructAndSet("y");
+    assertNotNull(y1Instance);
+    InstanceBuilder<?> y2Instance = y1Instance.constructAndSet("y");
+    assertNotNull(y2Instance);
+    InstanceBuilder<?> y3Instance = y2Instance.constructAndSet("y");
+    assertNotNull(y3Instance);
     // TODO better exception
-    TestUtil.assertThrows(() -> y3Instance.constructMember("y"), NullPointerException.class);
+    TestUtil.assertThrows(() -> y3Instance.constructAndSet("y"), NullPointerException.class);
   }
 
   private void apply() {
@@ -54,7 +81,7 @@ class CreatedInstanceTest extends Test {
     nameBuilder.addSetter("first", Name::setFirst);
     Name name = new Name();
     nameBuilder.apply(name, "first", "Bilbo");
-    TestUtil.assertEquals("Bilbo", name.getFirst());
+    assertEquals("Bilbo", name.getFirst());
   }
 
   private void topLevelArray() {
@@ -63,35 +90,35 @@ class CreatedInstanceTest extends Test {
     nameBuilder.addSetter("last", Name::setLast);
     Builder<List<Name>> listBuilder = new Builder<>(ArrayList::new);
     listBuilder.addMember("name", List::add, nameBuilder);
-    BuilderInstance<List<Name>> listInstance = new BuilderInstance<>(listBuilder);
-    BuilderInstance<?> nb1 = listInstance.constructMember("name");
+    InstanceBuilder<List<Name>> listInstance = new InstanceBuilder<>(listBuilder);
+    InstanceBuilder<?> nb1 = listInstance.constructAndSet("name");
     nb1.applyString("first", "foo");
     nb1.applyString("last", "bar");
-    BuilderInstance<?> nb2 = listInstance.constructMember("name");
+    InstanceBuilder<?> nb2 = listInstance.constructAndSet("name");
     nb2.applyString("first", "baz");
     nb2.applyString("last", "glarch");
     List<Name> list = listInstance.getObject();
-    TestUtil.assertEquals(List.of(new Name("foo", "bar"), new Name("baz", "glarch")), list);
+    assertEquals(List.of(new Name("foo", "bar"), new Name("baz", "glarch")), list);
   }
 
   private void memberArray() {
-    BuilderInstance<Room> roomInstance = new BuilderInstance<>(new RoomBuilder());
+    InstanceBuilder<Room> roomInstance = new InstanceBuilder<>(new RoomBuilder());
     roomInstance.applyString("name", "land of 702");
-    BuilderInstance<?> peopleInstance = roomInstance.constructMember("people");
-    BuilderInstance<?> personInstance = peopleInstance.constructMember("add");
+    InstanceBuilder<?> peopleInstance = roomInstance.constructAndSet("people");
+    InstanceBuilder<?> personInstance = peopleInstance.constructAndSet("add");
     personInstance.applyString("age", "42");
-    BuilderInstance<?> nameInstance = personInstance.constructMember("name");
+    InstanceBuilder<?> nameInstance = personInstance.constructAndSet("name");
     nameInstance.applyString("first", "pablo");
     nameInstance.applyString("last", "collins");
     Room room = roomInstance.getObject();
-    TestUtil.assertEquals("land of 702", room.getName());
+    assertEquals("land of 702", room.getName());
     List<FullNamePerson> people = room.getPeople();
-    TestUtil.assertEquals(1, people.size());
+    assertEquals(1, people.size());
     FullNamePerson person = people.get(0);
-    TestUtil.assertEquals(42, person.getAge());
+    assertEquals(42, person.getAge());
     Name name = person.getName();
-    TestUtil.assertEquals("pablo", name.getFirst());
-    TestUtil.assertEquals("collins", name.getLast());
+    assertEquals("pablo", name.getFirst());
+    assertEquals("collins", name.getLast());
   }
 
   private static class X {
