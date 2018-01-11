@@ -46,11 +46,7 @@ public class Getters<T> {
       sb.append('"').append(key).append('"').append(':');
       BiFunction<T, String, String> stringFunction = getters.get(key);
       String value;
-      if (stringFunction == null) {
-        value = dynamicBinding.apply(t, key);
-      } else {
-        value = stringFunction.apply(t, key);
-      }
+      value = stringFunction == null ? dynamicBinding.apply(t, key) : stringFunction.apply(t, key);
       sb.append(value);
     }
     sb.append('}');
