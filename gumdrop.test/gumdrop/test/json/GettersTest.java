@@ -5,10 +5,13 @@ import gumdrop.test.pojo.FullNamePerson;
 import gumdrop.test.pojo.Name;
 import gumdrop.test.pojo.Person;
 import gumdrop.test.util.Test;
-import gumdrop.test.util.TestUtil;
 
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
+
+import static gumdrop.test.util.TestUtil.assertEquals;
 
 class GettersTest extends Test {
 
@@ -49,6 +52,8 @@ class GettersTest extends Test {
   public void run() {
     personToJson();
     complexPersonToJson();
+    mapToJson();
+    dynamicMap();
   }
 
   private void personToJson() {
@@ -56,7 +61,7 @@ class GettersTest extends Test {
     person.setName("bobo");
     person.setAge(25);
     person.setBirthday(Instant.ofEpochMilli(700_000_000_000L));
-    TestUtil.assertEquals(
+    assertEquals(
       "{\"name\":\"bobo\",\"age\":25,\"birthday\":\"1992-03-07T20:26:40Z\"}",
       personJsonGetters.getJson(person)
     );
@@ -70,7 +75,36 @@ class GettersTest extends Test {
     name.setLast("collinson");
     complexPerson.setName(name);
     String json = complexPersonJsonGetters.getJson(complexPerson);
-    TestUtil.assertEquals("{\"age\":42,\"name\":{\"first\":\"lile\",\"last\":\"collinson\"}}", json);
+    assertEquals("{\"age\":42,\"name\":{\"first\":\"lile\",\"last\":\"collinson\"}}", json);
+  }
+
+  private void mapToJson() {
+    Map<String, Name> map = new HashMap<>();
+    map.put("foo", new Name("foo", "bar"));
+    map.put("baz", new Name("baz", "glarch"));
+    Getters<Name> nameGetters = new Getters<>();
+    nameGetters.addStringGetter("first", Name::getFirst);
+    nameGetters.addStringGetter("last", Name::getLast);
+    Getters<Map<String, Name>> mapGetters = new Getters<>();
+    mapGetters.addMember("foo", m -> m.get("foo"), nameGetters);
+    mapGetters.addMember("bar", m -> m.get("baz"), nameGetters);
+    String json = mapGetters.getJson(map);
+    assertEquals("{\"foo\":{\"first\":\"foo\",\"last\":\"bar\"},\"bar\":{\"first\":\"baz\",\"last\":\"glarch\"}}", json);
+  }
+
+  private void dynamicMap() {
+    Map<String, Name> map = new HashMap<>();
+    map.put("foo", new Name("foo", "bar"));
+    map.put("baz", new Name("baz", "glarch"));
+    map.put("quux", new Name("xxx", "yyy"));
+    Getters<Name> nameGetters = new Getters<>();
+    nameGetters.addStringGetter("first", Name::getFirst);
+    nameGetters.addStringGetter("last", Name::getLast);
+    Getters<Map<String, Name>> mapGetters = new Getters<>();
+    mapGetters.setKeyFunction(Map::keySet);
+    mapGetters.setMemberFunction(Map::get, nameGetters);
+    String json = mapGetters.getJson(map);
+    System.out.println("json = [" + json + "]");
   }
 
 }

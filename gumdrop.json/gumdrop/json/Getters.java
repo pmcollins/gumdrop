@@ -2,11 +2,14 @@ package gumdrop.json;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public class Getters<T> {
 
-  private final Map<String, Function<T, String>> getters = new LinkedHashMap<>();
+  private final Map<String, BiFunction<T, String, String>> getters = new LinkedHashMap<>();
+  private Function<T, Iterable<String>> keyFunction;
+  private GetterBinding<T, ?> dynamicBinding;
 
   public void addNumericGetter(String name, Function<T, ?> getter) {
     addBarewordGetter(name, t -> String.valueOf(getter.apply(t)));
@@ -21,18 +24,34 @@ public class Getters<T> {
   }
 
   private void addBarewordGetter(String name, Function<T, String> getter) {
-    getters.put(name, getter);
+    getters.put(name, (t, key) -> getter.apply(t));
+  }
+
+  public void setKeyFunction(Function<T, Iterable<String>> keyFunction) {
+    this.keyFunction = keyFunction;
+  }
+
+  public <U> void setMemberFunction(BiFunction<T, String, U> dynamicFieldGetter, Getters<U> subGetters) {
+    dynamicBinding = new GetterBinding<>(dynamicFieldGetter, subGetters);
   }
 
   public String getJson(T t) {
     StringBuilder sb = new StringBuilder("{");
     int i = 0;
-    for (String key : getters.keySet()) {
+    Iterable<String> strings = keyFunction == null ? getters.keySet() : keyFunction.apply(t);
+    for (String key : strings) {
       if (i++ > 0) {
         sb.append(',');
       }
       sb.append('"').append(key).append('"').append(':');
-      sb.append(getters.get(key).apply(t));
+      BiFunction<T, String, String> stringFunction = getters.get(key);
+      String value;
+      if (stringFunction == null) {
+        value = dynamicBinding.apply(t, key);
+      } else {
+        value = stringFunction.apply(t, key);
+      }
+      sb.append(value);
     }
     sb.append('}');
     return sb.toString();
