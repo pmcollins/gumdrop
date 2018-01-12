@@ -96,7 +96,7 @@ class GettersTest extends Test {
     Map<String, Name> map = new HashMap<>();
     map.put("foo", new Name("foo", "bar"));
     map.put("baz", new Name("baz", "glarch"));
-    map.put("quux", new Name("xxx", "yyy"));
+    map.put("quux", new Name("frob", "snarf"));
     Getters<Name> nameGetters = new Getters<>();
     nameGetters.addStringGetter("first", Name::getFirst);
     nameGetters.addStringGetter("last", Name::getLast);
@@ -104,7 +104,7 @@ class GettersTest extends Test {
     mapGetters.setKeyFunction(Map::keySet);
     mapGetters.setMemberFunction(Map::get, nameGetters);
     String json = mapGetters.getJson(map);
-    System.out.println("json = [" + json + "]");
+    assertEquals("{\"quux\":{\"first\":\"frob\",\"last\":\"snarf\"},\"foo\":{\"first\":\"foo\",\"last\":\"bar\"},\"baz\":{\"first\":\"baz\",\"last\":\"glarch\"}}", json);
   }
 
 }
