@@ -44,9 +44,9 @@ public class Getters<T> {
         sb.append(',');
       }
       sb.append('"').append(key).append('"').append(':');
-      BiFunction<T, String, String> stringFunction = getters.get(key);
-      String value;
-      value = stringFunction == null ? dynamicBinding.apply(t, key) : stringFunction.apply(t, key);
+      BiFunction<T, String, String> stringFcn = getters.get(key);
+      BiFunction<T, String, String> fcn = stringFcn == null ? dynamicBinding : stringFcn;
+      String value = fcn.apply(t, key);
       sb.append(value);
     }
     sb.append('}');
