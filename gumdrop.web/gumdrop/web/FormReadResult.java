@@ -5,11 +5,11 @@ import java.util.List;
 
 public class FormReadResult<T> {
 
-  private final List<ValidationFailure> failures = new ArrayList<>();
+  private final List<ValidationFailure> validationFailures = new ArrayList<>();
   private T t;
 
   void addFailure(ValidationFailure failure) {
-    failures.add(failure);
+    validationFailures.add(failure);
   }
 
   public T getT() {
@@ -20,12 +20,12 @@ public class FormReadResult<T> {
     this.t = t;
   }
 
-  public List<ValidationFailure> getFailures() {
-    return failures;
+  public List<ValidationFailure> getValidationFailures() {
+    return validationFailures;
   }
 
-  public boolean hasFailures() {
-    return !failures.isEmpty();
+  public boolean hasValidationFailures() {
+    return !validationFailures.isEmpty();
   }
 
 }
