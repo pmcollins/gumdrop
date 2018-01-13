@@ -41,8 +41,8 @@ public class FormReaderTest extends Test {
     reader.addSetter("first", UserFormData::setFirst, new Validator(s -> s.length() > 1, "must be longer than 1 character"));
     reader.addSetter("last", UserFormData::setLast);
     FormReadResult<UserFormData> read = reader.read("first=f&last=l");
-    assertTrue(read.hasFailures());
-    List<ValidationFailure> failures = read.getFailures();
+    assertTrue(read.hasValidationFailures());
+    List<ValidationFailure> failures = read.getValidationFailures();
     assertEquals(1, failures.size());
     ValidationFailure validationFailure = failures.get(0);
     assertEquals("f", validationFailure.getValue());
