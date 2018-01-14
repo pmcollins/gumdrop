@@ -3,7 +3,7 @@ package gumdrop.common;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HttpRequest {
+public class HttpRequest implements Request {
 
   private final Map<String, String> headers = new HashMap<>();
   private HttpMethod httpMethod;
@@ -29,6 +29,7 @@ public class HttpRequest {
     this.httpMethod = httpMethod;
   }
 
+  @Override
   public String getPath() {
     return path;
   }
@@ -71,6 +72,7 @@ public class HttpRequest {
     return (httpMethod == HttpMethod.GET && gotBlankLine) || (httpMethod == HttpMethod.POST && postString != null);
   }
 
+  @Override
   public String getPostString() {
     return postString;
   }
