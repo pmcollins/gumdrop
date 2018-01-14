@@ -32,7 +32,7 @@ public class IncrementalRequestParserTest extends Test {
     "Upgrade-Insecure-Requests: 1\r\n" +
     "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\n" +
     "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/604.4.7 (KHTML, like Gecko) Version/11.0.2 Safari/604.4.7\r\n" +
-    "Referer: http://localhost:8080/users/new\r\n" +
+    "Referer: http://localhost:8080/users/form\r\n" +
     "Content-Length: 28\r\n" +
     "Accept-Language: en-us\r\n" +
     "\r\n" +

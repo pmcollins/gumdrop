@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
-public class FormReader<T> {
+public class FormReader<T> implements IFormReader<T> {
 
   private final Builder<T> builder;
   private final Map<String, Validator> validators = new HashMap<>();
