@@ -2,15 +2,19 @@ package gumdrop.web;
 
 import gumdrop.common.Builder;
 import gumdrop.common.InstanceBuilder;
+import gumdrop.common.ValidationFailure;
+import gumdrop.common.Validator;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 public class FormReader<T> implements IFormReader<T> {
 
   private final Builder<T> builder;
-  private final Map<String, Validator> validators = new HashMap<>();
+  private final Map<String, Validator<String>> validators = new HashMap<>();
 
   public FormReader(Supplier<T> constructor) {
     this.builder = new Builder<>(constructor);
@@ -20,11 +24,12 @@ public class FormReader<T> implements IFormReader<T> {
     builder.addSetter(key, setter);
   }
 
-  public void addSetter(String key, BiConsumer<T, String> setter, Validator validator) {
+  public void addSetter(String key, BiConsumer<T, String> setter, Validator<String> validator) {
     addSetter(key, setter);
     validators.put(key, validator);
   }
 
+  @Override
   public FormReadResult<T> read(String q) {
     InstanceBuilder<T> instance = new InstanceBuilder<>(builder);
     String[] pairs = q.split("&");
@@ -41,7 +46,7 @@ public class FormReader<T> implements IFormReader<T> {
     int idx = pair.indexOf('=');
     String key = pair.substring(0, idx);
     String value = pair.substring(idx + 1, pair.length());
-    Validator validator = validators.get(key);
+    Validator<String> validator = validators.get(key);
     instance.applyString(key, value);
     return validator == null ? Optional.empty() : validator.validate(value);
   }

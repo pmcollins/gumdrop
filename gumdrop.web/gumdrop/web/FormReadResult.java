@@ -1,5 +1,7 @@
 package gumdrop.web;
 
+import gumdrop.common.ValidationFailure;
+
 import java.util.ArrayList;
 import java.util.List;
 
