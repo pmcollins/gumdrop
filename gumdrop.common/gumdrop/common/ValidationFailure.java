@@ -1,4 +1,4 @@
-package gumdrop.web;
+package gumdrop.common;
 
 public class ValidationFailure {
 

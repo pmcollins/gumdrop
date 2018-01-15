@@ -11,3 +11,4 @@ public class EmailBox extends InputWidget {
   }
 
 }
+

@@ -1,10 +1,10 @@
 package gumdrop.test.web;
 
+import gumdrop.common.ValidationFailure;
+import gumdrop.common.Validator;
 import gumdrop.test.util.Test;
 import gumdrop.web.FormReadResult;
 import gumdrop.web.FormReader;
-import gumdrop.web.ValidationFailure;
-import gumdrop.web.Validator;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class FormReaderTest extends Test {
 
   private void invalid() {
     FormReader<UserFormData> reader = new FormReader<>(UserFormData::new);
-    reader.addSetter("first", UserFormData::setFirst, new Validator(s -> s.length() > 1, "must be longer than 1 character"));
+    reader.addSetter("first", UserFormData::setFirst, new Validator<>(s -> s.length() > 1, "must be longer than 1 character"));
     reader.addSetter("last", UserFormData::setLast);
     FormReadResult<UserFormData> read = reader.read("first=f&last=l");
     assertTrue(read.hasValidationFailures());
