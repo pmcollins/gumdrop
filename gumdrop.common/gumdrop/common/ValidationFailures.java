@@ -11,8 +11,16 @@ public class ValidationFailures {
     list.add(validationFailure);
   }
 
+  public void add(ValidationFailures validationFailures) {
+    list.addAll(validationFailures.list);
+  }
+
   public List<ValidationFailure> getList() {
     return list;
+  }
+
+  public boolean isEmpty() {
+    return list.isEmpty();
   }
 
 }
