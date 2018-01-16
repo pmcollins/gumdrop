@@ -94,6 +94,11 @@ public class HttpRequest implements Request {
   }
 
   @Override
+  public String getCookieString() {
+    return getAttr("Cookie");
+  }
+
+  @Override
   public String toString() {
     return "HttpRequest{" +
       "headers=" + headers +
