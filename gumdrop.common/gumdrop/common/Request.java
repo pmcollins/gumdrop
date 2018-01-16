@@ -6,4 +6,8 @@ public interface Request {
 
   String getPath();
 
+  String getAttr(String key);
+
+  String getCookieString();
+
 }
