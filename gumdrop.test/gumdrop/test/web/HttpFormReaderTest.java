@@ -31,7 +31,7 @@ public class HttpFormReaderTest extends Test {
 
     FormReadResult<UserFormData> result = reader.read("first=fff&last=lll&email=foo%40bar");
 
-    UserFormData userFormData = result.getT();
+    UserFormData userFormData = result.getFormObject();
 
     assertEquals("fff", userFormData.getFirst());
     assertEquals("lll", userFormData.getLast());

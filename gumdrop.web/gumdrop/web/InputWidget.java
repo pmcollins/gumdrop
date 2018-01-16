@@ -8,6 +8,10 @@ abstract class InputWidget extends Widget {
   private String label;
   private String name;
 
+  InputWidget(String type, String label, Enum<?> name) {
+    this(type, label, name.toString().toLowerCase());
+  }
+
   InputWidget(String type, String label, String name) {
     this.type = type;
     this.label = label;
