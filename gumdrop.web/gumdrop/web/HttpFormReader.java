@@ -18,6 +18,10 @@ public class HttpFormReader<T> implements FormReader<T> {
     this.builder = new Builder<>(constructor);
   }
 
+  protected void addSetter(Enum<?> e, BiConsumer<T, String> setter) {
+    addSetter(e.toString().toLowerCase(), setter);
+  }
+
   public void addSetter(String key, BiConsumer<T, String> setter) {
     builder.addSetter(key, setter);
   }

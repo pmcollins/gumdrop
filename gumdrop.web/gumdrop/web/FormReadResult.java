@@ -14,7 +14,7 @@ public class FormReadResult<T> {
     validationFailures.add(failure);
   }
 
-  public T getT() {
+  public T getFormObject() {
     return t;
   }
 
