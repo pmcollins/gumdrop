@@ -1,5 +1,5 @@
 package gumdrop.web;
 
-abstract class Widget implements Buildable {
+public abstract class Widget implements Buildable {
 
 }

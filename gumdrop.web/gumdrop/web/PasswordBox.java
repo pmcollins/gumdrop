@@ -2,12 +2,12 @@ package gumdrop.web;
 
 public class PasswordBox extends InputWidget {
 
-  public PasswordBox(String label, Enum<?> name) {
-    this(label, name.toString().toLowerCase());
+  public PasswordBox(Enum<?> name, String label) {
+    this(name.toString().toLowerCase(), label);
   }
 
-  public PasswordBox(String label, String name) {
-    super("password", label, name);
+  public PasswordBox(String name, String label) {
+    super("password", name, label);
   }
 
 }
