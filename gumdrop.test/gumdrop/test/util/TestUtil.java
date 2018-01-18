@@ -2,56 +2,22 @@ package gumdrop.test.util;
 
 public class TestUtil {
 
-  public static void assertNotNull(Object o) {
-    print();
-    if (o == null) {
-      throw new FailedTestException("assertNotNull failed");
+  private TestUtil() { }
+
+  public static String randomString(int length) {
+    StringBuilder sb = new StringBuilder();
+    for (int i = 0; i < length; i++) {
+      sb.append((char) TestUtil.randomInt('a', 'z'));
     }
+    return sb.toString();
   }
 
-  public static void assertNull(Object o) {
-    print();
-    if (o != null) {
-      throw new FailedTestException("assertNull failed");
-    }
+  public static int randomInt(int min, int max) {
+    return randomInt(Math.random(), min, max);
   }
 
-  public static void assertTrue(boolean condition) {
-    print();
-    if (!condition) {
-      throw new FailedTestException("assertTrue condition not met");
-    }
-  }
-
-  public static void assertFalse(boolean condition) {
-    print();
-    if (condition) {
-      throw new FailedTestException("assertFalse condition not met");
-    }
-  }
-
-  public static void assertEquals(Object expected, Object actual) {
-    print();
-    if (!expected.equals(actual)) {
-      throw new FailedTestException("assertEquals expected [" + expected + "], got [" + actual + "]");
-    }
-  }
-
-  public static void assertThrows(Runnable r, Class klass) {
-    print();
-    Throwable caught = null;
-    try {
-      r.run();
-    } catch (Throwable e) {
-      caught = e;
-    }
-    if (caught == null || !caught.getClass().equals(klass)) {
-      throw new FailedTestException("assertThrows expected exception [" + klass + "], got [" + caught + "]");
-    }
-  }
-
-  private static void print() {
-    System.out.print(".");
+  private static int randomInt(double rand, int min, int max) {
+    return (int) Math.round(rand * (max - min)) + min;
   }
 
 }

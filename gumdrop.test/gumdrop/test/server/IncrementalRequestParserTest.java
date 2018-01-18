@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static gumdrop.test.util.TestUtil.assertEquals;
-import static gumdrop.test.util.TestUtil.assertFalse;
-import static gumdrop.test.util.TestUtil.assertTrue;
+import static gumdrop.test.util.Asserts.assertEquals;
+import static gumdrop.test.util.Asserts.assertFalse;
+import static gumdrop.test.util.Asserts.assertTrue;
 
 public class IncrementalRequestParserTest extends Test {
 

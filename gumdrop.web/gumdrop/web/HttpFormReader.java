@@ -48,8 +48,8 @@ public class HttpFormReader<T> implements FormReader<T> {
     int idx = pair.indexOf('=');
     String key = HtmlEscapist.unescape(pair.substring(0, idx));
     String value = HtmlEscapist.unescape(pair.substring(idx + 1, pair.length()));
-    Validator<String> validator = validators.get(key);
     instance.applyString(key, value);
+    Validator<String> validator = validators.get(key);
     return validator == null ? Optional.empty() : validator.validate(value);
   }
 

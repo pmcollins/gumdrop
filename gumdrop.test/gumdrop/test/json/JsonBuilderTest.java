@@ -5,11 +5,11 @@ import gumdrop.test.pojo.FullNamePerson;
 import gumdrop.test.pojo.Name;
 import gumdrop.test.pojo.Person;
 import gumdrop.test.util.Test;
-import gumdrop.test.util.TestUtil;
+import gumdrop.test.util.Asserts;
 
 import java.time.Instant;
 
-import static gumdrop.test.util.TestUtil.assertEquals;
+import static gumdrop.test.util.Asserts.assertEquals;
 
 class JsonBuilderTest extends Test {
 
@@ -30,9 +30,9 @@ class JsonBuilderTest extends Test {
     p.setName("lile");
     p.setAge(10);
     String json = personBuilder.toJson(p);
-    TestUtil.assertEquals("{\"name\":\"lile\",\"age\":10}", json);
+    Asserts.assertEquals("{\"name\":\"lile\",\"age\":10}", json);
     Person fromJson = personBuilder.fromJson(json);
-    TestUtil.assertEquals(p, fromJson);
+    Asserts.assertEquals(p, fromJson);
   }
 
   private void fullNamePerson() {
@@ -50,7 +50,7 @@ class JsonBuilderTest extends Test {
     p.setName(name);
     String json = personBuilder.toJson(p);
     FullNamePerson rebuilt = personBuilder.fromJson(json);
-    TestUtil.assertEquals(p, rebuilt);
+    Asserts.assertEquals(p, rebuilt);
   }
 
   private void integration() {

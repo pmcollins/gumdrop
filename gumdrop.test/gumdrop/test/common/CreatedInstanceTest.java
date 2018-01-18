@@ -7,15 +7,15 @@ import gumdrop.test.pojo.FullNamePerson;
 import gumdrop.test.pojo.Name;
 import gumdrop.test.pojo.Room;
 import gumdrop.test.util.Test;
-import gumdrop.test.util.TestUtil;
+import gumdrop.test.util.Asserts;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static gumdrop.test.util.TestUtil.assertEquals;
-import static gumdrop.test.util.TestUtil.assertNotNull;
+import static gumdrop.test.util.Asserts.assertEquals;
+import static gumdrop.test.util.Asserts.assertNotNull;
 
 class CreatedInstanceTest extends Test {
 
@@ -54,7 +54,7 @@ class CreatedInstanceTest extends Test {
     InstanceBuilder<?> y3Instance = y2Instance.constructAndSet("y");
     assertNotNull(y3Instance);
     // TODO better exception
-    TestUtil.assertThrows(() -> y3Instance.constructAndSet("y"), NullPointerException.class);
+    Asserts.assertThrows(() -> y3Instance.constructAndSet("y"), NullPointerException.class);
   }
 
   private void apply() {

@@ -8,8 +8,8 @@ import gumdrop.web.HttpFormReader;
 
 import java.util.List;
 
-import static gumdrop.test.util.TestUtil.assertEquals;
-import static gumdrop.test.util.TestUtil.assertTrue;
+import static gumdrop.test.util.Asserts.assertEquals;
+import static gumdrop.test.util.Asserts.assertTrue;
 
 public class HttpFormReaderTest extends Test {
 

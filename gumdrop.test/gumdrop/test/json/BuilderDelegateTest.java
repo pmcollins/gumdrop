@@ -7,7 +7,7 @@ import gumdrop.test.pojo.FullNamePerson;
 import gumdrop.test.pojo.Name;
 import gumdrop.test.pojo.Room;
 import gumdrop.test.util.Test;
-import gumdrop.test.util.TestUtil;
+import gumdrop.test.util.Asserts;
 
 import java.util.List;
 
@@ -74,17 +74,17 @@ class BuilderDelegateTest extends Test {
   }
 
   private void checkRoom(Room room) {
-    TestUtil.assertEquals("703", room.getName());
+    Asserts.assertEquals("703", room.getName());
     List<FullNamePerson> people = room.getPeople();
-    TestUtil.assertEquals(2, people.size());
+    Asserts.assertEquals(2, people.size());
 
     FullNamePerson p1 = people.get(0);
-    TestUtil.assertEquals(42, p1.getAge());
-    TestUtil.assertEquals(new Name("foo", "bar"), p1.getName());
+    Asserts.assertEquals(42, p1.getAge());
+    Asserts.assertEquals(new Name("foo", "bar"), p1.getName());
 
     FullNamePerson p2 = people.get(1);
-    TestUtil.assertEquals(110, p2.getAge());
-    TestUtil.assertEquals(new Name("bilbo", "baggins"), p2.getName());
+    Asserts.assertEquals(110, p2.getAge());
+    Asserts.assertEquals(new Name("bilbo", "baggins"), p2.getName());
   }
 
 }

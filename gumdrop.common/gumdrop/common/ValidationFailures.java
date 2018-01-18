@@ -23,4 +23,11 @@ public class ValidationFailures {
     return list.isEmpty();
   }
 
+  @Override
+  public String toString() {
+    return "ValidationFailures{" +
+      "list=" + list +
+      '}';
+  }
+
 }

@@ -2,11 +2,11 @@ package gumdrop.test.common;
 
 import gumdrop.common.CharIterator;
 import gumdrop.test.util.Test;
-import gumdrop.test.util.TestUtil;
+import gumdrop.test.util.Asserts;
 
-import static gumdrop.test.util.TestUtil.assertEquals;
-import static gumdrop.test.util.TestUtil.assertFalse;
-import static gumdrop.test.util.TestUtil.assertTrue;
+import static gumdrop.test.util.Asserts.assertEquals;
+import static gumdrop.test.util.Asserts.assertFalse;
+import static gumdrop.test.util.Asserts.assertTrue;
 
 class CharIteratorTest extends Test {
 
@@ -34,7 +34,7 @@ class CharIteratorTest extends Test {
     assertEquals(CharIterator.DONE, it.next());
     assertEquals(CharIterator.DONE, it.current());
     assertTrue(it.done());
-    TestUtil.assertThrows(it::next, IllegalStateException.class);
+    Asserts.assertThrows(it::next, IllegalStateException.class);
     it.append("ghijk");
     assertEquals('g', it.current());
     it.increment();

@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
-import static gumdrop.test.util.TestUtil.assertEquals;
+import static gumdrop.test.util.Asserts.assertEquals;
 
 class GettersTest extends Test {
 
