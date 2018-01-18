@@ -164,4 +164,12 @@ public class TagLib {
     return tag("dd", children);
   }
 
+  public static Tag select() {
+    return tag("select");
+  }
+
+  public static Tag option(String text) {
+    return tag("option", text);
+  }
+
 }

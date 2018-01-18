@@ -50,36 +50,36 @@ public class HttpFormReaderTest extends Test {
     assertEquals("f", validationFailure.getValue());
   }
 
-}
+  private static class UserFormData {
 
-class UserFormData {
+    private String first;
+    private String last;
+    private String email;
 
-  private String first;
-  private String last;
-  private String email;
+    String getFirst() {
+      return first;
+    }
 
-  String getFirst() {
-    return first;
-  }
+    void setFirst(String first) {
+      this.first = first;
+    }
 
-  void setFirst(String first) {
-    this.first = first;
-  }
+    String getLast() {
+      return last;
+    }
 
-  String getLast() {
-    return last;
-  }
+    void setLast(String last) {
+      this.last = last;
+    }
 
-  void setLast(String last) {
-    this.last = last;
-  }
+    String getEmail() {
+      return email;
+    }
 
-  String getEmail() {
-    return email;
-  }
+    void setEmail(String email) {
+      this.email = email;
+    }
 
-  void setEmail(String email) {
-    this.email = email;
   }
 
 }
