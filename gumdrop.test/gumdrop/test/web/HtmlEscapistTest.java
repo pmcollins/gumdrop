@@ -3,7 +3,7 @@ package gumdrop.test.web;
 import gumdrop.test.util.Test;
 import gumdrop.web.HtmlEscapist;
 
-import static gumdrop.test.util.TestUtil.assertEquals;
+import static gumdrop.test.util.Asserts.assertEquals;
 
 public class HtmlEscapistTest extends Test {
 
