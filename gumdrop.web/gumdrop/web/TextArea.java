@@ -8,7 +8,11 @@ public class TextArea extends Widget {
   private final int rows;
   private final int cols;
 
-  public TextArea(String name, int rows, int cols) {
+  public TextArea(Enum<?> name, int rows, int cols) {
+    this(name.toString().toLowerCase(), rows, cols);
+  }
+
+  private TextArea(String name, int rows, int cols) {
     this.name = name;
     this.rows = rows;
     this.cols = cols;
