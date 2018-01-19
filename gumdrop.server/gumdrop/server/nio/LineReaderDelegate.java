@@ -4,6 +4,6 @@ public interface LineReaderDelegate {
 
   void line(String line);
 
-  void endOfDoc(String remainder);
+  void endOfChunk(String remainder);
 
 }

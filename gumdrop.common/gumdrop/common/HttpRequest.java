@@ -66,6 +66,7 @@ public class HttpRequest implements Request {
     return headers;
   }
 
+  @Override
   public String getAttr(String key) {
     return headers.get(key);
   }

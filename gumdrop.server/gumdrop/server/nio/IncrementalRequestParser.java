@@ -24,6 +24,7 @@ public class IncrementalRequestParser {
   }
 
   public void append(String str) {
+    System.out.println(str);
     if (it == null) {
       it = new CharIterator(str);
     } else {
@@ -35,7 +36,7 @@ public class IncrementalRequestParser {
     while (!it.done()) {
       readLine();
     }
-    delegate.endOfDoc(it.substring());
+    delegate.endOfChunk(it.substring());
   }
 
   public void readLine() {

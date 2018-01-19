@@ -17,14 +17,14 @@ public class RequestBuildingReaderDelegate implements LineReaderDelegate {
   }
 
   @Override
-  public void endOfDoc(String remainder) {
+  public void endOfChunk(String remainder) {
     if (request.getHttpMethod() == HttpMethod.POST) {
       int contentLength = Integer.parseInt(request.getAttr("Content-Length"));
       int remainderLength = remainder.length();
       if (remainderLength == contentLength) {
         request.setPostString(remainder);
       } else {
-        System.err.println("Content length mismatch: expecting [" + contentLength + "], got [" + remainderLength + "]. Waiting for more data.");
+        System.out.println("Content length mismatch: expecting [" + contentLength + "], got [" + remainderLength + "]. Waiting for more data.");
       }
     }
   }
