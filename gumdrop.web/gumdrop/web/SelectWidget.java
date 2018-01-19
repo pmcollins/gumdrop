@@ -11,7 +11,7 @@ public class SelectWidget extends Widget {
   private final String name;
   private final List<ValueTextPair> list = new ArrayList<>();
 
-  public SelectWidget(Enum<?> e) {
+  SelectWidget(Enum<?> e) {
     this(e.toString().toLowerCase());
   }
 
@@ -23,7 +23,7 @@ public class SelectWidget extends Widget {
     addOption(new ValueTextPair(value, text));
   }
 
-  public void addOption(ValueTextPair pair) {
+  private void addOption(ValueTextPair pair) {
     list.add(pair);
   }
 
@@ -33,10 +33,15 @@ public class SelectWidget extends Widget {
 
   @Override
   public void build(StringBuilder sb) {
+    getTag().build(sb);
+  }
+
+  Tag getTag() {
     Tag select = select().attr("name", name);
     for (ValueTextPair pair : list) {
       select.add(option(pair.getText()).attr("value", pair.getValue()));
     }
-    select.build(sb);
+    return select;
   }
+
 }

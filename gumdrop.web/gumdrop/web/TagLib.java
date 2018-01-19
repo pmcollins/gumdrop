@@ -172,7 +172,7 @@ public class TagLib {
     return tag("option", text);
   }
 
-  public static Tag link() {
+  public static Tag a() {
     return tag("link");
   }
 
