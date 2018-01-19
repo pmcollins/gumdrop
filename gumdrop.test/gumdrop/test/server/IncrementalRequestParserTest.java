@@ -140,7 +140,7 @@ public class IncrementalRequestParserTest extends Test {
 
   private void parseQueryString() {
     String q = "first=qqq&last=www&email=eee";
-    Map<String, String> map = RequestBuildingReaderDelegate.parseQueryString(q);
+    Map<String, String> map = HttpRequest.parseQueryString(q);
     assertEquals("qqq", map.get("first"));
     assertEquals("www", map.get("last"));
     assertEquals("eee", map.get("email"));

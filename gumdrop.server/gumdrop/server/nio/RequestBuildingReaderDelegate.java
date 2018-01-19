@@ -3,24 +3,9 @@ package gumdrop.server.nio;
 import gumdrop.common.HttpMethod;
 import gumdrop.common.HttpRequest;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class RequestBuildingReaderDelegate implements LineReaderDelegate {
 
   private HttpRequest request;
-
-  public static Map<String, String> parseQueryString(String q) {
-    Map<String, String> out = new HashMap<>();
-    String[] pairs = q.split("&");
-    for (String pair : pairs) {
-      int idx = pair.indexOf('=');
-      String key = pair.substring(0, idx);
-      String value = pair.substring(idx + 1, pair.length());
-      out.put(key, value);
-    }
-    return out;
-  }
 
   @Override
   public void line(String line) {
@@ -38,7 +23,6 @@ public class RequestBuildingReaderDelegate implements LineReaderDelegate {
       int remainderLength = remainder.length();
       if (remainderLength == contentLength) {
         request.setPostString(remainder);
-        request.setParameterMap(parseQueryString(remainder));
       } else {
         System.err.println("Content length mismatch: expecting [" + contentLength + "], got [" + remainderLength + "]. Waiting for more data.");
       }
