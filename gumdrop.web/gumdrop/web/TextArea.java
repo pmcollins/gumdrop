@@ -19,14 +19,14 @@ public class TextArea extends Widget {
   }
 
   @Override
-  public void build(StringBuilder sb) {
-    textarea().attr(
+  protected Buildable getRoot() {
+    return textarea().attr(
       "name", name
     ).attr(
       "rows", String.valueOf(rows)
     ).attr(
       "cols", String.valueOf(cols)
-    ).build(sb);
+    );
   }
 
 }

@@ -1,6 +1,6 @@
 package gumdrop.web;
 
-import static gumdrop.web.TagLib.*;
+import static gumdrop.web.TagLib.input;
 
 abstract class LabeledInputWidget extends Widget {
 
@@ -19,11 +19,11 @@ abstract class LabeledInputWidget extends Widget {
   }
 
   @Override
-  public void build(StringBuilder sb) {
-    new LabeledWidget(
+  protected Buildable getRoot() {
+    return new LabeledWidget(
       label,
       input().attr("type", type).attr("name", name)
-    ).build(sb);
+    );
   }
 
 }

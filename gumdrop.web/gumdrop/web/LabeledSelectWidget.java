@@ -10,8 +10,8 @@ public class LabeledSelectWidget extends SelectWidget {
   }
 
   @Override
-  public void build(StringBuilder sb) {
-    new LabeledWidget(label, getTag()).build(sb);
+  protected Buildable getRoot() {
+    return new LabeledWidget(label, super.getRoot());
   }
 
 }

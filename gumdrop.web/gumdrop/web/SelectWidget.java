@@ -32,8 +32,8 @@ public class SelectWidget extends Widget {
   }
 
   @Override
-  public void build(StringBuilder sb) {
-    getTag().build(sb);
+  protected Buildable getRoot() {
+    return getTag();
   }
 
   Tag getTag() {

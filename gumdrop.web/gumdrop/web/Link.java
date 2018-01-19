@@ -12,8 +12,8 @@ public class Link extends Widget {
   }
 
   @Override
-  public void build(StringBuilder sb) {
-    a(text).attr("href", url).build(sb);
+  protected Buildable getRoot() {
+    return a(text).attr("href", url);
   }
 
 }

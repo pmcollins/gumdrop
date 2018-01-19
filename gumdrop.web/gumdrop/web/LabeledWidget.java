@@ -15,13 +15,13 @@ class LabeledWidget extends Widget {
   }
 
   @Override
-  public void build(StringBuilder sb) {
-    div(
+  protected Buildable getRoot() {
+    return div(
       label(
         text(label),
         widget
       )
-    ).build(sb);
+    );
   }
 
 }
