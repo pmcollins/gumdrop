@@ -165,7 +165,7 @@ public class IncrementalRequestParserTest extends Test {
     }
 
     @Override
-    public void endOfDoc(String remainder) {
+    public void endOfChunk(String remainder) {
     }
 
     int getLineCount() {
