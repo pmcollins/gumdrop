@@ -1,6 +1,6 @@
 package gumdrop.web;
 
-public class EmailBox extends InputWidget {
+public class EmailBox extends LabeledInputWidget {
 
   public EmailBox(Enum<?> name, String label) {
     super("email", name, label);
@@ -8,10 +8,6 @@ public class EmailBox extends InputWidget {
 
   public EmailBox(String name, String label) {
     super("email", name, label);
-  }
-
-  public EmailBox() {
-    setType("email");
   }
 
 }

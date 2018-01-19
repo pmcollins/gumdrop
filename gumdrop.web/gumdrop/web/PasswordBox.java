@@ -1,6 +1,6 @@
 package gumdrop.web;
 
-public class PasswordBox extends InputWidget {
+public class PasswordBox extends LabeledInputWidget {
 
   public PasswordBox(Enum<?> name, String label) {
     this(name.toString().toLowerCase(), label);
