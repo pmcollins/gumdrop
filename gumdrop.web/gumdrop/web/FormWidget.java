@@ -20,11 +20,11 @@ public class FormWidget extends Widget {
   }
 
   @Override
-  public void build(StringBuilder sb) {
+  protected Buildable getRoot() {
     Tag form = form().attr("method", "post").attr("action", formAction);
     form.add(children);
     form.add(div(input().attr("type", "submit")).attr("value", submitText));
-    div(form).build(sb);
+    return div(form);
   }
 
 }
