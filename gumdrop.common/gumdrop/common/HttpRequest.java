@@ -21,6 +21,18 @@ public class HttpRequest implements Request {
   public HttpRequest() {
   }
 
+  public static Map<String, String> parseQueryString(String q) {
+    Map<String, String> out = new HashMap<>();
+    String[] pairs = q.split("&");
+    for (String pair : pairs) {
+      int idx = pair.indexOf('=');
+      String key = pair.substring(0, idx);
+      String value = pair.substring(idx + 1, pair.length());
+      out.put(key, value);
+    }
+    return out;
+  }
+
   public HttpMethod getHttpMethod() {
     return httpMethod;
   }
@@ -79,14 +91,7 @@ public class HttpRequest implements Request {
 
   public void setPostString(String postString) {
     this.postString = postString;
-  }
-
-  public void setParameterMap(Map<String, String> parameterMap) {
-    this.parameterMap = parameterMap;
-  }
-
-  public Map<String, String> getParameterMap() {
-    return parameterMap;
+    this.parameterMap = parseQueryString(postString);
   }
 
   public String getParameter(String key) {
