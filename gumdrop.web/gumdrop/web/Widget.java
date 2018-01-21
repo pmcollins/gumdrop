@@ -2,11 +2,11 @@ package gumdrop.web;
 
 public abstract class Widget implements Buildable {
 
-  protected abstract Buildable getRoot();
+  protected abstract Buildable getBuildable();
 
   @Override
   public final void build(StringBuilder sb) {
-    getRoot().build(sb);
+    getBuildable().build(sb);
   }
 
 }

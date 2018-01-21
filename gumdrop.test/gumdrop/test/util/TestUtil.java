@@ -7,7 +7,7 @@ public class TestUtil {
   public static String randomString(int length) {
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < length; i++) {
-      sb.append((char) TestUtil.randomInt('a', 'z'));
+      sb.append((char) TestUtil.randomInt(' ', '~'));
     }
     return sb.toString();
   }

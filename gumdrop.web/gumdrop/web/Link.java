@@ -12,7 +12,7 @@ public class Link extends Widget {
   }
 
   @Override
-  protected Buildable getRoot() {
+  protected Buildable getBuildable() {
     return a(text).attr("href", url);
   }
 

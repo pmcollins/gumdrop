@@ -32,7 +32,7 @@ public class SelectWidget extends Widget {
   }
 
   @Override
-  protected Buildable getRoot() {
+  protected Buildable getBuildable() {
     return getTag();
   }
 
