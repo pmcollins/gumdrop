@@ -2,7 +2,6 @@ package gumdrop.web;
 
 import static gumdrop.web.TagLib.div;
 import static gumdrop.web.TagLib.form;
-import static gumdrop.web.TagLib.input;
 
 public class FormWidget extends Widget {
 
@@ -20,10 +19,10 @@ public class FormWidget extends Widget {
   }
 
   @Override
-  protected Buildable getRoot() {
+  protected Buildable getBuildable() {
     Tag form = form().attr("method", "post").attr("action", formAction);
     form.add(children);
-    form.add(div(input().attr("type", "submit")).attr("value", submitText));
+    form.add(div(new SubmitButton(submitText)).attr("class", "button-panel"));
     return div(form);
   }
 
