@@ -14,9 +14,10 @@ public class Tag implements Buildable {
   private final String name;
   private final List<Buildable> children = new ArrayList<>();
   private final List<TagAttribute> tagAttributes = new ArrayList<>();
+  private final List<BareAttribute> bareAttributes = new ArrayList<>();
   private boolean nonAutoClosing;
 
-  public Tag(String name) {
+  Tag(String name) {
     this.name = name;
   }
 
@@ -43,13 +44,13 @@ public class Tag implements Buildable {
     return this;
   }
 
-  public Tag setNonAutoClosing() {
-    nonAutoClosing = true;
+  public Tag attr(String name) {
+    bareAttributes.add(new BareAttribute(name));
     return this;
   }
 
-  protected List<TagAttribute> getTagAttributes() {
-    return tagAttributes;
+  public void setNonAutoClosing() {
+    nonAutoClosing = true;
   }
 
   @Override
@@ -57,6 +58,9 @@ public class Tag implements Buildable {
     sb.append(LT).append(name);
     for (TagAttribute attr : tagAttributes) {
       attr.build(sb);
+    }
+    for (BareAttribute bareAttribute : bareAttributes) {
+      bareAttribute.build(sb);
     }
     if (children.isEmpty() && !nonAutoClosing) {
       sb.append(SLASH_GT);
