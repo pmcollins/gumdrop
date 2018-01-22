@@ -9,7 +9,7 @@ public class TagAttribute implements Buildable {
   private final Buildable k;
   private final Buildable v;
 
-  public TagAttribute(String key, String value) {
+  TagAttribute(String key, String value) {
     k = new Text(key);
     v = new Text(value);
   }
