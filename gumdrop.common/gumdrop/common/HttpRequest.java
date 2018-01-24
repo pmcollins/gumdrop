@@ -23,12 +23,14 @@ public class HttpRequest implements Request {
 
   public static Map<String, String> parseQueryString(String q) {
     Map<String, String> out = new HashMap<>();
-    String[] pairs = q.split("&");
-    for (String pair : pairs) {
-      int idx = pair.indexOf('=');
-      String key = pair.substring(0, idx);
-      String value = pair.substring(idx + 1, pair.length());
-      out.put(key, value);
+    if (!q.isEmpty()) {
+      String[] pairs = q.split("&");
+      for (String pair : pairs) {
+        int idx = pair.indexOf('=');
+        String key = pair.substring(0, idx);
+        String value = pair.substring(idx + 1, pair.length());
+        out.put(key, value);
+      }
     }
     return out;
   }

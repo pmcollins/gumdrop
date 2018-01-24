@@ -21,7 +21,9 @@ public class FormWidget extends Widget {
   @Override
   protected Buildable getBuildable() {
     Tag form = form().attr("method", "post").attr("action", formAction);
-    form.add(children);
+    if (children != null) {
+      form.add(children);
+    }
     form.add(div(new SubmitButton(submitText)).attr("class", "button-panel"));
     return div(form);
   }
