@@ -2,22 +2,20 @@ package gumdrop.web;
 
 import static gumdrop.web.TagLib.textarea;
 
-public class LabeldTextArea extends Widget {
+public class LabeledTextArea extends Widget {
 
   private final String name;
   private final String label;
   private final int rows;
-  private final int cols;
 
-  public LabeldTextArea(Enum<?> name, String label, int rows, int cols) {
-    this(name.toString().toLowerCase(), label, rows, cols);
+  public LabeledTextArea(Enum<?> name, String label, int rows) {
+    this(name.toString().toLowerCase(), label, rows);
   }
 
-  private LabeldTextArea(String name, String label, int rows, int cols) {
+  private LabeledTextArea(String name, String label, int rows) {
     this.name = name;
     this.label = label;
     this.rows = rows;
-    this.cols = cols;
   }
 
   @Override
@@ -26,8 +24,6 @@ public class LabeldTextArea extends Widget {
       "name", name
     ).attr(
       "rows", String.valueOf(rows)
-    ).attr(
-      "cols", String.valueOf(cols)
     );
     return new LabeledWidget(label, textArea);
   }
