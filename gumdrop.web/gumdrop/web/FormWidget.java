@@ -6,12 +6,17 @@ import static gumdrop.web.TagLib.form;
 public class FormWidget extends Widget {
 
   private final String formAction;
-  private final String submitText;
   private Buildable[] children;
+  private ButtonPanel buttonPanel;
 
   public FormWidget(String formAction, String submitText) {
     this.formAction = formAction;
-    this.submitText = submitText;
+    buttonPanel = new ButtonPanel(submitText);
+  }
+
+  public FormWidget(String formAction, ButtonPanel buttonPanel) {
+    this.formAction = formAction;
+    this.buttonPanel = buttonPanel;
   }
 
   public void setChildren(Buildable... children) {
@@ -24,8 +29,9 @@ public class FormWidget extends Widget {
     if (children != null) {
       form.add(children);
     }
-    form.add(div(new SubmitButton(submitText)).attr("class", "button-panel"));
+    form.add(buttonPanel);
     return div(form);
   }
 
 }
+
