@@ -17,6 +17,7 @@ public class HtmlEscapistTest extends Test {
     parseHexEntity();
     parseString();
     parseMultiEntityString();
+    parseSpaces();
   }
 
   private void parseNumericEntity() {
@@ -39,6 +40,11 @@ public class HtmlEscapistTest extends Test {
   private void parseMultiEntityString() {
     String parsed = HtmlEscapist.unescape("aaa%3dbbb%26ccc%3Dddd");
     assertEquals("aaa=bbb&ccc=ddd", parsed);
+  }
+
+  private void parseSpaces() {
+    String unescaped = HtmlEscapist.unescape("aaa+bbb");
+    assertEquals("aaa bbb", unescaped);
   }
 
 }
