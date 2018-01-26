@@ -8,7 +8,9 @@ public class HtmlEscapist {
   private static final Pattern PATTERN = Pattern.compile("%([0-9a-fA-F][0-9a-fA-F])");
 
   public static String unescape(String queryStr) {
-    Matcher matcher = PATTERN.matcher(queryStr);
+    // consolidate?
+    String replaced = queryStr.replaceAll("\\+", " ");
+    Matcher matcher = PATTERN.matcher(replaced);
     StringBuilder sb = new StringBuilder();
     while (matcher.find()) {
       matcher.appendReplacement(sb, parseEntity(matcher.group()));
