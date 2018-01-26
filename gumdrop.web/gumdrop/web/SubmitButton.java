@@ -4,15 +4,21 @@ import static gumdrop.web.TagLib.input;
 
 class SubmitButton extends Widget {
 
-  private final String buttonText;
+  private final Tag button;
 
   SubmitButton(String buttonText) {
-    this.buttonText = buttonText;
+    button = input().attr("type", "submit").attr("value", buttonText);
   }
 
   @Override
   protected Buildable getBuildable() {
-    return input().attr("type", "submit").attr("value", buttonText);
+    return button;
+  }
+
+  public void disable(boolean disable) {
+    if (disable) {
+      button.attr("disabled").attr("class", "disabled");
+    }
   }
 
 }

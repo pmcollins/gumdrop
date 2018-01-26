@@ -8,10 +8,10 @@ import static gumdrop.web.TagLib.div;
 public class ButtonPanel extends Widget {
 
   private List<Buildable> list = new ArrayList<>();
-  private String submitText;
+  private SubmitButton submitButton;
 
   public ButtonPanel(String submitText) {
-    this.submitText = submitText;
+    submitButton = new SubmitButton(submitText);
   }
 
   public void addElement(Buildable buildable) {
@@ -24,8 +24,12 @@ public class ButtonPanel extends Widget {
     for (Buildable buildable : list) {
       out.add(buildable);
     }
-    out.add(new SubmitButton(submitText));
+    out.add(submitButton);
     return out;
+  }
+
+  public void disableSubmit(boolean disable) {
+    submitButton.disable(disable);
   }
 
 }
