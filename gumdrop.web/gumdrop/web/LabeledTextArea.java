@@ -7,6 +7,7 @@ public class LabeledTextArea extends Widget {
   private final String name;
   private final String label;
   private final int rows;
+  private String value;
 
   public LabeledTextArea(Enum<?> name, String label, int rows) {
     this(name.toString().toLowerCase(), label, rows);
@@ -25,7 +26,15 @@ public class LabeledTextArea extends Widget {
     ).attr(
       "rows", String.valueOf(rows)
     );
+    if (value != null) {
+      // TODO escape
+      textArea.add(value);
+    }
     return new LabeledWidget(label, textArea);
+  }
+
+  public void setValue(String value) {
+    this.value = value;
   }
 
 }

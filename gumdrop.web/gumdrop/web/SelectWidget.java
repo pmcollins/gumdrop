@@ -10,6 +10,7 @@ public class SelectWidget extends Widget {
 
   private final String name;
   private final List<ValueTextPair> list = new ArrayList<>();
+  private String value;
 
   SelectWidget(Enum<?> e) {
     this(e.toString().toLowerCase());
@@ -31,6 +32,10 @@ public class SelectWidget extends Widget {
     list.addAll(pairs);
   }
 
+  public void setValue(String value) {
+    this.value = value;
+  }
+
   @Override
   protected Buildable getBuildable() {
     return getTag();
@@ -39,7 +44,12 @@ public class SelectWidget extends Widget {
   Tag getTag() {
     Tag select = select().attr("name", name);
     for (ValueTextPair pair : list) {
-      select.add(option(pair.getText()).attr("value", pair.getValue()));
+      String pairValue = pair.getValue();
+      Tag option = option(pair.getText()).attr("value", pairValue);
+      if (pairValue.equals(value)) {
+        option.attr("selected");
+      }
+      select.add(option);
     }
     return select;
   }
