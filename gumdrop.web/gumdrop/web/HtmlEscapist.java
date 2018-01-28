@@ -9,8 +9,8 @@ public class HtmlEscapist {
 
   public static String unescape(String queryStr) {
     // consolidate?
-    String replaced = queryStr.replaceAll("\\+", " ");
-    Matcher matcher = PATTERN.matcher(replaced);
+    String withSpaces = queryStr.replaceAll("\\+", " ");
+    Matcher matcher = PATTERN.matcher(withSpaces);
     StringBuilder sb = new StringBuilder();
     while (matcher.find()) {
       matcher.appendReplacement(sb, parseEntity(matcher.group()));
