@@ -6,6 +6,10 @@ public class PathBuilder {
 
   public PathBuilder(String path) {
     parts = path.split("#");
+    String lastPart = parts[parts.length - 1];
+    if (lastPart.endsWith("*")) {
+      parts[parts.length - 1] = lastPart.substring(0, lastPart.length() - 1);
+    }
   }
 
   public String build(Object... args) {
