@@ -176,4 +176,28 @@ public class TagLib {
     return tag("link");
   }
 
+  public static Tag p(String text) {
+    return tag("p", text);
+  }
+
+  public static Tag p(Buildable... buildables) {
+    return tag("p", buildables);
+  }
+
+  public static Tag ol(Buildable... buildables) {
+    return tag("ol", buildables);
+  }
+
+  public static Tag li(Buildable... buildables) {
+    return tag("li", buildables);
+  }
+
+  public static Tag li(String text) {
+    return tag("li", text);
+  }
+
+  public static Tag ul(Buildable... buildables) {
+    return tag("ul", buildables);
+  }
+
 }
