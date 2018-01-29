@@ -200,4 +200,8 @@ public class TagLib {
     return tag("ul", buildables);
   }
 
+  public static Tag blockquote(String text) {
+    return tag("blockquote", text);
+  }
+
 }
