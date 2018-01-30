@@ -2,7 +2,7 @@ package gumdrop.test.server;
 
 import gumdrop.common.HttpMethod;
 import gumdrop.common.HttpRequest;
-import gumdrop.server.nio.IncrementalRequestParser;
+import gumdrop.server.nio.LineOrientedRequestParser;
 import gumdrop.server.nio.LineReaderDelegate;
 import gumdrop.server.nio.RequestBuildingReaderDelegate;
 import gumdrop.test.util.Test;
@@ -16,7 +16,7 @@ import static gumdrop.test.util.Asserts.assertEquals;
 import static gumdrop.test.util.Asserts.assertFalse;
 import static gumdrop.test.util.Asserts.assertTrue;
 
-public class IncrementalRequestParserTest extends Test {
+public class LineOrientedRequestParserTest extends Test {
 
   private static final String GET_STR =
     "GET / HTTP/1.1\r\n" +
@@ -82,7 +82,7 @@ public class IncrementalRequestParserTest extends Test {
     "------WebKitFormBoundarynwAxopXoFg6rtPYX--\r\n";
   
   public static void main(String[] args) {
-    new IncrementalRequestParserTest().run();
+    new LineOrientedRequestParserTest().run();
   }
 
   @Override
@@ -102,7 +102,7 @@ public class IncrementalRequestParserTest extends Test {
 
   private void readLine() {
     FakeLineReaderDelegate delegate = new FakeLineReaderDelegate();
-    IncrementalRequestParser parser = new IncrementalRequestParser(delegate);
+    LineOrientedRequestParser parser = new LineOrientedRequestParser(delegate);
     parser.append(GET_STR);
     parser.readLine();
     assertEquals("GET / HTTP/1.1", delegate.getLine(0));
@@ -110,17 +110,17 @@ public class IncrementalRequestParserTest extends Test {
 
   private void readLines() {
     FakeLineReaderDelegate delegate = new FakeLineReaderDelegate();
-    IncrementalRequestParser parser = new IncrementalRequestParser(delegate);
+    LineOrientedRequestParser parser = new LineOrientedRequestParser(delegate);
     parser.append(GET_STR);
-    parser.readLines();
+    parser.read();
     assertEquals(4, delegate.getLineCount());
   }
 
   private void twoStageParse() {
     FakeLineReaderDelegate oneStageDelegate = new FakeLineReaderDelegate();
-    IncrementalRequestParser oneStageParser = new IncrementalRequestParser(oneStageDelegate);
+    LineOrientedRequestParser oneStageParser = new LineOrientedRequestParser(oneStageDelegate);
     oneStageParser.append(GET_STR);
-    oneStageParser.readLines();
+    oneStageParser.read();
     assertEquals(4, oneStageDelegate.getLineCount());
     for (int i = 0; i < GET_STR.length(); i++) {
       twoStageParse(i, oneStageDelegate.getLines());
@@ -132,19 +132,19 @@ public class IncrementalRequestParserTest extends Test {
     String firstChunk = GET_STR.substring(0, splitPt);
     String secondChunk = GET_STR.substring(splitPt);
     assertEquals(GET_STR, firstChunk + secondChunk);
-    IncrementalRequestParser twoStageParser = new IncrementalRequestParser(delegate);
+    LineOrientedRequestParser twoStageParser = new LineOrientedRequestParser(delegate);
     twoStageParser.append(firstChunk);
-    twoStageParser.readLines();
+    twoStageParser.read();
     twoStageParser.append(secondChunk);
-    twoStageParser.readLines();
+    twoStageParser.read();
     assertEquals(lines, delegate.getLines());
   }
 
   private void buildGetRequest() {
     RequestBuildingReaderDelegate delegate = new RequestBuildingReaderDelegate();
-    IncrementalRequestParser parser = new IncrementalRequestParser(delegate);
+    LineOrientedRequestParser parser = new LineOrientedRequestParser(delegate);
     parser.append(GET_STR);
-    parser.readLines();
+    parser.read();
     HttpRequest request = delegate.getRequest();
     assertEquals(HttpMethod.GET, request.getHttpMethod());
     assertEquals("/", request.getPath());
@@ -161,21 +161,21 @@ public class IncrementalRequestParserTest extends Test {
     int splitPt = 16;
     String firstChunk = GET_STR.substring(0, splitPt);
     String secondChunk = GET_STR.substring(splitPt);
-    IncrementalRequestParser parser = new IncrementalRequestParser(delegate);
+    LineOrientedRequestParser parser = new LineOrientedRequestParser(delegate);
     parser.append(firstChunk);
-    parser.readLines();
+    parser.read();
     HttpRequest request = delegate.getRequest();
     assertFalse(request.isCompleted());
     parser.append(secondChunk);
-    parser.readLines();
+    parser.read();
     assertTrue(request.isCompleted());
   }
 
   private void buildPostRequest() {
     RequestBuildingReaderDelegate delegate = new RequestBuildingReaderDelegate();
-    IncrementalRequestParser parser = new IncrementalRequestParser(delegate);
+    LineOrientedRequestParser parser = new LineOrientedRequestParser(delegate);
     parser.append(POST_STR);
-    parser.readLines();
+    parser.read();
     HttpRequest request = delegate.getRequest();
     assertEquals(HttpMethod.POST, request.getHttpMethod());
     String postString = request.getPostString();
@@ -186,11 +186,11 @@ public class IncrementalRequestParserTest extends Test {
 
   private void twoPartPost() {
     RequestBuildingReaderDelegate delegate = new RequestBuildingReaderDelegate();
-    IncrementalRequestParser parser = new IncrementalRequestParser(delegate);
+    LineOrientedRequestParser parser = new LineOrientedRequestParser(delegate);
     parser.append(PARTIAL_POST_A);
-    parser.readLines();
+    parser.read();
     parser.append(PARTIAL_POST_B);
-    parser.readLines();
+    parser.read();
     HttpRequest request = delegate.getRequest();
     assertEquals(HttpMethod.POST, request.getHttpMethod());
     String postString = request.getPostString();
@@ -210,15 +210,15 @@ public class IncrementalRequestParserTest extends Test {
     ByteBuffer bb = ByteBuffer.allocate(1000);
     bb.put(s.getBytes());
     bb.flip();
-    String string = IncrementalRequestParser.bbToString(bb);
+    String string = LineOrientedRequestParser.bbToString(bb);
     assertEquals(s, string);
   }
 
   private void upload() {
     RequestBuildingReaderDelegate delegate = new RequestBuildingReaderDelegate();
-    IncrementalRequestParser parser = new IncrementalRequestParser(delegate);
+    LineOrientedRequestParser parser = new LineOrientedRequestParser(delegate);
     parser.append(UPLOAD_STR);
-    parser.readLines();
+    parser.read();
   }
 
   private static class FakeLineReaderDelegate implements LineReaderDelegate {

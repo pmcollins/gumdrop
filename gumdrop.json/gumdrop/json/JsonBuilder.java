@@ -40,10 +40,7 @@ public class JsonBuilder<T> {
   }
 
   public T fromJson(String json) {
-    BuilderDelegate<T> delegate = new BuilderDelegate<>(builder);
-    JsonReader jsonReader = new JsonReader(json, delegate);
-    jsonReader.readValue();
-    return delegate.getObject();
+    return JsonReader.fromJson(json, builder);
   }
 
 }

@@ -4,7 +4,7 @@ import gumdrop.common.CharIterator;
 
 import java.nio.ByteBuffer;
 
-public class IncrementalRequestParser {
+public class LineOrientedRequestParser {
 
   public static String bbToString(ByteBuffer bb) {
     byte[] bytes = new byte[bb.limit()];
@@ -15,7 +15,7 @@ public class IncrementalRequestParser {
   private final LineReaderDelegate delegate;
   private CharIterator it;
 
-  public IncrementalRequestParser(LineReaderDelegate delegate) {
+  public LineOrientedRequestParser(LineReaderDelegate delegate) {
     this.delegate = delegate;
   }
 
@@ -32,7 +32,7 @@ public class IncrementalRequestParser {
     }
   }
 
-  public void readLines() {
+  public void read() {
     while (!it.done()) {
       readLine();
     }
