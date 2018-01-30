@@ -23,7 +23,8 @@ public class IncrementalRequestParserTest extends Test {
     "Host: localhost:8080\r\n" +
     "User-Agent: Mozilla\r\n\r\n";
 
-  private static final String POST_STR = "POST /users/create HTTP/1.1\r\n" +
+  private static final String POST_STR =
+    "POST /users/create HTTP/1.1\r\n" +
     "Host: localhost:8080\r\n" +
     "Content-Type: application/x-www-form-urlencoded\r\n" +
     "Origin: http://localhost:8080\r\n" +
@@ -38,20 +39,65 @@ public class IncrementalRequestParserTest extends Test {
     "\r\n" +
     "first=qqq&last=www&email=eee";
 
+  private static final String PARTIAL_POST_A =
+    "POST /users/create HTTP/1.1\r\n" +
+    "Host: localhost:8080\r\n" +
+    "Content-Type: application/x-www-form-urlencoded\r\n" +
+    "Origin: http://localhost:8080\r\n" +
+    "Accept-Encoding: gzip, deflate\r\n" +
+    "Connection: keep-alive\r\n" +
+    "Upgrade-Insecure-Requests: 1\r\n" +
+    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\n" +
+    "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/604.4.7 (KHTML, like Gecko) Version/11.0.2 Safari/604.4.7\r\n" +
+    "Referer: http://localhost:8080/users/form\r\n" +
+    "Content-Length: 28\r\n" +
+    "Accept-Language: en-us\r\n" +
+    "\r\n";
+
+  private static final String PARTIAL_POST_B = "first=qqq&last=www&email=eee";
+
+  private static final String UPLOAD_STR =
+    "POST /prompts/upload HTTP/1.1\r\n" +
+    "Host: localhost:8080\r\n" +
+    "Connection: keep-alive\r\n" +
+    "Content-Length: 189\r\n" +
+    "Pragma: no-cache\r\n" +
+    "Cache-Control: no-cache\r\n" +
+    "Origin: http://localhost:8080\r\n" +
+    "Upgrade-Insecure-Requests: 1\r\n" +
+    "Content-Type: multipart/form-data; boundary=----WebKitFormBoundarynwAxopXoFg6rtPYX\r\n" +
+    "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36\r\n" +
+    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8\r\n" +
+    "Referer: http://localhost:8080/prompts/3\r\n" +
+    "Accept-Encoding: gzip, deflate, br\r\n" +
+    "Accept-Language: en-US,en;q=0.9,es;q=0.8,pt;q=0.7\r\n" +
+    "Cookie: s=89fd9aff-c2b0-4475-bc99-2a2a364698e0\r\n" +
+    "\r\n" +
+    "------WebKitFormBoundarynwAxopXoFg6rtPYX\r\n" +
+    "Content-Disposition: form-data; name=\"foo\"; filename=\"hello.txt\"\r\n" +
+    "Content-Type: text/plain\r\n" +
+    "\r\n" +
+    "hello!\r\n" +
+    "\r\n" +
+    "------WebKitFormBoundarynwAxopXoFg6rtPYX--\r\n";
+  
   public static void main(String[] args) {
     new IncrementalRequestParserTest().run();
   }
 
   @Override
   public void run() {
-    readLine();
-    readLines();
-    twoStageParse();
-    buildGetRequest();
-    buildIncrementalGetRequest();
-    buildPostRequest();
-    parseQueryString();
-    bbToString();
+//    readLine();
+//    readLines();
+//    twoStageParse();
+//    buildGetRequest();
+//    buildIncrementalGetRequest();
+//    buildPostRequest();
+//    twoPartPost();
+//    parseQueryString();
+//    bbToString();
+
+    upload();
   }
 
   private void readLine() {
@@ -138,6 +184,19 @@ public class IncrementalRequestParserTest extends Test {
     assertTrue(request.isCompleted());
   }
 
+  private void twoPartPost() {
+    RequestBuildingReaderDelegate delegate = new RequestBuildingReaderDelegate();
+    IncrementalRequestParser parser = new IncrementalRequestParser(delegate);
+    parser.append(PARTIAL_POST_A);
+    parser.readLines();
+    parser.append(PARTIAL_POST_B);
+    parser.readLines();
+    HttpRequest request = delegate.getRequest();
+    assertEquals(HttpMethod.POST, request.getHttpMethod());
+    String postString = request.getPostString();
+    assertEquals("first=qqq&last=www&email=eee", postString);
+  }
+
   private void parseQueryString() {
     String q = "first=qqq&last=www&email=eee";
     Map<String, String> map = HttpRequest.parseQueryString(q);
@@ -153,6 +212,13 @@ public class IncrementalRequestParserTest extends Test {
     bb.flip();
     String string = IncrementalRequestParser.bbToString(bb);
     assertEquals(s, string);
+  }
+
+  private void upload() {
+    RequestBuildingReaderDelegate delegate = new RequestBuildingReaderDelegate();
+    IncrementalRequestParser parser = new IncrementalRequestParser(delegate);
+    parser.append(UPLOAD_STR);
+    parser.readLines();
   }
 
   private static class FakeLineReaderDelegate implements LineReaderDelegate {

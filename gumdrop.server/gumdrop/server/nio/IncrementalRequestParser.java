@@ -6,17 +6,17 @@ import java.nio.ByteBuffer;
 
 public class IncrementalRequestParser {
 
+  public static String bbToString(ByteBuffer bb) {
+    byte[] bytes = new byte[bb.limit()];
+    bb.get(bytes);
+    return new String(bytes);
+  }
+
   private final LineReaderDelegate delegate;
   private CharIterator it;
 
   public IncrementalRequestParser(LineReaderDelegate delegate) {
     this.delegate = delegate;
-  }
-
-  public static String bbToString(ByteBuffer bb) {
-    byte[] bytes = new byte[bb.limit()];
-    bb.get(bytes);
-    return new String(bytes);
   }
 
   void append(ByteBuffer bb) {

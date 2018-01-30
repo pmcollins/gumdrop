@@ -94,7 +94,10 @@ public class HttpRequest implements Request {
 
   public void setPostString(String postString) {
     this.postString = postString;
-    this.parameterMap = parseQueryString(postString);
+  }
+
+  public void writeParameterMap() {
+    this.parameterMap = parseQueryString(this.postString);
   }
 
   public String getParameter(String key) {
