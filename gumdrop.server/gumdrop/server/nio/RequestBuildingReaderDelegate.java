@@ -64,4 +64,8 @@ public class RequestBuildingReaderDelegate implements LineReaderDelegate {
     return request;
   }
 
+  public boolean isCompleted() {
+    return request.isCompleted();
+  }
+
 }
