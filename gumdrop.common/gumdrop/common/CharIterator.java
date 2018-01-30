@@ -38,6 +38,10 @@ public class CharIterator {
     return sb.substring(mark, Math.max(mark, i + offset));
   }
 
+  public String remaining() {
+    return sb.substring(i, sb.length());
+  }
+
   public void increment() {
     if (i < sb.length()) {
       ++i;

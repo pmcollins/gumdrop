@@ -50,44 +50,44 @@ class JsonReaderTest extends Test {
   }
 
   private void readQuotedString() {
-    FakeJsonDelegate listener = new FakeJsonDelegate();
-    JsonReader reader = new JsonReader("\"aaa\":42", listener);
+    FakeJsonDelegate delegate = new FakeJsonDelegate();
+    JsonReader reader = new JsonReader("\"aaa\":42", delegate);
     reader.readQuotedString();
-    Asserts.assertEquals(List.of("aaa"), listener.getQuotedStrings());
+    Asserts.assertEquals(List.of("aaa"), delegate.getQuotedStrings());
     Asserts.assertEquals(':', reader.getCurrentCharacter());
   }
 
   private void readBareword() {
-    FakeJsonDelegate listener = new FakeJsonDelegate();
-    JsonReader reader = new JsonReader("42", listener);
+    FakeJsonDelegate delegate = new FakeJsonDelegate();
+    JsonReader reader = new JsonReader("42", delegate);
     reader.readBareword();
-    Asserts.assertEquals(List.of("42"), listener.getBarewords());
+    Asserts.assertEquals(List.of("42"), delegate.getBarewords());
   }
 
   private void readKVPair() {
-    FakeJsonDelegate listener = new FakeJsonDelegate();
-    JsonReader reader = new JsonReader("\"aaa\":42", listener);
+    FakeJsonDelegate delegate = new FakeJsonDelegate();
+    JsonReader reader = new JsonReader("\"aaa\":42", delegate);
     reader.readKVPair();
-    Asserts.assertEquals(List.of("aaa"), listener.getQuotedStrings());
-    Asserts.assertEquals(List.of("42"), listener.getBarewords());
+    Asserts.assertEquals(List.of("aaa"), delegate.getQuotedStrings());
+    Asserts.assertEquals(List.of("42"), delegate.getBarewords());
   }
 
   private void readObject() {
-    FakeJsonDelegate listener = new FakeJsonDelegate();
-    JsonReader reader = new JsonReader("{\"aaa\":42}", listener);
+    FakeJsonDelegate delegate = new FakeJsonDelegate();
+    JsonReader reader = new JsonReader("{\"aaa\":42}", delegate);
     reader.readObject();
-    Asserts.assertEquals(1, listener.getObjectStartCount());
-    Asserts.assertEquals(List.of("aaa"), listener.getQuotedStrings());
-    Asserts.assertEquals(List.of("42"), listener.getBarewords());
-    Asserts.assertEquals(1, listener.getObjectEndCount());
+    Asserts.assertEquals(1, delegate.getObjectStartCount());
+    Asserts.assertEquals(List.of("aaa"), delegate.getQuotedStrings());
+    Asserts.assertEquals(List.of("42"), delegate.getBarewords());
+    Asserts.assertEquals(1, delegate.getObjectEndCount());
   }
 
   private void readDoubleKVPair() {
-    FakeJsonDelegate listener = new FakeJsonDelegate();
-    JsonReader reader = new JsonReader("\"aaa\":42,\"bbb\":99", listener);
+    FakeJsonDelegate delegate = new FakeJsonDelegate();
+    JsonReader reader = new JsonReader("\"aaa\":42,\"bbb\":99", delegate);
     reader.readKVPairs();
-    Asserts.assertEquals(List.of("aaa", "bbb"), listener.getQuotedStrings());
-    Asserts.assertEquals(List.of("42", "99"), listener.getBarewords());
+    Asserts.assertEquals(List.of("aaa", "bbb"), delegate.getQuotedStrings());
+    Asserts.assertEquals(List.of("42", "99"), delegate.getBarewords());
   }
 
   private void readMultiKVPair() {
@@ -96,97 +96,97 @@ class JsonReaderTest extends Test {
       if (i > 0) sb.append(',');
       sb.append('"').append((char) ('a' + i)).append('"').append(':').append(i);
     }
-    FakeJsonDelegate listener = new FakeJsonDelegate();
-    JsonReader reader = new JsonReader(sb.toString(), listener);
+    FakeJsonDelegate delegate = new FakeJsonDelegate();
+    JsonReader reader = new JsonReader(sb.toString(), delegate);
     reader.readKVPairs();
-    Asserts.assertTrue(listener.containsKey("a"));
-    Asserts.assertTrue(listener.containsKey("z"));
-    Asserts.assertTrue(listener.containsBareword("0"));
-    Asserts.assertTrue(listener.containsBareword("25"));
+    Asserts.assertTrue(delegate.containsKey("a"));
+    Asserts.assertTrue(delegate.containsKey("z"));
+    Asserts.assertTrue(delegate.containsBareword("0"));
+    Asserts.assertTrue(delegate.containsBareword("25"));
   }
 
   private void readDoubleKVObject() {
-    FakeJsonDelegate listener = new FakeJsonDelegate();
-    JsonReader reader = new JsonReader("{\"aaa\":42,\"bbb\":99}", listener);
+    FakeJsonDelegate delegate = new FakeJsonDelegate();
+    JsonReader reader = new JsonReader("{\"aaa\":42,\"bbb\":99}", delegate);
     reader.readObject();
-    Asserts.assertEquals(List.of("aaa", "bbb"), listener.getQuotedStrings());
-    Asserts.assertEquals(List.of("42", "99"), listener.getBarewords());
+    Asserts.assertEquals(List.of("aaa", "bbb"), delegate.getQuotedStrings());
+    Asserts.assertEquals(List.of("42", "99"), delegate.getBarewords());
   }
 
   private void readKVPairStringValue() {
-    FakeJsonDelegate listener = new FakeJsonDelegate();
-    JsonReader reader = new JsonReader("\"foo\":\"bar\"", listener);
+    FakeJsonDelegate delegate = new FakeJsonDelegate();
+    JsonReader reader = new JsonReader("\"foo\":\"bar\"", delegate);
     reader.readKVPair();
-    Asserts.assertEquals(List.of("foo", "bar"), listener.getQuotedStrings());
+    Asserts.assertEquals(List.of("foo", "bar"), delegate.getQuotedStrings());
   }
 
   private void readKVPairObjectValue() {
-    FakeJsonDelegate listener = new FakeJsonDelegate();
-    JsonReader reader = new JsonReader("\"foo\":{\"bar\":42}", listener);
+    FakeJsonDelegate delegate = new FakeJsonDelegate();
+    JsonReader reader = new JsonReader("\"foo\":{\"bar\":42}", delegate);
     reader.readKVPair();
-    Asserts.assertEquals(List.of("foo", "bar"), listener.getQuotedStrings());
-    Asserts.assertEquals(List.of("42"), listener.getBarewords());
-    Asserts.assertEquals(1, listener.getObjectStartCount());
-    Asserts.assertEquals(1, listener.getObjectEndCount());
+    Asserts.assertEquals(List.of("foo", "bar"), delegate.getQuotedStrings());
+    Asserts.assertEquals(List.of("42"), delegate.getBarewords());
+    Asserts.assertEquals(1, delegate.getObjectStartCount());
+    Asserts.assertEquals(1, delegate.getObjectEndCount());
   }
 
   private void readNestedObjects() {
-    FakeJsonDelegate listener = new FakeJsonDelegate();
-    JsonReader reader = new JsonReader("{\"foo\":{\"bar\":42}}", listener);
+    FakeJsonDelegate delegate = new FakeJsonDelegate();
+    JsonReader reader = new JsonReader("{\"foo\":{\"bar\":42}}", delegate);
     reader.readObject();
-    Asserts.assertEquals(List.of("foo", "bar"), listener.getQuotedStrings());
-    Asserts.assertEquals(List.of("42"), listener.getBarewords());
-    Asserts.assertEquals(2, listener.getObjectStartCount());
-    Asserts.assertEquals(2, listener.getObjectEndCount());
+    Asserts.assertEquals(List.of("foo", "bar"), delegate.getQuotedStrings());
+    Asserts.assertEquals(List.of("42"), delegate.getBarewords());
+    Asserts.assertEquals(2, delegate.getObjectStartCount());
+    Asserts.assertEquals(2, delegate.getObjectEndCount());
   }
 
   private void readCommaList() {
-    FakeJsonDelegate listener = new FakeJsonDelegate();
-    JsonReader reader = new JsonReader("1,2,3,4", listener);
+    FakeJsonDelegate delegate = new FakeJsonDelegate();
+    JsonReader reader = new JsonReader("1,2,3,4", delegate);
     reader.readCommaList();
-    Asserts.assertEquals(List.of("1", "2", "3", "4"), listener.getBarewords());
+    Asserts.assertEquals(List.of("1", "2", "3", "4"), delegate.getBarewords());
   }
 
   private void readQuotedCommaList() {
-    FakeJsonDelegate listener = new FakeJsonDelegate();
-    JsonReader reader = new JsonReader("\"a\",\"b\",\"c\"", listener);
+    FakeJsonDelegate delegate = new FakeJsonDelegate();
+    JsonReader reader = new JsonReader("\"a\",\"b\",\"c\"", delegate);
     reader.readCommaList();
-    Asserts.assertEquals(List.of("a", "b", "c"), listener.getQuotedStrings());
+    Asserts.assertEquals(List.of("a", "b", "c"), delegate.getQuotedStrings());
   }
 
   private void readArray() {
-    FakeJsonDelegate listener = new FakeJsonDelegate();
-    JsonReader reader = new JsonReader("[42]", listener);
+    FakeJsonDelegate delegate = new FakeJsonDelegate();
+    JsonReader reader = new JsonReader("[42]", delegate);
     reader.readArray();
-    Asserts.assertEquals(List.of("42"), listener.getBarewords());
+    Asserts.assertEquals(List.of("42"), delegate.getBarewords());
   }
 
   private void readMultiElementArray() {
-    FakeJsonDelegate listener = new FakeJsonDelegate();
-    JsonReader reader = new JsonReader("[42,99,\"111\"]", listener);
+    FakeJsonDelegate delegate = new FakeJsonDelegate();
+    JsonReader reader = new JsonReader("[42,99,\"111\"]", delegate);
     reader.readArray();
-    Asserts.assertEquals(List.of("42", "99"), listener.getBarewords());
-    Asserts.assertEquals(List.of("111"), listener.getQuotedStrings());
-    Asserts.assertEquals(1, listener.getArrayStartCount());
-    Asserts.assertEquals(1, listener.getArrayEndCount());
+    Asserts.assertEquals(List.of("42", "99"), delegate.getBarewords());
+    Asserts.assertEquals(List.of("111"), delegate.getQuotedStrings());
+    Asserts.assertEquals(1, delegate.getArrayStartCount());
+    Asserts.assertEquals(1, delegate.getArrayEndCount());
   }
 
   private void readNestedArrays() {
-    FakeJsonDelegate listener = new FakeJsonDelegate();
-    JsonReader reader = new JsonReader("[42,99,[111]]", listener);
+    FakeJsonDelegate delegate = new FakeJsonDelegate();
+    JsonReader reader = new JsonReader("[42,99,[111]]", delegate);
     reader.readArray();
-    Asserts.assertEquals(2, listener.getArrayStartCount());
-    Asserts.assertEquals(2, listener.getArrayEndCount());
-    Asserts.assertEquals(List.of("42", "99", "111"), listener.getBarewords());
+    Asserts.assertEquals(2, delegate.getArrayStartCount());
+    Asserts.assertEquals(2, delegate.getArrayEndCount());
+    Asserts.assertEquals(List.of("42", "99", "111"), delegate.getBarewords());
   }
 
   private void readMultiNestedArrays() {
-    FakeJsonDelegate listener = new FakeJsonDelegate();
-    JsonReader reader = new JsonReader("[[42,99],[111],66]", listener);
+    FakeJsonDelegate delegate = new FakeJsonDelegate();
+    JsonReader reader = new JsonReader("[[42,99],[111],66]", delegate);
     reader.readArray();
-    Asserts.assertEquals(3, listener.getArrayStartCount());
-    Asserts.assertEquals(3, listener.getArrayEndCount());
-    Asserts.assertEquals(List.of("42", "99", "111", "66"), listener.getBarewords());
+    Asserts.assertEquals(3, delegate.getArrayStartCount());
+    Asserts.assertEquals(3, delegate.getArrayEndCount());
+    Asserts.assertEquals(List.of("42", "99", "111", "66"), delegate.getBarewords());
   }
 
   private void readMixed() {
@@ -195,18 +195,19 @@ class JsonReaderTest extends Test {
   }
 
   private void readMixedWithSpaces() {
-    String json = " [ { \"foo\" : 42 , \"bar\" : [ \"baz\" ] }\n , [\t111 , 222 ] , 66 ] ";
+    String json = " [ { \"foo\" : 42 , \"bar\" : [ \"baz\" ] }\n" +
+      " , [\t111 , 222 ] , 66 ] ";
     checkMixed(json);
   }
 
   private static void checkMixed(String json) {
-    FakeJsonDelegate listener = new FakeJsonDelegate();
-    JsonReader reader = new JsonReader(json, listener);
+    FakeJsonDelegate delegate = new FakeJsonDelegate();
+    JsonReader reader = new JsonReader(json, delegate);
     reader.readValue();
-    Asserts.assertEquals(3, listener.getArrayStartCount());
-    Asserts.assertEquals(3, listener.getArrayEndCount());
-    Asserts.assertEquals(List.of("42", "111", "222", "66"), listener.getBarewords());
-    Asserts.assertEquals(List.of("foo", "bar", "baz"), listener.getQuotedStrings());
+    Asserts.assertEquals(3, delegate.getArrayStartCount());
+    Asserts.assertEquals(3, delegate.getArrayEndCount());
+    Asserts.assertEquals(List.of("42", "111", "222", "66"), delegate.getBarewords());
+    Asserts.assertEquals(List.of("foo", "bar", "baz"), delegate.getQuotedStrings());
   }
 
 }
