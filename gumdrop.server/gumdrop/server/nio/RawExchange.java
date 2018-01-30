@@ -20,7 +20,7 @@ class RawExchange {
   }
 
   boolean isDoneReading() {
-    return delegate.getRequest().isCompleted();
+    return delegate.isCompleted();
   }
 
   ByteBuffer getResponse() {
