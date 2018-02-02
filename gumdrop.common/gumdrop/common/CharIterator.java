@@ -34,6 +34,10 @@ public class CharIterator {
     return sb.substring(mark, i);
   }
 
+  /**
+   * With arg 0 behaves like substring(). Otherwise shifts the effective position (i) by the offset amount.
+   * If substring() returns "abc", passing in an offset of -1 will return "ab".
+   */
   public String substring(int offset) {
     return sb.substring(mark, Math.max(mark, i + offset));
   }
@@ -63,6 +67,34 @@ public class CharIterator {
 
   public boolean done() {
     return current() == CharIterator.DONE;
+  }
+
+  public int length() {
+    return sb.length();
+  }
+
+  public void reset() {
+    i = 0;
+  }
+
+  public void last() {
+    i = sb.length() - 1;
+  }
+
+  public int position() {
+    return i;
+  }
+
+  public void position(int i) {
+    this.i = i;
+  }
+
+  public void decrement() {
+    if (i == 0) {
+      throw new IllegalStateException("already at beginning of string");
+    } else {
+      --i;
+    }
   }
 
 }

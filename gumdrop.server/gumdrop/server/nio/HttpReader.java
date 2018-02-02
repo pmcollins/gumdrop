@@ -2,7 +2,9 @@ package gumdrop.server.nio;
 
 import gumdrop.common.CharIterator;
 
-public class HttpReader {
+import java.nio.ByteBuffer;
+
+public class HttpReader implements RequestParser {
 
   private final CharIterator it;
   private final HttpReaderDelegate delegate;
@@ -10,6 +12,13 @@ public class HttpReader {
   public HttpReader(String http, HttpReaderDelegate delegate) {
     it = new CharIterator(http);
     this.delegate = delegate;
+  }
+
+  @Override
+  public void append(ByteBuffer bb) {
+    byte[] bytes = new byte[bb.limit()];
+    bb.get(bytes);
+    it.append(new String(bytes));
   }
 
   private void readWord() {
@@ -45,7 +54,8 @@ public class HttpReader {
     }
   }
 
-  public void readAll() {
+  @Override
+  public void parse() {
     readFirstLine();
     while (it.current() != '\r') {
       readKVPair();

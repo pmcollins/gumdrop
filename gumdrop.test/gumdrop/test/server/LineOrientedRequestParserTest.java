@@ -112,7 +112,7 @@ public class LineOrientedRequestParserTest extends Test {
     FakeLineReaderDelegate delegate = new FakeLineReaderDelegate();
     LineOrientedRequestParser parser = new LineOrientedRequestParser(delegate);
     parser.append(GET_STR);
-    parser.read();
+    parser.parse();
     assertEquals(4, delegate.getLineCount());
   }
 
@@ -120,7 +120,7 @@ public class LineOrientedRequestParserTest extends Test {
     FakeLineReaderDelegate oneStageDelegate = new FakeLineReaderDelegate();
     LineOrientedRequestParser oneStageParser = new LineOrientedRequestParser(oneStageDelegate);
     oneStageParser.append(GET_STR);
-    oneStageParser.read();
+    oneStageParser.parse();
     assertEquals(4, oneStageDelegate.getLineCount());
     for (int i = 0; i < GET_STR.length(); i++) {
       twoStageParse(i, oneStageDelegate.getLines());
@@ -134,9 +134,9 @@ public class LineOrientedRequestParserTest extends Test {
     assertEquals(GET_STR, firstChunk + secondChunk);
     LineOrientedRequestParser twoStageParser = new LineOrientedRequestParser(delegate);
     twoStageParser.append(firstChunk);
-    twoStageParser.read();
+    twoStageParser.parse();
     twoStageParser.append(secondChunk);
-    twoStageParser.read();
+    twoStageParser.parse();
     assertEquals(lines, delegate.getLines());
   }
 
@@ -144,7 +144,7 @@ public class LineOrientedRequestParserTest extends Test {
     RequestBuildingReaderDelegate delegate = new RequestBuildingReaderDelegate();
     LineOrientedRequestParser parser = new LineOrientedRequestParser(delegate);
     parser.append(GET_STR);
-    parser.read();
+    parser.parse();
     HttpRequest request = delegate.getRequest();
     assertEquals(HttpMethod.GET, request.getHttpMethod());
     assertEquals("/", request.getPath());
@@ -163,11 +163,11 @@ public class LineOrientedRequestParserTest extends Test {
     String secondChunk = GET_STR.substring(splitPt);
     LineOrientedRequestParser parser = new LineOrientedRequestParser(delegate);
     parser.append(firstChunk);
-    parser.read();
+    parser.parse();
     HttpRequest request = delegate.getRequest();
     assertFalse(request.isCompleted());
     parser.append(secondChunk);
-    parser.read();
+    parser.parse();
     assertTrue(request.isCompleted());
   }
 
@@ -175,7 +175,7 @@ public class LineOrientedRequestParserTest extends Test {
     RequestBuildingReaderDelegate delegate = new RequestBuildingReaderDelegate();
     LineOrientedRequestParser parser = new LineOrientedRequestParser(delegate);
     parser.append(POST_STR);
-    parser.read();
+    parser.parse();
     HttpRequest request = delegate.getRequest();
     assertEquals(HttpMethod.POST, request.getHttpMethod());
     String postString = request.getPostString();
@@ -188,9 +188,9 @@ public class LineOrientedRequestParserTest extends Test {
     RequestBuildingReaderDelegate delegate = new RequestBuildingReaderDelegate();
     LineOrientedRequestParser parser = new LineOrientedRequestParser(delegate);
     parser.append(PARTIAL_POST_A);
-    parser.read();
+    parser.parse();
     parser.append(PARTIAL_POST_B);
-    parser.read();
+    parser.parse();
     HttpRequest request = delegate.getRequest();
     assertEquals(HttpMethod.POST, request.getHttpMethod());
     String postString = request.getPostString();
@@ -218,7 +218,7 @@ public class LineOrientedRequestParserTest extends Test {
     RequestBuildingReaderDelegate delegate = new RequestBuildingReaderDelegate();
     LineOrientedRequestParser parser = new LineOrientedRequestParser(delegate);
     parser.append(UPLOAD_STR);
-    parser.read();
+    parser.parse();
   }
 
   private static class FakeLineReaderDelegate implements LineReaderDelegate {
