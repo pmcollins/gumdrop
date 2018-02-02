@@ -7,12 +7,12 @@ import java.nio.ByteBuffer;
 class RawExchange {
 
   private final RequestBuildingReaderDelegate delegate = new RequestBuildingReaderDelegate();
-  private final LineOrientedRequestParser parser = new LineOrientedRequestParser(delegate);
+  private final RequestParser parser = new LineOrientedRequestParser(delegate);
   private ByteBuffer response;
 
   void addRequestChunk(ByteBuffer bb) {
     parser.append(bb);
-    parser.read();
+    parser.parse();
   }
 
   HttpRequest getRequest() {

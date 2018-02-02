@@ -32,6 +32,22 @@ public class CharOrientedRequestParserTest extends Test {
     "\r\n" +
     "first=qqq&last=www&email=eee";
 
+  private static final String POST_STR_A =
+    "POST /users/create HTTP/1.1\r\n" +
+    "Host: localhost:8080\r\n" +
+    "Content-Type: application/x-www-form-urlencoded\r\n" +
+    "Origin: http://localhost:8080\r\n" +
+    "Accept-Encoding: gzip, deflate\r\n" +
+    "Connection: keep-alive\r\n" +
+    "Upgrade-Insecure-Requests: 1\r\n" +
+    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\n" +
+    "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/604.4.7 (KHTML, like Gecko) " +
+    "Version/11.0.2 Safari/604.4.7\r\n" +
+    "Referer: http://localhost:8080/users/form\r\n" +
+    "Content-Length: 28\r\n" +
+    "Accept-Language: en-us\r\n" +
+    "\r\n";
+
   public static void main(String[] args) {
     new CharOrientedRequestParserTest().run();
   }
@@ -75,7 +91,7 @@ public class CharOrientedRequestParserTest extends Test {
   private void readAllGet() {
     FakeHttpReaderDelegate delegate = new FakeHttpReaderDelegate();
     HttpReader r = new HttpReader(GET_STR, delegate);
-    r.readAll();
+    r.parse();
     assertEquals(List.of("GET", "/", "HTTP/1.1"), delegate.getWords());
     assertEquals(List.of("Host", "User-Agent"), delegate.getKeys());
     assertEquals(List.of("localhost:8080", "Mozilla"), delegate.getValues());
@@ -84,7 +100,7 @@ public class CharOrientedRequestParserTest extends Test {
   private void post() {
     FakeHttpReaderDelegate delegate = new FakeHttpReaderDelegate();
     HttpReader r = new HttpReader(POST_STR, delegate);
-    r.readAll();
+    r.parse();
     assertEquals(List.of("POST", "/users/create", "HTTP/1.1"), delegate.getWords());
     assertTrue(delegate.getKeys().contains("Accept-Language"));
     assertTrue(delegate.getValues().contains("en-us"));
@@ -92,4 +108,3 @@ public class CharOrientedRequestParserTest extends Test {
   }
 
 }
-

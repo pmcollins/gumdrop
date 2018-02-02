@@ -4,7 +4,7 @@ import gumdrop.common.CharIterator;
 
 import java.nio.ByteBuffer;
 
-public class LineOrientedRequestParser {
+public class LineOrientedRequestParser implements RequestParser {
 
   public static String bbToString(ByteBuffer bb) {
     byte[] bytes = new byte[bb.limit()];
@@ -19,7 +19,8 @@ public class LineOrientedRequestParser {
     this.delegate = delegate;
   }
 
-  void append(ByteBuffer bb) {
+  @Override
+  public void append(ByteBuffer bb) {
     append(bbToString(bb));
   }
 
@@ -32,7 +33,7 @@ public class LineOrientedRequestParser {
     }
   }
 
-  public void read() {
+  public void parse() {
     while (!it.done()) {
       readLine();
     }

@@ -4,9 +4,7 @@ import gumdrop.common.CharIterator;
 import gumdrop.test.util.Test;
 import gumdrop.test.util.Asserts;
 
-import static gumdrop.test.util.Asserts.assertEquals;
-import static gumdrop.test.util.Asserts.assertFalse;
-import static gumdrop.test.util.Asserts.assertTrue;
+import static gumdrop.test.util.Asserts.*;
 
 class CharIteratorTest extends Test {
 
@@ -16,6 +14,11 @@ class CharIteratorTest extends Test {
 
   @Override
   public void run() {
+    a();
+    b();
+  }
+
+  private void a() {
     CharIterator it = new CharIterator("abcdef");
     assertEquals('a', it.current());
     assertEquals('a', it.bump());
@@ -39,6 +42,20 @@ class CharIteratorTest extends Test {
     assertEquals('g', it.current());
     it.increment();
     assertEquals("fg", it.substring());
+  }
+
+  private void b() {
+    CharIterator it = new CharIterator("abcdef");
+    int pos = it.position();
+    assertEquals(0, pos);
+    it.last();
+    assertEquals('f', it.current());
+    assertEquals(5, it.position());
+    it.position(1);
+    assertEquals('b', it.current());
+    it.decrement();
+    assertEquals('a', it.current());
+    assertThrows(it::decrement, IllegalStateException.class);
   }
 
 }
