@@ -42,8 +42,12 @@ public class CharIterator {
     return sb.substring(mark, Math.max(mark, i + offset));
   }
 
-  public String remaining() {
+  public String tail() {
     return sb.substring(i, sb.length());
+  }
+
+  public int remaining() {
+    return sb.length() - i;
   }
 
   public void increment() {
@@ -77,7 +81,7 @@ public class CharIterator {
     i = 0;
   }
 
-  public void last() {
+  public void positionLast() {
     i = sb.length() - 1;
   }
 

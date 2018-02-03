@@ -48,7 +48,7 @@ class CharIteratorTest extends Test {
     CharIterator it = new CharIterator("abcdef");
     int pos = it.position();
     assertEquals(0, pos);
-    it.last();
+    it.positionLast();
     assertEquals('f', it.current());
     assertEquals(5, it.position());
     it.position(1);
