@@ -66,7 +66,7 @@ public class HttpReader implements RequestParser {
       // POST
       nextLine();
       it.mark();
-      delegate.post(it.remaining());
+      delegate.post(it.tail());
     }
   }
 
