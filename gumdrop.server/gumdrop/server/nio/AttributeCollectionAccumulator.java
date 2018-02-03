@@ -21,8 +21,7 @@ public class AttributeCollectionAccumulator implements Accumulator {
     }
     while (true) {
       if (curr.match(it)) {
-        it.increment(); // \r
-        it.increment(); // \n
+        curr.skip(it);
         it.mark();
         accumulators.add(curr);
         if (delimiter.match(it)) return true;
@@ -38,6 +37,11 @@ public class AttributeCollectionAccumulator implements Accumulator {
         return false;
       }
     }
+  }
+
+  @Override
+  public void skip(CharIterator it) {
+    delimiter.skip(it);
   }
 
   public Map<String, String> getMap() {

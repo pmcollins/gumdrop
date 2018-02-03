@@ -14,6 +14,10 @@ public class CharIterator {
   private int i;
   private int mark;
 
+  public CharIterator() {
+    sb = new StringBuilder();
+  }
+
   public CharIterator(String str) {
     sb = new StringBuilder(str);
   }
@@ -51,9 +55,12 @@ public class CharIterator {
   }
 
   public void increment() {
-    if (i < sb.length()) {
-      ++i;
-    } else {
+    increment(1);
+  }
+
+  public void increment(int n) {
+    i += n;
+    if (i > sb.length()) {
       throw new IllegalStateException("already at end of string");
     }
   }
@@ -100,5 +107,4 @@ public class CharIterator {
       --i;
     }
   }
-
 }

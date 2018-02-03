@@ -6,38 +6,50 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class InterruptibleRequestParser {
 
   private final WordAccumulator method = new WordAccumulator(' ');
   private final WordAccumulator path = new WordAccumulator(' ');
-  private final WordAccumulator protocol = new WordAccumulator('\r');
-  private final Iterator<Accumulator> ptr;
+  private final WordAccumulator protocol = new WordAccumulator("\r\n");
+  private final AttributeCollectionAccumulator ac = new AttributeCollectionAccumulator();
+  private final Iterator<Accumulator> accumPtr;
 
   private Accumulator curr;
-  private CharIterator it;
+  private final CharIterator it = new CharIterator();
 
   public InterruptibleRequestParser() {
     List<Accumulator> accumulators = new ArrayList<>();
     accumulators.add(method);
     accumulators.add(path);
     accumulators.add(protocol);
-    ptr = accumulators.iterator();
-    curr = ptr.next();
+    accumulators.add(ac);
+    accumPtr = accumulators.iterator();
+    curr = accumPtr.next();
   }
 
   public void parse(ByteBuffer bb) {
-    String str = new String(bb.array());
-    if (it == null) {
-      it = new CharIterator(str);
-    } else {
-      it.append(str);
-    }
-    while (curr.match(it) && ptr.hasNext()) {
-      curr = ptr.next();
-      it.increment(); // step over the end of the delimiter
+    it.append(new String(bb.array()));
+    while (true) {
+      if (!curr.match(it)) break;
+      curr.skip(it);
+      if (!accumPtr.hasNext()) break;
+      curr = accumPtr.next();
       it.mark();
     }
+  }
+
+  private void handlePost() {
+    if (getAttrs().get("Content-Type").equals("application/x-www-form-urlencoded")) {
+      int contentLength = Integer.parseInt(getAttrs().get("Content-Length"));
+      String tail = it.tail();
+      System.out.println("tail = [" + tail + "]");
+    }
+  }
+
+  public Map<String, String> getAttrs() {
+    return ac.getMap();
   }
 
   public String getMethod() {
@@ -50,6 +62,10 @@ public class InterruptibleRequestParser {
 
   public String getProtocol() {
     return protocol.getVal();
+  }
+
+  public boolean done() {
+    return false;
   }
 
 }

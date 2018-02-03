@@ -37,4 +37,9 @@ public class WordAccumulator implements Accumulator {
     return val != null;
   }
 
+  @Override
+  public void skip(CharIterator it) {
+    delim.skip(it);
+  }
+
 }
