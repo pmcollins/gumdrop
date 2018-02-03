@@ -1,6 +1,7 @@
 package gumdrop.test.server;
 
 import gumdrop.common.CharIterator;
+import gumdrop.server.nio.*;
 import gumdrop.test.util.Test;
 
 import java.nio.ByteBuffer;
@@ -31,8 +32,7 @@ public class InterruptibleRequestParserTest extends Test {
     singleAttributeInterrupted();
     twoAttributes();
     twoAttributesScan();
-//    emptyAttribute();
-//    backwardDelimiterTest();
+    emptyAttribute();
   }
 
   private static final String GET_STR =
@@ -199,7 +199,6 @@ public class InterruptibleRequestParserTest extends Test {
   }
 
   private void testSplit(String lines, int splitPt) {
-    System.out.println("splitPt = [" + splitPt + "]");
     String head = lines.substring(0, splitPt);
     String tail = lines.substring(splitPt, lines.length());
     AttributeCollectionAccumulator accumulator = new AttributeCollectionAccumulator();
@@ -211,268 +210,6 @@ public class InterruptibleRequestParserTest extends Test {
     assertEquals(2, map.size());
     assertEquals("localhost:8080", map.get("Host"));
     assertEquals("Mozilla", map.get("User-Agent"));
-  }
-
-  private void backwardDelimiterTest() {
-    BackwardDelimiter d = new BackwardDelimiter("cde");
-    CharIterator it = new CharIterator("abcdefg");
-    for (int i = 0; i < 4; i++) {
-      assertFalse(d.match(it));
-      it.increment();
-    }
-    assertEquals('e', it.current());
-    assertTrue(d.match(it));
-    it.increment();
-    assertFalse(d.match(it));
-  }
-
-}
-
-class FwdDelimiter implements Accumulator {
-
-  private final CharIterator delim;
-
-  FwdDelimiter(String s) {
-    delim = new CharIterator(s);
-  }
-
-  @Override
-  public boolean match(CharIterator it) {
-    int itPos = it.position();
-    boolean out = false;
-    while (it.current() == delim.current()) {
-      it.increment();
-      delim.increment();
-      if (delim.done()) {
-        out = true;
-        break;
-      }
-    }
-    reset();
-    it.position(itPos);
-    return out;
-  }
-
-  public boolean matching() {
-    return delim.position() > 0;
-  }
-
-  public int length() {
-    return delim.length();
-  }
-
-  private void reset() {
-    delim.position(0);
-  }
-
-}
-
-class BackwardDelimiter implements Accumulator {
-
-  private final CharIterator delim;
-  private final int len;
-
-  BackwardDelimiter(String s) {
-    delim = new CharIterator(s);
-    len = delim.length();
-    reset();
-  }
-
-  private void reset() {
-    delim.position(len - 1);
-  }
-
-  @Override
-  public boolean match(CharIterator it) {
-    int itPosition = it.position();
-    boolean out = false;
-    while (delim.current() == it.current()) {
-      if (delim.position() == 0) {
-        out = true;
-        // if we matched, step over the last matching character
-        ++itPosition;
-        break;
-      } else if (it.position() == 0) {
-        break;
-      } else {
-        delim.decrement();
-        it.decrement();
-      }
-    }
-    reset();
-    it.position(itPosition);
-    return out;
-  }
-
-  public int length() {
-    return delim.length();
-  }
-
-}
-
-class AttributeCollectionAccumulator implements Accumulator {
-
-  private final List<AttributeAccumulator> accumulators = new ArrayList<>();
-  private AttributeAccumulator curr;
-  private final FwdDelimiter delimiter = new FwdDelimiter("\r\n");
-
-  @Override
-  public boolean match(CharIterator it) {
-    if (curr == null) {
-      if (delimiter.match(it)) return true;
-      curr = new AttributeAccumulator();
-    }
-    while (true) {
-      if (curr.match(it)) {
-        it.increment(); // \r
-        it.increment(); // \n
-        it.mark();
-        accumulators.add(curr);
-        if (delimiter.match(it)) return true;
-        if (it.remaining() < delimiter.length()) {
-          // We just matched. At this point, we're pointing to the beginning of a new line, yet that line is mostly empty.
-          // Don't leave an AttributeAccumulator which will preempt a possible delimiter match on the next round.
-          curr = null;
-          return false;
-        } else {
-          curr = new AttributeAccumulator();
-        }
-      } else {
-        return false;
-      }
-    }
-  }
-
-  Map<String, String> getMap() {
-    Map<String, String> out = new HashMap<>();
-    for (AttributeAccumulator accumulator : accumulators) {
-      String key = accumulator.getKey();
-      String value = accumulator.getValue();
-      out.put(key, value);
-    }
-    return out;
-  }
-
-}
-
-class AttributeAccumulator implements Accumulator {
-
-  private final WordAccumulator key = new WordAccumulator(": ");
-  private final WordAccumulator value = new WordAccumulator("\r\n");
-
-  @Override
-  public boolean match(CharIterator it) {
-    if (key.done()) {
-      return value.match(it);
-    } else {
-      boolean keyMatch = key.match(it);
-      //noinspection SimplifiableIfStatement
-      if (keyMatch) {
-        it.increment(); // :
-        it.increment(); // ' '
-        it.mark();
-        return value.match(it);
-      }
-      return false;
-    }
-  }
-
-  public String getKey() {
-    return key.getVal();
-  }
-
-  public String getValue() {
-    return value.getVal();
-  }
-
-}
-
-interface Accumulator {
-
-  boolean match(CharIterator it);
-
-}
-
-class WordAccumulator implements Accumulator {
-
-  private String val;
-  private final FwdDelimiter delim;
-
-  WordAccumulator(char stopChar) {
-    this(String.valueOf(stopChar));
-  }
-
-  WordAccumulator(String s) {
-    delim = new FwdDelimiter(s);
-  }
-
-  public boolean match(CharIterator it) {
-    while (!it.done()) {
-      if (delim.match(it)) {
-        val = it.substring();
-        return true;
-      }
-      if (it.remaining() < delim.length()) {
-        return false;
-      }
-      it.increment();
-    }
-    return false;
-  }
-
-  public String getVal() {
-    return val;
-  }
-
-  boolean done() {
-    return val != null;
-  }
-
-}
-
-class InterruptibleRequestParser {
-
-  private final WordAccumulator method = new WordAccumulator(' ');
-  private final WordAccumulator path = new WordAccumulator(' ');
-  private final WordAccumulator protocol = new WordAccumulator('\r');
-  private final Iterator<Accumulator> ptr;
-
-  private Accumulator curr;
-  private CharIterator it;
-
-  InterruptibleRequestParser() {
-    List<Accumulator> accumulators = new ArrayList<>();
-    accumulators.add(method);
-    accumulators.add(path);
-    accumulators.add(protocol);
-    ptr = accumulators.iterator();
-    curr = ptr.next();
-  }
-
-  void parse(ByteBuffer bb) {
-    String str = new String(bb.array());
-    if (it == null) {
-      it = new CharIterator(str);
-    } else {
-      it.append(str);
-    }
-    while (curr.match(it) && ptr.hasNext()) {
-      curr = ptr.next();
-      it.increment(); // step over the end of the delimiter
-      it.mark();
-    }
-  }
-
-  String getMethod() {
-    return method.getVal();
-  }
-
-  String getPath() {
-    return path.getVal();
-  }
-
-  String getProtocol() {
-    return protocol.getVal();
   }
 
 }
