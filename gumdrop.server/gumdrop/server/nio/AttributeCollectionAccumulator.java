@@ -12,6 +12,7 @@ public class AttributeCollectionAccumulator implements Accumulator {
   private final List<AttributeAccumulator> accumulators = new ArrayList<>();
   private AttributeAccumulator curr;
   private final FwdDelimiter delimiter = new FwdDelimiter("\r\n");
+  private Map<String, String> map;
 
   @Override
   public boolean match(CharIterator it) {
@@ -45,13 +46,19 @@ public class AttributeCollectionAccumulator implements Accumulator {
   }
 
   public Map<String, String> getMap() {
-    Map<String, String> out = new HashMap<>();
-    for (AttributeAccumulator accumulator : accumulators) {
-      String key = accumulator.getKey();
-      String value = accumulator.getValue();
-      out.put(key, value);
+    if (map == null) {
+      map = new HashMap<>();
+      for (AttributeAccumulator accumulator : accumulators) {
+        String key = accumulator.getKey();
+        String value = accumulator.getValue();
+        map.put(key, value);
+      }
     }
-    return out;
+    return map;
+  }
+
+  public String get(String key) {
+    return getMap().get(key);
   }
 
 }

@@ -2,7 +2,8 @@ package gumdrop.server.nio;
 
 import java.nio.ByteBuffer;
 
-interface RequestParser {
+@Deprecated
+interface CraptasticalRequestParser {
 
   void append(ByteBuffer bb);
 
