@@ -6,4 +6,6 @@ interface Accumulator {
 
   boolean match(CharIterator it);
 
+  void skip(CharIterator it);
+
 }

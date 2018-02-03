@@ -27,6 +27,11 @@ public class FwdDelimiter implements Accumulator {
     return out;
   }
 
+  @Override
+  public void skip(CharIterator it) {
+    it.increment(delim.length());
+  }
+
   public boolean matching() {
     return delim.position() > 0;
   }
