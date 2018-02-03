@@ -7,7 +7,7 @@ import java.nio.ByteBuffer;
 class RawExchange {
 
   private final RequestBuildingReaderDelegate delegate = new RequestBuildingReaderDelegate();
-  private final RequestParser parser = new LineOrientedRequestParser(delegate);
+  private final CraptasticalRequestParser parser = new LineOrientedRequestParser(delegate);
   private ByteBuffer response;
 
   void addRequestChunk(ByteBuffer bb) {
