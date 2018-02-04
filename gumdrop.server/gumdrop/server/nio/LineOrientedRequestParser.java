@@ -4,7 +4,6 @@ import gumdrop.common.CharIterator;
 
 import java.nio.ByteBuffer;
 
-@Deprecated
 public class LineOrientedRequestParser implements CraptasticalRequestParser {
 
   public static String bbToString(ByteBuffer bb) {

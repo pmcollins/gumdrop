@@ -87,7 +87,7 @@ public class NioServer {
       bb.flip();
       exchange.addRequestChunk(bb);
       bb.clear();
-      if (exchange.isDoneReading()) {
+      if (exchange.done()) {
         executorService.submit(
           new ResponseHandler(mainFcn, selector, selectionKey, exchange)
         );

@@ -6,21 +6,19 @@ import java.nio.ByteBuffer;
 
 class RawExchange {
 
-  private final RequestBuildingReaderDelegate delegate = new RequestBuildingReaderDelegate();
-  private final CraptasticalRequestParser parser = new LineOrientedRequestParser(delegate);
+  private final InterruptibleRequestParser parser = new InterruptibleRequestParser();
   private ByteBuffer response;
 
   void addRequestChunk(ByteBuffer bb) {
-    parser.append(bb);
-    parser.parse();
+    parser.parse(bb);
   }
 
   HttpRequest getRequest() {
-    return delegate.getRequest();
+    return parser.getRequest();
   }
 
-  boolean isDoneReading() {
-    return delegate.isCompleted();
+  boolean done() {
+    return parser.done();
   }
 
   ByteBuffer getResponse() {

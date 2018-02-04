@@ -32,7 +32,7 @@ public class RequestBuilderDelegateTest extends Test {
 
     delegate.key("User-Agent");
     delegate.value("Mozilla");
-    String uaAttr = request.getAttr("User-Agent");
+    String uaAttr = request.getHeader("User-Agent");
     assertEquals("Mozilla", uaAttr);
 
     String post = "first=qqq&last=www&email=eee";

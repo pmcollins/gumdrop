@@ -22,8 +22,10 @@ public class FwdDelimiter implements Accumulator {
         break;
       }
     }
+    // TODO if delim incremented {
     reset();
     it.position(itPos);
+    // }
     return out;
   }
 
