@@ -1,6 +1,8 @@
 package gumdrop.server.nio;
 
 import gumdrop.common.CharIterator;
+import gumdrop.common.HttpMethod;
+import gumdrop.common.HttpRequest;
 import gumdrop.common.Request;
 
 import java.nio.ByteBuffer;
@@ -33,7 +35,9 @@ public class InterruptibleRequestParser implements RequestParser {
   }
 
   public void parse(ByteBuffer bb) {
-    it.append(new String(bb.array()));
+    byte[] a = new byte[bb.remaining()];
+    bb.get(a);
+    it.append(new String(a));
     while (true) {
       if (!curr.match(it)) break;
       curr.skip(it);
@@ -44,10 +48,6 @@ public class InterruptibleRequestParser implements RequestParser {
       curr = accumPtr.next();
       it.mark();
     }
-  }
-
-  public Map<String, String> getAttrs() {
-    return attributes.getMap();
   }
 
   @Override
@@ -76,45 +76,26 @@ public class InterruptibleRequestParser implements RequestParser {
     return postProcessor.getPostString();
   }
 
-}
-
-interface RequestParser {
-
-  String getMethod();
-
-  String getAttr(String s);
-
-}
-
-class PostProcessor implements Accumulator {
-
-  private final RequestParser requestParser;
-  private String post;
-
-  PostProcessor(RequestParser requestParser) {
-    this.requestParser = requestParser;
-  }
-
-  @Override
-  public boolean match(CharIterator it) {
-    if (requestParser.getMethod().equals("POST") && requestParser.getAttr("Content-Type").equals("application/x-www-form-urlencoded")) {
-      int contentLength = Integer.parseInt(requestParser.getAttr("Content-Length"));
-      if (it.remaining() == contentLength) {
-        post = it.tail();
-        return true;
-      }
-    } else {
-      return true;
+  public HttpRequest getRequest() {
+    HttpRequest request = new HttpRequest();
+    request.setHttpMethod(HttpMethod.valueOf(getMethod()));
+    request.setPath(getPath());
+    request.setProtocol(getProtocol());
+    Map<String, String> map = attributes.getMap();
+    request.setHeaders(map);
+    request.setPostString(getPostString());
+    if (isFormPost(request)) {
+      request.writeParameterMap();
     }
-    return false;
+    return request;
   }
 
-  @Override
-  public void skip(CharIterator it) {
+  private boolean isFormPost(HttpRequest request) {
+    return request.isPost() && isFormType();
   }
 
-  public String getPostString() {
-    return post;
+  private boolean isFormType() {
+    return getAttr("Content-Type").equals("application/x-www-form-urlencoded");
   }
 
 }

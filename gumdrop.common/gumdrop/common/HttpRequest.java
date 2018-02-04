@@ -5,11 +5,10 @@ import java.util.Map;
 
 public class HttpRequest implements Request {
 
-  private final Map<String, String> headers = new HashMap<>();
+  private Map<String, String> headers;
   private HttpMethod httpMethod;
   private String path;
   private String protocol;
-  private boolean gotBlankLine;
   private String postString;
   private Map<String, String> parameterMap;
 
@@ -21,7 +20,7 @@ public class HttpRequest implements Request {
   public HttpRequest() {
   }
 
-  public static Map<String, String> parseQueryString(String q) {
+  private static Map<String, String> parseQueryString(String q) {
     Map<String, String> out = new HashMap<>();
     if (!q.isEmpty()) {
       String[] pairs = q.split("&");
@@ -33,6 +32,10 @@ public class HttpRequest implements Request {
       }
     }
     return out;
+  }
+
+  public void setHeaders(Map<String, String> map) {
+    headers = map;
   }
 
   public HttpMethod getHttpMethod() {
@@ -64,27 +67,14 @@ public class HttpRequest implements Request {
     headers.put(key, value);
   }
 
-  Map<String, String> getHeaders() {
-    return headers;
+  @Override
+  public String getCookieString() {
+    return getHeader("Cookie");
   }
 
   @Override
-  public String getAttr(String key) {
+  public String getHeader(String key) {
     return headers.get(key);
-  }
-
-  public boolean gotBlankLine() {
-    return gotBlankLine;
-  }
-
-  public void gotBlankLine(boolean b) {
-    gotBlankLine = b;
-  }
-
-  public boolean isCompleted() {
-    // postString is only set by RequestBuildingReaderDelegate when all data has been accumulated
-    // and Content-Length matches postString length
-    return (httpMethod == HttpMethod.GET && gotBlankLine) || (httpMethod == HttpMethod.POST && postString != null);
   }
 
   @Override
@@ -100,13 +90,8 @@ public class HttpRequest implements Request {
     this.parameterMap = parseQueryString(this.postString);
   }
 
-  public String getParameter(String key) {
-    return parameterMap.get(key);
-  }
-
-  @Override
-  public String getCookieString() {
-    return getAttr("Cookie");
+  public boolean isPost() {
+    return httpMethod == HttpMethod.POST;
   }
 
   @Override
@@ -116,10 +101,8 @@ public class HttpRequest implements Request {
       ", httpMethod=" + httpMethod +
       ", path='" + path + '\'' +
       ", protocol='" + protocol + '\'' +
-      ", gotBlankLine=" + gotBlankLine +
       ", postString='" + postString + '\'' +
       ", parameterMap=" + parameterMap +
       '}';
   }
-
 }
