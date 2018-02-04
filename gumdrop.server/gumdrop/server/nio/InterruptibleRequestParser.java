@@ -37,7 +37,9 @@ public class InterruptibleRequestParser implements RequestParser {
   public void parse(ByteBuffer bb) {
     byte[] a = new byte[bb.remaining()];
     bb.get(a);
-    it.append(new String(a));
+    String chunk = new String(a);
+    System.out.println(chunk);
+    it.append(chunk);
     while (true) {
       if (!curr.match(it)) break;
       curr.skip(it);
