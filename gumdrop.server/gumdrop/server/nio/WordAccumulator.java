@@ -5,16 +5,17 @@ import gumdrop.common.CharIterator;
 public class WordAccumulator implements Accumulator {
 
   private String val;
-  private final FwdDelimiter delim;
+  private final Delimiter delim;
 
   WordAccumulator(char stopChar) {
     this(String.valueOf(stopChar));
   }
 
   public WordAccumulator(String s) {
-    delim = new FwdDelimiter(s);
+    delim = new Delimiter(s);
   }
 
+  @Override
   public boolean match(CharIterator it) {
     while (!it.done()) {
       if (delim.match(it)) {

@@ -11,7 +11,7 @@ public class AttributeCollectionAccumulator implements Accumulator {
 
   private final List<AttributeAccumulator> accumulators = new ArrayList<>();
   private AttributeAccumulator curr;
-  private final FwdDelimiter delimiter = new FwdDelimiter("\r\n");
+  private final Delimiter delimiter = new Delimiter("\r\n");
   private Map<String, String> map;
 
   @Override

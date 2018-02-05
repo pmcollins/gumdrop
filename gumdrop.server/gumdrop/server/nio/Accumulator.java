@@ -2,7 +2,7 @@ package gumdrop.server.nio;
 
 import gumdrop.common.CharIterator;
 
-interface Accumulator {
+public interface Accumulator {
 
   boolean match(CharIterator it);
 

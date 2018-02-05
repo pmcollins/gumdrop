@@ -1,7 +1,7 @@
 package gumdrop.test.server;
 
 import gumdrop.common.CharIterator;
-import gumdrop.server.nio.FwdDelimiter;
+import gumdrop.server.nio.Delimiter;
 import gumdrop.test.util.Test;
 
 import static gumdrop.test.util.Asserts.assertEquals;
@@ -22,7 +22,7 @@ public class DelimiterTest extends Test {
   }
 
   private void fwdDelimiterTest() {
-    FwdDelimiter delim = new FwdDelimiter("cde");
+    Delimiter delim = new Delimiter("cde");
     CharIterator it = new CharIterator("abcdefg");
     assertFalse(delim.match(it));
     it.position(2);
@@ -32,7 +32,7 @@ public class DelimiterTest extends Test {
   }
 
   private void fwdDelimiterTest2() {
-    FwdDelimiter d = new FwdDelimiter("cdefghijk");
+    Delimiter d = new Delimiter("cdefghijk");
     CharIterator it = new CharIterator("abcdefg");
     assertFalse(d.match(it));
     it.position(2);
@@ -42,7 +42,7 @@ public class DelimiterTest extends Test {
   }
 
   private void fwdDelimiterTest3() {
-    FwdDelimiter d = new FwdDelimiter("ccc");
+    Delimiter d = new Delimiter("ccc");
     CharIterator it = new CharIterator("abcdefg");
     assertFalse(d.match(it));
   }
