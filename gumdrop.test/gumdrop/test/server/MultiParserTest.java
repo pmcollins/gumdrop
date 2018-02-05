@@ -1,6 +1,7 @@
 package gumdrop.test.server;
 
 import gumdrop.common.CharIterator;
+import gumdrop.server.nio.BoundaryParser;
 import gumdrop.server.nio.MultiParser;
 import gumdrop.test.util.Test;
 
@@ -17,22 +18,32 @@ public class MultiParserTest extends Test {
     "\r\n" +
     "------WebKitFormBoundarynwAxopXoFg6rtPYX--\r\n";
 
+  private static final String MULTI = "Content-Type: multipart/form-data; boundary=----WebKitFormBoundarynwAxopXoFg6rtPYX\r\n";
+
   public static void main(String[] args) {
     new MultiParserTest().run();
   }
 
   @Override
   public void run() {
+    getBoundary();
     dispositionLine();
+  }
+
+  private void getBoundary() {
+    CharIterator it = new CharIterator(MULTI);
+    BoundaryParser multiParser = new BoundaryParser();
+    String boundary = multiParser.getBoundary(it);
+    assertEquals("----WebKitFormBoundarynwAxopXoFg6rtPYX", boundary);
   }
 
   private void dispositionLine() {
     String delimStr = "------WebKitFormBoundarynwAxopXoFg6rtPYX";
     CharIterator it = new CharIterator(POST);
     MultiParser multiParser = new MultiParser();
-    multiParser.parse(delimStr, it);
-    String val = multiParser.getVal();
+    String val = multiParser.getSinglePart(delimStr, it);
     assertEquals("hello!\n", val);
   }
 
 }
+
