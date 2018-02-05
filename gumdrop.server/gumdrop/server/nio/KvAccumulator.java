@@ -2,12 +2,12 @@ package gumdrop.server.nio;
 
 import gumdrop.common.CharIterator;
 
-class KvAccumulator implements Accumulator {
+public class KvAccumulator implements Accumulator {
 
   private final WordAccumulator w1;
   private final WordAccumulator w2;
 
-  KvAccumulator(String delim1, String delim2) {
+  public KvAccumulator(String delim1, String delim2) {
     w1 = new WordAccumulator(delim1);
     w2 = new WordAccumulator(delim2);
   }

@@ -16,7 +16,7 @@ public class MultiParser {
     q = new Accumulator[] {crlf, cd, name, fn, type, crlf};
   }
 
-  public void parse(String delimStr, CharIterator it) {
+  public String getSinglePart(String delimStr, CharIterator it) {
     Delimiter startBoundary = new Delimiter(delimStr);
     startBoundary.match(it);
     startBoundary.skip(it);
@@ -29,11 +29,7 @@ public class MultiParser {
 
     WordAccumulator content = new WordAccumulator("\r\n" + delimStr + "--");
     content.match(it);
-    val = content.getVal();
-  }
-
-  public String getVal() {
-    return val;
+    return content.getVal();
   }
 
 }
