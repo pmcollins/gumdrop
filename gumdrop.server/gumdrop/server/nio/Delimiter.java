@@ -2,11 +2,11 @@ package gumdrop.server.nio;
 
 import gumdrop.common.CharIterator;
 
-public class FwdDelimiter implements Accumulator {
+public class Delimiter implements Accumulator {
 
   private final CharIterator delim;
 
-  public FwdDelimiter(String s) {
+  public Delimiter(String s) {
     delim = new CharIterator(s);
   }
 
