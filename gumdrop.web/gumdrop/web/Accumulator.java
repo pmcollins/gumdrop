@@ -1,4 +1,4 @@
-package gumdrop.server.nio;
+package gumdrop.web;
 
 import gumdrop.common.CharIterator;
 

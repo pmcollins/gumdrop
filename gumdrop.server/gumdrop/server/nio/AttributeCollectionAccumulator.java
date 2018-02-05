@@ -1,6 +1,8 @@
 package gumdrop.server.nio;
 
 import gumdrop.common.CharIterator;
+import gumdrop.web.Accumulator;
+import gumdrop.web.Delimiter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
