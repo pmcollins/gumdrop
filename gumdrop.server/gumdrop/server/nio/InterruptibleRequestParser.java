@@ -3,7 +3,8 @@ package gumdrop.server.nio;
 import gumdrop.common.CharIterator;
 import gumdrop.common.HttpMethod;
 import gumdrop.common.HttpRequest;
-import gumdrop.common.Request;
+import gumdrop.web.Accumulator;
+import gumdrop.web.WordAccumulator;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -78,6 +79,14 @@ public class InterruptibleRequestParser implements RequestParser {
     return postProcessor.getPostString();
   }
 
+  private boolean isFormPost(HttpRequest request) {
+    return request.isPost() && isFormType();
+  }
+
+  private boolean isFormType() {
+    return getAttr("Content-Type").equals("application/x-www-form-urlencoded");
+  }
+
   public HttpRequest getRequest() {
     HttpRequest request = new HttpRequest();
     request.setHttpMethod(HttpMethod.valueOf(getMethod()));
@@ -90,14 +99,6 @@ public class InterruptibleRequestParser implements RequestParser {
       request.writeParameterMap();
     }
     return request;
-  }
-
-  private boolean isFormPost(HttpRequest request) {
-    return request.isPost() && isFormType();
-  }
-
-  private boolean isFormType() {
-    return getAttr("Content-Type").equals("application/x-www-form-urlencoded");
   }
 
 }

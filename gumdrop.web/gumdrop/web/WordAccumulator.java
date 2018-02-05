@@ -1,4 +1,4 @@
-package gumdrop.server.nio;
+package gumdrop.web;
 
 import gumdrop.common.CharIterator;
 
@@ -7,7 +7,7 @@ public class WordAccumulator implements Accumulator {
   private String val;
   private final Delimiter delim;
 
-  WordAccumulator(char stopChar) {
+  public WordAccumulator(char stopChar) {
     this(String.valueOf(stopChar));
   }
 
@@ -34,7 +34,7 @@ public class WordAccumulator implements Accumulator {
     return val;
   }
 
-  boolean done() {
+  public boolean done() {
     return val != null;
   }
 
