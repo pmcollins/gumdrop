@@ -1,4 +1,4 @@
-package gumdrop.test;
+package gumdrop.test.common;
 
 import gumdrop.common.ByteBuilder;
 import gumdrop.test.util.Test;
