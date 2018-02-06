@@ -34,8 +34,7 @@ class CharIteratorTest extends Test {
     assertEquals('f', it.current());
     it.mark();
     assertFalse(it.done());
-    assertEquals(CharIterator.DONE, it.next());
-    assertEquals(CharIterator.DONE, it.current());
+    it.next();
     assertTrue(it.done());
     Asserts.assertThrows(it::next, IllegalStateException.class);
     it.append("ghijk");

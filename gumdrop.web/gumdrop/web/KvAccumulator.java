@@ -27,11 +27,11 @@ public class KvAccumulator implements Accumulator {
   }
 
   String getKey() {
-    return w1.getVal();
+    return w1.getSubstring();
   }
 
   String getValue() {
-    return w2.getVal();
+    return w2.getSubstring();
   }
 
 }

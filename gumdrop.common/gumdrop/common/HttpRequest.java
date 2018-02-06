@@ -9,7 +9,7 @@ public class HttpRequest implements Request {
   private HttpMethod httpMethod;
   private String path;
   private String protocol;
-  private String postString;
+  private byte[] post;
   private Map<String, String> parameterMap;
 
   public HttpRequest(HttpMethod httpMethod, String path) {
@@ -79,15 +79,20 @@ public class HttpRequest implements Request {
 
   @Override
   public String getPostString() {
-    return postString;
+    return new String(post);
   }
 
-  public void setPostString(String postString) {
-    this.postString = postString;
+  public void setPost(byte[] post) {
+    this.post = post;
+  }
+
+  @Override
+  public byte[] getPost() {
+    return post;
   }
 
   public void writeParameterMap() {
-    this.parameterMap = parseQueryString(this.postString);
+    this.parameterMap = parseQueryString(getPostString());
   }
 
   public boolean isPost() {
@@ -101,8 +106,8 @@ public class HttpRequest implements Request {
       ", httpMethod=" + httpMethod +
       ", path='" + path + '\'' +
       ", protocol='" + protocol + '\'' +
-      ", postString='" + postString + '\'' +
       ", parameterMap=" + parameterMap +
       '}';
   }
+
 }

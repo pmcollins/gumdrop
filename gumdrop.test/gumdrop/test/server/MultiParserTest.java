@@ -37,8 +37,8 @@ public class MultiParserTest extends Test {
   private void parseSinglePart() {
     String delimStr = "----WebKitFormBoundarynwAxopXoFg6rtPYX";
     CharIterator it = new CharIterator(POST);
-    String val = MultiParser.parseSinglePart(delimStr, it);
-    assertEquals("hello!\n", val);
+    byte[] bytes = MultiParser.parseSinglePart(delimStr, it);
+    assertEquals("hello!\n", new String(bytes));
   }
 
 }

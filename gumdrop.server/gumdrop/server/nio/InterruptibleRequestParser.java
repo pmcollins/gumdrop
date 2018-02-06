@@ -4,6 +4,7 @@ import gumdrop.common.CharIterator;
 import gumdrop.common.HttpMethod;
 import gumdrop.common.HttpRequest;
 import gumdrop.web.Accumulator;
+import gumdrop.web.AttributeCollectionAccumulator;
 import gumdrop.web.WordAccumulator;
 
 import java.nio.ByteBuffer;
@@ -38,9 +39,8 @@ public class InterruptibleRequestParser implements RequestParser {
   public void parse(ByteBuffer bb) {
     byte[] a = new byte[bb.remaining()];
     bb.get(a);
-    String chunk = new String(a);
-    System.out.println(chunk);
-    it.append(chunk);
+    System.out.println(new String(a));
+    it.append(a);
     while (true) {
       if (!curr.match(it)) break;
       curr.skip(it);
@@ -60,15 +60,15 @@ public class InterruptibleRequestParser implements RequestParser {
 
   @Override
   public String getMethod() {
-    return method.getVal();
+    return method.getSubstring();
   }
 
   public String getPath() {
-    return path.getVal();
+    return path.getSubstring();
   }
 
   public String getProtocol() {
-    return protocol.getVal();
+    return protocol.getSubstring();
   }
 
   public boolean done() {
@@ -77,6 +77,10 @@ public class InterruptibleRequestParser implements RequestParser {
 
   public String getPostString() {
     return postProcessor.getPostString();
+  }
+
+  public byte[] getPostBytes() {
+    return postProcessor.getPostBytes();
   }
 
   private boolean isFormPost(HttpRequest request) {
@@ -94,7 +98,7 @@ public class InterruptibleRequestParser implements RequestParser {
     request.setProtocol(getProtocol());
     Map<String, String> map = attributes.getMap();
     request.setHeaders(map);
-    request.setPostString(getPostString());
+    request.setPost(getPostBytes());
     if (isFormPost(request)) {
       request.writeParameterMap();
     }

@@ -20,17 +20,26 @@ public class ByteBuilder {
   }
 
   public String substring(int start, int end) {
-    StringBuilder sb = new StringBuilder();
+    return new String(subarray(start, end));
+  }
+
+  public byte[] subarray(int start, int end) {
+    byte[] out = new byte[end - start];
+    int idx = 0;
     for (int i = start; i < end; i++) {
-      sb.append(charAt(i));
+      out[idx++] = byteAt(i);
     }
-    return sb.toString();
+    return out;
   }
 
   public char charAt(int idx) {
+    return (char) byteAt(idx);
+  }
+
+  public byte byteAt(int idx) {
     for (byte[] chunk : chunks) {
       if (idx < chunk.length) {
-        return (char) chunk[idx];
+        return chunk[idx];
       } else {
         idx -= chunk.length;
       }
