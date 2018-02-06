@@ -59,8 +59,10 @@ public class CharIterator {
   }
 
   public void increment(int n) {
-    i += n;
-    if (i > sb.length()) {
+    int next = i + n;
+    if (next <= sb.length()) {
+      i = next;
+    } else {
       throw new IllegalStateException("already at end of string");
     }
   }
@@ -107,4 +109,5 @@ public class CharIterator {
       --i;
     }
   }
+
 }
