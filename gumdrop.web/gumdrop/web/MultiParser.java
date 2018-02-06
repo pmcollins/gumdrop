@@ -1,10 +1,10 @@
 package gumdrop.web;
 
-import gumdrop.common.CharIterator;
+import gumdrop.common.ByteIterator;
 
 public class MultiParser {
 
-  public static byte[] parseSinglePart(String delimStr, CharIterator it) {
+  public static byte[] parseSinglePart(String delimStr, ByteIterator it) {
     Delimiter crlf = new Delimiter("\r\n");
     KvAccumulator cd = new KvAccumulator(": ", ";");
     KvAccumulator name = new KvAccumulator("=", ";");

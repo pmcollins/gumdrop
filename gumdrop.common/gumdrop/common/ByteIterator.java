@@ -1,34 +1,38 @@
 package gumdrop.common;
 
-public class CharIterator {
+public class ByteIterator {
 
   private final ByteBuilder bb;
   private int i;
   private int mark;
 
-  public CharIterator() {
+  public ByteIterator() {
     bb = new ByteBuilder();
   }
 
-  public CharIterator(String str) {
+  public ByteIterator(String str) {
     this(str.getBytes());
   }
 
-  public CharIterator(byte[] bytes) {
+  public ByteIterator(byte[] bytes) {
     bb = new ByteBuilder();
     bb.append(bytes);
   }
 
   public void append(String string) {
-    bb.append(string.getBytes());
+    append(string.getBytes());
   }
 
   public void append(byte[] bytes) {
     bb.append(bytes);
   }
 
-  public char current() {
+  public char currentChar() {
     return bb.charAt(i);
+  }
+
+  public byte current() {
+    return bb.byteAt(i);
   }
 
   public void mark() {
@@ -76,13 +80,21 @@ public class CharIterator {
     }
   }
 
-  public char bump() {
-    char out = current();
+  public char bumpChar() {
+    return (char) bump();
+  }
+
+  public byte bump() {
+    byte out = current();
     increment();
     return out;
   }
 
-  public char next() {
+  public char nextChar() {
+    return (char) next();
+  }
+
+  public byte next() {
     increment();
     return current();
   }
@@ -113,7 +125,7 @@ public class CharIterator {
 
   public void decrement() {
     if (i == 0) {
-      throw new IllegalStateException("already at beginning of string");
+      throw new IllegalStateException("already at beginning of array");
     } else {
       --i;
     }

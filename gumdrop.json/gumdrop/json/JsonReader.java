@@ -1,15 +1,15 @@
 package gumdrop.json;
 
 import gumdrop.common.Builder;
-import gumdrop.common.CharIterator;
+import gumdrop.common.ByteIterator;
 
 public class JsonReader {
 
-  private final CharIterator it;
+  private final ByteIterator it;
   private final JsonDelegate delegate;
 
   public JsonReader(String json, JsonDelegate delegate) {
-    it = new CharIterator(json);
+    it = new ByteIterator(json);
     this.delegate = delegate;
   }
 
@@ -22,7 +22,7 @@ public class JsonReader {
 
   public void readValue() {
     skipWhiteSpace();
-    char curr = it.current();
+    char curr = it.currentChar();
     switch (curr) {
       case '"':
         readQuotedString();
@@ -53,7 +53,7 @@ public class JsonReader {
     it.mark();
     char c;
     do {
-      c = it.next();
+      c = it.nextChar();
     } while (c != '"');
     delegate.quotedString(it.substring());
     it.increment();
@@ -61,9 +61,9 @@ public class JsonReader {
 
   public void readBareword() {
     it.mark();
-    char c = it.current();
+    char c = it.currentChar();
     while (Character.isAlphabetic(c) || Character.isDigit(c)) {
-      c = it.next();
+      c = it.nextChar();
     }
     String bareword = it.substring();
     delegate.bareword(bareword);
@@ -79,7 +79,7 @@ public class JsonReader {
 
   public void readKVPairs() {
     readKVPair();
-    while (it.current() == ',') {
+    while (it.currentChar() == ',') {
       it.increment();
       readKVPair();
     }
@@ -95,7 +95,7 @@ public class JsonReader {
 
   public void readCommaList() {
     readValue();
-    while (it.current() == ',') {
+    while (it.currentChar() == ',') {
       it.increment();
       readValue();
     }
@@ -103,13 +103,13 @@ public class JsonReader {
 
   public void skipWhiteSpace() {
     char c;
-    while ((c = it.current()) == ' ' || c == '\n' || c == '\t') {
+    while ((c = it.currentChar()) == ' ' || c == '\n' || c == '\t') {
       it.increment();
     }
   }
 
   public char getCurrentCharacter() {
-    return it.current();
+    return it.currentChar();
   }
 
 }

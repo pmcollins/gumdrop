@@ -1,6 +1,6 @@
 package gumdrop.test.server;
 
-import gumdrop.common.CharIterator;
+import gumdrop.common.ByteIterator;
 import gumdrop.web.AttributeAccumulator;
 import gumdrop.web.AttributeCollectionAccumulator;
 import gumdrop.test.util.Test;
@@ -28,13 +28,13 @@ public class AttributeAccumulatorTest extends Test {
 
   private void fullSingleAttribute() {
     AttributeAccumulator accumulator = new AttributeAccumulator();
-    boolean completed = accumulator.match(new CharIterator("Host: localhost:8080\r\n"));
+    boolean completed = accumulator.match(new ByteIterator("Host: localhost:8080\r\n"));
     assertTrue(completed);
   }
 
   private void emptyAttribute() {
     AttributeAccumulator accumulator = new AttributeAccumulator();
-    boolean complete = accumulator.match(new CharIterator("\r\n"));
+    boolean complete = accumulator.match(new ByteIterator("\r\n"));
     assertFalse(complete);
   }
 
@@ -44,7 +44,7 @@ public class AttributeAccumulatorTest extends Test {
     int splitPt = 2;
     String head = line.substring(0, splitPt);
     String tail = line.substring(splitPt, line.length());
-    CharIterator it = new CharIterator(head);
+    ByteIterator it = new ByteIterator(head);
     assertFalse(accumulator.match(it));
     it.append(tail);
     assertTrue(accumulator.match(it));
@@ -55,7 +55,7 @@ public class AttributeAccumulatorTest extends Test {
   private void twoAttributes() {
     String lines = "Host: localhost:8080\r\nUser-Agent: Mozilla\r\n\r\n";
     AttributeCollectionAccumulator accumulator = new AttributeCollectionAccumulator();
-    boolean completed = accumulator.match(new CharIterator(lines));
+    boolean completed = accumulator.match(new ByteIterator(lines));
     assertTrue(completed);
     Map<String, String> map = accumulator.getMap();
     assertEquals(2, map.size());
@@ -74,7 +74,7 @@ public class AttributeAccumulatorTest extends Test {
     String head = lines.substring(0, splitPt);
     String tail = lines.substring(splitPt, lines.length());
     AttributeCollectionAccumulator accumulator = new AttributeCollectionAccumulator();
-    CharIterator it = new CharIterator(head);
+    ByteIterator it = new ByteIterator(head);
     assertFalse(accumulator.match(it));
     it.append(tail);
     assertTrue(accumulator.match(it));

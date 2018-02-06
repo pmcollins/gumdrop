@@ -1,6 +1,6 @@
 package gumdrop.web;
 
-import gumdrop.common.CharIterator;
+import gumdrop.common.ByteIterator;
 
 public class AttributeAccumulator implements Accumulator {
 
@@ -8,7 +8,7 @@ public class AttributeAccumulator implements Accumulator {
   private final WordAccumulator value = new WordAccumulator("\r\n");
 
   @Override
-  public boolean match(CharIterator it) {
+  public boolean match(ByteIterator it) {
     if (key.done()) {
       return value.match(it);
     } else {
@@ -22,8 +22,8 @@ public class AttributeAccumulator implements Accumulator {
   }
 
   @Override
-  public void skip(CharIterator it) {
-    // no reason why this can't be done in match() and no-op here
+  public void skip(ByteIterator it) {
+    // could be done in match() and no-op here
     value.skip(it);
   }
 

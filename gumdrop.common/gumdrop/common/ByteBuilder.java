@@ -6,17 +6,15 @@ import java.util.List;
 public class ByteBuilder {
 
   private final List<byte[]> chunks = new ArrayList<>();
+  private int length;
 
   public void append(byte[] bytes) {
     chunks.add(bytes);
+    length += bytes.length;
   }
 
   public int length() {
-    int out = 0;
-    for (byte[] chunk : chunks) {
-      out += chunk.length;
-    }
-    return out;
+    return length;
   }
 
   public String substring(int start, int end) {
@@ -37,6 +35,7 @@ public class ByteBuilder {
   }
 
   public byte byteAt(int idx) {
+    // one chunk will be the norm, two rare, three+ supported but not expected
     for (byte[] chunk : chunks) {
       if (idx < chunk.length) {
         return chunk[idx];

@@ -1,6 +1,6 @@
 package gumdrop.test.server;
 
-import gumdrop.common.CharIterator;
+import gumdrop.common.ByteIterator;
 import gumdrop.web.WordAccumulator;
 import gumdrop.test.util.Test;
 
@@ -23,18 +23,18 @@ public class WordAccumulatorTest extends Test {
 
   private void wordAccumulator() {
     WordAccumulator accumulator = new WordAccumulator("\r\n");
-    assertTrue(accumulator.match(new CharIterator("XXX\r\nZZZ")));
+    assertTrue(accumulator.match(new ByteIterator("XXX\r\nZZZ")));
     String val = accumulator.getSubstring();
     assertEquals("XXX", val);
-    CharIterator it = new CharIterator("XXX\rYYY\r\nZZZ");
+    ByteIterator it = new ByteIterator("XXX\rYYY\r\nZZZ");
     assertTrue(accumulator.match(it));
     assertEquals("XXX\rYYY", accumulator.getSubstring());
-    assertEquals('\r', it.current());
+    assertEquals('\r', it.currentChar());
   }
 
   private void wordAccumulator2() {
     WordAccumulator accumulator = new WordAccumulator("\r\n");
-    CharIterator it = new CharIterator("XXX\r");
+    ByteIterator it = new ByteIterator("XXX\r");
     assertFalse(accumulator.match(it));
     it.append("\n");
     assertTrue(accumulator.match(it));
@@ -43,7 +43,7 @@ public class WordAccumulatorTest extends Test {
 
   private void wordAccumulator3() {
     WordAccumulator accumulator = new WordAccumulator("Hello");
-    CharIterator it = new CharIterator("XXXHell");
+    ByteIterator it = new ByteIterator("XXXHell");
     assertFalse(accumulator.match(it));
     it.append("xYYYHello");
     assertTrue(accumulator.match(it));

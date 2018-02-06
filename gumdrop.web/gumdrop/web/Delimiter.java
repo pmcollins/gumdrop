@@ -1,17 +1,17 @@
 package gumdrop.web;
 
-import gumdrop.common.CharIterator;
+import gumdrop.common.ByteIterator;
 
 public class Delimiter implements Accumulator {
 
-  private final CharIterator delim;
+  private final ByteIterator delim;
 
   public Delimiter(String s) {
-    delim = new CharIterator(s);
+    delim = new ByteIterator(s);
   }
 
   @Override
-  public boolean match(CharIterator it) {
+  public boolean match(ByteIterator it) {
     int itPos = it.position();
     boolean out = false;
     while (it.current() == delim.current()) {
@@ -25,17 +25,13 @@ public class Delimiter implements Accumulator {
     // TODO if delim incremented {
     reset();
     it.position(itPos);
-    // }
+    // TODO }
     return out;
   }
 
   @Override
-  public void skip(CharIterator it) {
+  public void skip(ByteIterator it) {
     it.increment(delim.length());
-  }
-
-  public boolean matching() {
-    return delim.position() > 0;
   }
 
   public int length() {

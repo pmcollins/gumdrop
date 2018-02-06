@@ -1,6 +1,6 @@
 package gumdrop.test.server;
 
-import gumdrop.common.CharIterator;
+import gumdrop.common.ByteIterator;
 import gumdrop.web.MultiParser;
 import gumdrop.test.util.Test;
 
@@ -36,7 +36,7 @@ public class MultiParserTest extends Test {
 
   private void parseSinglePart() {
     String delimStr = "----WebKitFormBoundarynwAxopXoFg6rtPYX";
-    CharIterator it = new CharIterator(POST);
+    ByteIterator it = new ByteIterator(POST);
     byte[] bytes = MultiParser.parseSinglePart(delimStr, it);
     assertEquals("hello!\n", new String(bytes));
   }
