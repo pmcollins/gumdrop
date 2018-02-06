@@ -1,6 +1,6 @@
 package gumdrop.web;
 
-import gumdrop.common.CharIterator;
+import gumdrop.common.ByteIterator;
 
 public class KvAccumulator implements Accumulator {
 
@@ -13,7 +13,7 @@ public class KvAccumulator implements Accumulator {
   }
 
   @Override
-  public boolean match(CharIterator it) {
+  public boolean match(ByteIterator it) {
     w1.match(it);
     w1.skip(it);
     it.mark();
@@ -22,7 +22,7 @@ public class KvAccumulator implements Accumulator {
   }
 
   @Override
-  public void skip(CharIterator it) {
+  public void skip(ByteIterator it) {
     w2.skip(it);
   }
 

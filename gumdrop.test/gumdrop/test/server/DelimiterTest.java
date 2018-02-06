@@ -1,6 +1,6 @@
 package gumdrop.test.server;
 
-import gumdrop.common.CharIterator;
+import gumdrop.common.ByteIterator;
 import gumdrop.web.Delimiter;
 import gumdrop.test.util.Test;
 
@@ -23,27 +23,27 @@ public class DelimiterTest extends Test {
 
   private void fwdDelimiterTest() {
     Delimiter delim = new Delimiter("cde");
-    CharIterator it = new CharIterator("abcdefg");
+    ByteIterator it = new ByteIterator("abcdefg");
     assertFalse(delim.match(it));
     it.position(2);
-    assertEquals('c', it.current());
+    assertEquals('c', it.currentChar());
     assertTrue(delim.match(it));
-    assertEquals('c', it.current());
+    assertEquals('c', it.currentChar());
   }
 
   private void fwdDelimiterTest2() {
     Delimiter d = new Delimiter("cdefghijk");
-    CharIterator it = new CharIterator("abcdefg");
+    ByteIterator it = new ByteIterator("abcdefg");
     assertFalse(d.match(it));
     it.position(2);
-    assertEquals('c', it.current());
+    assertEquals('c', it.currentChar());
     assertFalse(d.match(it));
-    assertEquals('c', it.current());
+    assertEquals('c', it.currentChar());
   }
 
   private void fwdDelimiterTest3() {
     Delimiter d = new Delimiter("ccc");
-    CharIterator it = new CharIterator("abcdefg");
+    ByteIterator it = new ByteIterator("abcdefg");
     assertFalse(d.match(it));
   }
 

@@ -1,6 +1,6 @@
 package gumdrop.server.nio;
 
-import gumdrop.common.CharIterator;
+import gumdrop.common.ByteIterator;
 import gumdrop.common.HttpMethod;
 import gumdrop.common.HttpRequest;
 import gumdrop.web.Accumulator;
@@ -23,7 +23,7 @@ public class InterruptibleRequestParser implements RequestParser {
   private final Iterator<Accumulator> accumPtr;
 
   private Accumulator curr;
-  private final CharIterator it = new CharIterator();
+  private final ByteIterator it = new ByteIterator();
 
   public InterruptibleRequestParser() {
     List<Accumulator> accumulators = new ArrayList<>();
@@ -39,7 +39,6 @@ public class InterruptibleRequestParser implements RequestParser {
   public void parse(ByteBuffer bb) {
     byte[] a = new byte[bb.remaining()];
     bb.get(a);
-    System.out.println(new String(a));
     it.append(a);
     while (true) {
       if (!curr.match(it)) break;

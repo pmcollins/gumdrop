@@ -1,6 +1,6 @@
 package gumdrop.test.common;
 
-import gumdrop.common.CharIterator;
+import gumdrop.common.ByteIterator;
 import gumdrop.test.util.Test;
 import gumdrop.test.util.Asserts;
 
@@ -19,41 +19,41 @@ class CharIteratorTest extends Test {
   }
 
   private void a() {
-    CharIterator it = new CharIterator("abcdef");
-    assertEquals('a', it.current());
-    assertEquals('a', it.bump());
-    assertEquals('b', it.current());
+    ByteIterator it = new ByteIterator("abcdef");
+    assertEquals('a', it.currentChar());
+    assertEquals('a', it.bumpChar());
+    assertEquals('b', it.currentChar());
     assertEquals("a", it.substring());
     it.mark();
     it.increment();
     it.increment();
-    assertEquals('d', it.current());
+    assertEquals('d', it.currentChar());
     assertEquals("bc", it.substring());
-    assertEquals('e', it.next());
+    assertEquals('e', it.nextChar());
     it.increment();
-    assertEquals('f', it.current());
+    assertEquals('f', it.currentChar());
     it.mark();
     assertFalse(it.done());
-    it.next();
+    it.nextChar();
     assertTrue(it.done());
-    Asserts.assertThrows(it::next, IllegalStateException.class);
+    Asserts.assertThrows(it::nextChar, IllegalStateException.class);
     it.append("ghijk");
-    assertEquals('g', it.current());
+    assertEquals('g', it.currentChar());
     it.increment();
     assertEquals("fg", it.substring());
   }
 
   private void b() {
-    CharIterator it = new CharIterator("abcdef");
+    ByteIterator it = new ByteIterator("abcdef");
     int pos = it.position();
     assertEquals(0, pos);
     it.positionLast();
-    assertEquals('f', it.current());
+    assertEquals('f', it.currentChar());
     assertEquals(5, it.position());
     it.position(1);
-    assertEquals('b', it.current());
+    assertEquals('b', it.currentChar());
     it.decrement();
-    assertEquals('a', it.current());
+    assertEquals('a', it.currentChar());
     assertThrows(it::decrement, IllegalStateException.class);
   }
 

@@ -1,6 +1,6 @@
 package gumdrop.web;
 
-import gumdrop.common.CharIterator;
+import gumdrop.common.ByteIterator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +15,7 @@ public class AttributeCollectionAccumulator implements Accumulator {
   private Map<String, String> map;
 
   @Override
-  public boolean match(CharIterator it) {
+  public boolean match(ByteIterator it) {
     if (curr == null) {
       if (delimiter.match(it)) return true;
       curr = new AttributeAccumulator();
@@ -41,7 +41,7 @@ public class AttributeCollectionAccumulator implements Accumulator {
   }
 
   @Override
-  public void skip(CharIterator it) {
+  public void skip(ByteIterator it) {
     delimiter.skip(it);
   }
 

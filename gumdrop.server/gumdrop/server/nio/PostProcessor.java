@@ -1,6 +1,6 @@
 package gumdrop.server.nio;
 
-import gumdrop.common.CharIterator;
+import gumdrop.common.ByteIterator;
 import gumdrop.web.Accumulator;
 
 class PostProcessor implements Accumulator {
@@ -13,7 +13,7 @@ class PostProcessor implements Accumulator {
   }
 
   @Override
-  public boolean match(CharIterator it) {
+  public boolean match(ByteIterator it) {
     if (requestParser.getMethod().equals("POST")) {
       int contentLength = Integer.parseInt(requestParser.getAttr("Content-Length"));
       if (it.remaining() == contentLength) {
@@ -27,7 +27,7 @@ class PostProcessor implements Accumulator {
   }
 
   @Override
-  public void skip(CharIterator it) {
+  public void skip(ByteIterator it) {
   }
 
   public String getPostString() {

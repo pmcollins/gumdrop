@@ -1,6 +1,6 @@
 package gumdrop.web;
 
-import gumdrop.common.CharIterator;
+import gumdrop.common.ByteIterator;
 
 public class WordAccumulator implements Accumulator {
 
@@ -16,7 +16,7 @@ public class WordAccumulator implements Accumulator {
   }
 
   @Override
-  public boolean match(CharIterator it) {
+  public boolean match(ByteIterator it) {
     while (!it.done()) {
       if (delim.match(it)) {
         subArray = it.subArray();
@@ -30,12 +30,12 @@ public class WordAccumulator implements Accumulator {
     return false;
   }
 
-  public String getSubstring() {
-    return new String(subArray);
-  }
-
   public byte[] getSubArray() {
     return subArray;
+  }
+
+  public String getSubstring() {
+    return new String(subArray);
   }
 
   public boolean done() {
@@ -43,7 +43,7 @@ public class WordAccumulator implements Accumulator {
   }
 
   @Override
-  public void skip(CharIterator it) {
+  public void skip(ByteIterator it) {
     delim.skip(it);
   }
 

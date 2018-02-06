@@ -1,11 +1,11 @@
 package gumdrop.web;
 
-import gumdrop.common.CharIterator;
+import gumdrop.common.ByteIterator;
 
 public interface Accumulator {
 
-  boolean match(CharIterator it);
+  boolean match(ByteIterator it);
 
-  void skip(CharIterator it);
+  void skip(ByteIterator it);
 
 }
