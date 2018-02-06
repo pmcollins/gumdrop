@@ -6,7 +6,7 @@ import gumdrop.web.Accumulator;
 class PostProcessor implements Accumulator {
 
   private final RequestParser requestParser;
-  private String post;
+  private byte[] post;
 
   PostProcessor(RequestParser requestParser) {
     this.requestParser = requestParser;
@@ -31,6 +31,10 @@ class PostProcessor implements Accumulator {
   }
 
   public String getPostString() {
+    return new String(post);
+  }
+
+  public byte[] getPostBytes() {
     return post;
   }
 

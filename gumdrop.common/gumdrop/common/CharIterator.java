@@ -2,32 +2,33 @@ package gumdrop.common;
 
 public class CharIterator {
 
-  /**
-   * From CharacterIterator:
-   * Constant that is returned when the iterator has reached either the end
-   * or the beginning of the text. The value is '\\uFFFF', the "not a
-   * character" value which should not occur in any valid Unicode string.
-   */
-  public static final char DONE = '\uFFFF';
-
-  private final StringBuilder sb;
+  private final ByteBuilder bb;
   private int i;
   private int mark;
 
   public CharIterator() {
-    sb = new StringBuilder();
+    bb = new ByteBuilder();
   }
 
   public CharIterator(String str) {
-    sb = new StringBuilder(str);
+    this(str.getBytes());
+  }
+
+  public CharIterator(byte[] bytes) {
+    bb = new ByteBuilder();
+    bb.append(bytes);
   }
 
   public void append(String string) {
-    sb.append(string);
+    bb.append(string.getBytes());
+  }
+
+  public void append(byte[] bytes) {
+    bb.append(bytes);
   }
 
   public char current() {
-    return i == sb.length() ? DONE : sb.charAt(i);
+    return bb.charAt(i);
   }
 
   public void mark() {
@@ -35,7 +36,11 @@ public class CharIterator {
   }
 
   public String substring() {
-    return sb.substring(mark, i);
+    return bb.substring(mark, i);
+  }
+
+  public byte[] subArray() {
+    return bb.subarray(mark, i);
   }
 
   /**
@@ -43,15 +48,19 @@ public class CharIterator {
    * If substring() returns "abc", passing in an offset of -1 will return "ab".
    */
   public String substring(int offset) {
-    return sb.substring(mark, Math.max(mark, i + offset));
+    return bb.substring(mark, Math.max(mark, i + offset));
   }
 
-  public String tail() {
-    return sb.substring(i, sb.length());
+  public String tailString() {
+    return new String(tail());
+  }
+
+  public byte[] tail() {
+    return bb.subarray(i, bb.length());
   }
 
   public int remaining() {
-    return sb.length() - i;
+    return bb.length() - i;
   }
 
   public void increment() {
@@ -60,7 +69,7 @@ public class CharIterator {
 
   public void increment(int n) {
     int next = i + n;
-    if (next <= sb.length()) {
+    if (next <= bb.length()) {
       i = next;
     } else {
       throw new IllegalStateException("already at end of string");
@@ -79,11 +88,11 @@ public class CharIterator {
   }
 
   public boolean done() {
-    return current() == CharIterator.DONE;
+    return i == bb.length();
   }
 
   public int length() {
-    return sb.length();
+    return bb.length();
   }
 
   public void reset() {
@@ -91,7 +100,7 @@ public class CharIterator {
   }
 
   public void positionLast() {
-    i = sb.length() - 1;
+    i = bb.length() - 1;
   }
 
   public int position() {

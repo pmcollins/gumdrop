@@ -4,7 +4,7 @@ import gumdrop.common.CharIterator;
 
 public class MultiParser {
 
-  public static String parseSinglePart(String delimStr, CharIterator it) {
+  public static byte[] parseSinglePart(String delimStr, CharIterator it) {
     Delimiter crlf = new Delimiter("\r\n");
     KvAccumulator cd = new KvAccumulator(": ", ";");
     KvAccumulator name = new KvAccumulator("=", ";");
@@ -21,7 +21,7 @@ public class MultiParser {
     }
     WordAccumulator content = new WordAccumulator("\r\n--" + delimStr + "--");
     content.match(it);
-    return content.getVal();
+    return content.getSubArray();
   }
 
   public static String parseBoundary(String header) {

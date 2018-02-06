@@ -1,8 +1,6 @@
-package gumdrop.server.nio;
+package gumdrop.web;
 
 import gumdrop.common.CharIterator;
-import gumdrop.web.Accumulator;
-import gumdrop.web.WordAccumulator;
 
 public class AttributeAccumulator implements Accumulator {
 
@@ -30,11 +28,11 @@ public class AttributeAccumulator implements Accumulator {
   }
 
   public String getKey() {
-    return key.getVal();
+    return key.getSubstring();
   }
 
   public String getValue() {
-    return value.getVal();
+    return value.getSubstring();
   }
 
 }

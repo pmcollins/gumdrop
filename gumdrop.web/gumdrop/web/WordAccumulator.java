@@ -4,7 +4,7 @@ import gumdrop.common.CharIterator;
 
 public class WordAccumulator implements Accumulator {
 
-  private String val;
+  private byte[] subArray;
   private final Delimiter delim;
 
   public WordAccumulator(char stopChar) {
@@ -19,7 +19,7 @@ public class WordAccumulator implements Accumulator {
   public boolean match(CharIterator it) {
     while (!it.done()) {
       if (delim.match(it)) {
-        val = it.substring();
+        subArray = it.subArray();
         return true;
       }
       if (it.remaining() < delim.length()) {
@@ -30,12 +30,16 @@ public class WordAccumulator implements Accumulator {
     return false;
   }
 
-  public String getVal() {
-    return val;
+  public String getSubstring() {
+    return new String(subArray);
+  }
+
+  public byte[] getSubArray() {
+    return subArray;
   }
 
   public boolean done() {
-    return val != null;
+    return subArray != null;
   }
 
   @Override

@@ -24,11 +24,11 @@ public class WordAccumulatorTest extends Test {
   private void wordAccumulator() {
     WordAccumulator accumulator = new WordAccumulator("\r\n");
     assertTrue(accumulator.match(new CharIterator("XXX\r\nZZZ")));
-    String val = accumulator.getVal();
+    String val = accumulator.getSubstring();
     assertEquals("XXX", val);
     CharIterator it = new CharIterator("XXX\rYYY\r\nZZZ");
     assertTrue(accumulator.match(it));
-    assertEquals("XXX\rYYY", accumulator.getVal());
+    assertEquals("XXX\rYYY", accumulator.getSubstring());
     assertEquals('\r', it.current());
   }
 
@@ -38,7 +38,7 @@ public class WordAccumulatorTest extends Test {
     assertFalse(accumulator.match(it));
     it.append("\n");
     assertTrue(accumulator.match(it));
-    assertEquals("XXX", accumulator.getVal());
+    assertEquals("XXX", accumulator.getSubstring());
   }
 
   private void wordAccumulator3() {
@@ -47,7 +47,7 @@ public class WordAccumulatorTest extends Test {
     assertFalse(accumulator.match(it));
     it.append("xYYYHello");
     assertTrue(accumulator.match(it));
-    assertEquals("XXXHellxYYY", accumulator.getVal());
+    assertEquals("XXXHellxYYY", accumulator.getSubstring());
   }
 
 }
