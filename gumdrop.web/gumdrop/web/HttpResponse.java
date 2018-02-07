@@ -1,11 +1,11 @@
 package gumdrop.web;
 
-public class Response {
+public class HttpResponse {
 
   private final HttpResponseHeader header;
   private byte[] bytes;
 
-  public Response(HttpResponseHeader header) {
+  public HttpResponse(HttpResponseHeader header) {
     this.header = header;
   }
 
