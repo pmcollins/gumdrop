@@ -4,7 +4,7 @@ import gumdrop.common.Request;
 
 public interface Controller {
 
-  Response process(Request request);
+  HttpResponse process(Request request);
 
   void setPathArgs(String[] matches);
 
