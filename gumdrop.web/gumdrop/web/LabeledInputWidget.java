@@ -10,7 +10,6 @@ abstract class LabeledInputWidget extends Widget {
   private boolean autofocus;
   private String value;
 
-
   LabeledInputWidget(String type, Enum<?> name, String label) {
     this(type, name.toString().toLowerCase(), label);
   }

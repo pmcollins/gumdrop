@@ -5,13 +5,13 @@ import java.util.List;
 
 import static gumdrop.web.TagLib.div;
 
-public class ButtonPanel extends Widget {
+public class ButtonPanelWidget extends Widget {
 
   private List<Buildable> list = new ArrayList<>();
-  private SubmitButton submitButton;
+  private SubmitButtonWidget submitButtonWidget;
 
-  public ButtonPanel(String submitText) {
-    submitButton = new SubmitButton(submitText);
+  public ButtonPanelWidget(String submitText) {
+    submitButtonWidget = new SubmitButtonWidget(submitText);
   }
 
   public void addElement(Buildable buildable) {
@@ -24,12 +24,12 @@ public class ButtonPanel extends Widget {
     for (Buildable buildable : list) {
       out.add(buildable);
     }
-    out.add(submitButton);
+    out.add(submitButtonWidget);
     return out;
   }
 
   public void disableSubmit(boolean disable) {
-    submitButton.disable(disable);
+    submitButtonWidget.disable(disable);
   }
 
 }

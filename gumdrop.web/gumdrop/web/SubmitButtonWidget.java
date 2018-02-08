@@ -2,11 +2,11 @@ package gumdrop.web;
 
 import static gumdrop.web.TagLib.input;
 
-class SubmitButton extends Widget {
+class SubmitButtonWidget extends Widget {
 
   private final Tag button;
 
-  SubmitButton(String buttonText) {
+  SubmitButtonWidget(String buttonText) {
     button = input().attr("type", "submit").attr("value", buttonText);
   }
 

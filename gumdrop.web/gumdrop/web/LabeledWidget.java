@@ -1,6 +1,7 @@
 package gumdrop.web;
 
-import static gumdrop.web.TagLib.div;
+import static gumdrop.web.TagLib.label;
+import static gumdrop.web.TagLib.span;
 import static gumdrop.web.TagLib.text;
 
 class LabeledWidget extends Widget {
@@ -15,10 +16,7 @@ class LabeledWidget extends Widget {
 
   @Override
   protected Buildable getBuildable() {
-    return div(
-      div(text(label)).attr("class", "label"),
-      div(widget).attr("class", "value")
-    ).attr("class", "labeled-widget");
+    return new Buildables(label(label), widget);
   }
 
 }
