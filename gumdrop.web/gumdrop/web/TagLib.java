@@ -82,6 +82,10 @@ public class TagLib {
     return tag("label", children);
   }
 
+  public static Tag label(String text) {
+    return tag("label", text);
+  }
+
   public static Tag input() {
     return tag("input");
   }
@@ -94,6 +98,10 @@ public class TagLib {
 
   public static Tag header(Buildable... children) {
     return tag("header", children);
+  }
+
+  public static Tag header(String text) {
+    return tag("header", text);
   }
 
   public static Tag footer(Buildable... children) {
@@ -202,6 +210,18 @@ public class TagLib {
 
   public static Tag blockquote(String text) {
     return tag("blockquote", text);
+  }
+
+  public static Tag aside(String text) {
+    return tag("aside", text);
+  }
+
+  public static Tag section(Buildable... buildables) {
+    return tag("section", buildables);
+  }
+
+  public static Tag main(Buildable... buildables) {
+    return tag("main", buildables);
   }
 
 }

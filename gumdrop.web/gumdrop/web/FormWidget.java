@@ -1,37 +1,40 @@
 package gumdrop.web;
 
-import static gumdrop.web.TagLib.div;
 import static gumdrop.web.TagLib.form;
 
 public class FormWidget extends Widget {
 
   private final String formAction;
+  private final ButtonPanelWidget buttonPanelWidget;
   private Buildable[] children;
-  private ButtonPanel buttonPanel;
+  private final Tag form;
 
   public FormWidget(String formAction, String submitText) {
-    this.formAction = formAction;
-    buttonPanel = new ButtonPanel(submitText);
+    this(formAction, new ButtonPanelWidget(submitText));
   }
 
-  public FormWidget(String formAction, ButtonPanel buttonPanel) {
+  public FormWidget(String formAction, ButtonPanelWidget buttonPanelWidget) {
     this.formAction = formAction;
-    this.buttonPanel = buttonPanel;
+    this.buttonPanelWidget = buttonPanelWidget;
+    form = form().attr("method", "post");
   }
 
   public void setChildren(Buildable... children) {
     this.children = children;
   }
 
+  public void attr(String name, String val) {
+    form.attr(name, val);
+  }
+
   @Override
   protected Buildable getBuildable() {
-    Tag form = form().attr("method", "post").attr("action", formAction);
+    attr("action", formAction);
     if (children != null) {
       form.add(children);
     }
-    form.add(buttonPanel);
-    return div(form);
+    form.add(buttonPanelWidget);
+    return form;
   }
 
 }
-
