@@ -224,4 +224,16 @@ public class TagLib {
     return tag("main", buildables);
   }
 
+  public static Tag pre(String text) {
+    return tag("pre", text);
+  }
+
+  public static Tag fieldset(Buildable... buildables) {
+    return tag("fieldset", buildables);
+  }
+
+  public static Tag legend(String  text) {
+    return tag("legend", text);
+  }
+
 }
