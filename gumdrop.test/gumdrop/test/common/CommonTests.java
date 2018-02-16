@@ -14,7 +14,7 @@ public class CommonTests extends TestSuite {
   public void run() throws Exception {
     test(
       new ByteBuilderTest(),
-      new CharIteratorTest(),
+      new ByteIteratorTest(),
       new CreatedInstanceTest(),
       new ServerTests(),
       new WebTests()

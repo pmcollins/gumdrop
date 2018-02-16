@@ -8,7 +8,6 @@ public class FormWidget extends Widget {
   private final ButtonPanelWidget buttonPanelWidget;
   private Buildable[] children;
   private final Tag form;
-  private boolean suppressGrid;
 
   public FormWidget(String formAction, String submitText) {
     this(formAction, new ButtonPanelWidget(submitText));
@@ -24,20 +23,10 @@ public class FormWidget extends Widget {
     this.children = children;
   }
 
-  public void attr(String name, String val) {
-    form.attr(name, val);
-  }
-
-  public void suppressGrid() {
-    suppressGrid = true;
-  }
-
   @Override
   protected Buildable getBuildable() {
-    attr("action", formAction);
-    if (!suppressGrid) {
-      attr("class", "grid");
-    }
+    form.attr("action", formAction);
+    form.attr("class", "grid");
     if (children != null) {
       form.add(children);
     }

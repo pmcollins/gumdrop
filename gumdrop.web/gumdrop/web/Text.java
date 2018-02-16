@@ -4,8 +4,9 @@ public class Text implements Buildable {
 
   private final String text;
 
-  public Text(String text) {
-    this.text = text;
+  Text(String text) {
+    // TODO replace this with a ByteBuilder implementation
+    this.text = text.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
   }
 
   @Override
