@@ -1,6 +1,7 @@
 package gumdrop.test.web;
 
 import gumdrop.common.ValidationFailure;
+import gumdrop.common.ValidationFailures;
 import gumdrop.common.Validator;
 import gumdrop.test.util.Test;
 import gumdrop.web.FormReadResult;
@@ -44,9 +45,9 @@ public class HttpFormReaderTest extends Test {
     reader.addSetter("last", UserFormData::setLast);
     FormReadResult<UserFormData> read = reader.read("first=f&last=l");
     assertTrue(read.hasValidationFailures());
-    List<ValidationFailure> failures = read.getValidationFailures();
-    assertEquals(1, failures.size());
-    ValidationFailure validationFailure = failures.get(0);
+    ValidationFailures failures = read.getValidationFailures();
+    assertEquals(1, failures.getList().size());
+    ValidationFailure validationFailure = failures.getList().get(0);
     assertEquals("f", validationFailure.getValue());
   }
 

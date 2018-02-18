@@ -1,14 +1,12 @@
 package gumdrop.web;
 
-import gumdrop.common.ValidationFailure;
-
-import java.util.List;
+import gumdrop.common.ValidationFailures;
 
 public interface ReadResult<T> {
 
   T getFormObject();
 
-  List<ValidationFailure> getValidationFailures();
+  ValidationFailures getValidationFailures();
 
   boolean hasValidationFailures();
 

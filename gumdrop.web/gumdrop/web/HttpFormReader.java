@@ -22,6 +22,10 @@ public class HttpFormReader<T> implements FormReader<T> {
     addSetter(e.toString().toLowerCase(), setter);
   }
 
+  protected void addSetter(Enum<?> e, BiConsumer<T, String> setter, Validator<String> validator) {
+    addSetter(e.toString().toLowerCase(), setter, validator);
+  }
+
   public void addSetter(String key, BiConsumer<T, String> setter) {
     builder.addSetter(key, setter);
   }
