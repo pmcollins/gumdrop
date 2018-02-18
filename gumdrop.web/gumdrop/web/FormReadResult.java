@@ -1,17 +1,15 @@
 package gumdrop.web;
 
 import gumdrop.common.ValidationFailure;
-
-import java.util.ArrayList;
-import java.util.List;
+import gumdrop.common.ValidationFailures;
 
 public class FormReadResult<T> implements ReadResult<T> {
 
-  private final List<ValidationFailure> validationFailures = new ArrayList<>();
+  private final ValidationFailures vf = new ValidationFailures();
   private T t;
 
   void addFailure(ValidationFailure failure) {
-    validationFailures.add(failure);
+    vf.add(failure);
   }
 
   @Override
@@ -24,13 +22,13 @@ public class FormReadResult<T> implements ReadResult<T> {
   }
 
   @Override
-  public List<ValidationFailure> getValidationFailures() {
-    return validationFailures;
+  public ValidationFailures getValidationFailures() {
+    return vf;
   }
 
   @Override
   public boolean hasValidationFailures() {
-    return !validationFailures.isEmpty();
+    return !vf.isEmpty();
   }
 
 }

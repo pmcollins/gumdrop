@@ -236,4 +236,8 @@ public class TagLib {
     return tag("legend", text);
   }
 
+  public static Tag meta() {
+    return tag("meta");
+  }
+
 }
