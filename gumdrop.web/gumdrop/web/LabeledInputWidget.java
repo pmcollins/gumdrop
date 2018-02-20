@@ -9,6 +9,7 @@ abstract class LabeledInputWidget extends Widget {
   private final String label;
   private boolean autofocus;
   private String value;
+  private boolean disabled;
 
   LabeledInputWidget(String type, Enum<?> name, String label) {
     this(type, name.toString().toLowerCase(), label);
@@ -29,11 +30,18 @@ abstract class LabeledInputWidget extends Widget {
     this.value = value;
   }
 
+  public void setDisabled(boolean disabled) {
+    this.disabled = disabled;
+  }
+
   @Override
   protected Buildable getBuildable() {
     Tag input = input().attr("type", type).attr("name", name);
     if (value != null) {
       input.attr("value", value);
+    }
+    if (disabled) {
+      input.attr("disabled");
     }
     if (autofocus) {
       input.attr("autofocus");
