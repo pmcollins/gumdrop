@@ -1,13 +1,13 @@
 package gumdrop.common;
 
+/**
+ * Binds a Builder object to an instance whose type corresponds to the Builder
+ */
 public class InstanceBuilder<T> {
 
   private final Builder<T> builder;
   private final T t;
 
-  /**
-   * Binds a Builder object to an instance whose type corresponds to the Builder
-   */
   public InstanceBuilder(Builder<T> builder) {
     this.builder = builder;
     t = builder.construct();

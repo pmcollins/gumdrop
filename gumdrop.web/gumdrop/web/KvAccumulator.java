@@ -4,34 +4,34 @@ import gumdrop.common.ByteIterator;
 
 public class KvAccumulator implements Accumulator {
 
-  private final WordAccumulator w1;
-  private final WordAccumulator w2;
+  private final WordAccumulator key;
+  private final WordAccumulator value;
 
   KvAccumulator(String delim1, String delim2) {
-    w1 = new WordAccumulator(delim1);
-    w2 = new WordAccumulator(delim2);
+    key = new WordAccumulator(delim1);
+    value = new WordAccumulator(delim2);
   }
 
   @Override
   public boolean match(ByteIterator it) {
-    w1.match(it);
-    w1.skip(it);
+    key.match(it);
+    key.skip(it);
     it.mark();
-    w2.match(it);
+    value.match(it);
     return true;
   }
 
   @Override
   public void skip(ByteIterator it) {
-    w2.skip(it);
+    value.skip(it);
   }
 
   String getKey() {
-    return w1.getSubstring();
+    return key.getSubstring();
   }
 
   String getValue() {
-    return w2.getSubstring();
+    return value.getSubstring();
   }
 
 }

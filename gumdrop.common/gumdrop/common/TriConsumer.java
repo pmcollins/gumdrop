@@ -1,6 +1,5 @@
 package gumdrop.common;
 
-
 /**
  * @param <M> almost always a Map, but not necessarily
  * @param <V> the value to be put in the Map
