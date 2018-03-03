@@ -2,9 +2,8 @@
 
 A small library for turning JSON into POJOs and vice-versa.
 
-This library doesn't use reflection, or require annotations: it uses a plain old imperative API and has no
-dependencies. You wire up the relationships between JSON keys and getters/setters and have complete, imperative
-control over how things work.
+This library doesn't use reflection, or require annotations: it uses a plain old imperative API and has no dependencies.
+You wire up the relationships between JSON keys and getters/setters and have complete control.
 
 For example, given a `Person` class:
 
@@ -99,10 +98,10 @@ Then convert `Person` instances to and from JSON:
 
 ```
     Person p = new Person();
-    p.setName("Bilbo Baggins");
-    p.setAge(110);
+    p.setName("Bilbo");
+    p.setAge(50);
     String json = personBuilder.toJson(p);
-    TestUtil.assertEquals("{\"name\":\"Bilbo Baggins\",\"age\":110}", json);
+    TestUtil.assertEquals("{\"name\":\"Bilbo\",\"age\":50}", json);
     Person fromJson = personBuilder.fromJson(json);
     TestUtil.assertEquals(p, fromJson);
 ```
@@ -147,8 +146,7 @@ Now the entire thing looks like this:
     assertEquals(person, fromJson);
 ```
 
-Wait, but those lambdas look kind of tricky, and regardless, we don't want to rewrite them. Is there
-another way? _Yes_. Instead of using lambas, consider creating a `Converter`.
+If those lambdas look kind of tricky, use a `Converter` instead
 
 ```
 class InstantConverter implements Converter<Instant> {
@@ -168,7 +166,7 @@ class InstantConverter implements Converter<Instant> {
 }
 ```
 
-And pass it into `JsonBuilder`:
+...and pass it into `JsonBuilder`:
 
 ```
     personBuilder.addField(

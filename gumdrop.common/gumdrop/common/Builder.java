@@ -6,7 +6,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
 /**
- * A creator of objects of type T. Encapsulates a constructor, and setters.
+ * A creator of objects of type T. Encapsulates a constructor and setters.
  */
 public class Builder<T> {
 
