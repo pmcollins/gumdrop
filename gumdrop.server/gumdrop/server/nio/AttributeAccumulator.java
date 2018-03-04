@@ -1,6 +1,8 @@
-package gumdrop.web;
+package gumdrop.server.nio;
 
 import gumdrop.common.ByteIterator;
+import gumdrop.web.Accumulator;
+import gumdrop.web.WordAccumulator;
 
 public class AttributeAccumulator implements Accumulator {
 

@@ -4,7 +4,6 @@ import gumdrop.common.ByteIterator;
 import gumdrop.common.HttpMethod;
 import gumdrop.common.HttpRequest;
 import gumdrop.web.Accumulator;
-import gumdrop.web.AttributeCollectionAccumulator;
 import gumdrop.web.WordAccumulator;
 
 import java.nio.ByteBuffer;

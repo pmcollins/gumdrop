@@ -1,7 +1,7 @@
 package gumdrop.test.server;
 
 import gumdrop.common.ByteIterator;
-import gumdrop.web.MultiParser;
+import gumdrop.web.MultiPartParser;
 import gumdrop.test.util.Test;
 
 import static gumdrop.test.util.Asserts.assertEquals;
@@ -30,14 +30,14 @@ public class MultiParserTest extends Test {
   }
 
   private void parseBoundary() {
-    String boundary = MultiParser.parseBoundary(MULTI);
+    String boundary = MultiPartParser.parseMultipartHeader(MULTI);
     assertEquals("----WebKitFormBoundarynwAxopXoFg6rtPYX", boundary);
   }
 
   private void parseSinglePart() {
     String delimStr = "----WebKitFormBoundarynwAxopXoFg6rtPYX";
     ByteIterator it = new ByteIterator(POST);
-    byte[] bytes = MultiParser.parseSinglePart(delimStr, it);
+    byte[] bytes = MultiPartParser.parseSinglePart(delimStr, it);
     assertEquals("hello!\n", new String(bytes));
   }
 
