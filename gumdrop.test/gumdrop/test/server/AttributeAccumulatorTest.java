@@ -1,8 +1,8 @@
 package gumdrop.test.server;
 
 import gumdrop.common.ByteIterator;
-import gumdrop.web.AttributeAccumulator;
-import gumdrop.web.AttributeCollectionAccumulator;
+import gumdrop.server.nio.AttributeAccumulator;
+import gumdrop.server.nio.AttributeCollectionAccumulator;
 import gumdrop.test.util.Test;
 
 import java.util.Map;

@@ -2,7 +2,7 @@ package gumdrop.web;
 
 import gumdrop.common.ByteIterator;
 
-public class MultiParser {
+public class MultiPartParser {
 
   public static byte[] parseSinglePart(String delimStr, ByteIterator it) {
     Delimiter crlf = new Delimiter("\r\n");
@@ -24,10 +24,44 @@ public class MultiParser {
     return content.getSubArray();
   }
 
-  public static String parseBoundary(String header) {
+  public static String parseMultipartHeader(String header) {
     // e.g. Content-Type: multipart/form-data; boundary=----WebKitFormBoundarynwAxopXoFg6rtPYX
     int i = header.indexOf('=');
     return header.substring(i + 1, header.length());
+  }
+
+  private static class KvAccumulator implements Accumulator {
+
+    private final WordAccumulator key;
+    private final WordAccumulator value;
+
+    KvAccumulator(String delim1, String delim2) {
+      key = new WordAccumulator(delim1);
+      value = new WordAccumulator(delim2);
+    }
+
+    @Override
+    public boolean match(ByteIterator it) {
+      key.match(it);
+      key.skip(it);
+      it.mark();
+      value.match(it);
+      return true;
+    }
+
+    @Override
+    public void skip(ByteIterator it) {
+      value.skip(it);
+    }
+
+    String getKey() {
+      return key.getSubstring();
+    }
+
+    String getValue() {
+      return value.getSubstring();
+    }
+
   }
 
 }
