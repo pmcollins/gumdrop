@@ -1,14 +1,15 @@
 package gumdrop.test.web;
 
 import gumdrop.test.util.Test;
-import gumdrop.web.HtmlEscapist;
+import gumdrop.web.HttpStringUtil;
 
 import static gumdrop.test.util.Asserts.assertEquals;
+import static gumdrop.test.util.Asserts.assertNull;
 
-public class HtmlEscapistTest extends Test {
+public class HtmlStringUtilTest extends Test {
 
   public static void main(String[] args) {
-    new HtmlEscapistTest().run();
+    new HtmlStringUtilTest().run();
   }
 
   @Override
@@ -18,33 +19,41 @@ public class HtmlEscapistTest extends Test {
     parseString();
     parseMultiEntityString();
     parseSpaces();
+
+    stripTags();
   }
 
   private void parseNumericEntity() {
     String entity = "%40";
-    String c = HtmlEscapist.parseEntity(entity);
+    String c = HttpStringUtil.parseEntity(entity);
     assertEquals("@", c);
   }
 
   private void parseHexEntity() {
-    String c = HtmlEscapist.parseEntity("%2A");
+    String c = HttpStringUtil.parseEntity("%2A");
     assertEquals("*", c);
   }
 
   private void parseString() {
     String s = "foo%40bar";
-    String parsed = HtmlEscapist.unescape(s);
+    String parsed = HttpStringUtil.unescape(s);
     assertEquals("foo@bar", parsed);
   }
 
   private void parseMultiEntityString() {
-    String parsed = HtmlEscapist.unescape("aaa%3dbbb%26ccc%3Dddd");
+    String parsed = HttpStringUtil.unescape("aaa%3dbbb%26ccc%3Dddd");
     assertEquals("aaa=bbb&ccc=ddd", parsed);
   }
 
   private void parseSpaces() {
-    String unescaped = HtmlEscapist.unescape("aaa+bbb");
+    String unescaped = HttpStringUtil.unescape("aaa+bbb");
     assertEquals("aaa bbb", unescaped);
+  }
+
+  private void stripTags() {
+    String replaced = HttpStringUtil.stripTags("<hello>");
+    assertEquals("&lt;hello&gt;", replaced);
+    assertNull(HttpStringUtil.stripTags(null));
   }
 
 }

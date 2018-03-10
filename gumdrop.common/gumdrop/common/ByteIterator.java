@@ -84,7 +84,7 @@ public class ByteIterator {
     return (char) bump();
   }
 
-  public byte bump() {
+  private byte bump() {
     byte out = current();
     increment();
     return out;
@@ -94,7 +94,7 @@ public class ByteIterator {
     return (char) next();
   }
 
-  public byte next() {
+  private byte next() {
     increment();
     return current();
   }
