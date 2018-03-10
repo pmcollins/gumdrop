@@ -6,7 +6,7 @@ public class Text implements Buildable {
 
   Text(String text) {
     // TODO replace this with a ByteBuilder implementation
-    this.text = text.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    this.text = HttpStringUtil.stripTags(text);
   }
 
   @Override
