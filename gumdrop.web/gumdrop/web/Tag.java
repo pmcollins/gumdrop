@@ -49,7 +49,7 @@ public class Tag implements Buildable {
     return this;
   }
 
-  public Tag cssClass(String cssClass) {
+  public Tag cls(String cssClass) {
     return attr("class", cssClass);
   }
 
