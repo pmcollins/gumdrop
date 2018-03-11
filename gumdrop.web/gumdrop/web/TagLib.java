@@ -240,4 +240,8 @@ public class TagLib {
     return tag("meta");
   }
 
+  public static Tag hr() {
+    return tag("hr");
+  }
+
 }
