@@ -17,10 +17,10 @@ import java.util.Map;
 import static gumdrop.test.util.Asserts.assertEquals;
 import static gumdrop.test.util.Asserts.assertNotNull;
 
-class CreatedInstanceTest extends Test {
+class BuilderTests extends Test {
 
   public static void main(String[] args) {
-    new CreatedInstanceTest().run();
+    new BuilderTests().run();
   }
 
   @Override

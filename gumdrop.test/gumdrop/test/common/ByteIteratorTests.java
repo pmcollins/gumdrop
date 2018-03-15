@@ -6,10 +6,10 @@ import gumdrop.test.util.Asserts;
 
 import static gumdrop.test.util.Asserts.*;
 
-class ByteIteratorTest extends Test {
+class ByteIteratorTests extends Test {
 
   public static void main(String[] args) {
-    new ByteIteratorTest().run();
+    new ByteIteratorTests().run();
   }
 
   @Override

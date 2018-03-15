@@ -37,22 +37,22 @@ public class HttpFormReader<T> implements FormReader<T> {
 
   @Override
   public FormReadResult<T> read(String q) {
-    InstanceBuilder<T> instance = new InstanceBuilder<>(builder);
+    InstanceBuilder<T> instanceBuilder = new InstanceBuilder<>(builder);
     String[] pairs = q.split("&");
     FormReadResult<T> out = new FormReadResult<>();
     for (String pair : pairs) {
-      Optional<ValidationFailure> validationFailure = parsePair(instance, pair);
+      Optional<ValidationFailure> validationFailure = parsePair(instanceBuilder, pair);
       validationFailure.ifPresent(out::addFailure);
     }
-    out.setT(instance.getObject());
+    out.setT(instanceBuilder.getObject());
     return out;
   }
 
-  private Optional<ValidationFailure> parsePair(InstanceBuilder<T> instance, String pair) {
+  private Optional<ValidationFailure> parsePair(InstanceBuilder<T> instanceBuilder, String pair) {
     int idx = pair.indexOf('=');
     String key = HttpStringUtil.unescape(pair.substring(0, idx));
     String value = HttpStringUtil.unescape(pair.substring(idx + 1, pair.length()));
-    instance.applyString(key, value);
+    instanceBuilder.applyString(key, value);
     Validator<String> validator = validators.get(key);
     return validator == null ? Optional.empty() : validator.validate(value);
   }

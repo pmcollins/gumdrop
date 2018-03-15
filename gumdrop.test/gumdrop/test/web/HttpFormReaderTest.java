@@ -7,6 +7,7 @@ import gumdrop.test.util.Test;
 import gumdrop.web.FormReadResult;
 import gumdrop.web.HttpFormReader;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static gumdrop.test.util.Asserts.assertEquals;
@@ -22,6 +23,7 @@ public class HttpFormReaderTest extends Test {
   public void run() {
     simple();
     invalid();
+    multi();
   }
 
   private void simple() {
@@ -81,6 +83,36 @@ public class HttpFormReaderTest extends Test {
       this.email = email;
     }
 
+  }
+
+  private void multi() {
+    String post = "f=rh%2Fpython%2Ftransformation.py&f=rh%2Fpython%2Fdbutil.py&f=rh%2Fpython%2Finserter.py&" +
+      "f=rh%2Fpython%2Ftests.py&f=rh%2Fpython%2Fmain.py&f=rh%2FREADME.md&f=rh%2Fcsv%2FScoring.csv&" +
+      "f=rh%2Fcsv%2FCoaches.csv&f=rh%2Fcsv%2FAwardsPlayers.csv&f=rh%2Fcsv%2FMaster.csv&f=rh%2Foutput.txt&" +
+      "f=rh%2Fsql%2Ftop-coach-players-inline.sql&f=rh%2Fsql%2Fcreate-awards-players.sql&" +
+      "f=rh%2Fsql%2Fcreate-view-yearly-player-award-count.sql&f=rh%2Fsql%2Fcreate-view-top-coaches.sql&" +
+      "f=rh%2Fsql%2Fcreate-view-top-award-players.sql&f=rh%2Fsql%2Ftop-coach-players.sql&" +
+      "f=rh%2Fsql%2Fcreate-view-top-yearly-award-counts.sql&f=rh%2Fsql%2Fcreate-coaches.sql&" +
+      "f=rh%2Fsql%2Fcreate-player-teams.sql&f=rh%2Fsql%2Fcreate-master.sql&f=rh%2Fsql%2Fcreate-points-summary.sql&" +
+      "f=rh%2Fsql%2Fcreate-view-top-coach-wins.sql&f=rh%2Fsql%2Fcreate-proc-player-rankings.sql&" +
+      "f=rh%2Fsql%2Fcoach-ranking.sql";
+    HttpFormReader<FileFormData> reader = new HttpFormReader<>(FileFormData::new);
+    reader.addSetter("f", FileFormData::addFileName);
+    FormReadResult<FileFormData> read = reader.read(post);
+    FileFormData formObject = read.getFormObject();
+    List<String> fileNames = formObject.getFileNames();
+    assertTrue(fileNames.size() > 1);
+    System.out.println("fileNames = [" + fileNames + "]");
+  }
+
+  private static class FileFormData {
+    private final List<String> fileNames = new ArrayList<>();
+    void addFileName(String fileName) {
+      fileNames.add(fileName);
+    }
+    public List<String> getFileNames() {
+      return fileNames;
+    }
   }
 
 }
