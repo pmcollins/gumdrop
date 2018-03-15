@@ -5,10 +5,10 @@ import gumdrop.test.util.Test;
 
 import static gumdrop.test.util.Asserts.assertEquals;
 
-public class ByteBuilderTest extends Test {
+public class ByteBuilderTests extends Test {
 
   public static void main(String[] args) {
-    new ByteBuilderTest().run();
+    new ByteBuilderTests().run();
   }
 
   @Override

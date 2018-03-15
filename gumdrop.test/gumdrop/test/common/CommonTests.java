@@ -13,9 +13,9 @@ public class CommonTests extends TestSuite {
   @Override
   public void run() throws Exception {
     test(
-      new ByteBuilderTest(),
-      new ByteIteratorTest(),
-      new CreatedInstanceTest(),
+      new ByteBuilderTests(),
+      new ByteIteratorTests(),
+      new BuilderTests(),
       new ServerTests(),
       new WebTests()
     );
