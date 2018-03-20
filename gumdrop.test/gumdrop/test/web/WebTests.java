@@ -13,8 +13,12 @@ public class WebTests extends TestSuite {
     test(
       new HtmlStringUtilTest(),
       new HttpFormReaderTest(),
-      new WebTests(),
-      new MethodDispatcherTest()
+      new DispatcherTest(),
+      new MethodDispatcherTest(),
+      new PathBuilderTest(),
+      new PatternTest(),
+      new StaticControllerTest(),
+      new StringUtilTest()
     );
   }
 

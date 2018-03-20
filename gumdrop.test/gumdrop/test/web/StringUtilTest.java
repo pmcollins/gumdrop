@@ -7,21 +7,21 @@ import static gumdrop.test.util.Asserts.assertEquals;
 
 public class StringUtilTest extends Test {
 
+  private enum Foo {
+    ONE,
+    TWO_THREE,
+    A_B
+  }
+
   public static void main(String[] args) {
     new StringUtilTest().run();
   }
 
   @Override
   public void run() {
-    assertEquals("One", StringUtil.toTitleCase(Type.ONE));
-    assertEquals("Two Three", StringUtil.toTitleCase(Type.TWO_THREE));
-    assertEquals("A B", StringUtil.toTitleCase(Type.A_B));
-  }
-
-  private enum Type {
-    ONE,
-    TWO_THREE,
-    A_B
+    assertEquals("One", StringUtil.toTitleCase(Foo.ONE));
+    assertEquals("Two Three", StringUtil.toTitleCase(Foo.TWO_THREE));
+    assertEquals("A B", StringUtil.toTitleCase(Foo.A_B));
   }
 
 }
