@@ -15,6 +15,7 @@ public class StaticController implements Controller {
 
   private final String dir;
   private String path;
+  private String[] matches;
 
   public StaticController(String dir) {
     this.dir = dir;
@@ -26,7 +27,13 @@ public class StaticController implements Controller {
 
   @Override
   public void setPathArgs(String[] matches) {
+    this.matches = matches;
     path = matches[0];
+  }
+
+  @Override
+  public String[] getPathArgs() {
+    return matches;
   }
 
   @Override

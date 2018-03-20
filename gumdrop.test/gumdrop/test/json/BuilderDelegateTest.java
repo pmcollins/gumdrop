@@ -2,7 +2,6 @@ package gumdrop.test.json;
 
 import gumdrop.json.BuilderDelegate;
 import gumdrop.json.JsonReader;
-import gumdrop.test.*;
 import gumdrop.test.pojo.FullNamePerson;
 import gumdrop.test.pojo.Name;
 import gumdrop.test.pojo.Room;
