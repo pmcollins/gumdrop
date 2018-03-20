@@ -6,5 +6,4 @@ module gumdrop.test {
   requires gumdrop.server;
   requires gumdrop.json;
   requires gumdrop.web;
-  requires java.sql;
 }

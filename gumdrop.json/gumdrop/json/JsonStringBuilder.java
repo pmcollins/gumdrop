@@ -1,4 +1,4 @@
 package gumdrop.json;
 
-public class JsonStringBuilder {
+class JsonStringBuilder {
 }

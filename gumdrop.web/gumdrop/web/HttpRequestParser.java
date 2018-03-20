@@ -3,7 +3,7 @@ package gumdrop.web;
 import gumdrop.common.http.HttpMethod;
 import gumdrop.common.http.HttpRequest;
 
-public class HttpRequestParser {
+class HttpRequestParser {
 
   private final String[] lines;
 

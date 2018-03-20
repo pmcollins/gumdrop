@@ -2,11 +2,11 @@ package gumdrop.web;
 
 public class TagLib {
 
-  public static Tag tag(String name, Buildable... children) {
+  private static Tag tag(String name, Buildable... children) {
     return new Tag(name).add(children);
   }
 
-  public static Tag tag(String name, String child) {
+  private static Tag tag(String name, String child) {
     return new Tag(name).add(text(child));
   }
 
@@ -136,7 +136,7 @@ public class TagLib {
     return h3(text(text));
   }
 
-  public static Tag h4(Buildable... children) {
+  private static Tag h4(Buildable... children) {
     return tag("h4", children);
   }
 

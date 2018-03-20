@@ -77,7 +77,7 @@ public class InterruptibleRequestParser implements RequestParser {
     return postProcessor.getPostString();
   }
 
-  public byte[] getPostBytes() {
+  private byte[] getPostBytes() {
     return postProcessor.getPostBytes();
   }
 
