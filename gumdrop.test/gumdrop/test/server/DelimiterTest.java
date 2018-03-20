@@ -1,6 +1,6 @@
 package gumdrop.test.server;
 
-import gumdrop.common.ByteIterator;
+import gumdrop.common.builder.ByteIterator;
 import gumdrop.web.Delimiter;
 import gumdrop.test.util.Test;
 

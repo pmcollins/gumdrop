@@ -1,6 +1,6 @@
 package gumdrop.web;
 
-import gumdrop.common.Request;
+import gumdrop.common.http.Request;
 
 public interface Controller {
 

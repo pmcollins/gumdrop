@@ -1,6 +1,6 @@
 package gumdrop.web;
 
-import gumdrop.common.Validator;
+import gumdrop.common.validation.Validator;
 
 import java.util.HashMap;
 import java.util.Map;

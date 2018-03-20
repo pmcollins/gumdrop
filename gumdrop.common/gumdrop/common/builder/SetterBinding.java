@@ -1,4 +1,4 @@
-package gumdrop.common;
+package gumdrop.common.builder;
 
 import java.util.function.BiConsumer;
 

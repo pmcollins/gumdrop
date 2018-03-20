@@ -1,9 +1,9 @@
 package gumdrop.web;
 
-import gumdrop.common.Builder;
-import gumdrop.common.InstanceBuilder;
-import gumdrop.common.ValidationFailure;
-import gumdrop.common.Validator;
+import gumdrop.common.builder.Builder;
+import gumdrop.common.builder.InstanceBuilder;
+import gumdrop.common.validation.ValidationFailure;
+import gumdrop.common.validation.Validator;
 
 import java.util.Optional;
 import java.util.function.BiConsumer;

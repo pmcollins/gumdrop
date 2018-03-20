@@ -1,6 +1,6 @@
 package gumdrop.server.nio;
 
-import gumdrop.common.HttpRequest;
+import gumdrop.common.http.HttpRequest;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

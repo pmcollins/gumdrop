@@ -1,6 +1,6 @@
 package gumdrop.json;
 
-import gumdrop.common.Builder;
+import gumdrop.common.builder.Builder;
 
 class HolderBuilder<T> extends Builder<Holder<T>> {
 

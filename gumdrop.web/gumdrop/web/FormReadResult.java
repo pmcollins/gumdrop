@@ -1,7 +1,7 @@
 package gumdrop.web;
 
-import gumdrop.common.ValidationFailure;
-import gumdrop.common.ValidationFailures;
+import gumdrop.common.validation.ValidationFailure;
+import gumdrop.common.validation.ValidationFailures;
 
 public class FormReadResult<T> implements ReadResult<T> {
 

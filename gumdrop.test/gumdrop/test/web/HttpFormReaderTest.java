@@ -1,8 +1,8 @@
 package gumdrop.test.web;
 
-import gumdrop.common.ValidationFailure;
-import gumdrop.common.ValidationFailures;
-import gumdrop.common.Validator;
+import gumdrop.common.validation.ValidationFailure;
+import gumdrop.common.validation.ValidationFailures;
+import gumdrop.common.validation.Validator;
 import gumdrop.test.util.Test;
 import gumdrop.web.FormReadResult;
 import gumdrop.web.HttpFormReader;

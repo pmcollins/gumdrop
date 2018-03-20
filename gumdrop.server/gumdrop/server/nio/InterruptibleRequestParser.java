@@ -1,8 +1,8 @@
 package gumdrop.server.nio;
 
-import gumdrop.common.ByteIterator;
-import gumdrop.common.HttpMethod;
-import gumdrop.common.HttpRequest;
+import gumdrop.common.builder.ByteIterator;
+import gumdrop.common.http.HttpMethod;
+import gumdrop.common.http.HttpRequest;
 import gumdrop.web.Accumulator;
 import gumdrop.web.WordAccumulator;
 

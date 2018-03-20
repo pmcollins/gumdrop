@@ -1,6 +1,6 @@
 package gumdrop.web;
 
-import gumdrop.common.ValidationFailures;
+import gumdrop.common.validation.ValidationFailures;
 
 public interface ReadResult<T> {
 
