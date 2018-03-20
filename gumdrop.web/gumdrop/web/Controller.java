@@ -8,6 +8,8 @@ public interface Controller {
 
   void setPathArgs(String[] matches);
 
+  String[] getPathArgs();
+
   void visit(HasControllerIndex hasControllerIndex);
 
 }

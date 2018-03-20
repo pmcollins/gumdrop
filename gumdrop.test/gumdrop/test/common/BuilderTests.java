@@ -2,7 +2,7 @@ package gumdrop.test.common;
 
 import gumdrop.common.builder.Builder;
 import gumdrop.common.builder.InstanceBuilder;
-import gumdrop.test.RoomBuilder;
+import gumdrop.test.json.RoomBuilder;
 import gumdrop.test.pojo.FullNamePerson;
 import gumdrop.test.pojo.Name;
 import gumdrop.test.pojo.Room;

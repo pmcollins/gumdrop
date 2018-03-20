@@ -1,4 +1,4 @@
-package gumdrop.test;
+package gumdrop.test.json;
 
 import gumdrop.common.builder.Builder;
 import gumdrop.test.pojo.Room;

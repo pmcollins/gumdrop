@@ -10,7 +10,12 @@ public class WebTests extends TestSuite {
 
   @Override
   public void run() throws Exception {
-    test(new HtmlStringUtilTest(), new HttpFormReaderTest());
+    test(
+      new HtmlStringUtilTest(),
+      new HttpFormReaderTest(),
+      new WebTests(),
+      new MethodDispatcherTest()
+    );
   }
 
 }

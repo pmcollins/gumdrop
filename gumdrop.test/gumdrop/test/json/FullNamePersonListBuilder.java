@@ -1,4 +1,4 @@
-package gumdrop.test;
+package gumdrop.test.json;
 
 import gumdrop.json.ListBuilder;
 import gumdrop.test.pojo.FullNamePerson;
