@@ -15,7 +15,6 @@ public class ServerTests extends TestSuite {
       new DelimiterTest(),
       new InterruptibleRequestParserTest(),
       new MultiParserTest(),
-      new QueueTest(),
       new WordAccumulatorTest()
     );
   }
