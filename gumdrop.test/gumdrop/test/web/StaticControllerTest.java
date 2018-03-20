@@ -1,8 +1,8 @@
 package gumdrop.test.web;
 
 import gumdrop.test.util.Test;
-import gumdrop.web.HttpResponse;
-import gumdrop.web.StaticController;
+import gumdrop.web.http.HttpResponse;
+import gumdrop.web.controller.StaticController;
 
 public class StaticControllerTest extends Test {
 
