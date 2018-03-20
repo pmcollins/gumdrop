@@ -1,4 +1,4 @@
-package gumdrop.common;
+package gumdrop.common.validation;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package gumdrop.server.nio;
 
-import gumdrop.common.ByteIterator;
+import gumdrop.common.builder.ByteIterator;
 import gumdrop.web.Accumulator;
 import gumdrop.web.Delimiter;
 
@@ -12,8 +12,8 @@ import java.util.Map;
 public class AttributeCollectionAccumulator implements Accumulator {
 
   private final List<AttributeAccumulator> accumulators = new ArrayList<>();
-  private AttributeAccumulator curr;
   private final Delimiter delimiter = new Delimiter("\r\n");
+  private AttributeAccumulator curr;
   private Map<String, String> map;
 
   @Override

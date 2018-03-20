@@ -1,6 +1,6 @@
 package gumdrop.server.nio;
 
-import gumdrop.common.ByteIterator;
+import gumdrop.common.builder.ByteIterator;
 import gumdrop.web.Accumulator;
 import gumdrop.web.WordAccumulator;
 

@@ -1,6 +1,6 @@
 package gumdrop.web;
 
-import gumdrop.common.ByteIterator;
+import gumdrop.common.builder.ByteIterator;
 
 public class MultiPartParser {
 

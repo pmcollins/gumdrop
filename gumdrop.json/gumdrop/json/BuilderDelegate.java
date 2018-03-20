@@ -1,7 +1,7 @@
 package gumdrop.json;
 
-import gumdrop.common.Builder;
-import gumdrop.common.InstanceBuilder;
+import gumdrop.common.builder.Builder;
+import gumdrop.common.builder.InstanceBuilder;
 
 import java.util.Stack;
 

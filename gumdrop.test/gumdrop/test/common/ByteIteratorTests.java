@@ -1,6 +1,6 @@
 package gumdrop.test.common;
 
-import gumdrop.common.ByteIterator;
+import gumdrop.common.builder.ByteIterator;
 import gumdrop.test.util.Test;
 import gumdrop.test.util.Asserts;
 

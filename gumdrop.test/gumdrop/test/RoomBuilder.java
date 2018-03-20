@@ -1,6 +1,6 @@
 package gumdrop.test;
 
-import gumdrop.common.Builder;
+import gumdrop.common.builder.Builder;
 import gumdrop.test.pojo.Room;
 
 public class RoomBuilder extends Builder<Room> {

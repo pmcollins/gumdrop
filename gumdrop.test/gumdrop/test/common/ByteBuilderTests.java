@@ -1,6 +1,6 @@
 package gumdrop.test.common;
 
-import gumdrop.common.ByteBuilder;
+import gumdrop.common.builder.ByteBuilder;
 import gumdrop.test.util.Test;
 
 import static gumdrop.test.util.Asserts.assertEquals;
