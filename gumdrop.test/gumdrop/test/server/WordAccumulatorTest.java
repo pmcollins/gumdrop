@@ -1,7 +1,7 @@
 package gumdrop.test.server;
 
 import gumdrop.common.builder.ByteIterator;
-import gumdrop.web.WordAccumulator;
+import gumdrop.web.http.WordAccumulator;
 import gumdrop.test.util.Test;
 
 import static gumdrop.test.util.Asserts.assertEquals;

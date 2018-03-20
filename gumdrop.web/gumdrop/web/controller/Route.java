@@ -1,4 +1,4 @@
-package gumdrop.web;
+package gumdrop.web.controller;
 
 import gumdrop.web.controller.Controller;
 

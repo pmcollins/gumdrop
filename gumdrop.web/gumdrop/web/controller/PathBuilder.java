@@ -1,4 +1,4 @@
-package gumdrop.web;
+package gumdrop.web.controller;
 
 public class PathBuilder {
 

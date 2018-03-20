@@ -1,7 +1,7 @@
 package gumdrop.web.controller;
 
 import gumdrop.common.http.Request;
-import gumdrop.web.HeaderUtil;
+import gumdrop.web.http.HeaderUtil;
 import gumdrop.web.http.HttpResponse;
 import gumdrop.web.http.HttpResponseHeader;
 
