@@ -110,7 +110,7 @@ public class HttpFormReaderTest extends Test {
     void addFileName(String fileName) {
       fileNames.add(fileName);
     }
-    public List<String> getFileNames() {
+    List<String> getFileNames() {
       return fileNames;
     }
   }

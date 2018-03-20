@@ -5,7 +5,7 @@ import gumdrop.common.validation.Validator;
 import java.util.HashMap;
 import java.util.Map;
 
-public class QueryValidatorMap {
+class QueryValidatorMap {
 
   private final Map<String, Validator<String>> map = new HashMap<>();
 
