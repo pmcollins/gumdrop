@@ -1,6 +1,4 @@
-package gumdrop.web;
-
-import gumdrop.web.controller.Controller;
+package gumdrop.web.controller;
 
 public interface PathBuilderIndex {
 

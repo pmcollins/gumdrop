@@ -3,8 +3,8 @@ package gumdrop.server.nio;
 import gumdrop.common.builder.ByteIterator;
 import gumdrop.common.http.HttpMethod;
 import gumdrop.common.http.HttpRequest;
-import gumdrop.web.Accumulator;
-import gumdrop.web.WordAccumulator;
+import gumdrop.web.http.Accumulator;
+import gumdrop.web.http.WordAccumulator;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;

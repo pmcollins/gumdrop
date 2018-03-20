@@ -4,8 +4,8 @@ import gumdrop.common.http.HttpRequest;
 import gumdrop.test.util.Test;
 import gumdrop.test.util.Asserts;
 import gumdrop.web.controller.Controller;
-import gumdrop.web.PathBuilder;
-import gumdrop.web.Dispatcher;
+import gumdrop.web.controller.PathBuilder;
+import gumdrop.web.controller.Dispatcher;
 
 import java.util.Arrays;
 

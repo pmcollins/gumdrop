@@ -1,10 +1,7 @@
-package gumdrop.web;
+package gumdrop.web.controller;
 
 import gumdrop.common.http.HttpMethod;
 import gumdrop.common.http.HttpRequest;
-import gumdrop.web.controller.Controller;
-import gumdrop.web.controller.ControllerIndex;
-import gumdrop.web.controller.HasControllerIndex;
 import gumdrop.web.http.HttpResponse;
 
 import java.util.Optional;

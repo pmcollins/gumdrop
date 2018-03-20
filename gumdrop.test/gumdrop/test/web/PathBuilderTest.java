@@ -1,7 +1,7 @@
 package gumdrop.test.web;
 
 import gumdrop.test.util.Test;
-import gumdrop.web.PathBuilder;
+import gumdrop.web.controller.PathBuilder;
 
 import java.util.UUID;
 
