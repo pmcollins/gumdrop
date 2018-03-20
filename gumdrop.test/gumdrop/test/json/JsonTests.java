@@ -10,7 +10,12 @@ public class JsonTests extends TestSuite {
 
   @Override
   public void run() throws Exception {
-    test(new BuilderDelegateTest(), new GettersTest(), new JsonBuilderTest(), new JsonReaderTest());
+    test(
+      new BuilderDelegateTest(),
+      new GettersTest(),
+      new JsonBuilderTest(),
+      new JsonReaderTest()
+    );
   }
 
 }
