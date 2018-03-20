@@ -1,4 +1,4 @@
-package gumdrop.web;
+package gumdrop.web.http;
 
 import gumdrop.common.validation.Validator;
 

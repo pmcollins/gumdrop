@@ -1,7 +1,7 @@
 package gumdrop.test.web;
 
 import gumdrop.test.util.Test;
-import gumdrop.web.HttpStringUtil;
+import gumdrop.web.http.HttpStringUtil;
 
 import static gumdrop.test.util.Asserts.assertEquals;
 import static gumdrop.test.util.Asserts.assertNull;

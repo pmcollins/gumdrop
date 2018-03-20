@@ -3,7 +3,7 @@ package gumdrop.test.web;
 import gumdrop.common.http.HttpRequest;
 import gumdrop.test.util.Test;
 import gumdrop.test.util.Asserts;
-import gumdrop.web.Controller;
+import gumdrop.web.controller.Controller;
 import gumdrop.web.PathBuilder;
 import gumdrop.web.Dispatcher;
 

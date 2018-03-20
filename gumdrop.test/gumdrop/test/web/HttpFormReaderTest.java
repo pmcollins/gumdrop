@@ -4,8 +4,8 @@ import gumdrop.common.validation.ValidationFailure;
 import gumdrop.common.validation.ValidationFailures;
 import gumdrop.common.validation.Validator;
 import gumdrop.test.util.Test;
-import gumdrop.web.FormReadResult;
-import gumdrop.web.HttpFormReader;
+import gumdrop.web.http.FormReadResult;
+import gumdrop.web.http.HttpFormReader;
 
 import java.util.ArrayList;
 import java.util.List;

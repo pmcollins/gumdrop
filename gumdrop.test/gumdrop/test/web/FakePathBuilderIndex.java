@@ -1,6 +1,6 @@
 package gumdrop.test.web;
 
-import gumdrop.web.Controller;
+import gumdrop.web.controller.Controller;
 import gumdrop.web.PathBuilder;
 import gumdrop.web.PathBuilderIndex;
 
