@@ -1,4 +1,4 @@
-# Gumdrop Web
+# Gumdrop-Web
 
 A library for handling HTTP requests and building dynamic HTML documents.
 
