@@ -74,7 +74,7 @@ You would first create a `JsonBuilder` for the `Person` class. This wires up the
 `Person`'s getters/setters and JSON keys. You do this once, and typically use the same `JsonBuilder` instance
 throughout your application.
 
-```
+```java
     JsonBuilder<Person> personBuilder = new JsonBuilder<>(Person::new);
     personBuilder.addStringField("name", Person::getName, Person::setName);
     personBuilder.addIntField("age", Person::getAge, Person::setAge);
@@ -82,7 +82,7 @@ throughout your application.
 
 Alternatively, create a subclass:
 
-```
+```java
   class PersonBuilder extends JsonBuilder<Person> {
 
     PersonBuilder() {
@@ -96,7 +96,7 @@ Alternatively, create a subclass:
 
 Then convert `Person` instances to and from JSON:
 
-```
+```java
     Person p = new Person();
     p.setName("Bilbo");
     p.setAge(50);
@@ -108,7 +108,7 @@ Then convert `Person` instances to and from JSON:
 
 What about the birthday field in `Person`? Let's add support for that now:
 
-```
+```java
     DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
     personBuilder.addStringField(
       "birthday",
@@ -119,7 +119,7 @@ What about the birthday field in `Person`? Let's add support for that now:
 
 Now the entire thing looks like this:
 
-```
+```java
     // Typically, you'd put the JsonBuilder setup somewhere else. You'll want to create just one instance of a
     // JsonBuilder (at least per thread) rather than re-create it every time you want to (de)serialize an object. 
     JsonBuilder<Person> personBuilder = new JsonBuilder<>(Person::new);
@@ -148,7 +148,7 @@ Now the entire thing looks like this:
 
 If those lambdas look kind of tricky, use a `Converter` instead
 
-```
+```java
 class InstantConverter implements Converter<Instant> {
 
   private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
@@ -168,7 +168,7 @@ class InstantConverter implements Converter<Instant> {
 
 ...and pass it into `JsonBuilder`:
 
-```
+```java
     personBuilder.addField(
       "birthday",
       Person::getBirthday,
@@ -179,7 +179,7 @@ class InstantConverter implements Converter<Instant> {
 
 Now we have:
 
-```
+```java
     JsonBuilder<Person> personBuilder = new JsonBuilder<>(Person::new);
     personBuilder.addStringField("name", Person::getName, Person::setName);
     personBuilder.addIntField("age", Person::getAge, Person::setAge);
