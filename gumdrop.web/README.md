@@ -17,9 +17,9 @@ dispatcher.register(GET, "/messages/#", () -> new ShowMessageController(
 ));
 ```
 
-The `#` is a numeric wildcard that will only match numbers, causing all GET requests to, for example `/submissions/42`
-to match. The matching "group" (just a number) is then passed to the Controller instance and made available via
-the `getPathArgs` method. 
+The `#` is a numeric wildcard, dispatching GET requests to for example `/submissions/42` to the indicated Controller.
+The matching "group" (in this case just a number) is then passed to the Controller instance and made available via the
+`getPathArgs` method. 
 
 You don't pass in an actual controller instance, but rather a Controller Supplier (lambda). This is because a new
 controller is instantiated for each request. The nice thing about the lifetime of a Controller being short -- that of a
