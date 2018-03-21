@@ -1,12 +1,17 @@
 # Gumdrop
 
-I am building a web application from scratch, with no dependencies (outside of the JDK).
+Gumdrop is a web framework under active development, written in Java, with no dependencies outside of the JDK.
 
-The parts of the application that are general purpose are being put here. The intent is to ultimately package
-all of this into a framework usable by any web application developer.
-
-* [Server](gumdrop.server) -- a web server using Java's non-blocking IO
-* [Web](gumdrop.web) -- for dispatching requests and building dynamic HTML documents
-* [Json](gumdrop.json) -- for converting Java objects to and from JSON
+* [Server](gumdrop.server) -- multithreaded, non-blocking IO
+* [Web](gumdrop.web) -- request dispatch and page generation
+* [Json](gumdrop.json) -- JSON serialization
 * [Common](gumdrop.common) -- common classes (builder, http, validation, etc.)
 * [Test](gumdrop.test) -- unit tests
+
+Guiding principles:
+
+* Non prescriptive
+* Compile-time dispositive
+* Dependency free
+* Magic free
+* Test driven
