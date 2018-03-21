@@ -3,7 +3,7 @@
 A library for turning JSON into POJOs and vice-versa.
 
 This library doesn't use reflection or require annotations: it uses a simple, imperative API, which you use to
-wire up Field<->Attribute relationships at compile time.
+wire up Field-Attribute relationships at compile time.
 
 For example, given a `Person` class:
 
@@ -146,7 +146,7 @@ Now the entire thing looks like this:
     assertEquals(person, fromJson);
 ```
 
-If those lambdas look kind of tricky, use a `Converter` instead
+As an alternative to the birthday lambas, you could use a `Converter`:
 
 ```java
 class InstantConverter implements Converter<Instant> {
@@ -166,7 +166,7 @@ class InstantConverter implements Converter<Instant> {
 }
 ```
 
-...and pass it into `JsonBuilder`:
+...and pass an instance into your `JsonBuilder`:
 
 ```java
     personBuilder.addField(
