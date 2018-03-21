@@ -2,8 +2,7 @@
 
 A small library for turning JSON into POJOs and vice-versa.
 
-This library doesn't use reflection, or require annotations: it uses a plain old imperative API and has no dependencies.
-You wire up the relationships between JSON keys and getters/setters and have complete control.
+This library doesn't use reflection, or require annotations: it uses a simple, imperative API.
 
 For example, given a `Person` class:
 

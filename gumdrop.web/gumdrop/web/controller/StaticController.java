@@ -41,14 +41,12 @@ public class StaticController implements Controller {
 
   @Override
   public HttpResponse process(Request request) {
-    // TODO security
     if (path.contains("..")) {
       throw new RuntimeException("Illegal path access attempt: [" + path + "]");
     }
     Path fullPath = FILE_SYSTEM.getPath(dir, path);
     byte[] bytes = get(() -> Files.readAllBytes(fullPath));
     HttpResponseHeader h = new HttpResponseHeader();
-    // TODO expand
     if (path.endsWith(".css")) {
       HeaderUtil.setTextCss(h, bytes.length);
     } else {
