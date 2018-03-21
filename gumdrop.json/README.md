@@ -203,3 +203,7 @@ Now we have:
     Person fromJson = personBuilder.fromJson(json);
     assertEquals(person, fromJson);
 ```
+
+The motivation for this library isn't performance, but compile-time safety, and avoidance of annotations.
+As a happy side effect, however, because it doesn't use reflection, this library happens to be many times faster than
+Google's Gson library at serializing and deserializing JSON.
