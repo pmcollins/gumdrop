@@ -7,7 +7,7 @@ import gumdrop.web.http.HttpResponse;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-public class Dispatcher implements HasControllerIndex {
+public class Dispatcher {
 
   private final MethodDispatcher get = new MethodDispatcher();
   private final MethodDispatcher post = new MethodDispatcher();
@@ -36,7 +36,7 @@ public class Dispatcher implements HasControllerIndex {
   }
 
   private HttpResponse processController(Controller controller, HttpRequest request) {
-    controller.visit(this);
+    controller.setControllerIndex(controllerIndex);
     System.out.println(controller);
     return controller.process(request);
   }
@@ -63,11 +63,6 @@ public class Dispatcher implements HasControllerIndex {
 
   public PathBuilder getBuilder(Class<? extends Controller> klass) {
     return controllerIndex.get(klass);
-  }
-
-  @Override
-  public ControllerIndex getControllerIndex() {
-    return controllerIndex;
   }
 
 }

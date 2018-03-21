@@ -25,7 +25,7 @@ public class StaticController implements Controller {
   }
 
   @Override
-  public void visit(HasControllerIndex dispatcher) {
+  public void setControllerIndex(ControllerIndex dispatcher) {
   }
 
   @Override
