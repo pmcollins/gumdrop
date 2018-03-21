@@ -4,9 +4,10 @@ A web server that uses Java's non-blocking IO library.
 
 The part of the server that delivers bytes to and from the worker threads is single threaded and non-blocking. This
 just means that the thread doesn't wait for network data from any particular socket. Instead, it continuously scans all
-sockets, grabs data that's already available, and hands it off to the appropriate worker thread. A blocking io server,
-on the other hand, dedicates an entire thread to each active socket, and waits (blocks) for data, limiting the number of
-active sockets to the number of active threads.
+sockets, grabs data that's already available, and hands it off to the appropriate worker thread. A blocking IO server,
+on the other hand, dedicates an entire thread to each active socket, each of which waits (blocks) for data, limiting the
+number of active sockets to the number of active threads, which of course will never be able to scale up to the
+number of potential active requests on a publically available server.
 
-Using nio means the server can handle a large number of simultaneous connections, but it can still use a configurable
-number of threads to handle the relatively heavy lifting of processing requests.
+Using nio means your server can handle a very large number of simultaneous connections, but it can still use a
+configurable number of threads to handle the relatively heavy lifting of processing requests.
