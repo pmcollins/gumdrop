@@ -7,7 +7,7 @@ compile time.
 
 For example, given a `Person` class:
 
-```
+```java
 package gumdrop.json;
 
 import java.time.Instant;
