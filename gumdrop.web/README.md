@@ -4,11 +4,11 @@ A library for handling HTTP requests and building dynamic HTML documents.
 
 ### Setup
 
-At application startup, register [Controller](gumdrop/web/control/Controller.java)s with a single
-[Dispatcher](gumdrop/web/control/Dispatcher.java).
+At application startup, just register your [Controller](gumdrop/web/control/Controller.java)s with a single
+[Dispatcher](gumdrop/web/control/Dispatcher.java), binding request patterns to Controllers.
 
-For example, if you had a controller to show messages having some id, you'd decide on a URL convention and register it
-with your Dispatcher instance:
+For example, if you had a controller to show messages by id, you'd tell the dispatcher how to create new instances of
+your controller and bind this to a request pattern.
 
 ```java
 ShowMessageView showMessageView = new ShowMessageView();
@@ -21,20 +21,20 @@ The `#` is a numeric wildcard, so that GET requests to for example `/submissions
 Controller with the matching "group" (in this case just a number) passed to the Controller instance and made available
 via the `getPathArgs` method. 
 
-Notice that you don't pass in an actual controller instance, but rather a Controller Supplier (lambda). This is because
-a new controller is instantiated for each request. The nice thing about the lifetime of a Controller being short -- that
-of a single request -- is that you don't have to worry about them being thread safe.
+Notice that you don't pass in an actual controller instance, but rather a Controller Supplier (a lambda). This is because
+a new controller is instantiated with each request dispatch. The nice thing about the lifetime of a Controller being only
+that of a single request is that you don't have to worry about making your Controllers thread safe.
 
 ### General Control Flow
 
 After the Dispatcher is set up, when an HTTP Request is received:
 
 1. The [Dispatcher](gumdrop/web/control/Dispatcher.java) finds a matching
-[Controller](gumdrop/web/control/Controller.java) lambda for the given request path and method
+[Controller](gumdrop/web/control/Controller.java) lambda for the given request
 2. The Dispatcher creates a Controller instance, which is populated with everything it needs to handle the request
 3. The Controller instantiates and sets up a [Presenter](gumdrop/web/control/Presenter.java)
 3. The Presenter generates a [ViewModel](gumdrop/web/html/ViewModel.java)
-    * If necessary it also sets up sub-Presenters and attaches their ViewModels to the parent ViewModel
+    * If necessary the parent Presenter also sets up sub-Presenters and attaches their ViewModels to the parent ViewModel
 4. The Controller hands the ViewModel instance to a [View](gumdrop/web/html/View.java)
 5. The View assembles a tree of [Widget](gumdrop/web/html/Widget.java)s, handing each widget any appropriate model data
 6. The tree of Widgets is traversed, building an [HttpResponse](gumdrop/web/http/HttpResponse.java)
@@ -43,8 +43,8 @@ After the Dispatcher is set up, when an HTTP Request is received:
 ### HTML Generation
 
 Gumdrop provides a convenient library for generating HTML: [TabLib](gumdrop/web/html/TagLib.java). Instead of using a
-template language, Gumdrop lets you create nested HTML-like tags in Java with the compile-time safety, refactoring
-capability, and performance of Java.
+template language, Gumdrop lets you create nested HTML-like tags in Java with its attendant compile-time safety,
+refactoring capability, and performance.
 
 An anchor Widget might look like this:
 
@@ -71,7 +71,7 @@ public class AnchorWidget extends Widget {
 }
 ```
 
-A slightly more complex Widget -- one that uses nested tags -- might look this this.
+A slightly more complex Widget -- one that uses nested tags -- might look this this:
 
 ```java
 
