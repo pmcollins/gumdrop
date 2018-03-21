@@ -12,6 +12,7 @@ For example, if you had a Controller to show messages by id, and you wanted your
 request pattern, `/messages/#`.
 
 ```java
+Dispatcher dispatcher = new Dispatcher();
 ShowMessageView showMessageView = new ShowMessageView();
 dispatcher.register(GET, "/messages/#", () -> new ShowMessageController(
   sessionService, messageService, showMessageView, layoutView
@@ -69,7 +70,7 @@ public class AnchorWidget extends Widget {
 }
 ```
 
-A slightly more complex Widget -- one that uses nested tags -- might look this this:
+A slightly more complex Widget -- one that uses a `section`, and nested `header` and `main` tags -- might look this this:
 
 ```java
 
@@ -104,5 +105,3 @@ public class TitledPanelWidget extends Widget {
 }
 
 ```
-
-This panel widget wraps arbitrary content in a panel using the HTML 5 `section`, `header`, and `main` tags.
