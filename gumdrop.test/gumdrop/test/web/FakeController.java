@@ -2,7 +2,7 @@ package gumdrop.test.web;
 
 import gumdrop.common.http.Request;
 import gumdrop.web.controller.Controller;
-import gumdrop.web.controller.HasControllerIndex;
+import gumdrop.web.controller.ControllerIndex;
 import gumdrop.web.http.HttpResponse;
 
 public class FakeController implements Controller {
@@ -25,7 +25,7 @@ public class FakeController implements Controller {
   }
 
   @Override
-  public void visit(HasControllerIndex hasControllerIndex) {
+  public void setControllerIndex(ControllerIndex controllerIndex) {
   }
 
 }

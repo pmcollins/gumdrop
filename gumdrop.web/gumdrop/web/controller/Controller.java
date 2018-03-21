@@ -11,6 +11,6 @@ public interface Controller {
 
   String[] getPathArgs();
 
-  void visit(HasControllerIndex hasControllerIndex);
+  void setControllerIndex(ControllerIndex controllerIndex);
 
 }
