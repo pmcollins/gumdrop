@@ -5,10 +5,11 @@ A library for handling HTTP requests and building dynamic HTML documents.
 ### Setup
 
 At application startup, just register your [Controller](gumdrop/web/control/Controller.java)s with a single
-[Dispatcher](gumdrop/web/control/Dispatcher.java), binding request patterns to Controllers.
+[Dispatcher](gumdrop/web/control/Dispatcher.java), registering each Controller with a request pattern.
 
-For example, if you had a controller to show messages by id, you'd tell the dispatcher how to create new instances of
-your controller and bind this to a request pattern.
+For example, if you had a Controller to show messages by id, and you wanted your server to respond to requests to
+`/message/<some number>`, you'd tell the Dispatcher how to create new instances of your controller and bind them to the
+request pattern, `/messages/#`.
 
 ```java
 ShowMessageView showMessageView = new ShowMessageView();
@@ -17,11 +18,10 @@ dispatcher.register(GET, "/messages/#", () -> new ShowMessageController(
 ));
 ```
 
-The `#` is a numeric wildcard, so that GET requests to, for example `/submissions/42`, will be dispatched to the indicated
-Controller. The matching number is passed to the Controller instance and made available via the `getPathArgs` method.
+The `#` is a numeric wildcard, so that GET requests to, for example `/submissions/42`, will match, with the matching
+number passed to the Controller instance.
 
-You don't pass in an actual controller instance, but rather a Controller Supplier (a lambda). Thus a Controller only
-lives for one request, is handled by one thread, and doesn't have to be thread safe.
+Conveniently, a Controller instance only lives for one request, is handled by one thread, and so doesn't have to be thread safe.
 
 ### General Control Flow
 
