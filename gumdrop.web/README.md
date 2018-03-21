@@ -41,7 +41,7 @@ After the Dispatcher is set up, when an HTTP Request is received:
 
 ### HTML Generation
 
-Gumdrop provides a convenient library for generating HTML: [TabLib](gumdrop/web/html/TagLib.java). Instead of using a
+Gumdrop provides a convenient library for generating HTML: [TagLib](gumdrop/web/html/TagLib.java). Instead of using a
 template language, Gumdrop lets you create nested HTML-like tags in Java with its attendant compile-time safety,
 refactoring capability, and performance.
 
