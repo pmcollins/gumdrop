@@ -1,4 +1,4 @@
-# JsonBuilder
+# Gumdrop-JSON
 
 A library for turning JSON into POJOs and vice-versa.
 

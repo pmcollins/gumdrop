@@ -1,4 +1,4 @@
-# Gumdrop Server
+# Gumdrop-Server
 
 A web server that uses Java's non-blocking IO library.
 
