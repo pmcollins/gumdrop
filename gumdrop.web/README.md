@@ -5,7 +5,7 @@ A library for handling HTTP requests and building dynamic HTML documents.
 ### Setup
 
 At application startup, just register your [Controller](gumdrop/web/control/Controller.java)s with a single
-[Dispatcher](gumdrop/web/control/Dispatcher.java), registering each Controller with a request pattern.
+[Dispatcher](gumdrop/web/control/Dispatcher.java), associating each Controller with a request pattern.
 
 For example, if you had a Controller to show messages by id, and you wanted your server to respond to requests to
 `/message/<some number>`, you'd tell the Dispatcher how to create new instances of your controller and bind them to the
