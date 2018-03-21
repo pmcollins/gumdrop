@@ -2,8 +2,8 @@
 
 A library for turning JSON into POJOs and vice-versa.
 
-This library doesn't use reflection or require annotations: it uses a simple, imperative API, and which you use to
-wire up you field relationships at compile time.
+This library doesn't use reflection or require annotations: it uses a simple, imperative API, which you use to
+wire up Field<->Attribute relationships at compile time.
 
 For example, given a `Person` class:
 
