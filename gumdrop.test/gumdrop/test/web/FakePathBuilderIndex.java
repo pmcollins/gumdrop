@@ -1,8 +1,8 @@
 package gumdrop.test.web;
 
-import gumdrop.web.controller.Controller;
-import gumdrop.web.controller.PathBuilder;
-import gumdrop.web.controller.PathBuilderIndex;
+import gumdrop.web.control.Controller;
+import gumdrop.web.control.PathBuilder;
+import gumdrop.web.control.PathBuilderIndex;
 
 public class FakePathBuilderIndex implements PathBuilderIndex {
 

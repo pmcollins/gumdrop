@@ -2,8 +2,8 @@ package gumdrop.test.web;
 
 import gumdrop.test.util.Asserts;
 import gumdrop.test.util.Test;
-import gumdrop.web.controller.Controller;
-import gumdrop.web.controller.MethodDispatcher;
+import gumdrop.web.control.Controller;
+import gumdrop.web.control.MethodDispatcher;
 
 import java.util.Arrays;
 import java.util.Optional;
