@@ -31,7 +31,7 @@ After the Dispatcher is set up, when an HTTP Request is received:
 
 1. The [Dispatcher](gumdrop/web/control/Dispatcher.java) finds a matching
 [Controller](gumdrop/web/control/Controller.java) lambda for the given request path and method.
-2. The Dispatcher create a Controller instance, which is populated with everything it needs to handle the request.
+2. The Dispatcher creates a Controller instance, which is populated with everything it needs to handle the request.
 3. The Controller instantiates and sets up a [Presenter](gumdrop/web/control/Presenter.java)
 3. The Presenter generates a [ViewModel](gumdrop/web/html/ViewModel.java)
     * If necessary it also sets up sub-Presenters and attaches their ViewModels to the parent ViewModel
