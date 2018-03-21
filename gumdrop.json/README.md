@@ -2,10 +2,10 @@
 
 A library for turning JSON into POJOs and vice-versa.
 
-This library doesn't use reflection or require annotations: it uses a simple, imperative API, which you use to
-wire up Field-Attribute relationships at compile time.
+This library doesn't use reflection or require annotations: it has a simple, imperative API, which you use to wire up
+field-attribute relationships at compile time.
 
-For example, given a `Person` class:
+For example, consider a `Person` class:
 
 ```java
 package gumdrop.json;
@@ -70,9 +70,8 @@ class Person {
 }
 ```
 
-You would first create a `JsonBuilder` for the `Person` class. This wires up the relationships between a
-`Person`'s getters/setters and JSON keys. You do this once, and typically use the same `JsonBuilder` instance
-throughout your application.
+Let's create a `JsonBuilder` for the `Person` class. We'll wire up the relationships between `Person`'s getters/setters
+and the JSON keys we're interested in.
 
 ```java
     JsonBuilder<Person> personBuilder = new JsonBuilder<>(Person::new);
@@ -80,21 +79,7 @@ throughout your application.
     personBuilder.addIntField("age", Person::getAge, Person::setAge);
 ```
 
-Alternatively, create a subclass:
-
-```java
-  class PersonBuilder extends JsonBuilder<Person> {
-
-    PersonBuilder() {
-      super(Person::new);
-      addStringField("name", Person::getName, Person::setName);
-      addIntField("age", Person::getAge, Person::setAge);
-    }
-    
-  }
-```
-
-Then convert `Person` instances to and from JSON:
+Now we can convert a `Person` instance to JSON and back:
 
 ```java
     Person p = new Person();
@@ -117,11 +102,9 @@ What about the birthday field in `Person`? Let's add support for that now:
     );
 ```
 
-Now the entire thing looks like this:
+Overall, we now have:
 
 ```java
-    // Typically, you'd put the JsonBuilder setup somewhere else. You'll want to create just one instance of a
-    // JsonBuilder (at least per thread) rather than re-create it every time you want to (de)serialize an object. 
     JsonBuilder<Person> personBuilder = new JsonBuilder<>(Person::new);
     personBuilder.addStringField("name", Person::getName, Person::setName);
     personBuilder.addIntField("age", Person::getAge, Person::setAge);
@@ -135,18 +118,18 @@ Now the entire thing looks like this:
     Person person = new Person();
     person.setName("Frodo");
     person.setAge(25);
-    person.setBirthday(Instant.ofEpochMilli(700_000_000_000L));
+    person.setBirthday(Instant.parse("2001-09-09T01:46:40Z"));
 
     String json = personBuilder.toJson(person);
     assertEquals(
-      "{\"name\":\"Frodo\",\"age\":25,\"birthday\":\"1992-03-07T20:26:40Z\"}",
+      "{\"name\":\"Frodo\",\"age\":25,\"birthday\":\"2001-09-09T01:46:40Z\"}",
       json
     );
     Person fromJson = personBuilder.fromJson(json);
     assertEquals(person, fromJson);
 ```
 
-As an alternative to the birthday lambas, you could use a `Converter`:
+As an alternative to the formatter lambas above, use a `Converter`:
 
 ```java
 class InstantConverter implements Converter<Instant> {
@@ -204,6 +187,6 @@ Now we have:
     assertEquals(person, fromJson);
 ```
 
-The motivation for this library isn't performance, but compile-time safety, and avoidance of annotations.
+The motivation for this library isn't performance, but compile-time safety and avoidance of annotations.
 As a happy side effect, however, because it doesn't use reflection, this library happens to be many times faster than
 Google's Gson library at serializing and deserializing to and from JSON.
