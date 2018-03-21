@@ -17,13 +17,11 @@ dispatcher.register(GET, "/messages/#", () -> new ShowMessageController(
 ));
 ```
 
-The `#` is a numeric wildcard, so that GET requests to for example `/submissions/42` are dispatched to the indicated
-Controller with the matching "group" (in this case just a number) passed to the Controller instance and made available
-via the `getPathArgs` method. 
+The `#` is a numeric wildcard, so that GET requests to, for example `/submissions/42`, will be dispatched to the indicated
+Controller. The matching number is passed to the Controller instance and made available via the `getPathArgs` method.
 
-Notice that you don't pass in an actual controller instance, but rather a Controller Supplier (a lambda). This is because
-a new controller is instantiated with each request dispatch. The nice thing about the lifetime of a Controller being only
-that of a single request is that you don't have to worry about making your Controllers thread safe.
+You don't pass in an actual controller instance, but rather a Controller Supplier (a lambda). Thus a Controller only
+lives for one request, is handled by one thread, and doesn't have to be thread safe.
 
 ### General Control Flow
 
