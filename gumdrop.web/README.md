@@ -7,13 +7,13 @@ A library for handling HTTP requests and building dynamic HTML documents.
 At application startup, register [Controller](gumdrop/web/control/Controller.java)s with a single
 [Dispatcher](gumdrop/web/control/Dispatcher.java).
 
-For example, if you had a controller to show submissions of some sort, decide on a URL convention and register it with a
-Dispatcher instance:
+For example, if you had a controller to show messages of some sort, decide on a URL convention and register it with
+your Dispatcher instance:
 
 ```java
-ShowSubmissionView showSubmissionView = new ShowSubmissionView();
-dispatcher.register(GET, "/submissions/#", () -> new ShowSubmissionController(
-  sessionService, submissionService, showSubmissionView, layoutView
+ShowMessageView showMessageView = new ShowMessageView();
+dispatcher.register(GET, "/messages/#", () -> new ShowMessageController(
+  sessionService, messageService, showMessageView, layoutView
 ));
 ```
 
