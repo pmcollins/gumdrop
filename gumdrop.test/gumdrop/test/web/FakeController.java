@@ -1,8 +1,8 @@
 package gumdrop.test.web;
 
 import gumdrop.common.http.Request;
-import gumdrop.web.controller.Controller;
-import gumdrop.web.controller.ControllerIndex;
+import gumdrop.web.control.Controller;
+import gumdrop.web.control.ControllerIndex;
 import gumdrop.web.http.HttpResponse;
 
 public class FakeController implements Controller {

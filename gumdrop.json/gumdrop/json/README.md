@@ -1,8 +1,9 @@
 # JsonBuilder
 
-A small library for turning JSON into POJOs and vice-versa.
+A library for turning JSON into POJOs and vice-versa.
 
-This library doesn't use reflection, or require annotations: it uses a simple, imperative API.
+This library doesn't use reflection, or require annotations: it uses a simple, imperative API, and is wired up at
+compile time.
 
 For example, given a `Person` class:
 

@@ -7,7 +7,6 @@ public class Text implements Buildable {
   private final String text;
 
   Text(String text) {
-    // TODO replace this with a ByteBuilder implementation
     this.text = HttpStringUtil.stripTags(text);
   }
 
