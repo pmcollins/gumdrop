@@ -7,7 +7,7 @@ A facility for creating Java objects from Strings. Used by [Gumdrop-Json](../gum
 
 ##### Basic Builder
 
-A [Builder](gumdrop/common/builder/Builder.java) is very simple: it binds Strings to setters and uses those bindings
+[Builder](gumdrop/common/builder/Builder.java) is very simple: it binds Strings to setters and uses those bindings
 to populate instances.
 
 Consider a `Name` class:
