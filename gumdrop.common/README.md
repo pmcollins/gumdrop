@@ -132,4 +132,4 @@ Basic HTTP classes.
 
 ### Validation
 
-Simple validation facilites used throughout Gumdrop.
+Simple validation facilities used throughout Gumdrop.
