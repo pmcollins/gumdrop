@@ -120,7 +120,7 @@ assertEquals(List.of(new Name("foo", "bar"), new Name("baz", "glarch")), list);
 
 ```
 
-This is what happens under the hood in Gumdrop Json.
+For more examples, see [BuilderTests](../gumdrop.test/gumdrop/test/common/BuilderTests.java) and other unit tests.
 
 ### HTTP
 
