@@ -84,7 +84,7 @@ class BuilderTests extends Test {
 
   private void memberArray() {
     InstanceBuilder<Room> roomInstance = new InstanceBuilder<>(new RoomBuilder());
-    roomInstance.applyString("name", "land of 702");
+    roomInstance.applyString("name", "702");
     InstanceBuilder<?> peopleInstance = roomInstance.constructAndSet("people");
     InstanceBuilder<?> personInstance = peopleInstance.constructAndSet("add");
     personInstance.applyString("age", "42");
