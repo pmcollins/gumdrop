@@ -106,8 +106,8 @@ public class TitledPanelWidget extends Widget {
 
 ```
 
-In this case, we create header and main tags as children of our section tag and end up with an HTML structure that looks
-like our method call structure:
+In this case, we create `header` and `main` tags as children of our `section` tag and end up with an HTML structure that
+looks like our method call structure:
 
 ```html
 
