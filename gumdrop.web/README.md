@@ -67,7 +67,7 @@ public class AnchorWidget extends Widget {
 }
 ```
 
-That static `a` method returns a Tag, for which we set the `href` value to the `url` attribute of our `AnchorWidget`
+That static `a` method returns a [Tag](gumdrop/web/html/Tag.java), for which we set the `href` value to the `url` attribute of our `AnchorWidget`
 instance.
 
 A slightly more complex Widget -- one that uses a `section`, and nested `header` and `main` tags -- might look this this:
