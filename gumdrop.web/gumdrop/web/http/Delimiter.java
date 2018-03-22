@@ -1,7 +1,6 @@
 package gumdrop.web.http;
 
-import gumdrop.common.builder.ByteIterator;
-import gumdrop.web.http.Accumulator;
+import gumdrop.common.ByteIterator;
 
 public class Delimiter implements Accumulator {
 

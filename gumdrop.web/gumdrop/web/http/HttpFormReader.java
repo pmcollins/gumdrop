@@ -4,7 +4,6 @@ import gumdrop.common.builder.Builder;
 import gumdrop.common.builder.InstanceBuilder;
 import gumdrop.common.validation.ValidationFailure;
 import gumdrop.common.validation.Validator;
-import gumdrop.web.control.FormReader;
 
 import java.util.Optional;
 import java.util.function.BiConsumer;

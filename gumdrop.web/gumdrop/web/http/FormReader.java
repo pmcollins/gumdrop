@@ -1,4 +1,6 @@
-package gumdrop.web.control;
+package gumdrop.web.http;
+
+import gumdrop.web.control.ReadResult;
 
 public interface FormReader<T> {
 
