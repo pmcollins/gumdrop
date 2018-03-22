@@ -8,7 +8,7 @@ At application startup, we register our [Controller](gumdrop/web/control/Control
 [Dispatcher](gumdrop/web/control/Dispatcher.java), associating each Controller with a request pattern.
 
 For example, if we have a Controller to show messages by id, and we want our server to respond to requests to
-`/messages/<message-id>`, we'd tell the Dispatcher how to create new instances of our controller and bind that to the
+`/messages/<message-id>`, we'd tell our Dispatcher how to create new instances of our controller and bind that to the
 request pattern, `/messages/#`.
 
 ```java
@@ -20,13 +20,11 @@ dispatcher.register(GET, "/messages/#", () -> new ShowMessageController(
 ```
 
 The `#` is a numeric wildcard. Using a numeric wildcard in `/messages/#` means that GET requests to, for example
-`/submissions/42`, will match, with the matching number passed to the Controller instance.
-
-Conveniently, a Controller instance only lives for one request, is handled by one thread, and doesn't have to be thread safe.
+`/messages/42`, will match, with the matching number passed to the Controller instance.
 
 ### General Control Flow
 
-After the Dispatcher is set up, when an HTTP Request is received:
+After our Dispatcher is set up, when an HTTP Request is received:
 
 1. The [Dispatcher](gumdrop/web/control/Dispatcher.java) finds a matching
 [Controller](gumdrop/web/control/Controller.java) lambda for the given request
@@ -41,9 +39,8 @@ After the Dispatcher is set up, when an HTTP Request is received:
 
 ### HTML Generation
 
-Gumdrop provides a convenient library for generating HTML: [TagLib](gumdrop/web/html/TagLib.java). Instead of using a
-template language, Gumdrop lets you create nested HTML-like tags in Java with its attendant compile-time safety,
-refactoring capability, and performance.
+Gumdrop provides a convenient library for generating HTML. Instead of using a template language, Gumdrop lets you create
+nested HTML-like tags in Java with its attendant compile-time safety, refactoring capability, and performance.
 
 An anchor Widget might look like this:
 
@@ -69,6 +66,9 @@ public class AnchorWidget extends Widget {
 
 }
 ```
+
+That static `a` method returns a Tag, for which we set the `href` value to the `url` attribute of our `AnchorWidget`
+instance.
 
 A slightly more complex Widget -- one that uses a `section`, and nested `header` and `main` tags -- might look this this:
 
@@ -103,5 +103,17 @@ public class TitledPanelWidget extends Widget {
   }
 
 }
+
+```
+
+In this case, we create header and main tags as children of our section tag and end up with an HTML structure that looks
+like our method call structure:
+
+```html
+
+<section>
+  <header>titleBar</header>
+  <main>contents</main>
+</section>
 
 ```
