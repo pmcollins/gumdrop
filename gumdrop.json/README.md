@@ -129,7 +129,7 @@ Overall, we now have:
     assertEquals(person, fromJson);
 ```
 
-As an alternative to the formatter lambas above, use a `Converter`:
+As an alternative to the formatter lambas above, we can use a `Converter`:
 
 ```java
 class InstantConverter implements Converter<Instant> {
@@ -149,7 +149,7 @@ class InstantConverter implements Converter<Instant> {
 }
 ```
 
-...and pass an instance into your `JsonBuilder`:
+...and pass an instance into our `JsonBuilder`:
 
 ```java
     personBuilder.addField(
@@ -188,5 +188,6 @@ Now we have:
 ```
 
 The motivation for this library isn't performance, but compile-time safety and avoidance of annotations.
-As a happy side effect, however, because it doesn't use reflection, this library happens to be many times faster than
-Google's Gson library at serializing and deserializing to and from JSON.
+As a happy side effect, however, because it doesn't use reflection, this library happens to be over twice as fast as
+Google's Gson library at serializing and deserializing to and from JSON, all without having spent any time yet on
+optimizing performance.
