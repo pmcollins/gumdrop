@@ -5,7 +5,10 @@
 A facility for creating Java objects from Strings. Used by [Gumdrop-Json](../gumdrop.json/) and
 [HttpFormReader](../gumdrop.web/gumdrop/web/http/HttpFormReader.java).
 
-A [Builder](gumdrop/common/builder/Builder.java) just maps strings to setters.
+##### Explanation
+
+A [Builder](gumdrop/common/builder/Builder.java) is very simple: it maps strings to setters and uses that to populate
+instances.
 
 Consider a `Name` class:
 
@@ -67,10 +70,9 @@ public class Name {
 
 ```
 
-Let's create a Builder for our Name class:
+Let's create a `Builder` for our `Name` class:
 
 ```java
-
 
 Builder<Name> nameBuilder = new Builder<>(Name::new);
 nameBuilder.addSetter("first", Name::setFirst);
@@ -82,7 +84,7 @@ Builder object and have them be applied to an instance of Name:
 
 ```java
 
-Name name = new Name();
+Name name = nameBuilder.construct();
 nameBuilder.apply(name, "first", "Bilbo");
 assertEquals("Bilbo", name.getFirst());
 

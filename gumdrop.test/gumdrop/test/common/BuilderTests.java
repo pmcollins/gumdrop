@@ -60,7 +60,7 @@ class BuilderTests extends Test {
   private void apply() {
     Builder<Name> nameBuilder = new Builder<>(Name::new);
     nameBuilder.addSetter("first", Name::setFirst);
-    Name name = new Name();
+    Name name = nameBuilder.construct();
     nameBuilder.apply(name, "first", "Bilbo");
     assertEquals("Bilbo", name.getFirst());
   }
