@@ -8,7 +8,7 @@ At application startup, we register our [Controller](gumdrop/web/control/Control
 [Dispatcher](gumdrop/web/control/Dispatcher.java), associating each Controller with a request pattern.
 
 For example, if we have a Controller to show messages by id, and we want our server to respond to requests to
-`/message/<message-id>`, we'd tell the Dispatcher how to create new instances of our controller and bind that to the
+`/messages/<message-id>`, we'd tell the Dispatcher how to create new instances of our controller and bind that to the
 request pattern, `/messages/#`.
 
 ```java
