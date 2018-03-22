@@ -92,7 +92,7 @@ class BuilderTests extends Test {
     nameInstance.applyString("first", "pablo");
     nameInstance.applyString("last", "collins");
     Room room = roomInstance.getObject();
-    assertEquals("land of 702", room.getName());
+    assertEquals("702", room.getName());
     List<FullNamePerson> people = room.getPeople();
     assertEquals(1, people.size());
     FullNamePerson person = people.get(0);

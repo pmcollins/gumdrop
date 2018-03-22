@@ -5,10 +5,10 @@
 A facility for creating Java objects from Strings. Used by [Gumdrop-Json](../gumdrop.json/) and
 [HttpFormReader](../gumdrop.web/gumdrop/web/http/HttpFormReader.java).
 
-##### Explanation
+##### Basic Builder
 
-A [Builder](gumdrop/common/builder/Builder.java) is very simple: it maps strings to setters and uses that to populate
-instances.
+A [Builder](gumdrop/common/builder/Builder.java) is very simple: it binds strings to setters and uses those bindings
+to populate instances.
 
 Consider a `Name` class:
 
@@ -80,7 +80,7 @@ nameBuilder.addSetter("first", Name::setFirst);
 ```
 
 What we've done is bind the string "first" to the setter `setFirst`. Having done that, we can now send strings into our
-Builder object and have them be applied to an instance of Name:
+Builder object and have them be applied to our `Name` instance:
 
 ```java
 
@@ -90,9 +90,37 @@ assertEquals("Bilbo", name.getFirst());
 
 ```
 
-This simple concept is the foundation of how Gumdrop populates Java obects from Json, from URL parameters, and from
-form submissions. The idea is that you wire up the relationships using a simple API, giving you compile-time type safety.
-As a side benefit, this happens to be very fast at runtime.
+This simple concept is the foundation for how Gumdrop populates Java obects from JSON, from URL parameters, and from
+form submissions. The idea is that you wire up the relationships using a simple API, giving you compile-time type
+safety, and as a side-benefit you get excellent performance.
+
+##### Graph Builder
+
+When building an object from a JSON string, we often don't just build one simple object, but rather a tree or graph of
+nested objects. To handle the creation of these sub-objects, Gumdrop provides and uses an `InstanceBuilder` class.
+
+These sub-objects can be anything from POJOs to `List`s. To take an example where we populate a `List` of `Name`s:
+
+```java
+
+Builder<Name> nameBuilder = new Builder<>(Name::new);
+nameBuilder.addSetter("first", Name::setFirst);
+nameBuilder.addSetter("last", Name::setLast);
+Builder<List<Name>> listBuilder = new Builder<>(ArrayList::new);
+listBuilder.addMember("name", List::add, nameBuilder);
+InstanceBuilder<List<Name>> listInstance = new InstanceBuilder<>(listBuilder);
+InstanceBuilder<?> nb1 = listInstance.constructAndSet("name");
+nb1.applyString("first", "foo");
+nb1.applyString("last", "bar");
+InstanceBuilder<?> nb2 = listInstance.constructAndSet("name");
+nb2.applyString("first", "baz");
+nb2.applyString("last", "glarch");
+List<Name> list = listInstance.getObject();
+assertEquals(List.of(new Name("foo", "bar"), new Name("baz", "glarch")), list);
+
+```
+
+This is what happens under the hood in Gumdrop Json.
 
 ### HTTP
 
