@@ -201,5 +201,5 @@ assertEquals(person, fromJson);
 
 The motivation for this library isn't performance, but compile-time safety and avoidance of annotations.
 As a happy side effect, however, because it doesn't use reflection, this library happens to be over twice as fast as
-Google's Gson library at serializing and deserializing to and from JSON, all without having spent any time yet on
-optimizing performance.
+Google's Gson library at serializing and deserializing to and from JSON, all without having made any explicit
+performance optimizations.
