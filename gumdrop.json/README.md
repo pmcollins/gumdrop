@@ -176,7 +176,7 @@ Now we have:
     Person person = new Person();
     person.setName("Frodo");
     person.setAge(25);
-    person.setBirthday(Instant.ofEpochMilli(700_000_000_000L));
+    person.setBirthday(Instant.parse("2001-09-09T01:46:40Z"));
 
     String json = personBuilder.toJson(person);
     assertEquals(
