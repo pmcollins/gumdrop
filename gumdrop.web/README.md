@@ -112,8 +112,8 @@ like our method call structure:
 ```html
 
 <section>
-  <header>titleBar</header>
-  <main>contents</main>
+  <header>titleBar stuff</header>
+  <main>content stuff</main>
 </section>
 
 ```
