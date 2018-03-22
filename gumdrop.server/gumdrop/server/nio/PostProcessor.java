@@ -1,6 +1,6 @@
 package gumdrop.server.nio;
 
-import gumdrop.common.builder.ByteIterator;
+import gumdrop.common.ByteIterator;
 import gumdrop.web.http.Accumulator;
 
 class PostProcessor implements Accumulator {

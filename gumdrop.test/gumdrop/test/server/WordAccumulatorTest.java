@@ -1,6 +1,6 @@
 package gumdrop.test.server;
 
-import gumdrop.common.builder.ByteIterator;
+import gumdrop.common.ByteIterator;
 import gumdrop.web.http.WordAccumulator;
 import gumdrop.test.util.Test;
 

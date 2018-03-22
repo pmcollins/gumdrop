@@ -2,8 +2,8 @@
 
 ### Builder
 
-A facility for creating Java objects from strings. Used by [Gumdrop-Json](../gumdrop.json/) and
-[FormReader](../gumdrop.web/gumdrop/web/control/FormReader.java).
+A facility for creating Java objects from Strings. Used by [Gumdrop-Json](../gumdrop.json/) and
+[HttpFormReader](../gumdrop.web/gumdrop/web/http/HttpFormReader.java).
 
 ### HTTP
 

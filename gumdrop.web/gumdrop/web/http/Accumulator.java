@@ -1,6 +1,6 @@
 package gumdrop.web.http;
 
-import gumdrop.common.builder.ByteIterator;
+import gumdrop.common.ByteIterator;
 
 public interface Accumulator {
 

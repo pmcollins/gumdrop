@@ -1,7 +1,5 @@
 package gumdrop.common;
 
-import gumdrop.common.builder.ByteIterator;
-
 public class StringUtil {
 
   public static String toTitleCase(Enum<?> e) {

@@ -1,6 +1,6 @@
 package gumdrop.server.nio;
 
-import gumdrop.common.builder.ByteIterator;
+import gumdrop.common.ByteIterator;
 import gumdrop.common.http.HttpMethod;
 import gumdrop.common.http.HttpRequest;
 import gumdrop.web.http.Accumulator;

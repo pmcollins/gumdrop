@@ -1,7 +1,7 @@
 package gumdrop.json;
 
 import gumdrop.common.builder.Builder;
-import gumdrop.common.builder.ByteIterator;
+import gumdrop.common.ByteIterator;
 
 public class JsonReader {
 

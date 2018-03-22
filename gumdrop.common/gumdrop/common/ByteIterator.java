@@ -1,4 +1,4 @@
-package gumdrop.common.builder;
+package gumdrop.common;
 
 public class ByteIterator {
 
