@@ -7,7 +7,7 @@ A facility for creating Java objects from Strings. Used by [Gumdrop-Json](../gum
 
 ##### Basic Builder
 
-A [Builder](gumdrop/common/builder/Builder.java) is very simple: it binds strings to setters and uses those bindings
+A [Builder](gumdrop/common/builder/Builder.java) is very simple: it binds Strings to setters and uses those bindings
 to populate instances.
 
 Consider a `Name` class:
@@ -97,9 +97,9 @@ safety, and as a side-benefit you get excellent performance.
 ##### Graph Builder
 
 When building an object from a JSON string, we often don't just build one simple object, but rather a tree or graph of
-nested objects. To handle the creation of these sub-objects, Gumdrop provides and uses an `InstanceBuilder` class.
+nested objects. To handle the creation of these sub-objects, Gumdrop provides `InstanceBuilder`.
 
-These sub-objects can be anything from POJOs to `List`s. To take an example where we populate a `List` of `Name`s:
+To take an example where we populate a `List` of `Name`s:
 
 ```java
 
@@ -120,7 +120,10 @@ assertEquals(List.of(new Name("foo", "bar"), new Name("baz", "glarch")), list);
 
 ```
 
-For more examples, see [BuilderTests](../gumdrop.test/gumdrop/test/common/BuilderTests.java) and other unit tests.
+The functionality in  above example doesn't have much use, but it should illustrate what happens when a `[` is reached
+during JSON deserialization, or when an array argument is posted in a web form.
+
+For more examples, see [BuilderTests](../gumdrop.test/gumdrop/test/common/BuilderTests.java) and others.
 
 ### HTTP
 
