@@ -39,7 +39,7 @@ After our Dispatcher is set up, when an HTTP Request is received:
 
 ### HTML Generation
 
-Gumdrop provides a convenient library for generating HTML. Instead of using a template language, Gumdrop lets you create
+Gumdrop provides a convenient library for generating HTML. Instead of using a template language, we create
 nested HTML-like tags in Java with its attendant compile-time safety, refactoring capability, and performance.
 
 An anchor Widget might look like this:
