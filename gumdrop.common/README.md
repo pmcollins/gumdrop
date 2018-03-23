@@ -81,11 +81,11 @@ This simple concept is the foundation for how Gumdrop populates Java obects from
 form submissions. The idea is that you wire up the relationships using a simple API, giving you compile-time type
 safety, and as a side-benefit you get excellent performance.
 
-##### Graph Builder
+##### Building an Object Graph
 
 When building an object from a JSON string, we often don't just build one simple object, but rather a tree or graph of
 nested objects. To handle the creation of these sub-objects, Gumdrop provides
-[GraphBuilder](gumdrop/common/builder/GraphBuilder.java).
+[BuilderNode](gumdrop/common/builder/BuilderNode.java).
 
 To take an example where we populate a `List` of `Name` objects:
 
@@ -98,17 +98,17 @@ nameBuilder.addSetter("last", Name::setLast);
 Builder<List<Name>> listBuilder = new Builder<>(ArrayList::new);
 listBuilder.addMember("name", List::add, nameBuilder);
 
-GraphBuilder<List<Name>> listGraph = new GraphBuilder<>(listBuilder);
+BuilderNode<List<Name>> listNode = new BuilderNode<>(listBuilder);
 
-GraphBuilder<?> name1 = listGraph.create("name");
+BuilderNode<?> name1 = listNode.create("name");
 name1.applyString("first", "foo");
 name1.applyString("last", "bar");
 
-GraphBuilder<?> name2 = listGraph.create("name");
+BuilderNode<?> name2 = listNode.create("name");
 name2.applyString("first", "baz");
 name2.applyString("last", "glarch");
 
-List<Name> list = listGraph.getObject();
+List<Name> list = listNode.getObject();
 assertEquals(List.of(new Name("foo", "bar"), new Name("baz", "glarch")), list);
 
 ```

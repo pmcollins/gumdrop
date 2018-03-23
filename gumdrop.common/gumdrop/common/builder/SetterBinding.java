@@ -20,10 +20,10 @@ class SetterBinding<T, U> {
     this.fieldSetter = fieldSetter;
   }
 
-  GraphBuilder<U> constructAndSet(T t, String key) {
-    GraphBuilder<U> graphBuilder = new GraphBuilder<>(builder);
-    fieldSetter.accept(t, key, graphBuilder.getObject());
-    return graphBuilder;
+  BuilderNode<U> constructAndSet(T t, String key) {
+    BuilderNode<U> builderNode = new BuilderNode<>(builder);
+    fieldSetter.accept(t, key, builderNode.getObject());
+    return builderNode;
   }
 
 }

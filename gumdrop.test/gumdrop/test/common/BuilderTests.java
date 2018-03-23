@@ -1,7 +1,7 @@
 package gumdrop.test.common;
 
 import gumdrop.common.builder.Builder;
-import gumdrop.common.builder.GraphBuilder;
+import gumdrop.common.builder.BuilderNode;
 import gumdrop.test.json.RoomBuilder;
 import gumdrop.test.pojo.FullNamePerson;
 import gumdrop.test.pojo.Name;
@@ -44,14 +44,14 @@ class BuilderTests extends Test {
     xBuilder.addMember("y", X::setY, y1Builder);
     xBuilder.addMember("z", X::setZ, zBuilder);
 
-    GraphBuilder<X> xInstance = new GraphBuilder<>(xBuilder);
-    GraphBuilder<?> zInstance = xInstance.create("z");
+    BuilderNode<X> xInstance = new BuilderNode<>(xBuilder);
+    BuilderNode<?> zInstance = xInstance.create("z");
     assertNotNull(zInstance);
-    GraphBuilder<?> y1Instance = xInstance.create("y");
+    BuilderNode<?> y1Instance = xInstance.create("y");
     assertNotNull(y1Instance);
-    GraphBuilder<?> y2Instance = y1Instance.create("y");
+    BuilderNode<?> y2Instance = y1Instance.create("y");
     assertNotNull(y2Instance);
-    GraphBuilder<?> y3Instance = y2Instance.create("y");
+    BuilderNode<?> y3Instance = y2Instance.create("y");
     assertNotNull(y3Instance);
     // TODO better exception
     Asserts.assertThrows(() -> y3Instance.create("y"), NullPointerException.class);
@@ -71,11 +71,11 @@ class BuilderTests extends Test {
     nameBuilder.addSetter("last", Name::setLast);
     Builder<List<Name>> listBuilder = new Builder<>(ArrayList::new);
     listBuilder.addMember("name", List::add, nameBuilder);
-    GraphBuilder<List<Name>> listInstance = new GraphBuilder<>(listBuilder);
-    GraphBuilder<?> nb1 = listInstance.create("name");
+    BuilderNode<List<Name>> listInstance = new BuilderNode<>(listBuilder);
+    BuilderNode<?> nb1 = listInstance.create("name");
     nb1.applyString("first", "foo");
     nb1.applyString("last", "bar");
-    GraphBuilder<?> nb2 = listInstance.create("name");
+    BuilderNode<?> nb2 = listInstance.create("name");
     nb2.applyString("first", "baz");
     nb2.applyString("last", "glarch");
     List<Name> list = listInstance.getObject();
@@ -83,12 +83,12 @@ class BuilderTests extends Test {
   }
 
   private void memberArray() {
-    GraphBuilder<Room> roomInstance = new GraphBuilder<>(new RoomBuilder());
+    BuilderNode<Room> roomInstance = new BuilderNode<>(new RoomBuilder());
     roomInstance.applyString("name", "702");
-    GraphBuilder<?> peopleInstance = roomInstance.create("people");
-    GraphBuilder<?> personInstance = peopleInstance.create("add");
+    BuilderNode<?> peopleInstance = roomInstance.create("people");
+    BuilderNode<?> personInstance = peopleInstance.create("add");
     personInstance.applyString("age", "42");
-    GraphBuilder<?> nameInstance = personInstance.create("name");
+    BuilderNode<?> nameInstance = personInstance.create("name");
     nameInstance.applyString("first", "pablo");
     nameInstance.applyString("last", "collins");
     Room room = roomInstance.getObject();
@@ -110,15 +110,15 @@ class BuilderTests extends Test {
     Builder<Map<String, Name>> mapBuilder = new Builder<>(HashMap::new);
     mapBuilder.addMapMember("name", Map::put, nameBuilder);
 
-    GraphBuilder<Map<String, Name>> graphBuilder = new GraphBuilder<>(mapBuilder);
+    BuilderNode<Map<String, Name>> builderNode = new BuilderNode<>(mapBuilder);
 
-    GraphBuilder<?> nameGraphBuilder = graphBuilder.create("name");
-    assertNotNull(nameGraphBuilder);
+    BuilderNode<?> nameBuilderNode = builderNode.create("name");
+    assertNotNull(nameBuilderNode);
 
-    nameGraphBuilder.applyString("first", "foo");
-    nameGraphBuilder.applyString("last", "bar");
+    nameBuilderNode.applyString("first", "foo");
+    nameBuilderNode.applyString("last", "bar");
 
-    Map<String, Name> map = graphBuilder.getObject();
+    Map<String, Name> map = builderNode.getObject();
     assertEquals("foo", map.get("name").getFirst());
   }
 
@@ -130,15 +130,15 @@ class BuilderTests extends Test {
     Builder<Map<String, Name>> mapBuilder = new Builder<>(HashMap::new);
     mapBuilder.addMapMember("*", Map::put, nameBuilder);
 
-    GraphBuilder<Map<String, Name>> graphBuilder = new GraphBuilder<>(mapBuilder);
+    BuilderNode<Map<String, Name>> builderNode = new BuilderNode<>(mapBuilder);
 
-    GraphBuilder<?> nameGraphBuilder = graphBuilder.create("baz");
-    assertNotNull(nameGraphBuilder);
+    BuilderNode<?> nameBuilderNode = builderNode.create("baz");
+    assertNotNull(nameBuilderNode);
 
-    nameGraphBuilder.applyString("first", "foo");
-    nameGraphBuilder.applyString("last", "bar");
+    nameBuilderNode.applyString("first", "foo");
+    nameBuilderNode.applyString("last", "bar");
 
-    Map<String, Name> map = graphBuilder.getObject();
+    Map<String, Name> map = builderNode.getObject();
     assertEquals("foo", map.get("baz").getFirst());
   }
 
