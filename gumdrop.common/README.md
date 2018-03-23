@@ -113,7 +113,7 @@ assertEquals(List.of(new Name("foo", "bar"), new Name("baz", "glarch")), list);
 
 ```
 
-The functionality above should illustrate how Gumdrop handles an open square bracket (`[`) reached during JSON
+The functionality above should provide an idea of how Gumdrop handles an open square bracket (`[`) reached during JSON
 deserialization, or when an array argument is parsed from a web form submission.
 
 For more examples, see [BuilderTests](../gumdrop.test/gumdrop/test/common/BuilderTests.java) and others.
