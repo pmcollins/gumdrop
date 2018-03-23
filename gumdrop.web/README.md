@@ -12,30 +12,24 @@ For example, if we have a Controller to show messages by id, and we want our ser
 request pattern, `/messages/#`.
 
 ```java
+
 Dispatcher dispatcher = new Dispatcher();
 ShowMessageView showMessageView = new ShowMessageView();
-dispatcher.register(GET, "/messages/#", () -> new ShowMessageController(
-  sessionService, messageService, showMessageView, layoutView
-));
+dispatcher.register(GET, "/messages/#", () -> new ShowMessageController());
+
 ```
 
 The `#` is a numeric wildcard. Using a numeric wildcard in `/messages/#` means that GET requests to, for example
 `/messages/42`, will match, with the matching number passed to the Controller instance.
 
-### General Control Flow
 
-After our Dispatcher is set up, when an HTTP Request is received:
+```java
 
-1. The [Dispatcher](gumdrop/web/control/Dispatcher.java) finds a matching
-[Controller](gumdrop/web/control/Controller.java) Supplier for the given request
-2. The Dispatcher creates a Controller instance, which is populated with everything it needs to handle the request
-3. The Controller instantiates and sets up a [Presenter](gumdrop/web/control/Presenter.java)
-3. The Presenter generates a [ViewModel](gumdrop/web/html/ViewModel.java)
-    * If necessary the parent Presenter also sets up sub-Presenters and attaches their ViewModels to the parent ViewModel
-4. The Controller hands the ViewModel instance to a [View](gumdrop/web/html/View.java)
-5. The View assembles a tree of [Widget](gumdrop/web/html/Widget.java)s, handing each widget any appropriate model data
-6. The tree of Widgets is traversed, building an [HttpResponse](gumdrop/web/http/HttpResponse.java)
-7. The HttpResponse is returned to the caller
+new NioServer(dispatcher, 8080).run();
+
+```
+
+We pass our dispatcher to NioServer along with a port number and call `run` to start the server.
 
 ### HTML Generation
 
