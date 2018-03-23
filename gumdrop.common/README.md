@@ -78,8 +78,8 @@ assertEquals("Bilbo", name.getFirst());
 ```
 
 This simple concept is the foundation for how Gumdrop populates Java obects from JSON, from URL parameters, and from
-form submissions. The idea is that you wire up the relationships using a simple API, giving you compile-time type
-safety, and as a side-benefit you get excellent performance.
+form submissions. The idea is that we wire up the relationships using a simple API, giving us compile-time type
+safety, and as a side-benefit, excellent performance.
 
 ##### Building an Object Graph
 
