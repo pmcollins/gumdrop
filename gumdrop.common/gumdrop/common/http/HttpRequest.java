@@ -1,6 +1,7 @@
 package gumdrop.common.http;
 
-import java.util.HashMap;
+import gumdrop.common.StringUtil;
+
 import java.util.Map;
 
 public class HttpRequest implements Request {
@@ -18,20 +19,6 @@ public class HttpRequest implements Request {
   }
 
   public HttpRequest() {
-  }
-
-  private static Map<String, String> parseQueryString(String q) {
-    Map<String, String> out = new HashMap<>();
-    if (!q.isEmpty()) {
-      String[] pairs = q.split("&");
-      for (String pair : pairs) {
-        int idx = pair.indexOf('=');
-        String key = pair.substring(0, idx);
-        String value = pair.substring(idx + 1, pair.length());
-        out.put(key, value);
-      }
-    }
-    return out;
   }
 
   public void setHeaders(Map<String, String> map) {
@@ -92,7 +79,7 @@ public class HttpRequest implements Request {
   }
 
   public void writeParameterMap() {
-    this.parameterMap = parseQueryString(getPostString());
+    this.parameterMap = StringUtil.parseQueryString(getPostString());
   }
 
   public boolean isPost() {
