@@ -1,6 +1,6 @@
 package gumdrop.test.json;
 
-import gumdrop.json.Getters;
+import gumdrop.json.JsonWriter;
 import gumdrop.test.pojo.FullNamePerson;
 import gumdrop.test.pojo.Name;
 import gumdrop.test.pojo.Person;
@@ -15,8 +15,8 @@ import static gumdrop.test.util.Asserts.assertEquals;
 
 class GettersTest extends Test {
 
-  private final Getters<FullNamePerson> complexPersonJsonGetters;
-  private final Getters<Person> personJsonGetters;
+  private final JsonWriter<FullNamePerson> complexPersonJsonJsonWriter;
+  private final JsonWriter<Person> personJsonJsonWriter;
   private final DateTimeFormatter formatter;
 
   public static void main(String[] args) {
@@ -24,28 +24,28 @@ class GettersTest extends Test {
   }
 
   GettersTest() {
-    personJsonGetters = setupPerson();
-    complexPersonJsonGetters = setupComplexPerson();
+    personJsonJsonWriter = setupPerson();
+    complexPersonJsonJsonWriter = setupComplexPerson();
     formatter = DateTimeFormatter.ISO_INSTANT;
   }
 
-  private Getters<Person> setupPerson() {
-    Getters<Person> personJsonGetters = new Getters<>();
-    personJsonGetters.addStringGetter("name", Person::getName);
-    personJsonGetters.addNumericGetter("age", Person::getAge);
-    personJsonGetters.addStringGetter("birthday", p -> formatter.format(p.getBirthday()));
-    return personJsonGetters;
+  private JsonWriter<Person> setupPerson() {
+    JsonWriter<Person> personJsonJsonWriter = new JsonWriter<>();
+    personJsonJsonWriter.addStringGetter("name", Person::getName);
+    personJsonJsonWriter.addNumericGetter("age", Person::getAge);
+    personJsonJsonWriter.addStringGetter("birthday", p -> formatter.format(p.getBirthday()));
+    return personJsonJsonWriter;
   }
 
-  private Getters<FullNamePerson> setupComplexPerson() {
-    Getters<FullNamePerson> personGetters;
-    Getters<Name> nameGetters = new Getters<>();
-    nameGetters.addStringGetter("first", Name::getFirst);
-    nameGetters.addStringGetter("last", Name::getLast);
-    personGetters = new Getters<>();
-    personGetters.addNumericGetter("age", FullNamePerson::getAge);
-    personGetters.addMember("name", FullNamePerson::getName, nameGetters);
-    return personGetters;
+  private JsonWriter<FullNamePerson> setupComplexPerson() {
+    JsonWriter<FullNamePerson> personJsonWriter;
+    JsonWriter<Name> nameJsonWriter = new JsonWriter<>();
+    nameJsonWriter.addStringGetter("first", Name::getFirst);
+    nameJsonWriter.addStringGetter("last", Name::getLast);
+    personJsonWriter = new JsonWriter<>();
+    personJsonWriter.addNumericGetter("age", FullNamePerson::getAge);
+    personJsonWriter.addMember("name", FullNamePerson::getName, nameJsonWriter);
+    return personJsonWriter;
   }
 
   @Override
@@ -63,7 +63,7 @@ class GettersTest extends Test {
     person.setBirthday(Instant.ofEpochMilli(700_000_000_000L));
     assertEquals(
       "{\"name\":\"bobo\",\"age\":25,\"birthday\":\"1992-03-07T20:26:40Z\"}",
-      personJsonGetters.getJson(person)
+      personJsonJsonWriter.toJson(person)
     );
   }
 
@@ -74,7 +74,7 @@ class GettersTest extends Test {
     name.setFirst("lile");
     name.setLast("collinson");
     complexPerson.setName(name);
-    String json = complexPersonJsonGetters.getJson(complexPerson);
+    String json = complexPersonJsonJsonWriter.toJson(complexPerson);
     assertEquals("{\"age\":42,\"name\":{\"first\":\"lile\",\"last\":\"collinson\"}}", json);
   }
 
@@ -82,13 +82,13 @@ class GettersTest extends Test {
     Map<String, Name> map = new HashMap<>();
     map.put("foo", new Name("foo", "bar"));
     map.put("baz", new Name("baz", "glarch"));
-    Getters<Name> nameGetters = new Getters<>();
-    nameGetters.addStringGetter("first", Name::getFirst);
-    nameGetters.addStringGetter("last", Name::getLast);
-    Getters<Map<String, Name>> mapGetters = new Getters<>();
-    mapGetters.addMember("foo", m -> m.get("foo"), nameGetters);
-    mapGetters.addMember("bar", m -> m.get("baz"), nameGetters);
-    String json = mapGetters.getJson(map);
+    JsonWriter<Name> nameJsonWriter = new JsonWriter<>();
+    nameJsonWriter.addStringGetter("first", Name::getFirst);
+    nameJsonWriter.addStringGetter("last", Name::getLast);
+    JsonWriter<Map<String, Name>> mapJsonWriter = new JsonWriter<>();
+    mapJsonWriter.addMember("foo", m -> m.get("foo"), nameJsonWriter);
+    mapJsonWriter.addMember("bar", m -> m.get("baz"), nameJsonWriter);
+    String json = mapJsonWriter.toJson(map);
     assertEquals("{\"foo\":{\"first\":\"foo\",\"last\":\"bar\"},\"bar\":{\"first\":\"baz\",\"last\":\"glarch\"}}", json);
   }
 
@@ -97,13 +97,13 @@ class GettersTest extends Test {
     map.put("foo", new Name("foo", "bar"));
     map.put("baz", new Name("baz", "glarch"));
     map.put("quux", new Name("frob", "snarf"));
-    Getters<Name> nameGetters = new Getters<>();
-    nameGetters.addStringGetter("first", Name::getFirst);
-    nameGetters.addStringGetter("last", Name::getLast);
-    Getters<Map<String, Name>> mapGetters = new Getters<>();
-    mapGetters.setKeyFunction(Map::keySet);
-    mapGetters.setMemberFunction(Map::get, nameGetters);
-    String json = mapGetters.getJson(map);
+    JsonWriter<Name> nameJsonWriter = new JsonWriter<>();
+    nameJsonWriter.addStringGetter("first", Name::getFirst);
+    nameJsonWriter.addStringGetter("last", Name::getLast);
+    JsonWriter<Map<String, Name>> mapJsonWriter = new JsonWriter<>();
+    mapJsonWriter.setKeyFunction(Map::keySet);
+    mapJsonWriter.setMemberFunction(Map::get, nameJsonWriter);
+    String json = mapJsonWriter.toJson(map);
     assertEquals("{\"quux\":{\"first\":\"frob\",\"last\":\"snarf\"},\"foo\":{\"first\":\"foo\",\"last\":\"bar\"},\"baz\":{\"first\":\"baz\",\"last\":\"glarch\"}}", json);
   }
 
