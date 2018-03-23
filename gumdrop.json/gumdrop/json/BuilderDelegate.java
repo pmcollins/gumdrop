@@ -32,7 +32,7 @@ public class BuilderDelegate<T> implements JsonDelegate {
 
   @Override
   public void objectStart() {
-    pushSubBuilder(key == null ? ListBuilder.ARRAY_ADD_KEY : key);
+    pushSubNode(key == null ? ListBuilder.ARRAY_ADD_KEY : key);
   }
 
   @Override
@@ -42,7 +42,7 @@ public class BuilderDelegate<T> implements JsonDelegate {
 
   @Override
   public void arrayStart() {
-    pushSubBuilder(key);
+    pushSubNode(key);
   }
 
   @Override
@@ -56,10 +56,10 @@ public class BuilderDelegate<T> implements JsonDelegate {
     key = null;
   }
 
-  private void pushSubBuilder(String memberKey) {
-    BuilderNode<?> currentBuilder = nodeStack.peek();
-    BuilderNode<?> subBuilder = currentBuilder.create(memberKey);
-    nodeStack.push(subBuilder);
+  private void pushSubNode(String memberKey) {
+    BuilderNode<?> currentNode = nodeStack.peek();
+    BuilderNode<?> subNode = currentNode.create(memberKey);
+    nodeStack.push(subNode);
     key = null;
   }
 
