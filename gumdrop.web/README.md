@@ -22,14 +22,14 @@ dispatcher.register(GET, "/messages/#", () -> new ShowMessageController());
 The `#` is a numeric wildcard. Using a numeric wildcard in `/messages/#` means that GET requests to, for example
 `/messages/42`, will match, with the matching number passed to the Controller instance.
 
+We then pass our dispatcher to `NioServer` along with a port number and call `run` to start the
+[Gumdrop Server](../gumdrop.server/).
 
 ```java
 
 new NioServer(dispatcher, 8080).run();
 
 ```
-
-We pass our dispatcher to NioServer along with a port number and call `run` to start the server.
 
 ### HTML Generation
 
