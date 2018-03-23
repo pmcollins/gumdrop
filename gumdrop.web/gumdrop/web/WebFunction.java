@@ -9,11 +9,11 @@ import gumdrop.web.http.HttpResponseHeader;
 import java.util.Arrays;
 import java.util.function.Function;
 
-public class GumdropWebFunction implements Function<HttpRequest, byte[]> {
+public class WebFunction implements Function<HttpRequest, byte[]> {
 
   private final Dispatcher dispatcher;
 
-  public GumdropWebFunction(Dispatcher dispatcher) {
+  public WebFunction(Dispatcher dispatcher) {
     this.dispatcher = dispatcher;
   }
 
