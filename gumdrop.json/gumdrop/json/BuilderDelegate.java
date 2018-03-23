@@ -51,8 +51,8 @@ public class BuilderDelegate<T> implements JsonDelegate {
   }
 
   private void setValue(String string) {
-    BuilderNode<?> currentBuilder = nodeStack.peek();
-    currentBuilder.applyString(key, string);
+    BuilderNode<?> currentNode = nodeStack.peek();
+    currentNode.applyString(key, string);
     key = null;
   }
 
