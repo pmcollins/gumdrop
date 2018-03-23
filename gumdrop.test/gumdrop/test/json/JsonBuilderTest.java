@@ -29,9 +29,9 @@ class JsonBuilderTest extends Test {
     Person p = new Person();
     p.setName("lile");
     p.setAge(10);
-    String json = personBuilder.toJson(p);
+    String json = personBuilder.toString(p);
     Asserts.assertEquals("{\"name\":\"lile\",\"age\":10}", json);
-    Person fromJson = personBuilder.fromJson(json);
+    Person fromJson = personBuilder.fromString(json);
     Asserts.assertEquals(p, fromJson);
   }
 
@@ -48,8 +48,8 @@ class JsonBuilderTest extends Test {
     name.setFirst("lile");
     name.setLast("collinson");
     p.setName(name);
-    String json = personConverter.toJson(p);
-    FullNamePerson rebuilt = personConverter.fromJson(json);
+    String json = personConverter.toString(p);
+    FullNamePerson rebuilt = personConverter.fromString(json);
     Asserts.assertEquals(p, rebuilt);
   }
 
@@ -69,12 +69,12 @@ class JsonBuilderTest extends Test {
     person.setAge(25);
     person.setBirthday(Instant.parse("1900-01-01T01:00:00Z"));
 
-    String json = personConverter.toJson(person);
+    String json = personConverter.toString(person);
     assertEquals(
       "{\"name\":\"Frodo\",\"age\":25,\"birthday\":\"1900-01-01T01:00:00Z\"}",
       json
     );
-    Person fromJson = personConverter.fromJson(json);
+    Person fromJson = personConverter.fromString(json);
     assertEquals(person, fromJson);
   }
 
