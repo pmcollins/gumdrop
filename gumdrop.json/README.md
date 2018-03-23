@@ -76,9 +76,9 @@ Now we can convert a `Person` instance to JSON and back:
 Person p = new Person();
 p.setName("Bilbo");
 p.setAge(50);
-String json = personConverter.toJson(p);
+String json = personConverter.toString(p);
 TestUtil.assertEquals("{\"name\":\"Bilbo\",\"age\":50}", json);
-Person fromJson = personConverter.fromJson(json);
+Person fromJson = personConverter.fromString(json);
 TestUtil.assertEquals(p, fromJson);
 
 ```
@@ -113,31 +113,31 @@ Person person = new Person();
 person.setName("Frodo");
 person.setAge(25);
 person.setBirthday(Instant.parse("1900-01-01T01:00:00Z"));
-String json = personConverter.toJson(person);
+String json = personConverter.toString(person);
 assertEquals(
   "{\"name\":\"Frodo\",\"age\":25,\"birthday\":\"1900-01-01T01:00:00Z\"}",
   json
 );
-Person fromJson = personConverter.fromJson(json);
+Person fromJson = personConverter.fromString(json);
 assertEquals(person, fromJson);
 
 ```
 
-As an alternative to the formatter lambas above, we can use a `Converter`:
+As an alternative to the formatter lambas above, we can use a `StringConverter`:
 
 ```java
 
-class InstantConverter implements Converter<Instant> {
+class InstantConverter implements StringConverter<Instant> {
 
   private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
 
   @Override
-  public String convertToString(Instant instant) {
+  public String toString(Instant instant) {
     return formatter.format(instant);
   }
 
   @Override
-  public Instant convertFromString(String s) {
+  public Instant fromString(String s) {
     return Instant.from(formatter.parse(s));
   }
 
@@ -175,12 +175,12 @@ Person person = new Person();
 person.setName("Frodo");
 person.setAge(25);
 person.setBirthday(Instant.parse("1900-01-01T01:00:00Z"));
-String json = personConverter.toJson(person);
+String json = personConverter.toString(person);
 assertEquals(
   "{\"name\":\"Frodo\",\"age\":25,\"birthday\":\"1900-01-01T01:00:00Z\"}",
   json
 );
-Person fromJson = personConverter.fromJson(json);
+Person fromJson = personConverter.fromString(json);
 assertEquals(person, fromJson);
 
 ```
