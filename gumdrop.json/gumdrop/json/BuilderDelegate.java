@@ -7,13 +7,13 @@ import java.util.Stack;
 
 public class BuilderDelegate<T> implements JsonDelegate {
 
-  private final Stack<BuilderNode<?>> creatorStack = new Stack<>();
+  private final Stack<BuilderNode<?>> nodeStack = new Stack<>();
   private final BuilderNode<Holder<T>> rootNode;
   private String key = HolderBuilder.HOLDER_SET_KEY;
 
   public BuilderDelegate(Builder<T> builder) {
     rootNode = new BuilderNode<>(new HolderBuilder<>(builder));
-    creatorStack.add(rootNode);
+    nodeStack.add(rootNode);
   }
 
   @Override
@@ -37,7 +37,7 @@ public class BuilderDelegate<T> implements JsonDelegate {
 
   @Override
   public void objectEnd() {
-    creatorStack.pop();
+    nodeStack.pop();
   }
 
   @Override
@@ -47,19 +47,19 @@ public class BuilderDelegate<T> implements JsonDelegate {
 
   @Override
   public void arrayEnd() {
-    creatorStack.pop();
+    nodeStack.pop();
   }
 
   private void setValue(String string) {
-    BuilderNode<?> currentBuilder = creatorStack.peek();
+    BuilderNode<?> currentBuilder = nodeStack.peek();
     currentBuilder.applyString(key, string);
     key = null;
   }
 
   private void pushSubBuilder(String memberKey) {
-    BuilderNode<?> currentBuilder = creatorStack.peek();
+    BuilderNode<?> currentBuilder = nodeStack.peek();
     BuilderNode<?> subBuilder = currentBuilder.create(memberKey);
-    creatorStack.push(subBuilder);
+    nodeStack.push(subBuilder);
     key = null;
   }
 
