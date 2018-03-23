@@ -45,16 +45,16 @@ class BuilderTests extends Test {
     xBuilder.addMember("z", X::setZ, zBuilder);
 
     GraphBuilder<X> xInstance = new GraphBuilder<>(xBuilder);
-    GraphBuilder<?> zInstance = xInstance.constructAndSet("z");
+    GraphBuilder<?> zInstance = xInstance.create("z");
     assertNotNull(zInstance);
-    GraphBuilder<?> y1Instance = xInstance.constructAndSet("y");
+    GraphBuilder<?> y1Instance = xInstance.create("y");
     assertNotNull(y1Instance);
-    GraphBuilder<?> y2Instance = y1Instance.constructAndSet("y");
+    GraphBuilder<?> y2Instance = y1Instance.create("y");
     assertNotNull(y2Instance);
-    GraphBuilder<?> y3Instance = y2Instance.constructAndSet("y");
+    GraphBuilder<?> y3Instance = y2Instance.create("y");
     assertNotNull(y3Instance);
     // TODO better exception
-    Asserts.assertThrows(() -> y3Instance.constructAndSet("y"), NullPointerException.class);
+    Asserts.assertThrows(() -> y3Instance.create("y"), NullPointerException.class);
   }
 
   private void apply() {
@@ -72,10 +72,10 @@ class BuilderTests extends Test {
     Builder<List<Name>> listBuilder = new Builder<>(ArrayList::new);
     listBuilder.addMember("name", List::add, nameBuilder);
     GraphBuilder<List<Name>> listInstance = new GraphBuilder<>(listBuilder);
-    GraphBuilder<?> nb1 = listInstance.constructAndSet("name");
+    GraphBuilder<?> nb1 = listInstance.create("name");
     nb1.applyString("first", "foo");
     nb1.applyString("last", "bar");
-    GraphBuilder<?> nb2 = listInstance.constructAndSet("name");
+    GraphBuilder<?> nb2 = listInstance.create("name");
     nb2.applyString("first", "baz");
     nb2.applyString("last", "glarch");
     List<Name> list = listInstance.getObject();
@@ -85,10 +85,10 @@ class BuilderTests extends Test {
   private void memberArray() {
     GraphBuilder<Room> roomInstance = new GraphBuilder<>(new RoomBuilder());
     roomInstance.applyString("name", "702");
-    GraphBuilder<?> peopleInstance = roomInstance.constructAndSet("people");
-    GraphBuilder<?> personInstance = peopleInstance.constructAndSet("add");
+    GraphBuilder<?> peopleInstance = roomInstance.create("people");
+    GraphBuilder<?> personInstance = peopleInstance.create("add");
     personInstance.applyString("age", "42");
-    GraphBuilder<?> nameInstance = personInstance.constructAndSet("name");
+    GraphBuilder<?> nameInstance = personInstance.create("name");
     nameInstance.applyString("first", "pablo");
     nameInstance.applyString("last", "collins");
     Room room = roomInstance.getObject();
@@ -112,7 +112,7 @@ class BuilderTests extends Test {
 
     GraphBuilder<Map<String, Name>> graphBuilder = new GraphBuilder<>(mapBuilder);
 
-    GraphBuilder<?> nameGraphBuilder = graphBuilder.constructAndSet("name");
+    GraphBuilder<?> nameGraphBuilder = graphBuilder.create("name");
     assertNotNull(nameGraphBuilder);
 
     nameGraphBuilder.applyString("first", "foo");
@@ -132,7 +132,7 @@ class BuilderTests extends Test {
 
     GraphBuilder<Map<String, Name>> graphBuilder = new GraphBuilder<>(mapBuilder);
 
-    GraphBuilder<?> nameGraphBuilder = graphBuilder.constructAndSet("baz");
+    GraphBuilder<?> nameGraphBuilder = graphBuilder.create("baz");
     assertNotNull(nameGraphBuilder);
 
     nameGraphBuilder.applyString("first", "foo");

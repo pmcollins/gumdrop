@@ -13,7 +13,7 @@ public class GraphBuilder<T> {
     t = builder.construct();
   }
 
-  public GraphBuilder<?> constructAndSet(String key) {
+  public GraphBuilder<?> create(String key) {
     SetterBinding<T, ?> setterBinding = builder.getMember(key);
     return setterBinding.constructAndSet(t, key);
   }
