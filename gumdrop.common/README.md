@@ -100,29 +100,34 @@ When building an object from a JSON string, we often don't just build one simple
 nested objects. To handle the creation of these sub-objects, Gumdrop provides
 [InstanceBuilder](gumdrop/common/builder/InstanceBuilder.java).
 
-To take an example where we populate a `List` of `Name`s:
+To take an example where we populate a `List` of `Name` objects:
 
 ```java
 
 Builder<Name> nameBuilder = new Builder<>(Name::new);
 nameBuilder.addSetter("first", Name::setFirst);
 nameBuilder.addSetter("last", Name::setLast);
+
 Builder<List<Name>> listBuilder = new Builder<>(ArrayList::new);
 listBuilder.addMember("name", List::add, nameBuilder);
+
 InstanceBuilder<List<Name>> listInstance = new InstanceBuilder<>(listBuilder);
+
 InstanceBuilder<?> b1 = listInstance.constructAndSet("name");
 b1.applyString("first", "foo");
 b1.applyString("last", "bar");
+
 InstanceBuilder<?> b2 = listInstance.constructAndSet("name");
 b2.applyString("first", "baz");
 b2.applyString("last", "glarch");
+
 List<Name> list = listInstance.getObject();
 assertEquals(List.of(new Name("foo", "bar"), new Name("baz", "glarch")), list);
 
 ```
 
-The functionality in above example doesn't have much direct use, but it should illustrate what happens when a `[` is
-reached during JSON deserialization, or when an array argument is posted in a web form.
+The functionality above should illustrate how Gumdrop handles a `[` reached during JSON deserialization, or when an
+array argument is posted in a web form.
 
 For more examples, see [BuilderTests](../gumdrop.test/gumdrop/test/common/BuilderTests.java) and others.
 
