@@ -9,7 +9,7 @@ import java.util.function.Supplier;
  * direction, use one of those instead.
  * @param <T> The type of object to serialize/deserialize to/from JSON
  */
-public class JsonConverter<T> {
+public class JsonConverter<T> implements StringConverter<T> {
 
   private final JsonWriter<T> jsonWriter = new JsonWriter<>();
   private final JsonBuilder<T> builder;
@@ -28,9 +28,9 @@ public class JsonConverter<T> {
     jsonWriter.addNumericGetter(name, getter);
   }
 
-  public <U> void addField(String name, Function<T, U> getter, BiConsumer<T, U> setter, Converter<U> converter) {
-    builder.addSetter(name, (t, str) -> setter.accept(t, converter.convertFromString(str)));
-    jsonWriter.addStringGetter(name, (t) -> converter.convertToString(getter.apply(t)));
+  public <U> void addField(String name, Function<T, U> getter, BiConsumer<T, U> setter, StringConverter<U> stringConverter) {
+    builder.addSetter(name, (t, str) -> setter.accept(t, stringConverter.fromString(str)));
+    jsonWriter.addStringGetter(name, (t) -> stringConverter.toString(getter.apply(t)));
   }
 
   public <U> void addSubFields(String name, Function<T, U> fieldGetter, BiConsumer<T, U> fieldSetter, JsonConverter<U> jsonConverter) {
@@ -38,11 +38,13 @@ public class JsonConverter<T> {
     jsonWriter.addMember(name, fieldGetter, jsonConverter.jsonWriter);
   }
 
-  public String toJson(T t) {
+  @Override
+  public String toString(T t) {
     return jsonWriter.toJson(t);
   }
 
-  public T fromJson(String json) {
+  @Override
+  public T fromString(String json) {
     return builder.fromJson(json);
   }
 
