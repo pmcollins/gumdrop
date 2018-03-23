@@ -112,10 +112,10 @@ personBuilder.addStringField(
 Person person = new Person();
 person.setName("Frodo");
 person.setAge(25);
-person.setBirthday(Instant.parse("2001-09-09T01:46:40Z"));
+person.setBirthday(Instant.parse("1900-01-01T01:00:00Z"));
 String json = personBuilder.toJson(person);
 assertEquals(
-  "{\"name\":\"Frodo\",\"age\":25,\"birthday\":\"2001-09-09T01:46:40Z\"}",
+  "{\"name\":\"Frodo\",\"age\":25,\"birthday\":\"1900-01-01T01:00:00Z\"}",
   json
 );
 Person fromJson = personBuilder.fromJson(json);
@@ -174,10 +174,10 @@ personBuilder.addField(
 Person person = new Person();
 person.setName("Frodo");
 person.setAge(25);
-person.setBirthday(Instant.parse("2001-09-09T01:46:40Z"));
+person.setBirthday(Instant.parse("1900-01-01T01:00:00Z"));
 String json = personBuilder.toJson(person);
 assertEquals(
-  "{\"name\":\"Frodo\",\"age\":25,\"birthday\":\"2001-09-09T01:46:40Z\"}",
+  "{\"name\":\"Frodo\",\"age\":25,\"birthday\":\"1900-01-01T01:00:00Z\"}",
   json
 );
 Person fromJson = personBuilder.fromJson(json);
