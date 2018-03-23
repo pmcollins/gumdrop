@@ -8,12 +8,12 @@ import java.util.Stack;
 public class BuilderDelegate<T> implements JsonDelegate {
 
   private final Stack<BuilderNode<?>> creatorStack = new Stack<>();
-  private final BuilderNode<Holder<T>> rootCreator;
+  private final BuilderNode<Holder<T>> rootNode;
   private String key = HolderBuilder.HOLDER_SET_KEY;
 
   public BuilderDelegate(Builder<T> builder) {
-    rootCreator = new BuilderNode<>(new HolderBuilder<>(builder));
-    creatorStack.add(rootCreator);
+    rootNode = new BuilderNode<>(new HolderBuilder<>(builder));
+    creatorStack.add(rootNode);
   }
 
   @Override
@@ -64,7 +64,7 @@ public class BuilderDelegate<T> implements JsonDelegate {
   }
 
   public T getObject() {
-    Holder<T> holder = rootCreator.getObject();
+    Holder<T> holder = rootNode.getObject();
     return holder.getContents();
   }
 

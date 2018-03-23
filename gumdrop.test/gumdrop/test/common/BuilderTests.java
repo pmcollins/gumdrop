@@ -44,17 +44,17 @@ class BuilderTests extends Test {
     xBuilder.addMember("y", X::setY, y1Builder);
     xBuilder.addMember("z", X::setZ, zBuilder);
 
-    BuilderNode<X> xInstance = new BuilderNode<>(xBuilder);
-    BuilderNode<?> zInstance = xInstance.create("z");
-    assertNotNull(zInstance);
-    BuilderNode<?> y1Instance = xInstance.create("y");
-    assertNotNull(y1Instance);
-    BuilderNode<?> y2Instance = y1Instance.create("y");
-    assertNotNull(y2Instance);
-    BuilderNode<?> y3Instance = y2Instance.create("y");
-    assertNotNull(y3Instance);
+    BuilderNode<X> xNode = new BuilderNode<>(xBuilder);
+    BuilderNode<?> zNode = xNode.create("z");
+    assertNotNull(zNode);
+    BuilderNode<?> y1Node = xNode.create("y");
+    assertNotNull(y1Node);
+    BuilderNode<?> y2Node = y1Node.create("y");
+    assertNotNull(y2Node);
+    BuilderNode<?> y3Node = y2Node.create("y");
+    assertNotNull(y3Node);
     // TODO better exception
-    Asserts.assertThrows(() -> y3Instance.create("y"), NullPointerException.class);
+    Asserts.assertThrows(() -> y3Node.create("y"), NullPointerException.class);
   }
 
   private void apply() {
@@ -71,27 +71,27 @@ class BuilderTests extends Test {
     nameBuilder.addSetter("last", Name::setLast);
     Builder<List<Name>> listBuilder = new Builder<>(ArrayList::new);
     listBuilder.addMember("name", List::add, nameBuilder);
-    BuilderNode<List<Name>> listInstance = new BuilderNode<>(listBuilder);
-    BuilderNode<?> nb1 = listInstance.create("name");
+    BuilderNode<List<Name>> listNode = new BuilderNode<>(listBuilder);
+    BuilderNode<?> nb1 = listNode.create("name");
     nb1.applyString("first", "foo");
     nb1.applyString("last", "bar");
-    BuilderNode<?> nb2 = listInstance.create("name");
+    BuilderNode<?> nb2 = listNode.create("name");
     nb2.applyString("first", "baz");
     nb2.applyString("last", "glarch");
-    List<Name> list = listInstance.getObject();
+    List<Name> list = listNode.getObject();
     assertEquals(List.of(new Name("foo", "bar"), new Name("baz", "glarch")), list);
   }
 
   private void memberArray() {
-    BuilderNode<Room> roomInstance = new BuilderNode<>(new RoomBuilder());
-    roomInstance.applyString("name", "702");
-    BuilderNode<?> peopleInstance = roomInstance.create("people");
-    BuilderNode<?> personInstance = peopleInstance.create("add");
-    personInstance.applyString("age", "42");
-    BuilderNode<?> nameInstance = personInstance.create("name");
-    nameInstance.applyString("first", "pablo");
-    nameInstance.applyString("last", "collins");
-    Room room = roomInstance.getObject();
+    BuilderNode<Room> roomNode = new BuilderNode<>(new RoomBuilder());
+    roomNode.applyString("name", "702");
+    BuilderNode<?> peopleNode = roomNode.create("people");
+    BuilderNode<?> personNode = peopleNode.create("add");
+    personNode.applyString("age", "42");
+    BuilderNode<?> nameNode = personNode.create("name");
+    nameNode.applyString("first", "pablo");
+    nameNode.applyString("last", "collins");
+    Room room = roomNode.getObject();
     assertEquals("702", room.getName());
     List<FullNamePerson> people = room.getPeople();
     assertEquals(1, people.size());
