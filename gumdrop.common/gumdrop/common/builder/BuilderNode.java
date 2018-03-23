@@ -3,17 +3,17 @@ package gumdrop.common.builder;
 /**
  * Binds a Builder object to an instance whose type corresponds to the Builder
  */
-public class GraphBuilder<T> {
+public class BuilderNode<T> {
 
   private final Builder<T> builder;
   private final T t;
 
-  public GraphBuilder(Builder<T> builder) {
+  public BuilderNode(Builder<T> builder) {
     this.builder = builder;
     t = builder.construct();
   }
 
-  public GraphBuilder<?> create(String key) {
+  public BuilderNode<?> create(String key) {
     SetterBinding<T, ?> setterBinding = builder.getMember(key);
     return setterBinding.constructAndSet(t, key);
   }
