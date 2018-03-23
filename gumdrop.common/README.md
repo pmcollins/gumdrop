@@ -100,13 +100,13 @@ listBuilder.addMember("name", List::add, nameBuilder);
 
 GraphBuilder<List<Name>> listGraph = new GraphBuilder<>(listBuilder);
 
-GraphBuilder<?> b1 = listGraph.create("name");
-b1.applyString("first", "foo");
-b1.applyString("last", "bar");
+GraphBuilder<?> name1 = listGraph.create("name");
+name1.applyString("first", "foo");
+name1.applyString("last", "bar");
 
-GraphBuilder<?> b2 = listGraph.create("name");
-b2.applyString("first", "baz");
-b2.applyString("last", "glarch");
+GraphBuilder<?> name2 = listGraph.create("name");
+name2.applyString("first", "baz");
+name2.applyString("last", "glarch");
 
 List<Name> list = listGraph.getObject();
 assertEquals(List.of(new Name("foo", "bar"), new Name("baz", "glarch")), list);
