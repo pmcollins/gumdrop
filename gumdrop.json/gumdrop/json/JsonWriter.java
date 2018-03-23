@@ -5,7 +5,11 @@ import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-public class Getters<T> {
+/**
+ * Converts an object to a JSON string.
+ * @param <T> the type of object to serialize to JSON
+ */
+public class JsonWriter<T> {
 
   private final Map<String, BiFunction<T, String, String>> getters = new LinkedHashMap<>();
   private Function<T, Iterable<String>> keyFunction;
@@ -19,8 +23,8 @@ public class Getters<T> {
     addBarewordGetter(name, t -> '"' + getter.apply(t) + '"');
   }
 
-  public <U> void addMember(String name, Function<T, U> fieldGetter, Getters<U> subGetters) {
-    getters.put(name, new GetterBinding<>(fieldGetter, subGetters));
+  public <U> void addMember(String name, Function<T, U> fieldGetter, JsonWriter<U> subJsonWriter) {
+    getters.put(name, new GetterBinding<>(fieldGetter, subJsonWriter));
   }
 
   private void addBarewordGetter(String name, Function<T, String> getter) {
@@ -31,11 +35,11 @@ public class Getters<T> {
     this.keyFunction = keyFunction;
   }
 
-  public <U> void setMemberFunction(BiFunction<T, String, U> dynamicFieldGetter, Getters<U> subGetters) {
-    dynamicBinding = new GetterBinding<>(dynamicFieldGetter, subGetters);
+  public <U> void setMemberFunction(BiFunction<T, String, U> dynamicFieldGetter, JsonWriter<U> subJsonWriter) {
+    dynamicBinding = new GetterBinding<>(dynamicFieldGetter, subJsonWriter);
   }
 
-  public String getJson(T t) {
+  public String toJson(T t) {
     StringBuilder sb = new StringBuilder("{");
     int i = 0;
     Iterable<String> strings = keyFunction == null ? getters.keySet() : keyFunction.apply(t);

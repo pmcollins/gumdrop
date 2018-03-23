@@ -1,6 +1,5 @@
 package gumdrop.json;
 
-import gumdrop.common.builder.Builder;
 import gumdrop.common.ByteIterator;
 
 public class JsonReader {
@@ -11,13 +10,6 @@ public class JsonReader {
   public JsonReader(String json, JsonDelegate delegate) {
     it = new ByteIterator(json);
     this.delegate = delegate;
-  }
-
-  public static <T> T fromJson(String string, Builder<T> builder) {
-    BuilderDelegate<T> delegate = new BuilderDelegate<>(builder);
-    JsonReader jsonReader = new JsonReader(string, delegate);
-    jsonReader.readValue();
-    return delegate.getObject();
   }
 
   public void readValue() {
