@@ -67,11 +67,11 @@ class JsonBuilderTest extends Test {
     Person person = new Person();
     person.setName("Frodo");
     person.setAge(25);
-    person.setBirthday(Instant.ofEpochMilli(700_000_000_000L));
+    person.setBirthday(Instant.parse("1900-01-01T01:00:00Z"));
 
     String json = personConverter.toJson(person);
     assertEquals(
-      "{\"name\":\"Frodo\",\"age\":25,\"birthday\":\"1992-03-07T20:26:40Z\"}",
+      "{\"name\":\"Frodo\",\"age\":25,\"birthday\":\"1900-01-01T01:00:00Z\"}",
       json
     );
     Person fromJson = personConverter.fromJson(json);

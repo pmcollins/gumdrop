@@ -5,8 +5,8 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
- * JSON (de)serialization. This is just a facade for JsonWriter and JsonBuilder. To go just one direction, use
- * one of those instead.
+ * JSON serialization and deserialization. This is just a facade for JsonWriter and JsonBuilder. To go just one
+ * direction, use one of those instead.
  * @param <T> The type of object to serialize/deserialize to/from JSON
  */
 public class JsonConverter<T> {

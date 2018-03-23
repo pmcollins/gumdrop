@@ -58,14 +58,14 @@ class Person {
 
 ```
 
-Let's create a `JsonBuilder` for the `Person` class. We'll wire up the relationships between `Person`'s getters/setters
+Let's create a `JsonConverter` for the `Person` class. We'll wire up the relationships between `Person`'s getters/setters
 and the JSON keys we're interested in.
 
 ```java
 
-JsonBuilder<Person> personBuilder = new JsonBuilder<>(Person::new);
-personBuilder.addStringField("name", Person::getName, Person::setName);
-personBuilder.addIntField("age", Person::getAge, Person::setAge);
+JsonConverter<Person> personConverter = new JsonConverter<>(Person::new);
+personConverter.addStringField("name", Person::getName, Person::setName);
+personConverter.addIntField("age", Person::getAge, Person::setAge);
 
 ```
 
@@ -76,9 +76,9 @@ Now we can convert a `Person` instance to JSON and back:
 Person p = new Person();
 p.setName("Bilbo");
 p.setAge(50);
-String json = personBuilder.toJson(p);
+String json = personConverter.toJson(p);
 TestUtil.assertEquals("{\"name\":\"Bilbo\",\"age\":50}", json);
-Person fromJson = personBuilder.fromJson(json);
+Person fromJson = personConverter.fromJson(json);
 TestUtil.assertEquals(p, fromJson);
 
 ```
@@ -88,7 +88,7 @@ What about the birthday field in `Person`? Let's add support for that now:
 ```java
 
 DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
-personBuilder.addStringField(
+personConverter.addStringField(
   "birthday",
   person -> formatter.format(person.getBirthday()),
   (person, str) -> person.setBirthday(Instant.from(formatter.parse(str)))
@@ -100,11 +100,11 @@ Overall, we now have:
 
 ```java
 
-JsonBuilder<Person> personBuilder = new JsonBuilder<>(Person::new);
-personBuilder.addStringField("name", Person::getName, Person::setName);
-personBuilder.addIntField("age", Person::getAge, Person::setAge);
+JsonConverter<Person> personConverter = new JsonConverter<>(Person::new);
+personConverter.addStringField("name", Person::getName, Person::setName);
+personConverter.addIntField("age", Person::getAge, Person::setAge);
 DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
-personBuilder.addStringField(
+personConverter.addStringField(
   "birthday",
   person -> formatter.format(person.getBirthday()),
   (person, str) -> person.setBirthday(Instant.from(formatter.parse(str)))
@@ -113,12 +113,12 @@ Person person = new Person();
 person.setName("Frodo");
 person.setAge(25);
 person.setBirthday(Instant.parse("1900-01-01T01:00:00Z"));
-String json = personBuilder.toJson(person);
+String json = personConverter.toJson(person);
 assertEquals(
   "{\"name\":\"Frodo\",\"age\":25,\"birthday\":\"1900-01-01T01:00:00Z\"}",
   json
 );
-Person fromJson = personBuilder.fromJson(json);
+Person fromJson = personConverter.fromJson(json);
 assertEquals(person, fromJson);
 
 ```
@@ -145,11 +145,11 @@ class InstantConverter implements Converter<Instant> {
 
 ```
 
-...and pass an instance into our `JsonBuilder`:
+...and pass an instance into our `JsonConverter`:
 
 ```java
 
-personBuilder.addField(
+personConverter.addField(
   "birthday",
   Person::getBirthday,
   Person::setBirthday,
@@ -162,10 +162,10 @@ Now we have:
 
 ```java
 
-JsonBuilder<Person> personBuilder = new JsonBuilder<>(Person::new);
-personBuilder.addStringField("name", Person::getName, Person::setName);
-personBuilder.addIntField("age", Person::getAge, Person::setAge);
-personBuilder.addField(
+JsonConverter<Person> personConverter = new JsonConverter<>(Person::new);
+personConverter.addStringField("name", Person::getName, Person::setName);
+personConverter.addIntField("age", Person::getAge, Person::setAge);
+personConverter.addField(
   "birthday",
   Person::getBirthday,
   Person::setBirthday,
@@ -175,12 +175,12 @@ Person person = new Person();
 person.setName("Frodo");
 person.setAge(25);
 person.setBirthday(Instant.parse("1900-01-01T01:00:00Z"));
-String json = personBuilder.toJson(person);
+String json = personConverter.toJson(person);
 assertEquals(
   "{\"name\":\"Frodo\",\"age\":25,\"birthday\":\"1900-01-01T01:00:00Z\"}",
   json
 );
-Person fromJson = personBuilder.fromJson(json);
+Person fromJson = personConverter.fromJson(json);
 assertEquals(person, fromJson);
 
 ```
