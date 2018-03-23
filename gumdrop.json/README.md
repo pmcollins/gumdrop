@@ -2,8 +2,8 @@
 
 A library for turning JSON into POJOs and vice-versa.
 
-This library doesn't use reflection or require annotations: it has a simple, imperative API, which you use to wire up
-field-attribute relationships at compile time.
+This library doesn't use reflection or require annotations. It has a simple, imperative API to wire up field-attribute
+relationships at compile time.
 
 For example, consider a `Person` class:
 
@@ -52,20 +52,6 @@ class Person {
     return age == person.age &&
       Objects.equals(name, person.name) &&
       Objects.equals(birthday, person.birthday);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(name, age, birthday);
-  }
-
-  @Override
-  public String toString() {
-    return "Person{" +
-      "name='" + name + '\'' +
-      ", age=" + age +
-      ", birthday=" + birthday +
-      '}';
   }
 
 }
