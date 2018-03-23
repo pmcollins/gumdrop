@@ -1,7 +1,7 @@
 package gumdrop.server.nio;
 
 import gumdrop.common.http.HttpRequest;
-import gumdrop.web.GumdropWebFunction;
+import gumdrop.web.WebFunction;
 import gumdrop.web.control.Dispatcher;
 
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class NioServer {
   private final Function<HttpRequest, byte[]> mainFcn;
 
   public NioServer(Dispatcher dispatcher, int port) throws IOException {
-    this(new GumdropWebFunction(dispatcher), port);
+    this(new WebFunction(dispatcher), port);
   }
 
   public NioServer(Function<HttpRequest, byte[]> mainFcn, int port) throws IOException {
