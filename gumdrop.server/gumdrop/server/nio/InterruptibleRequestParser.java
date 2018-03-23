@@ -1,6 +1,7 @@
 package gumdrop.server.nio;
 
 import gumdrop.common.ByteIterator;
+import gumdrop.common.StringUtil;
 import gumdrop.common.http.HttpMethod;
 import gumdrop.common.http.HttpRequest;
 import gumdrop.web.http.Accumulator;
@@ -98,7 +99,7 @@ public class InterruptibleRequestParser implements RequestParser {
     request.setHeaders(map);
     request.setPost(getPostBytes());
     if (isFormPost(request)) {
-      request.writeParameterMap();
+      request.setParameterMap(StringUtil.parseQueryString(request.getPostString()));
     }
     return request;
   }
