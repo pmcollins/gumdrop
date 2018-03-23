@@ -58,7 +58,7 @@ public class BuilderDelegate<T> implements JsonDelegate {
 
   private void pushSubBuilder(String memberKey) {
     GraphBuilder<?> currentBuilder = creatorStack.peek();
-    GraphBuilder<?> subBuilder = currentBuilder.constructAndSet(memberKey);
+    GraphBuilder<?> subBuilder = currentBuilder.create(memberKey);
     creatorStack.push(subBuilder);
     key = null;
   }

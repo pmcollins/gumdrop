@@ -100,11 +100,11 @@ listBuilder.addMember("name", List::add, nameBuilder);
 
 GraphBuilder<List<Name>> listGraph = new GraphBuilder<>(listBuilder);
 
-GraphBuilder<?> b1 = listGraph.constructAndSet("name");
+GraphBuilder<?> b1 = listGraph.create("name");
 b1.applyString("first", "foo");
 b1.applyString("last", "bar");
 
-GraphBuilder<?> b2 = listGraph.constructAndSet("name");
+GraphBuilder<?> b2 = listGraph.create("name");
 b2.applyString("first", "baz");
 b2.applyString("last", "glarch");
 
