@@ -191,7 +191,7 @@ person.setAge(25);
 person.setBirthday(Instant.parse("2001-09-09T01:46:40Z"));
 String json = personBuilder.toJson(person);
 assertEquals(
-  "{\"name\":\"Frodo\",\"age\":25,\"birthday\":\"1992-03-07T20:26:40Z\"}",
+  "{\"name\":\"Frodo\",\"age\":25,\"birthday\":\"2001-09-09T01:46:40Z\"}",
   json
 );
 Person fromJson = personBuilder.fromJson(json);

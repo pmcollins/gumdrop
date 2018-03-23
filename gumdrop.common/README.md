@@ -2,8 +2,8 @@
 
 ### Builder
 
-A facility for creating Java objects from Strings. Used by [Gumdrop-Json](../gumdrop.json/) and
-[HttpFormReader](../gumdrop.web/gumdrop/web/http/HttpFormReader.java).
+A facility for creating Java objects from Strings without using reflection or annotations. Used by
+[Gumdrop-Json](../gumdrop.json/) and [HttpFormReader](../gumdrop.web/gumdrop/web/http/HttpFormReader.java).
 
 ##### Basic Builder
 
@@ -121,8 +121,8 @@ assertEquals(List.of(new Name("foo", "bar"), new Name("baz", "glarch")), list);
 
 ```
 
-The functionality in  above example doesn't have much use, but it should illustrate what happens when a `[` is reached
-during JSON deserialization, or when an array argument is posted in a web form.
+The functionality in above example doesn't have much direct use, but it should illustrate what happens when a `[` is
+reached during JSON deserialization, or when an array argument is posted in a web form.
 
 For more examples, see [BuilderTests](../gumdrop.test/gumdrop/test/common/BuilderTests.java) and others.
 
