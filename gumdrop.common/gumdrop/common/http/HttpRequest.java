@@ -1,7 +1,5 @@
 package gumdrop.common.http;
 
-import gumdrop.common.StringUtil;
-
 import java.util.Map;
 
 public class HttpRequest implements Request {
@@ -78,12 +76,12 @@ public class HttpRequest implements Request {
     return post;
   }
 
-  public void writeParameterMap() {
-    this.parameterMap = StringUtil.parseQueryString(getPostString());
-  }
-
   public boolean isPost() {
     return httpMethod == HttpMethod.POST;
+  }
+
+  public void setParameterMap(Map<String, String> parameterMap) {
+    this.parameterMap = parameterMap;
   }
 
   @Override
