@@ -98,7 +98,7 @@ safety, and as a side-benefit you get excellent performance.
 
 When building an object from a JSON string, we often don't just build one simple object, but rather a tree or graph of
 nested objects. To handle the creation of these sub-objects, Gumdrop provides
-[InstanceBuilder](gumdrop/common/builder/InstanceBuilder.java).
+[GraphBuilder](gumdrop/common/builder/GraphBuilder.java).
 
 To take an example where we populate a `List` of `Name` objects:
 
@@ -111,17 +111,17 @@ nameBuilder.addSetter("last", Name::setLast);
 Builder<List<Name>> listBuilder = new Builder<>(ArrayList::new);
 listBuilder.addMember("name", List::add, nameBuilder);
 
-InstanceBuilder<List<Name>> listInstance = new InstanceBuilder<>(listBuilder);
+GraphBuilder<List<Name>> listGraph = new GraphBuilder<>(listBuilder);
 
-InstanceBuilder<?> b1 = listInstance.constructAndSet("name");
+GraphBuilder<?> b1 = listGraph.constructAndSet("name");
 b1.applyString("first", "foo");
 b1.applyString("last", "bar");
 
-InstanceBuilder<?> b2 = listInstance.constructAndSet("name");
+GraphBuilder<?> b2 = listGraph.constructAndSet("name");
 b2.applyString("first", "baz");
 b2.applyString("last", "glarch");
 
-List<Name> list = listInstance.getObject();
+List<Name> list = listGraph.getObject();
 assertEquals(List.of(new Name("foo", "bar"), new Name("baz", "glarch")), list);
 
 ```

@@ -1,7 +1,7 @@
 package gumdrop.web.http;
 
 import gumdrop.common.builder.Builder;
-import gumdrop.common.builder.InstanceBuilder;
+import gumdrop.common.builder.GraphBuilder;
 import gumdrop.common.validation.ValidationFailure;
 import gumdrop.common.validation.Validator;
 
@@ -37,22 +37,22 @@ public class HttpFormReader<T> implements FormReader<T> {
 
   @Override
   public FormReadResult<T> read(String q) {
-    InstanceBuilder<T> instanceBuilder = new InstanceBuilder<>(builder);
+    GraphBuilder<T> graphBuilder = new GraphBuilder<>(builder);
     String[] pairs = q.split("&");
     FormReadResult<T> out = new FormReadResult<>();
     for (String pair : pairs) {
-      Optional<ValidationFailure> validationFailure = parsePair(instanceBuilder, pair);
+      Optional<ValidationFailure> validationFailure = parsePair(graphBuilder, pair);
       validationFailure.ifPresent(out::addFailure);
     }
-    out.setT(instanceBuilder.getObject());
+    out.setT(graphBuilder.getObject());
     return out;
   }
 
-  private Optional<ValidationFailure> parsePair(InstanceBuilder<T> instanceBuilder, String pair) {
+  private Optional<ValidationFailure> parsePair(GraphBuilder<T> graphBuilder, String pair) {
     int idx = pair.indexOf('=');
     String key = HttpStringUtil.unescape(pair.substring(0, idx));
     String value = HttpStringUtil.unescape(pair.substring(idx + 1, pair.length()));
-    instanceBuilder.applyString(key, value);
+    graphBuilder.applyString(key, value);
     Validator<String> validator = validators.get(key);
     return validator == null ? Optional.empty() : validator.validate(value);
   }

@@ -1,18 +1,18 @@
 package gumdrop.json;
 
 import gumdrop.common.builder.Builder;
-import gumdrop.common.builder.InstanceBuilder;
+import gumdrop.common.builder.GraphBuilder;
 
 import java.util.Stack;
 
 public class BuilderDelegate<T> implements JsonDelegate {
 
-  private final Stack<InstanceBuilder<?>> creatorStack = new Stack<>();
-  private final InstanceBuilder<Holder<T>> rootCreator;
+  private final Stack<GraphBuilder<?>> creatorStack = new Stack<>();
+  private final GraphBuilder<Holder<T>> rootCreator;
   private String key = HolderBuilder.HOLDER_SET_KEY;
 
   public BuilderDelegate(Builder<T> builder) {
-    rootCreator = new InstanceBuilder<>(new HolderBuilder<>(builder));
+    rootCreator = new GraphBuilder<>(new HolderBuilder<>(builder));
     creatorStack.add(rootCreator);
   }
 
@@ -51,14 +51,14 @@ public class BuilderDelegate<T> implements JsonDelegate {
   }
 
   private void setValue(String string) {
-    InstanceBuilder<?> currentBuilder = creatorStack.peek();
+    GraphBuilder<?> currentBuilder = creatorStack.peek();
     currentBuilder.applyString(key, string);
     key = null;
   }
 
   private void pushSubBuilder(String memberKey) {
-    InstanceBuilder<?> currentBuilder = creatorStack.peek();
-    InstanceBuilder<?> subBuilder = currentBuilder.constructAndSet(memberKey);
+    GraphBuilder<?> currentBuilder = creatorStack.peek();
+    GraphBuilder<?> subBuilder = currentBuilder.constructAndSet(memberKey);
     creatorStack.push(subBuilder);
     key = null;
   }
