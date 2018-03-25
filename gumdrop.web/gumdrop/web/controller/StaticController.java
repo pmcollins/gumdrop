@@ -9,6 +9,7 @@ import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Set;
 
 import static gumdrop.common.ExceptionUtil.get;
 
@@ -17,11 +18,13 @@ public class StaticController implements Controller {
   private static final FileSystem FILE_SYSTEM = FileSystems.getDefault();
 
   private final String dir;
+  private final Set<String> extensions;
   private String path;
   private String[] matches;
 
-  public StaticController(String dir) {
+  public StaticController(String dir, Set<String> extensions) {
     this.dir = dir;
+    this.extensions = extensions;
   }
 
   @Override
@@ -47,14 +50,19 @@ public class StaticController implements Controller {
     Path fullPath = FILE_SYSTEM.getPath(dir, path);
     byte[] bytes = get(() -> Files.readAllBytes(fullPath));
     HttpResponseHeader h = new HttpResponseHeader();
-    if (path.endsWith(".css")) {
-      HeaderUtil.setTextCss(h, bytes.length);
-    } else {
-      throw new RuntimeException("I can only read css files at the moment, not " + path);
-    }
+    checkExtension();
+    HeaderUtil.setTextCss(h, bytes.length);
     HttpResponse response = new HttpResponse(h);
     response.setBytes(bytes);
     return response;
+  }
+
+  private void checkExtension() {
+    int idx = path.lastIndexOf('.');
+    String extension = path.substring(idx + 1);
+    if (!extensions.contains(extension)) {
+      throw new RuntimeException("Invalid extension for path: [" + path + "]");
+    }
   }
 
 }
