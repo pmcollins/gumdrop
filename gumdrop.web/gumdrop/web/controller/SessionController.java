@@ -19,7 +19,7 @@ public abstract class SessionController<T> implements Controller, ControllerCont
   private Request request;
   private String unauthorizedPath;
 
-  protected SessionController(SessionSupplier<T> sessionSupplier) {
+  SessionController(SessionSupplier<T> sessionSupplier) {
     this.sessionSupplier = sessionSupplier;
   }
 
@@ -94,25 +94,14 @@ public abstract class SessionController<T> implements Controller, ControllerCont
     return Integer.parseInt(getPathArgs()[i]);
   }
 
-  protected <U extends Controller> void setUnauthorizedController(Class<U> klass) {
+  protected <C extends Controller> void setUnauthorizedController(Class<C> klass) {
     unauthorizedPath = getPathBuilder(klass).build();
   }
 
   @Override
   public final HttpResponse process(Request request) {
     this.request = request;
-    String cookieString = request.getCookieString();
-    HttpResponseHeader responseHeader = new HttpResponseHeader();
-    String sessionId;
-    if (cookieString == null) {
-      String uuid = UUID.randomUUID().toString();
-      responseHeader.putAttr("Set-Cookie", "s=" + uuid);
-      sessionId = uuid;
-    } else {
-      // TODO process cookies correctly. This breaks logins when there's more than one cookie.
-      sessionId = cookieString.substring(2);
-    }
-    session = sessionSupplier.getSession(sessionId);
+    HttpResponseHeader responseHeader = handleSessionCookie(request);
     HttpResponse response = new HttpResponse(responseHeader);
     if (isAuthorized()) {
       process(response);
@@ -121,6 +110,21 @@ public abstract class SessionController<T> implements Controller, ControllerCont
       HeaderUtil.setRedirect(responseHeader, unauthorizedPath);
       return response;
     }
+  }
+
+  private HttpResponseHeader handleSessionCookie(Request request) {
+    String cookieString = request.getCookieString();
+    HttpResponseHeader responseHeader = new HttpResponseHeader();
+    String sessionId;
+    if (cookieString == null) {
+      String uuid = UUID.randomUUID().toString();
+      responseHeader.setCookie("s", uuid);
+      sessionId = uuid;
+    } else {
+      sessionId = cookieString.substring(2);
+    }
+    session = sessionSupplier.getSession(sessionId);
+    return responseHeader;
   }
 
 }
