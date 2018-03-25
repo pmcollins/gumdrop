@@ -7,7 +7,7 @@ public class Session<T> {
 
   private final String id;
   private Flash flash;
-  private T login;
+  private T entity;
   private final Map<String, String> map = new HashMap<>();
 
   protected Session(String id) {
@@ -15,19 +15,19 @@ public class Session<T> {
   }
 
   public boolean isLoggedIn() {
-    return login != null;
+    return entity != null;
   }
 
   public String getId() {
     return id;
   }
 
-  public T getLogin() {
-    return login;
+  public T getEntity() {
+    return entity;
   }
 
-  public void setLogin(T login) {
-    this.login = login;
+  public void setEntity(T entity) {
+    this.entity = entity;
   }
 
   public Flash getFlash() {
