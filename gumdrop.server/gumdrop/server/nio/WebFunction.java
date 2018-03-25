@@ -1,4 +1,4 @@
-package gumdrop.web;
+package gumdrop.server.nio;
 
 import gumdrop.common.http.HttpRequest;
 import gumdrop.web.control.Dispatcher;
