@@ -90,7 +90,7 @@ public abstract class SessionController<T> implements Controller, ControllerCont
     return session.getEntity();
   }
 
-  protected Request getRequest() {
+  Request getRequest() {
     return request;
   }
 

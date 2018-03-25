@@ -7,7 +7,7 @@ import gumdrop.web.http.HttpResponse;
 
 public abstract class PageController<T> extends SessionController<T> {
 
-  protected PageController(SessionProvider<T> sessionProvider) {
+  PageController(SessionProvider<T> sessionProvider) {
     super(sessionProvider);
   }
 
