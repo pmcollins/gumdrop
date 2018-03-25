@@ -1,8 +1,6 @@
-package gumdrop.web;
+package gumdrop.web.controller;
 
 import gumdrop.common.Session;
-import gumdrop.web.control.Controller;
-import gumdrop.web.control.PathBuilder;
 
 public interface ControllerContext<T> {
 

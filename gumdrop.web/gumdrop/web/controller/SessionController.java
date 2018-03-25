@@ -1,13 +1,9 @@
-package gumdrop.web;
+package gumdrop.web.controller;
 
 import gumdrop.common.Flash;
 import gumdrop.common.Session;
 import gumdrop.common.SessionSupplier;
 import gumdrop.common.http.Request;
-import gumdrop.web.control.Controller;
-import gumdrop.web.control.ControllerIndex;
-import gumdrop.web.control.PathBuilder;
-import gumdrop.web.control.PathBuilderIndex;
 import gumdrop.web.http.HeaderUtil;
 import gumdrop.web.http.HttpResponse;
 import gumdrop.web.http.HttpResponseHeader;
