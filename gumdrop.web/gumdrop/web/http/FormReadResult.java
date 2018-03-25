@@ -2,7 +2,7 @@ package gumdrop.web.http;
 
 import gumdrop.common.validation.ValidationFailure;
 import gumdrop.common.validation.ValidationFailures;
-import gumdrop.web.control.ReadResult;
+import gumdrop.web.controller.ReadResult;
 
 public class FormReadResult<T> implements ReadResult<T> {
 

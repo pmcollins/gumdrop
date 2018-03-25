@@ -2,6 +2,5 @@ module gumdrop.web {
   requires gumdrop.common;
   exports gumdrop.web.http;
   exports gumdrop.web.html;
-  exports gumdrop.web.control;
-  exports gumdrop.web;
+  exports gumdrop.web.controller;
 }

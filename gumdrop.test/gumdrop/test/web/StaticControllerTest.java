@@ -2,7 +2,7 @@ package gumdrop.test.web;
 
 import gumdrop.test.util.Test;
 import gumdrop.web.http.HttpResponse;
-import gumdrop.web.control.StaticController;
+import gumdrop.web.controller.StaticController;
 import gumdrop.web.http.HttpResponseHeader;
 
 import static gumdrop.test.util.Asserts.assertEquals;

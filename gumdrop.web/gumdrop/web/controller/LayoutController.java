@@ -1,7 +1,6 @@
-package gumdrop.web;
+package gumdrop.web.controller;
 
 import gumdrop.common.SessionSupplier;
-import gumdrop.web.control.Presenter;
 import gumdrop.web.html.Buildable;
 import gumdrop.web.html.View;
 import gumdrop.web.html.ViewModel;

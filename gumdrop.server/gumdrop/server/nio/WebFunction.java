@@ -1,7 +1,7 @@
 package gumdrop.server.nio;
 
 import gumdrop.common.http.HttpRequest;
-import gumdrop.web.control.Dispatcher;
+import gumdrop.web.controller.Dispatcher;
 import gumdrop.web.http.HeaderUtil;
 import gumdrop.web.http.HttpResponse;
 import gumdrop.web.http.HttpResponseHeader;

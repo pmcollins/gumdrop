@@ -1,4 +1,4 @@
-package gumdrop.web.control;
+package gumdrop.web.controller;
 
 import java.util.HashMap;
 import java.util.Map;
