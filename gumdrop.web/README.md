@@ -4,8 +4,8 @@ A library for handling HTTP requests and building dynamic HTML documents.
 
 ### Setup
 
-At application startup, we register our [Controller](gumdrop/web/control/Controller.java)s with a single
-[Dispatcher](gumdrop/web/control/Dispatcher.java), associating each Controller with a request pattern.
+At application startup, we register our [Controller](gumdrop/web/controller/Controller.java)s with a single
+[Dispatcher](gumdrop/web/controller/Dispatcher.java), associating each Controller with a request pattern.
 
 For example, if we have a Controller to show messages by id, and we want our server to respond to requests to
 `/messages/<message-id>`, we'd tell our Dispatcher how to create new instances of our controller and bind that to the
@@ -39,6 +39,7 @@ nested HTML-like tags in Java with its attendant compile-time safety, refactorin
 An anchor Widget might look like this:
 
 ```java
+
 import gumdrop.web.html.Buildable;
 import gumdrop.web.html.Widget;
 
@@ -59,6 +60,7 @@ public class AnchorWidget extends Widget {
   }
 
 }
+
 ```
 
 That static `a` method returns a [Tag](gumdrop/web/html/Tag.java), for which we set the `href` value to the `url` attribute of our `AnchorWidget`
