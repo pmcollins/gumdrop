@@ -1,6 +1,6 @@
 package gumdrop.common;
 
-public interface SessionProvider<T> {
+public interface SessionSupplier<T> {
 
   Session<T> getSession(String sessionId);
 
