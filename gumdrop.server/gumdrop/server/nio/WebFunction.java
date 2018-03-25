@@ -19,6 +19,11 @@ public class WebFunction implements Function<HttpRequest, byte[]> {
 
   @Override
   public byte[] apply(HttpRequest request) {
+    HttpResponse response = getHttpResponse(request);
+    return getResponseBytes(response);
+  }
+
+  private HttpResponse getHttpResponse(HttpRequest request) {
     HttpResponse response;
     try {
       response = dispatcher.processRequest(request);
@@ -26,6 +31,10 @@ public class WebFunction implements Function<HttpRequest, byte[]> {
       e.printStackTrace();
       response = dispatcher.processError(request);
     }
+    return response;
+  }
+
+  private static byte[] getResponseBytes(HttpResponse response) {
     HttpResponseHeader header = response.getHeader();
     byte[] headerBytes = HeaderUtil.buildString(header).getBytes();
     byte[] bodyBytes = response.getBytes();
