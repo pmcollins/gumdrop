@@ -1,6 +1,6 @@
 package gumdrop.web;
 
-import gumdrop.common.SessionProvider;
+import gumdrop.common.SessionSupplier;
 import gumdrop.web.control.Presenter;
 import gumdrop.web.html.Buildable;
 import gumdrop.web.html.View;
@@ -15,8 +15,8 @@ public abstract class LayoutController<E, M extends ViewModel, L extends ViewMod
   private final View<M> view;
   private final WrapperView<L> wrapperView;
 
-  protected LayoutController(SessionProvider<E> sessionProvider, View<M> view, WrapperView<L> wrapperView) {
-    super(sessionProvider);
+  protected LayoutController(SessionSupplier<E> sessionSupplier, View<M> view, WrapperView<L> wrapperView) {
+    super(sessionSupplier);
     this.view = view;
     this.wrapperView = wrapperView;
   }

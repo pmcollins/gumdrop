@@ -2,7 +2,7 @@ package gumdrop.web;
 
 import gumdrop.common.Flash;
 import gumdrop.common.Session;
-import gumdrop.common.SessionProvider;
+import gumdrop.common.SessionSupplier;
 import gumdrop.common.http.Request;
 import gumdrop.web.control.Controller;
 import gumdrop.web.control.ControllerIndex;
@@ -16,15 +16,15 @@ import java.util.UUID;
 
 public abstract class SessionController<T> implements Controller, ControllerContext<T> {
 
-  private final SessionProvider<T> sessionProvider;
+  private final SessionSupplier<T> sessionSupplier;
   private String[] pathArgs;
   private PathBuilderIndex pathBuilderIndex;
   private Session<T> session;
   private Request request;
   private String unauthorizedPath;
 
-  protected SessionController(SessionProvider<T> sessionProvider) {
-    this.sessionProvider = sessionProvider;
+  protected SessionController(SessionSupplier<T> sessionSupplier) {
+    this.sessionSupplier = sessionSupplier;
   }
 
   protected abstract boolean isAuthorized();
@@ -116,7 +116,7 @@ public abstract class SessionController<T> implements Controller, ControllerCont
       // TODO process cookies correctly. This breaks logins when there's more than one cookie.
       sessionId = cookieString.substring(2);
     }
-    session = sessionProvider.getSession(sessionId);
+    session = sessionSupplier.getSession(sessionId);
     HttpResponse response = new HttpResponse(responseHeader);
     if (isAuthorized()) {
       process(response);
