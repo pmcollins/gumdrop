@@ -13,7 +13,7 @@ public class JsonWriter<T> {
 
   private final Map<String, BiFunction<T, String, String>> getters = new LinkedHashMap<>();
   private Function<T, Iterable<String>> keyFunction;
-  private GetterBinding<T, ?> dynamicBinding;
+  private GetterBinding<T, ?> mapBinding;
 
   public void addNumericGetter(String name, Function<T, ?> getter) {
     addBarewordGetter(name, t -> String.valueOf(getter.apply(t)));
@@ -35,8 +35,8 @@ public class JsonWriter<T> {
     this.keyFunction = keyFunction;
   }
 
-  public <U> void setMemberFunction(BiFunction<T, String, U> dynamicFieldGetter, JsonWriter<U> subJsonWriter) {
-    dynamicBinding = new GetterBinding<>(dynamicFieldGetter, subJsonWriter);
+  public <U> void setMapFunction(BiFunction<T, String, U> dynamicFieldGetter, JsonWriter<U> subJsonWriter) {
+    mapBinding = new GetterBinding<>(dynamicFieldGetter, subJsonWriter);
   }
 
   public String toJson(T t) {
@@ -49,7 +49,7 @@ public class JsonWriter<T> {
       }
       sb.append('"').append(key).append('"').append(':');
       BiFunction<T, String, String> stringFcn = getters.get(key);
-      BiFunction<T, String, String> fcn = stringFcn == null ? dynamicBinding : stringFcn;
+      BiFunction<T, String, String> fcn = stringFcn == null ? mapBinding : stringFcn;
       String value = fcn.apply(t, key);
       sb.append(value);
     }

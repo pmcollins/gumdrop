@@ -102,7 +102,7 @@ class JsonWriterTest extends Test {
     nameJsonWriter.addStringGetter("last", Name::getLast);
     JsonWriter<Map<String, Name>> mapJsonWriter = new JsonWriter<>();
     mapJsonWriter.setKeyFunction(Map::keySet);
-    mapJsonWriter.setMemberFunction(Map::get, nameJsonWriter);
+    mapJsonWriter.setMapFunction(Map::get, nameJsonWriter);
     String json = mapJsonWriter.toJson(map);
     assertEquals("{\"quux\":{\"first\":\"frob\",\"last\":\"snarf\"},\"foo\":{\"first\":\"foo\",\"last\":\"bar\"},\"baz\":{\"first\":\"baz\",\"last\":\"glarch\"}}", json);
   }
