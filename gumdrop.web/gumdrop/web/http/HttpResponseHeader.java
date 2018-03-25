@@ -24,6 +24,10 @@ public class HttpResponseHeader {
     }
   }
 
+  public void setCookie(String key, String val) {
+    putAttr("Set-Cookie", key + "=" + val);
+  }
+
   public String getProtocol() {
     return protocol;
   }
