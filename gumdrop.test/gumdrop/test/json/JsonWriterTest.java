@@ -13,17 +13,17 @@ import java.util.Map;
 
 import static gumdrop.test.util.Asserts.assertEquals;
 
-class GettersTest extends Test {
+class JsonWriterTest extends Test {
 
   private final JsonWriter<FullNamePerson> complexPersonJsonJsonWriter;
   private final JsonWriter<Person> personJsonJsonWriter;
   private final DateTimeFormatter formatter;
 
   public static void main(String[] args) {
-    new GettersTest().run();
+    new JsonWriterTest().run();
   }
 
-  GettersTest() {
+  JsonWriterTest() {
     personJsonJsonWriter = setupPerson();
     complexPersonJsonJsonWriter = setupComplexPerson();
     formatter = DateTimeFormatter.ISO_INSTANT;

@@ -11,10 +11,10 @@ import java.time.Instant;
 
 import static gumdrop.test.util.Asserts.assertEquals;
 
-class JsonBuilderTest extends Test {
+class JsonConverterTest extends Test {
 
   public static void main(String[] args) {
-    new JsonBuilderTest().run();
+    new JsonConverterTest().run();
   }
 
   @Override

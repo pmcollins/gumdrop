@@ -12,8 +12,8 @@ public class JsonTests extends TestSuite {
   public void run() throws Exception {
     test(
       new BuilderDelegateTest(),
-      new GettersTest(),
-      new JsonBuilderTest(),
+      new JsonWriterTest(),
+      new JsonConverterTest(),
       new JsonReaderTest()
     );
   }
