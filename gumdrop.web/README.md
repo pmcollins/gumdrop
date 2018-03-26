@@ -14,7 +14,6 @@ request pattern, `/messages/#`.
 ```java
 
 Dispatcher dispatcher = new Dispatcher();
-ShowMessageView showMessageView = new ShowMessageView();
 dispatcher.register(GET, "/messages/#", () -> new ShowMessageController());
 
 ```

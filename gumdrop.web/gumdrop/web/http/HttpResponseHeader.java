@@ -20,6 +20,7 @@ public class HttpResponseHeader {
   public void putAttr(String key, String val) {
     String prev = attrs.put(key, val);
     if (prev != null) {
+      // TODO support multiple values with the same key
       throw new RuntimeException("double set of key: " + prev);
     }
   }
