@@ -281,13 +281,13 @@ public class Name {
 
 ```
 
-We'd now like to build a `Person` object from a nested JSON string such as:
+We'd now like to build `Person` objects from nested JSON string such as:
 
 ```json
 {"age":111,"name":{"first":"Bilbo","last":"Baggins"}}
 ```
 
-So we set up our JsonConverter to be able to build the member `Name` object, by calling `addSubConverter` :
+To tell JsonConverter how to build our member `Name` objects, we call `addSubConverter`, passing it a name converter:
 
 ```java
 
