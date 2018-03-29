@@ -61,20 +61,20 @@ public class JsonReader {
     delegate.bareword(bareword);
   }
 
-  public void readKVPair() {
-    skipWhiteSpace();
-    readQuotedString();
-    skipWhiteSpace();
-    it.increment(); // ':'
-    readValue();
-  }
-
   public void readKVPairs() {
     readKVPair();
     while (it.currentChar() == ',') {
       it.increment();
       readKVPair();
     }
+  }
+
+  public void readKVPair() {
+    skipWhiteSpace();
+    readQuotedString();
+    skipWhiteSpace();
+    it.increment(); // ':'
+    readValue();
   }
 
   public void readArray() {
