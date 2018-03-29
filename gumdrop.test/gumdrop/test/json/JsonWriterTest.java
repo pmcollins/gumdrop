@@ -1,9 +1,9 @@
 package gumdrop.test.json;
 
 import gumdrop.json.JsonWriter;
-import gumdrop.test.pojo.FullNamePerson;
-import gumdrop.test.pojo.Name;
 import gumdrop.test.pojo.Person;
+import gumdrop.test.pojo.Name;
+import gumdrop.test.pojo.SimplePerson;
 import gumdrop.test.util.Test;
 
 import java.time.Instant;
@@ -15,8 +15,8 @@ import static gumdrop.test.util.Asserts.assertEquals;
 
 class JsonWriterTest extends Test {
 
-  private final JsonWriter<FullNamePerson> complexPersonJsonJsonWriter;
-  private final JsonWriter<Person> personJsonJsonWriter;
+  private final JsonWriter<Person> complexPersonJsonJsonWriter;
+  private final JsonWriter<SimplePerson> personJsonJsonWriter;
   private final DateTimeFormatter formatter;
 
   public static void main(String[] args) {
@@ -29,22 +29,22 @@ class JsonWriterTest extends Test {
     formatter = DateTimeFormatter.ISO_INSTANT;
   }
 
-  private JsonWriter<Person> setupPerson() {
-    JsonWriter<Person> personJsonJsonWriter = new JsonWriter<>();
-    personJsonJsonWriter.addStringGetter("name", Person::getName);
-    personJsonJsonWriter.addNumericGetter("age", Person::getAge);
+  private JsonWriter<SimplePerson> setupPerson() {
+    JsonWriter<SimplePerson> personJsonJsonWriter = new JsonWriter<>();
+    personJsonJsonWriter.addStringGetter("name", SimplePerson::getName);
+    personJsonJsonWriter.addNumericGetter("age", SimplePerson::getAge);
     personJsonJsonWriter.addStringGetter("birthday", p -> formatter.format(p.getBirthday()));
     return personJsonJsonWriter;
   }
 
-  private JsonWriter<FullNamePerson> setupComplexPerson() {
-    JsonWriter<FullNamePerson> personJsonWriter;
+  private JsonWriter<Person> setupComplexPerson() {
+    JsonWriter<Person> personJsonWriter;
     JsonWriter<Name> nameJsonWriter = new JsonWriter<>();
     nameJsonWriter.addStringGetter("first", Name::getFirst);
     nameJsonWriter.addStringGetter("last", Name::getLast);
     personJsonWriter = new JsonWriter<>();
-    personJsonWriter.addNumericGetter("age", FullNamePerson::getAge);
-    personJsonWriter.addMember("name", FullNamePerson::getName, nameJsonWriter);
+    personJsonWriter.addNumericGetter("age", Person::getAge);
+    personJsonWriter.addMember("name", Person::getName, nameJsonWriter);
     return personJsonWriter;
   }
 
@@ -57,7 +57,7 @@ class JsonWriterTest extends Test {
   }
 
   private void personToJson() {
-    Person person = new Person();
+    SimplePerson person = new SimplePerson();
     person.setName("bobo");
     person.setAge(25);
     person.setBirthday(Instant.ofEpochMilli(700_000_000_000L));
@@ -68,7 +68,7 @@ class JsonWriterTest extends Test {
   }
 
   private void complexPersonToJson() {
-    FullNamePerson complexPerson = new FullNamePerson();
+    Person complexPerson = new Person();
     complexPerson.setAge(42);
     Name name = new Name();
     name.setFirst("lile");

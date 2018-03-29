@@ -1,19 +1,17 @@
 package gumdrop.test.pojo;
 
-import java.time.Instant;
 import java.util.Objects;
 
 public class Person {
 
-  private String name;
+  private Name name;
   private int age;
-  private Instant birthday;
 
-  public String getName() {
+  public Name getName() {
     return name;
   }
 
-  public void setName(String name) {
+  public void setName(Name name) {
     this.name = name;
   }
 
@@ -25,36 +23,26 @@ public class Person {
     this.age = age;
   }
 
-  public Instant getBirthday() {
-    return birthday;
-  }
-
-  public void setBirthday(Instant birthday) {
-    this.birthday = birthday;
+  @Override
+  public String toString() {
+    return "ComplexPerson{" +
+      "name=" + name +
+      ", age=" + age +
+      '}';
   }
 
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    Person person = (Person) o;
-    return age == person.age &&
-      Objects.equals(name, person.name) &&
-      Objects.equals(birthday, person.birthday);
+    Person that = (Person) o;
+    return age == that.age &&
+      Objects.equals(name, that.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, age, birthday);
-  }
-
-  @Override
-  public String toString() {
-    return "Person{" +
-      "name='" + name + '\'' +
-      ", age=" + age +
-      ", birthday=" + birthday +
-      '}';
+    return Objects.hash(name, age);
   }
 
 }

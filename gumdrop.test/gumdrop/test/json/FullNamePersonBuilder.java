@@ -1,14 +1,14 @@
 package gumdrop.test.json;
 
 import gumdrop.common.builder.Builder;
-import gumdrop.test.pojo.FullNamePerson;
+import gumdrop.test.pojo.Person;
 
-class FullNamePersonBuilder extends Builder<FullNamePerson> {
+class FullNamePersonBuilder extends Builder<Person> {
 
   FullNamePersonBuilder() {
-    super(FullNamePerson::new);
-    addIntSetter("age", FullNamePerson::setAge);
-    addMember("name", FullNamePerson::setName, new NameBuilder());
+    super(Person::new);
+    addIntSetter("age", Person::setAge);
+    addMember("name", Person::setName, new NameBuilder());
   }
 
 }
