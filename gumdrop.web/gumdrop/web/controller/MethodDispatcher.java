@@ -13,7 +13,12 @@ public class MethodDispatcher {
   private final List<Route> routes = new ArrayList<>();
 
   public void register(String strPattern, Supplier<Controller> controllerSupplier) {
-    routes.add(new Route(getRegexPattern(strPattern), controllerSupplier));
+    String regexPattern = getRegexPattern(strPattern);
+    register(new Route(regexPattern, controllerSupplier));
+  }
+
+  public void register(Route route) {
+    routes.add(route);
   }
 
   public static String getRegexPattern(String strPattern) {

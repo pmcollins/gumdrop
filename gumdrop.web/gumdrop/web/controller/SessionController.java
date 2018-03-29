@@ -61,6 +61,10 @@ public abstract class SessionController<T> implements Controller, ControllerCont
     return pathBuilderIndex.get(controllerClass);
   }
 
+  protected PathBuilderIndex getPathBuilderIndex() {
+    return pathBuilderIndex;
+  }
+
   @Override
   public final Session<T> getSession() {
     return session;
@@ -71,7 +75,7 @@ public abstract class SessionController<T> implements Controller, ControllerCont
   }
 
   protected String sessionGet(String key) {
-    return session.get(key);
+    return session.getString(key);
   }
 
   protected void setFlash(Flash flash) {
@@ -90,8 +94,12 @@ public abstract class SessionController<T> implements Controller, ControllerCont
     return request;
   }
 
-  protected int getPathArg(int i) {
-    return Integer.parseInt(getPathArgs()[i]);
+  protected String getStringArg(int i) {
+    return pathArgs[i];
+  }
+
+  protected int getIntArg(int i) {
+    return Integer.parseInt(getStringArg(i));
   }
 
   protected <C extends Controller> void setUnauthorizedController(Class<C> klass) {

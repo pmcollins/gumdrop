@@ -5,12 +5,12 @@ import gumdrop.web.http.HttpResponse;
 
 public interface Controller {
 
-  HttpResponse process(Request request);
+  void setControllerIndex(ControllerIndex controllerIndex);
 
   void setPathArgs(String[] matches);
 
   String[] getPathArgs();
 
-  void setControllerIndex(ControllerIndex controllerIndex);
+  HttpResponse process(Request request);
 
 }

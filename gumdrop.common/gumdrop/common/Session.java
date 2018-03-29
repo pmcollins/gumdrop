@@ -44,7 +44,7 @@ public class Session<T> {
     map.put(key, val);
   }
 
-  public String get(String key) {
+  public String getString(String key) {
     return map.get(key);
   }
 
