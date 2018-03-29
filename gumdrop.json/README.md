@@ -2,10 +2,20 @@
 
 A library for turning JSON into POJOs and vice-versa.
 
-This library doesn't use reflection or require annotations. It has a simple, imperative API for wiring up
-field-attribute relationships at compile time.
+### Overview
 
-For example, consider a `Person` class:
+The motivation for Gumdrop-JSON isn't performance, but compile-time safety and avoidance of both annotations and
+reflection. Instead it has a simple, imperative API for wiring up field-attribute relationships at compile time.
+
+As a happy side effect, however, because it doesn't use reflection, this library happens to be over twice as fast as
+Google's Gson library at serializing and deserializing to and from JSON, all without having made any explicit
+performance optimizations.
+
+For a little more information about how this works under the hood, see [Gumdrop Common](../gumdrop.common/).
+
+### Simple Example
+
+Consider a `Person` class:
 
 ```java
 
@@ -185,9 +195,6 @@ assertEquals(person, fromJson);
 
 ```
 
-The motivation for this library isn't performance, but compile-time safety and avoidance of annotations.
-As a happy side effect, however, because it doesn't use reflection, this library happens to be over twice as fast as
-Google's Gson library at serializing and deserializing to and from JSON, all without having made any explicit
-performance optimizations.
+### Nested Object Example
 
-For a little more information about how this works under the hood, see [Gumdrop Common](../gumdrop.common/).
+TODO

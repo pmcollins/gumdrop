@@ -5,12 +5,12 @@ import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class Route {
+public class Route {
 
   private final Pattern pattern;
   private final Supplier<Controller> supplier;
 
-  Route(String strPattern, Supplier<Controller> supplier) {
+  public Route(String strPattern, Supplier<Controller> supplier) {
     this.pattern = Pattern.compile(strPattern);
     this.supplier = supplier;
   }
