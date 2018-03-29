@@ -1,7 +1,6 @@
-package gumdrop.test.json;
+package gumdrop.test.fake;
 
 import gumdrop.json.ListBuilder;
-import gumdrop.test.pojo.Person;
 
 class FullNamePersonListBuilder extends ListBuilder<Person> {
 

@@ -1,4 +1,4 @@
-package gumdrop.test.web;
+package gumdrop.test.fake;
 
 import gumdrop.web.controller.Controller;
 import gumdrop.web.controller.PathBuilder;

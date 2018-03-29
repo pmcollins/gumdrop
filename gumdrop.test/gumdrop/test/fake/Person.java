@@ -1,4 +1,4 @@
-package gumdrop.test.pojo;
+package gumdrop.test.fake;
 
 import java.util.Objects;
 

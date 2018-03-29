@@ -2,9 +2,10 @@ package gumdrop.test.json;
 
 import gumdrop.json.BuilderDelegate;
 import gumdrop.json.JsonReader;
-import gumdrop.test.pojo.Person;
-import gumdrop.test.pojo.Name;
-import gumdrop.test.pojo.Room;
+import gumdrop.test.fake.Person;
+import gumdrop.test.fake.Name;
+import gumdrop.test.fake.Room;
+import gumdrop.test.fake.RoomBuilder;
 import gumdrop.test.util.Test;
 import gumdrop.test.util.Asserts;
 

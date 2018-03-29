@@ -1,4 +1,4 @@
-package gumdrop.test.json;
+package gumdrop.test.fake;
 
 import gumdrop.json.StringConverter;
 

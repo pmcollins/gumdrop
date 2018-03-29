@@ -1,6 +1,7 @@
 package gumdrop.test.json;
 
 import gumdrop.json.JsonReader;
+import gumdrop.test.fake.FakeJsonDelegate;
 import gumdrop.test.util.Test;
 import gumdrop.test.util.Asserts;
 

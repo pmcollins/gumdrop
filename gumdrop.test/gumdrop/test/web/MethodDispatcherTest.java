@@ -1,5 +1,6 @@
 package gumdrop.test.web;
 
+import gumdrop.test.fake.FakeController;
 import gumdrop.test.util.Asserts;
 import gumdrop.test.util.Test;
 import gumdrop.web.controller.Controller;
