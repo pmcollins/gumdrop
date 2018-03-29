@@ -1,13 +1,13 @@
 # Gumdrop-JSON
 
-Converts JSON into Java objects and vice-versa.
+JSON/Java serialization and deserialization.
 
 ### Overview
 
 Gumdrop-JSON has a simple, imperative API for wiring up field-attribute relationships at compile time. The motivation for
-Gumdrop-JSON isn't performance, but compile-time safety and avoidance of both annotations and reflection.
+this isn't performance, but compile-time safety and avoidance of both annotations and reflection.
 
-As a happy side effect, however, because it doesn't use reflection, this library happens to be over two times faster
+As a happy side effect, however, because it doesn't use reflection, Gumdrop-JSON happens to be over two times faster
 than Google's Gson library at serializing and deserializing to and from JSON, all without having made any explicit
 performance optimizations (yet).
 
@@ -311,4 +311,4 @@ Asserts.assertEquals(p, rebuilt);
 
 ```
 
-In this way, we can assemble `Converter`s of arbitrary depth and complexity.
+In this way, we can assemble converters of arbitrary depth and complexity.
