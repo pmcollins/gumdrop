@@ -140,16 +140,16 @@ As an alternative to the formatter lambas above, we can use a `StringConverter`:
 
 class InstantConverter implements StringConverter<Instant> {
 
-  private static final DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
+  private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_INSTANT;
 
   @Override
   public String toString(Instant instant) {
-    return formatter.format(instant);
+    return FORMATTER.format(instant);
   }
 
   @Override
   public Instant fromString(String s) {
-    return Instant.from(formatter.parse(s));
+    return Instant.from(FORMATTER.parse(s));
   }
 
 }
