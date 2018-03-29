@@ -39,8 +39,8 @@ class JsonConverterTest extends Test {
     JsonConverter<Person> personConverter = new JsonConverter<>(Person::new);
     personConverter.addIntField("age", Person::getAge, Person::setAge);
     JsonConverter<Name> nameConverter = new JsonConverter<>(Name::new);
-    nameConverter.addStringField("first", Name::getFirst, Name::setFirst);
-    nameConverter.addStringField("last", Name::getLast, Name::setLast);
+    nameConverter.addField("first", Name::getFirst, Name::setFirst);
+    nameConverter.addField("last", Name::getLast, Name::setLast);
     personConverter.addSubConverter("name", Person::getName, Person::setName, nameConverter);
     Person p = new Person();
     p.setAge(111);
@@ -56,7 +56,7 @@ class JsonConverterTest extends Test {
 
   private void integration() {
     JsonConverter<SimplePerson> personConverter = new JsonConverter<>(SimplePerson::new);
-    personConverter.addStringField("name", SimplePerson::getName, SimplePerson::setName);
+    personConverter.addField("name", SimplePerson::getName, SimplePerson::setName);
     personConverter.addIntField("age", SimplePerson::getAge, SimplePerson::setAge);
     personConverter.addField(
       "birthday",
@@ -83,7 +83,7 @@ class JsonConverterTest extends Test {
 
     PersonConverter() {
       super(SimplePerson::new);
-      addStringField("name", SimplePerson::getName, SimplePerson::setName);
+      addField("name", SimplePerson::getName, SimplePerson::setName);
       addIntField("age", SimplePerson::getAge, SimplePerson::setAge);
     }
 

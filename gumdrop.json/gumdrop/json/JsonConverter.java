@@ -18,7 +18,7 @@ public class JsonConverter<T> implements StringConverter<T> {
     builder = new JsonBuilder<>(constructor);
   }
 
-  public void addStringField(String name, Function<T, String> getter, BiConsumer<T, String> setter) {
+  public void addField(String name, Function<T, String> getter, BiConsumer<T, String> setter) {
     builder.addSetter(name, setter);
     jsonWriter.addStringGetter(name, getter);
   }

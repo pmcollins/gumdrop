@@ -4,7 +4,7 @@ Converts JSON into Java objects and vice-versa.
 
 ### Overview
 
-Gumdrop has a simple, imperative API for wiring up field-attribute relationships at compile time. The motivation for
+Gumdrop-JSON has a simple, imperative API for wiring up field-attribute relationships at compile time. The motivation for
 Gumdrop-JSON isn't performance, but compile-time safety and avoidance of both annotations and reflection.
 
 As a happy side effect, however, because it doesn't use reflection, this library happens to be over two times faster
@@ -74,7 +74,7 @@ and the JSON keys we're interested in.
 ```java
 
 JsonConverter<Person> personConverter = new JsonConverter<>(Person::new);
-personConverter.addStringField("name", Person::getName, Person::setName);
+personConverter.addField("name", Person::getName, Person::setName);
 personConverter.addIntField("age", Person::getAge, Person::setAge);
 
 ```
@@ -93,12 +93,13 @@ TestUtil.assertEquals(p, fromJson);
 
 ```
 
-What about the birthday field in `Person`? Let's add support for that now:
+What about the birthday field in `Person`? Unlike the name field, this field is of type `Instant`, so we'll have to
+explicitly define how to convert incoming strings to `Instant`s and vice-versa. Let's do that now:
 
 ```java
 
 DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
-personConverter.addStringField(
+personConverter.addField(
   "birthday",
   person -> formatter.format(person.getBirthday()),
   (person, str) -> person.setBirthday(Instant.from(formatter.parse(str)))
@@ -111,10 +112,10 @@ Overall, we now have:
 ```java
 
 JsonConverter<Person> personConverter = new JsonConverter<>(Person::new);
-personConverter.addStringField("name", Person::getName, Person::setName);
+personConverter.addField("name", Person::getName, Person::setName);
 personConverter.addIntField("age", Person::getAge, Person::setAge);
 DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
-personConverter.addStringField(
+personConverter.addField(
   "birthday",
   person -> formatter.format(person.getBirthday()),
   (person, str) -> person.setBirthday(Instant.from(formatter.parse(str)))
@@ -173,7 +174,7 @@ Now we have:
 ```java
 
 JsonConverter<Person> personConverter = new JsonConverter<>(Person::new);
-personConverter.addStringField("name", Person::getName, Person::setName);
+personConverter.addField("name", Person::getName, Person::setName);
 personConverter.addIntField("age", Person::getAge, Person::setAge);
 personConverter.addField(
   "birthday",
@@ -293,8 +294,8 @@ So we set up our JsonConverter to be able to build the member `Name` object, by 
 JsonConverter<Person> personConverter = new JsonConverter<>(Person::new);
 personConverter.addIntField("age", Person::getAge, Person::setAge);
 JsonConverter<Name> nameConverter = new JsonConverter<>(Name::new);
-nameConverter.addStringField("first", Name::getFirst, Name::setFirst);
-nameConverter.addStringField("last", Name::getLast, Name::setLast);
+nameConverter.addField("first", Name::getFirst, Name::setFirst);
+nameConverter.addField("last", Name::getLast, Name::setLast);
 personConverter.addSubConverter("name", Person::getName, Person::setName, nameConverter);
 
 Person p = new Person();
