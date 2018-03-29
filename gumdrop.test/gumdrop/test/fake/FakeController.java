@@ -1,4 +1,4 @@
-package gumdrop.test.web;
+package gumdrop.test.fake;
 
 import gumdrop.common.http.Request;
 import gumdrop.web.controller.Controller;

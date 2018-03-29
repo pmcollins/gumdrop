@@ -1,11 +1,11 @@
-package gumdrop.test.json;
+package gumdrop.test.fake;
 
 import gumdrop.json.JsonDelegate;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class FakeJsonDelegate implements JsonDelegate {
+public class FakeJsonDelegate implements JsonDelegate {
 
   private final List<String> quotedStrings = new ArrayList<>();
   private final List<String> barewords = new ArrayList<>();
@@ -41,35 +41,35 @@ class FakeJsonDelegate implements JsonDelegate {
     arrayEndCount++;
   }
 
-  List<String> getQuotedStrings() {
+  public List<String> getQuotedStrings() {
     return quotedStrings;
   }
 
-  List<String> getBarewords() {
+  public List<String> getBarewords() {
     return barewords;
   }
 
-  int getObjectStartCount() {
+  public int getObjectStartCount() {
     return objectStartCount;
   }
 
-  int getObjectEndCount() {
+  public int getObjectEndCount() {
     return objectEndCount;
   }
 
-  int getArrayStartCount() {
+  public int getArrayStartCount() {
     return arrayStartCount;
   }
 
-  int getArrayEndCount() {
+  public int getArrayEndCount() {
     return arrayEndCount;
   }
 
-  boolean containsKey(String key) {
+  public boolean containsKey(String key) {
     return key.contains(key);
   }
 
-  boolean containsBareword(String bareword) {
+  public boolean containsBareword(String bareword) {
     return barewords.contains(bareword);
   }
 
