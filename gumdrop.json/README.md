@@ -85,9 +85,9 @@ Now we can convert a `Person` instance to JSON and back:
 
 Person p = new Person();
 p.setName("Bilbo");
-p.setAge(50);
+p.setAge(111);
 String json = personConverter.toString(p);
-TestUtil.assertEquals("{\"name\":\"Bilbo\",\"age\":50}", json);
+TestUtil.assertEquals("{\"name\":\"Bilbo\",\"age\":111}", json);
 Person fromJson = personConverter.fromString(json);
 TestUtil.assertEquals(p, fromJson);
 
@@ -223,14 +223,6 @@ public class Person {
   }
 
   @Override
-  public String toString() {
-    return "ComplexPerson{" +
-      "name=" + name +
-      ", age=" + age +
-      '}';
-  }
-
-  @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
@@ -288,13 +280,13 @@ public class Name {
 
 ```
 
-We'd like to build `Person` object from nested JSON strings such as:
+We'd now like to build a `Person` object from a nested JSON string such as:
 
 ```json
 {"age":111,"name":{"first":"Bilbo","last":"Baggins"}}
 ```
 
-We set up our JsonConverter to be able to build the member `Name` object, by calling `addSubConverter`
+So we set up our JsonConverter to be able to build the member `Name` object, by calling `addSubConverter` :
 
 ```java
 
