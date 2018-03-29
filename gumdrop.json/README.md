@@ -294,7 +294,7 @@ We'd like to build `Person` object from nested JSON strings such as:
 {"age":111,"name":{"first":"Bilbo","last":"Baggins"}}
 ```
 
-We set up our JsonConverter to be able to build the member `Name` object, by calling `addSubFields`
+We set up our JsonConverter to be able to build the member `Name` object, by calling `addSubConverter`
 
 ```java
 
@@ -318,4 +318,4 @@ Asserts.assertEquals(p, rebuilt);
 
 ```
 
-In this way, we can assemble converters of arbitrary depth and complexity.
+In this way, we can assemble `Converter`s of arbitrary depth and complexity.
