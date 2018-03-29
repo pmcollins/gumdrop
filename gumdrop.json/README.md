@@ -197,4 +197,125 @@ assertEquals(person, fromJson);
 
 ### Nested Object Example
 
-TODO
+Let's update our `Person` class to have a `Name` member:
+
+```java
+
+public class Person {
+
+  private Name name;
+  private int age;
+
+  public Name getName() {
+    return name;
+  }
+
+  public void setName(Name name) {
+    this.name = name;
+  }
+
+  public int getAge() {
+    return age;
+  }
+
+  public void setAge(int age) {
+    this.age = age;
+  }
+
+  @Override
+  public String toString() {
+    return "ComplexPerson{" +
+      "name=" + name +
+      ", age=" + age +
+      '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Person that = (Person) o;
+    return age == that.age &&
+      Objects.equals(name, that.name);
+  }
+
+}
+
+```
+
+where `Name` is defined as
+
+```java
+
+public class Name {
+
+  private String first, last;
+
+  public Name() {
+  }
+
+  public Name(String first, String last) {
+    this.first = first;
+    this.last = last;
+  }
+
+  public String getFirst() {
+    return first;
+  }
+
+  public void setFirst(String first) {
+    this.first = first;
+  }
+
+  public String getLast() {
+    return last;
+  }
+
+  public void setLast(String last) {
+    this.last = last;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Name name = (Name) o;
+    return Objects.equals(first, name.first) &&
+      Objects.equals(last, name.last);
+  }
+
+}
+
+```
+
+We'd like to build `Person` object from nested JSON strings such as:
+
+```json
+{"age":111,"name":{"first":"Bilbo","last":"Baggins"}}
+```
+
+We set up our JsonConverter to be able to build the member `Name` object, by calling `addSubFields`
+
+```java
+
+JsonConverter<Person> personConverter = new JsonConverter<>(Person::new);
+personConverter.addIntField("age", Person::getAge, Person::setAge);
+JsonConverter<Name> nameConverter = new JsonConverter<>(Name::new);
+nameConverter.addStringField("first", Name::getFirst, Name::setFirst);
+nameConverter.addStringField("last", Name::getLast, Name::setLast);
+personConverter.addSubConverter("name", Person::getName, Person::setName, nameConverter);
+
+Person p = new Person();
+p.setAge(111);
+Name name = new Name();
+name.setFirst("Bilbo");
+name.setLast("Baggins");
+p.setName(name);
+
+String json = personConverter.toString(p);
+Person rebuilt = personConverter.fromString(json);
+Asserts.assertEquals(p, rebuilt);
+
+```
+
+In this way, we can assemble converters of arbitrary depth and complexity.

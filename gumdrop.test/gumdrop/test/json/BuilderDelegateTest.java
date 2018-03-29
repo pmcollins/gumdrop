@@ -2,7 +2,7 @@ package gumdrop.test.json;
 
 import gumdrop.json.BuilderDelegate;
 import gumdrop.json.JsonReader;
-import gumdrop.test.pojo.FullNamePerson;
+import gumdrop.test.pojo.Person;
 import gumdrop.test.pojo.Name;
 import gumdrop.test.pojo.Room;
 import gumdrop.test.util.Test;
@@ -74,14 +74,14 @@ class BuilderDelegateTest extends Test {
 
   private void checkRoom(Room room) {
     Asserts.assertEquals("703", room.getName());
-    List<FullNamePerson> people = room.getPeople();
+    List<Person> people = room.getPeople();
     Asserts.assertEquals(2, people.size());
 
-    FullNamePerson p1 = people.get(0);
+    Person p1 = people.get(0);
     Asserts.assertEquals(42, p1.getAge());
     Asserts.assertEquals(new Name("foo", "bar"), p1.getName());
 
-    FullNamePerson p2 = people.get(1);
+    Person p2 = people.get(1);
     Asserts.assertEquals(110, p2.getAge());
     Asserts.assertEquals(new Name("bilbo", "baggins"), p2.getName());
   }

@@ -1,9 +1,9 @@
 package gumdrop.test.json;
 
 import gumdrop.json.JsonConverter;
-import gumdrop.test.pojo.FullNamePerson;
-import gumdrop.test.pojo.Name;
 import gumdrop.test.pojo.Person;
+import gumdrop.test.pojo.Name;
+import gumdrop.test.pojo.SimplePerson;
 import gumdrop.test.util.Test;
 import gumdrop.test.util.Asserts;
 
@@ -25,46 +25,47 @@ class JsonConverterTest extends Test {
   }
 
   private void person() {
-    JsonConverter<Person> personBuilder = new PersonConverter();
-    Person p = new Person();
+    JsonConverter<SimplePerson> personBuilder = new PersonConverter();
+    SimplePerson p = new SimplePerson();
     p.setName("lile");
     p.setAge(10);
     String json = personBuilder.toString(p);
     Asserts.assertEquals("{\"name\":\"lile\",\"age\":10}", json);
-    Person fromJson = personBuilder.fromString(json);
+    SimplePerson fromJson = personBuilder.fromString(json);
     Asserts.assertEquals(p, fromJson);
   }
 
   private void fullNamePerson() {
-    JsonConverter<FullNamePerson> personConverter = new JsonConverter<>(FullNamePerson::new);
-    personConverter.addIntField("age", FullNamePerson::getAge, FullNamePerson::setAge);
+    JsonConverter<Person> personConverter = new JsonConverter<>(Person::new);
+    personConverter.addIntField("age", Person::getAge, Person::setAge);
     JsonConverter<Name> nameConverter = new JsonConverter<>(Name::new);
     nameConverter.addStringField("first", Name::getFirst, Name::setFirst);
     nameConverter.addStringField("last", Name::getLast, Name::setLast);
-    personConverter.addSubFields("name", FullNamePerson::getName, FullNamePerson::setName, nameConverter);
-    FullNamePerson p = new FullNamePerson();
-    p.setAge(10);
+    personConverter.addSubConverter("name", Person::getName, Person::setName, nameConverter);
+    Person p = new Person();
+    p.setAge(111);
     Name name = new Name();
-    name.setFirst("lile");
-    name.setLast("collinson");
+    name.setFirst("Bilbo");
+    name.setLast("Baggins");
     p.setName(name);
     String json = personConverter.toString(p);
-    FullNamePerson rebuilt = personConverter.fromString(json);
+    System.out.println(json);
+    Person rebuilt = personConverter.fromString(json);
     Asserts.assertEquals(p, rebuilt);
   }
 
   private void integration() {
-    JsonConverter<Person> personConverter = new JsonConverter<>(Person::new);
-    personConverter.addStringField("name", Person::getName, Person::setName);
-    personConverter.addIntField("age", Person::getAge, Person::setAge);
+    JsonConverter<SimplePerson> personConverter = new JsonConverter<>(SimplePerson::new);
+    personConverter.addStringField("name", SimplePerson::getName, SimplePerson::setName);
+    personConverter.addIntField("age", SimplePerson::getAge, SimplePerson::setAge);
     personConverter.addField(
       "birthday",
-      Person::getBirthday,
-      Person::setBirthday,
+      SimplePerson::getBirthday,
+      SimplePerson::setBirthday,
       new InstantConverter()
     );
 
-    Person person = new Person();
+    SimplePerson person = new SimplePerson();
     person.setName("Frodo");
     person.setAge(25);
     person.setBirthday(Instant.parse("1900-01-01T01:00:00Z"));
@@ -74,16 +75,16 @@ class JsonConverterTest extends Test {
       "{\"name\":\"Frodo\",\"age\":25,\"birthday\":\"1900-01-01T01:00:00Z\"}",
       json
     );
-    Person fromJson = personConverter.fromString(json);
+    SimplePerson fromJson = personConverter.fromString(json);
     assertEquals(person, fromJson);
   }
 
-  private static class PersonConverter extends JsonConverter<Person> {
+  private static class PersonConverter extends JsonConverter<SimplePerson> {
 
     PersonConverter() {
-      super(Person::new);
-      addStringField("name", Person::getName, Person::setName);
-      addIntField("age", Person::getAge, Person::setAge);
+      super(SimplePerson::new);
+      addStringField("name", SimplePerson::getName, SimplePerson::setName);
+      addIntField("age", SimplePerson::getAge, SimplePerson::setAge);
     }
 
   }

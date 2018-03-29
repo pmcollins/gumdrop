@@ -33,7 +33,7 @@ public class JsonConverter<T> implements StringConverter<T> {
     jsonWriter.addStringGetter(name, (t) -> stringConverter.toString(getter.apply(t)));
   }
 
-  public <U> void addSubFields(String name, Function<T, U> fieldGetter, BiConsumer<T, U> fieldSetter, JsonConverter<U> jsonConverter) {
+  public <U> void addSubConverter(String name, Function<T, U> fieldGetter, BiConsumer<T, U> fieldSetter, JsonConverter<U> jsonConverter) {
     builder.addMember(name, fieldSetter, jsonConverter.builder);
     jsonWriter.addMember(name, fieldGetter, jsonConverter.jsonWriter);
   }
