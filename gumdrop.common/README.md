@@ -116,7 +116,7 @@ assertEquals(List.of(new Name("foo", "bar"), new Name("baz", "glarch")), list);
 We set up a `nameBuilder` and a `listBuilder`, then bind our `nameBuilder` to our `listBuilder`, passing in a key
 ("name") and a setter (`List::add`). This wires up `listBuilder` to -- when we call `create` with a "name" argument --
 instantiate and a return new Name node, and pass in an instance of the object wrapped by that Name node to the
-provided setter.
+provided method reference.
 
 > A `BuilderNode` always has one and only one instance of the object it's building
 
