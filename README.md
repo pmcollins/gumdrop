@@ -17,5 +17,3 @@ Goals:
 * Simple
 * [SOLID](https://en.wikipedia.org/wiki/SOLID_(object-oriented_design))
 * Test driven
-
-Contact me at `pablo.collins` at `gmail`.
