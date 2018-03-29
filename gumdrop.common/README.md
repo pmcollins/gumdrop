@@ -115,15 +115,14 @@ assertEquals(List.of(new Name("foo", "bar"), new Name("baz", "glarch")), list);
 
 We set up a `nameBuilder` and a `listBuilder`, then bind our `nameBuilder` to our `listBuilder`, passing in a key
 ("name") and a setter (`List::add`). This wires up `listBuilder` to -- when we call `create` with a "name" argument --
-to instantiate and a return new name node, and pass in an instance of the object wrapped by that name node to the
-setter.
+instantiate and a return new Name node, and pass in an instance of the object wrapped by that Name node to the
+provided setter.
 
-> A builder node always has one and only one instance of the object it's building, so our list builder node `listNode`
-> has one instance of `ArrayList` and each of our name builder nodes `name1` and `name2` has an instance of `Name`
+> A `BuilderNode` always has one and only one instance of the object it's building
 
 Now when our list builder node gets a "name" key, it emits a new name builder node, and adds an instance of that builder
 node's `Name` to the `listNode`'s ArrayList. After sending strings into our name builder node instances, which in turn
-populate their `Name` instances, we can get a hold of a reference to the ArrayList of the Names we just created.
+populate their `Name` instances, we get a hold of a reference to the ArrayList of the Names we just created.
 
 This example should provide an idea of how Gumdrop handles JSON deserialization as well as how it builds objects from
 form submissions.
