@@ -39,6 +39,10 @@ public class Tag implements Buildable {
     return this;
   }
 
+  public void add(List<Buildable> list) {
+    children.addAll(list);
+  }
+
   public Tag attr(String name, String value) {
     tagAttributes.add(new TagAttribute(name, value));
     return this;
