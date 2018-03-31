@@ -39,8 +39,9 @@ public class Tag implements Buildable {
     return this;
   }
 
-  public void add(List<Buildable> list) {
+  public Tag add(List<Buildable> list) {
     children.addAll(list);
+    return this;
   }
 
   public Tag attr(String name, String value) {
