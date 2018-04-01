@@ -51,9 +51,9 @@ public class HtmlStringUtilTest extends Test {
   }
 
   private void stripTags() {
-    String replaced = HttpStringUtil.stripTags("<hello>");
+    String replaced = HttpStringUtil.sanitizeHtml("<hello>");
     assertEquals("&lt;hello&gt;", replaced);
-    assertNull(HttpStringUtil.stripTags(null));
+    assertNull(HttpStringUtil.sanitizeHtml(null));
   }
 
 }

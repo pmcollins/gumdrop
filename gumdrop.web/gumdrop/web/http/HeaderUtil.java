@@ -1,7 +1,5 @@
 package gumdrop.web.http;
 
-import gumdrop.web.http.HttpResponseHeader;
-
 import java.util.Map;
 
 public class HeaderUtil {
