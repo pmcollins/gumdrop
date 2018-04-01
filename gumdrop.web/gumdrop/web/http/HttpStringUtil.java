@@ -9,6 +9,7 @@ public class HttpStringUtil {
   private static final Pattern PLUS = Pattern.compile("\\+");
   private static final Pattern LT = Pattern.compile("<");
   private static final Pattern GT = Pattern.compile(">");
+  private static final Pattern AND = Pattern.compile("&");
 
   public static String unescape(String queryStr) {
     String withSpaces = PLUS.matcher(queryStr).replaceAll(" ");
@@ -27,9 +28,10 @@ public class HttpStringUtil {
     return String.valueOf((char) num);
   }
 
-  public static String stripTags(String text) {
+  public static String sanitizeHtml(String text) {
     if (text == null) return null;
-    return GT.matcher(LT.matcher(text).replaceAll("&lt;")).replaceAll("&gt;");
+    // TODO factor and optimize
+    return GT.matcher(LT.matcher(AND.matcher(text).replaceAll("&amp;")).replaceAll("&lt;")).replaceAll("&gt;");
   }
 
 }

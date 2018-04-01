@@ -7,7 +7,7 @@ public class Text implements Buildable {
   private final String text;
 
   Text(String text) {
-    this.text = HttpStringUtil.stripTags(text);
+    this.text = HttpStringUtil.sanitizeHtml(text);
   }
 
   @Override
