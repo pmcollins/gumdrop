@@ -7,7 +7,7 @@ import gumdrop.web.html.ViewModel;
 import gumdrop.web.http.HeaderUtil;
 import gumdrop.web.http.HttpResponse;
 
-public abstract class LayoutController<E, M extends ViewModel, L extends ViewModel> extends SessionController<E> {
+public abstract class LayoutController<E, M, L> extends SessionController<E> {
 
   private static final int CAPACITY = 1024 * 128;
 
@@ -34,7 +34,7 @@ public abstract class LayoutController<E, M extends ViewModel, L extends ViewMod
   // we can't put this in a call to super so we set it up this way
   abstract protected Presenter<L> getLayoutPresenter();
 
-  private static class BuildableView<M extends ViewModel> implements Buildable {
+  private static class BuildableView<M> implements Buildable {
 
     private final View<M> view;
     private final M viewModel;
