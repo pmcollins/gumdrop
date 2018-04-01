@@ -10,7 +10,7 @@ import gumdrop.web.http.HttpResponseHeader;
 
 import java.util.UUID;
 
-public abstract class SessionController<T> implements Controller, ControllerContext<T> {
+public abstract class SessionController<T> implements Controller {
 
   private final SessionSupplier<T> sessionSupplier;
   private String[] pathArgs;
@@ -27,7 +27,6 @@ public abstract class SessionController<T> implements Controller, ControllerCont
 
   protected abstract void process(HttpResponse response);
 
-  @Override
   public String getPath() {
     return request.getPath();
   }
@@ -56,7 +55,6 @@ public abstract class SessionController<T> implements Controller, ControllerCont
     this.pathBuilderIndex = pathBuilderIndex;
   }
 
-  @Override
   public PathBuilder getPathBuilder(Class<? extends Controller> controllerClass) {
     return pathBuilderIndex.get(controllerClass);
   }
@@ -65,7 +63,6 @@ public abstract class SessionController<T> implements Controller, ControllerCont
     return pathBuilderIndex;
   }
 
-  @Override
   public final Session<T> getSession() {
     return session;
   }
