@@ -7,8 +7,8 @@ JSON/Java serialization and deserialization.
 Gumdrop-JSON has a simple, imperative API for wiring up field-attribute relationships at compile time. The motivation for
 this isn't performance, but compile-time safety and avoidance of both annotations and reflection.
 
-As a happy side effect, however, because it doesn't use reflection, Gumdrop-JSON happens to be over two times faster
-than Google's Gson library at serializing and deserializing to and from JSON, all without having made any explicit
+As a happy side effect, however, because it doesn't use reflection, Gumdrop-JSON happens to be over two times as fast
+as Google's Gson library at serializing and deserializing to and from JSON, all without having made any explicit
 performance optimizations (yet).
 
 For a little more information about how this works under the hood, see [Gumdrop Common](../gumdrop.common/).
