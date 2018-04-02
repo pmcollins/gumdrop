@@ -51,7 +51,10 @@ public class StaticController implements Controller {
     byte[] bytes = get(() -> Files.readAllBytes(fullPath));
     HttpResponseHeader h = new HttpResponseHeader();
     checkExtension();
+
+    // TODO expand
     HeaderUtil.setTextCss(h, bytes.length);
+
     HttpResponse response = new HttpResponse(h);
     response.setBytes(bytes);
     return response;
