@@ -3,7 +3,6 @@ package gumdrop.web.controller;
 import gumdrop.common.SessionSupplier;
 import gumdrop.web.html.Buildable;
 import gumdrop.web.html.View;
-import gumdrop.web.html.ViewModel;
 import gumdrop.web.http.HeaderUtil;
 import gumdrop.web.http.HttpResponse;
 
