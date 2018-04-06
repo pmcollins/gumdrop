@@ -1,14 +1,14 @@
 # Gumdrop-Common
 
-### Builder
+### Builder Library
 
 Creates Java objects from strings without using reflection or annotations. Used by [Gumdrop-Json](../gumdrop.json/) and
 [HttpFormReader](../gumdrop.web/gumdrop/web/http/HttpFormReader.java).
 
 ##### Basic Builder
 
-[Builder](gumdrop/common/builder/Builder.java) is very simple: it binds strings to setters and uses those bindings
-to populate instances.
+The [Builder](gumdrop/common/builder/Builder.java) class is very simple: it binds strings to setters and uses those
+bindings to populate instances.
 
 Consider a `Name` class:
 
@@ -111,6 +111,9 @@ List<Name> list = listNode.getObject();
 assertEquals(List.of(new Name("foo", "bar"), new Name("baz", "glarch")), list);
 
 ```
+
+Here, `BuilderNode`s construct and wrap any member objects. When we call `create` on a `BuilderNode` the member object
+is created and wrapped, and the corresponding sub-`BuilderNode` is returned.
 
 This example should provide a basic idea of how Gumdrop handles JSON deserialization as well as how it builds objects
 from form submissions.
