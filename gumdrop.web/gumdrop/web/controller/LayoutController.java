@@ -1,20 +1,21 @@
 package gumdrop.web.controller;
 
-import gumdrop.common.SessionSupplier;
+import gumdrop.common.Session;
+import gumdrop.common.SessionService;
 import gumdrop.web.html.Buildable;
 import gumdrop.web.html.View;
 import gumdrop.web.http.HeaderUtil;
 import gumdrop.web.http.HttpResponse;
 
-public abstract class LayoutController<E, M, L> extends SessionController<E> {
+public abstract class LayoutController<S extends Session<E>, M, L, E> extends SessionController<S, E> {
 
   private static final int CAPACITY = 1024 * 128;
 
   private final View<M> view;
   private final WrapperView<L> wrapperView;
 
-  protected LayoutController(SessionSupplier<E> sessionSupplier, View<M> view, WrapperView<L> wrapperView) {
-    super(sessionSupplier);
+  protected LayoutController(SessionService<S> sessionService, View<M> view, WrapperView<L> wrapperView) {
+    super(sessionService);
     this.view = view;
     this.wrapperView = wrapperView;
   }

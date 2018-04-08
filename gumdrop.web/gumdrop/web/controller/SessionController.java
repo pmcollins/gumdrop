@@ -2,7 +2,7 @@ package gumdrop.web.controller;
 
 import gumdrop.common.Flash;
 import gumdrop.common.Session;
-import gumdrop.common.SessionSupplier;
+import gumdrop.common.SessionService;
 import gumdrop.common.http.Request;
 import gumdrop.web.http.HeaderUtil;
 import gumdrop.web.http.HttpResponse;
@@ -10,17 +10,17 @@ import gumdrop.web.http.HttpResponseHeader;
 
 import java.util.UUID;
 
-public abstract class SessionController<T> implements Controller {
+public abstract class SessionController<S extends Session<E>, E> implements Controller {
 
-  private final SessionSupplier<T> sessionSupplier;
+  private final SessionService<S> sessionService;
   private String[] pathArgs;
   private PathBuilderIndex pathBuilderIndex;
-  private Session<T> session;
+  private S session;
   private Request request;
   private String unauthorizedPath;
 
-  SessionController(SessionSupplier<T> sessionSupplier) {
-    this.sessionSupplier = sessionSupplier;
+  SessionController(SessionService<S> sessionService) {
+    this.sessionService = sessionService;
   }
 
   protected abstract boolean isAuthorized();
@@ -63,7 +63,7 @@ public abstract class SessionController<T> implements Controller {
     return pathBuilderIndex;
   }
 
-  public final Session<T> getSession() {
+  public final S getSession() {
     return session;
   }
 
@@ -75,6 +75,10 @@ public abstract class SessionController<T> implements Controller {
     return session.getString(key);
   }
 
+  protected void persistSession() {
+    sessionService.persistSession(session);
+  }
+
   protected void setFlash(Flash flash) {
     getSession().setFlash(flash);
   }
@@ -83,7 +87,7 @@ public abstract class SessionController<T> implements Controller {
     return session.isLoggedIn();
   }
 
-  protected T getSessionEntity() {
+  protected E getSessionEntity() {
     return session.getEntity();
   }
 
@@ -128,7 +132,7 @@ public abstract class SessionController<T> implements Controller {
     } else {
       sessionId = cookieString.substring(2);
     }
-    session = sessionSupplier.getSession(sessionId);
+    session = sessionService.getSession(sessionId).get();
     return responseHeader;
   }
 

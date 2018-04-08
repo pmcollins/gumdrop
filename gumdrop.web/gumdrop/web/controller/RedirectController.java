@@ -1,13 +1,14 @@
 package gumdrop.web.controller;
 
-import gumdrop.common.SessionSupplier;
+import gumdrop.common.Session;
+import gumdrop.common.SessionService;
 import gumdrop.web.http.HeaderUtil;
 import gumdrop.web.http.HttpResponse;
 
-public abstract class RedirectController<T> extends SessionController<T> {
+public abstract class RedirectController<T extends Session<E>, E> extends SessionController<T, E> {
 
-  protected RedirectController(SessionSupplier<T> sessionSupplier) {
-    super(sessionSupplier);
+  protected RedirectController(SessionService<T> sessionService) {
+    super(sessionService);
   }
 
   protected abstract String getRedirectTarget();
