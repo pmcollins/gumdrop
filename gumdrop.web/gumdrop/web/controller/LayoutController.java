@@ -7,6 +7,12 @@ import gumdrop.web.html.View;
 import gumdrop.web.http.HeaderUtil;
 import gumdrop.web.http.HttpResponse;
 
+/**
+ * @param <S> Session
+ * @param <M> ViewModel
+ * @param <L> Layout ViewModel
+ * @param <E> Session Entity
+ */
 public abstract class LayoutController<S extends Session<E>, M, L, E> extends SessionController<S, E> {
 
   private static final int CAPACITY = 1024 * 128;
