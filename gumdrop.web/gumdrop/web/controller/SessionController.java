@@ -8,6 +8,7 @@ import gumdrop.web.http.HeaderUtil;
 import gumdrop.web.http.HttpResponse;
 import gumdrop.web.http.HttpResponseHeader;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public abstract class SessionController<S extends Session<E>, E> implements Controller {
@@ -80,7 +81,7 @@ public abstract class SessionController<S extends Session<E>, E> implements Cont
   }
 
   protected void setFlash(Flash flash) {
-    getSession().setFlash(flash);
+    session.setFlash(flash);
   }
 
   protected boolean isLoggedIn() {
@@ -132,7 +133,12 @@ public abstract class SessionController<S extends Session<E>, E> implements Cont
     } else {
       sessionId = cookieString.substring(2);
     }
-    session = sessionService.getSession(sessionId).get();
+    Optional<S> sessionOptional = sessionService.getSession(sessionId);
+    if (sessionOptional.isPresent()) {
+      session = sessionOptional.get();
+    } else {
+      session = sessionService.createSession(sessionId);
+    }
     return responseHeader;
   }
 
