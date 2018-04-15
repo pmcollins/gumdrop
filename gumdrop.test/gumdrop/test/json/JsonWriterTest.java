@@ -63,7 +63,7 @@ class JsonWriterTest extends Test {
     person.setBirthday(Instant.ofEpochMilli(700_000_000_000L));
     assertEquals(
       "{\"name\":\"bobo\",\"age\":25,\"birthday\":\"1992-03-07T20:26:40Z\"}",
-      personJsonJsonWriter.toJson(person)
+      personJsonJsonWriter.apply(person)
     );
   }
 
@@ -74,7 +74,7 @@ class JsonWriterTest extends Test {
     name.setFirst("lile");
     name.setLast("collinson");
     complexPerson.setName(name);
-    String json = complexPersonJsonJsonWriter.toJson(complexPerson);
+    String json = complexPersonJsonJsonWriter.apply(complexPerson);
     assertEquals("{\"age\":42,\"name\":{\"first\":\"lile\",\"last\":\"collinson\"}}", json);
   }
 
@@ -88,7 +88,7 @@ class JsonWriterTest extends Test {
     JsonWriter<Map<String, Name>> mapJsonWriter = new JsonWriter<>();
     mapJsonWriter.addMember("foo", m -> m.get("foo"), nameJsonWriter);
     mapJsonWriter.addMember("bar", m -> m.get("baz"), nameJsonWriter);
-    String json = mapJsonWriter.toJson(map);
+    String json = mapJsonWriter.apply(map);
     assertEquals("{\"foo\":{\"first\":\"foo\",\"last\":\"bar\"},\"bar\":{\"first\":\"baz\",\"last\":\"glarch\"}}", json);
   }
 
@@ -97,13 +97,15 @@ class JsonWriterTest extends Test {
     map.put("foo", new Name("foo", "bar"));
     map.put("baz", new Name("baz", "glarch"));
     map.put("quux", new Name("frob", "snarf"));
+
     JsonWriter<Name> nameJsonWriter = new JsonWriter<>();
     nameJsonWriter.addStringGetter("first", Name::getFirst);
     nameJsonWriter.addStringGetter("last", Name::getLast);
+
     JsonWriter<Map<String, Name>> mapJsonWriter = new JsonWriter<>();
     mapJsonWriter.setKeyFunction(Map::keySet);
-    mapJsonWriter.setMapFunction(Map::get, nameJsonWriter);
-    String json = mapJsonWriter.toJson(map);
+    mapJsonWriter.setCatchallBinding(Map::get, nameJsonWriter);
+    String json = mapJsonWriter.apply(map);
     assertEquals("{\"quux\":{\"first\":\"frob\",\"last\":\"snarf\"},\"foo\":{\"first\":\"foo\",\"last\":\"bar\"},\"baz\":{\"first\":\"baz\",\"last\":\"glarch\"}}", json);
   }
 

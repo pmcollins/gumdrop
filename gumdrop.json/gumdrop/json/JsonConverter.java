@@ -1,6 +1,9 @@
 package gumdrop.json;
 
+import gumdrop.common.builder.TriConsumer;
+
 import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -38,14 +41,22 @@ public class JsonConverter<T> implements StringConverter<T> {
     jsonWriter.addMember(name, fieldGetter, jsonConverter.jsonWriter);
   }
 
+  public void addMapFunctions(
+    TriConsumer<T, String> tc,
+    Function<T, Iterable<String>> keyFunction,
+    BiFunction<T, String, String> dynamicFieldGetter
+  ) {
+    builder.addCatchallSetter(tc);
+    jsonWriter.setMapFunctions(keyFunction, dynamicFieldGetter);
+  }
+
   @Override
   public String toString(T t) {
-    return jsonWriter.toJson(t);
+    return jsonWriter.apply(t);
   }
 
   @Override
   public T fromString(String json) {
     return builder.fromJson(json);
   }
-
 }
