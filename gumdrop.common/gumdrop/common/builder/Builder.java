@@ -30,8 +30,8 @@ public class Builder<T> {
     setters.put(key, (t, k, v) -> setter.accept(t, v));
   }
 
-  public void addSetter(String key, TriConsumer<T, String> setter) {
-    setters.put(key, setter);
+  public void addCatchallSetter(TriConsumer<T, String> setter) {
+    setters.put("*", setter);
   }
 
   public <U> void addMember(String name, BiConsumer<T, U> fieldSetter, Builder<U> subSetters) {
