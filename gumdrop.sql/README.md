@@ -62,7 +62,7 @@ Gumdrop-SQL assumes we have a serial primary key, so in this case, we just have 
 columns. Once we have our column collection defined, we just pass it in to the `Inserter` constructor along with the name
 of our table.
 
-Now that we have our `Inserter`, we can insert a row. We just call `insert` and pass a db connection object and the
+Now that we have our `Inserter`, we can insert a row. We call `insert`, passing in a db connection object and the
 entity we want to persist:
 
 ```java
@@ -82,8 +82,8 @@ read the primary key value by calling `getId` defined by the parent `Entity` cla
 
 To get data out of our database, we use a `Selector`. As with the `Inserter` case, we set up our columns, then give the
 `Selector` constructor those columns along with the name of our table. In this case, however, because we're asking
-the selector to create entity instances for each row, we also have to tell it how to construct `Person` objects. In
-our case, we just pass in the constructor reference, `Person::new`.
+the selector to create entity instances for each row, we also have to tell it how to construct `Person` objects, so we
+pass in a constructor reference, `Person::new`.
 
 ```java
 
