@@ -35,7 +35,7 @@ class Person extends Entity {
 
 ```
 
-Given a `Person` table with at least these columns...
+Given a `Person` table with at least these columns
 
 ```sql
 
@@ -47,7 +47,7 @@ CREATE TABLE person (
 
 ```
 
-...we set up an `Inserter`:
+we set up an `Inserter`:
 
 ```java
 
@@ -59,10 +59,11 @@ Inserter<Person> inserter = new Inserter<>("person", columns);
 ```
 
 Gumdrop-SQL assumes we have a serial primary key, so in this case, we just have to tell it about our name and age
-columns. Once we have our colum collection defined, we just pass it in to the `Inserter` constructor along with the name
+columns. Once we have our column collection defined, we just pass it in to the `Inserter` constructor along with the name
 of our table.
 
-Now that we have our `Inserter`, we can insert a row. Given an existing JDBC connection, we just say:
+Now that we have our `Inserter`, we can insert a row. Given an existing JDBC connection, and an entity, we just call
+`insert`:
 
 ```java
 
@@ -74,15 +75,15 @@ int id = person.getId();
 
 ```
 
-After insert is performed, our `person` object is populated with the primary key it received from the database,
-made available via `person.getId()`.
+After insert is performed, our `person` object is populated with the primary key it received from the database. We can
+read the primary key value by calling `getId` defined by the parent `Entity` class.
 
 ### Selecting
 
 To get data out of our database, we use a `Selector`. As with the `Inserter` case, we set up our columns, then give the
 `Selector` constructor those columns along with the name of our table. In this case, however, because we're asking
 the selector to create entity instances for each row, we also have to tell it how to construct `Person` objects. In
-our case, a reference to the constructor, `Person::new`, will do.
+our case, we just pass in the constructor reference, `Person::new`.
 
 ```java
 
