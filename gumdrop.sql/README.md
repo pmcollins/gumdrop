@@ -62,8 +62,8 @@ Gumdrop-SQL assumes we have a serial primary key, so in this case, we just have 
 columns. Once we have our column collection defined, we just pass it in to the `Inserter` constructor along with the name
 of our table.
 
-Now that we have our `Inserter`, we can insert a row. Given an existing JDBC connection, and an entity, we just call
-`insert`:
+Now that we have our `Inserter`, we can insert a row. We just call `insert` and pass a db connection object and the
+entity we want to persist:
 
 ```java
 
@@ -103,11 +103,27 @@ Optional<Person> person = selector.selectFirst(connection, new StringPredicate("
 
 ```
 
+### Updating
+
+To update existing rows, we set up an `Updater`.
+
+```java
+
+Updater updater = new Updater("person");
+updater.setSetClause(new StringPredicate("name = ?", "Frodo"), new IntegerPredicate("age = ?", 25));
+updater.setWhereClause(new IntegerPredicate("id = ?", 1));
+updater.execute(connection);
+
+```
+
 ### Discussion
 
-Notice that selectors and inserters are set up separately. This because inserting and selecting often have very
-different scopes and requirements. The scope of an insert is usually just that of a single table, whereas the scope of
-a select typically ranges from requiring multiple tables to just a column subset of a single table. Also, we often need
-to perform SQL operations on our columns when we select them. A `Selector`, therefore, is defined independently so
-that it may have any combination of selecting from just a few columns, selecting from something other than real tables,
-selecting columns that are the result of SQL operations/functions, or selecting from multiple tables via a join.
+Why are selectors, inserters, and updaters set up separately? This because selecting, inserting, and updating often have
+very different scopes and requirements. The scope of an insert is usually just that of a single table, whereas the scope
+of a select typically ranges from requiring multiple tables to just a column subset of a single table. Also, we often
+need to perform SQL operations on our columns when we select them. And the scope of an update is also distinct --
+something which may not even lend itself to object relational mapping without a lot of complication. Which of an entity's
+attributes are to be explicitly updated? An `Updater`, therefore is a separate class which doesn't use O/R mapping. And
+a `Selector` is defined independently so that it may have any combination of selecting from just a few columns,
+selecting from something other than real tables, selecting columns that are the result of SQL operations/functions, or
+selecting from multiple tables via a join.
