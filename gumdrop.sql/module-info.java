@@ -1,5 +1,5 @@
 module gumdrop.sql {
+  requires gumdrop.common;
   requires transitive java.sql;
-  requires revlab.core;
   exports gumdrop.sql;
 }
