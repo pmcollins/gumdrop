@@ -41,8 +41,7 @@ public class JsonMapsTest extends Test {
       if (this == o) return true;
       if (o == null || getClass() != o.getClass()) return false;
       Thing thing = (Thing) o;
-      return Objects.equals(name, thing.name) &&
-        Objects.equals(map, thing.map);
+      return Objects.equals(name, thing.name) && Objects.equals(map, thing.map);
     }
 
   }
@@ -76,17 +75,17 @@ public class JsonMapsTest extends Test {
     JsonWriter<Map<String, String>> mapWriter = new JsonWriter<>();
     mapWriter.setMapFunctions(Map::keySet, Map::get);
     String json = mapWriter.apply(mkMap());
-    assertEquals("{\"a\":b,\"c\":d}", json);
+    assertEquals("{\"a\":\"b\",\"c\":\"d\"}", json);
 
     JsonWriter<Thing> thingWriter = new JsonWriter<>();
     thingWriter.addStringGetter("name", Thing::getName);
     thingWriter.addMember("map", Thing::getMap, mapWriter);
 
     Thing thing = new Thing();
-    thing.setName("bobo");
+    thing.setName("bilbo");
     thing.setMap(mkMap());
     String thingJson = thingWriter.apply(thing);
-    assertEquals("{\"name\":\"bobo\",\"map\":{\"a\":b,\"c\":d}}", thingJson);
+    assertEquals("{\"name\":\"bilbo\",\"map\":{\"a\":\"b\",\"c\":\"d\"}}", thingJson);
   }
 
   private void converter() {
@@ -97,7 +96,7 @@ public class JsonMapsTest extends Test {
     c.addField("name", Thing::getName, Thing::setName);
     c.addSubConverter("map", Thing::getMap, Thing::setMap, mapConverter);
     Thing thing = new Thing();
-    thing.setName("bobo");
+    thing.setName("bilbo");
     thing.setMap(map);
     assertEquals(thing, c.fromString(c.toString(thing)));
   }
