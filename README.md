@@ -6,6 +6,7 @@ Gumdrop is a web framework under active development, written in Java, with no de
 * [Json](gumdrop.json): a JSON serialization library
 * [Web](gumdrop.web): request dispatch and page generation facilities
 * [Server](gumdrop.server): a multithreaded, non-blocking IO web server
+* [SQL](gumdrop.sql): a thin wrapper around JDBC for ORM-like operations
 * [Test](gumdrop.test): unit tests
 
 Goals:
