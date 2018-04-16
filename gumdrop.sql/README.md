@@ -59,8 +59,8 @@ Inserter<Person> inserter = new Inserter<>("person", columns);
 
 ```
 
-Gumdrop-SQL assumes we have a serial primary key. We just have to tell it about our `name` and `age` columns. We then
-pass in both the name of the person table, `"person"` and our column collection into the inserter and we're done with
+Gumdrop-SQL assumes we have a serial primary key. We just have to tell it about our "name" and "age" columns. We then
+pass in both the name of the person table, `"person"`, and our column collection, into the inserter and we're done with
 setup. Of course, we only have to do this once per application. You're encouraged to subclass `Inserter` and do
 this setup in your subclass's constructor.
 
