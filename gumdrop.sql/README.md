@@ -35,7 +35,7 @@ class Person extends Entity {
 
 ```
 
-We create a table for our `Person` entities:
+Given a `Person` table with at least these columns...
 
 ```sql
 
@@ -47,7 +47,7 @@ CREATE TABLE person (
 
 ```
 
-Then set up an `Inserter`:
+...we set up an `Inserter`:
 
 ```java
 
@@ -58,9 +58,9 @@ Inserter<Person> inserter = new Inserter<>("person", columns);
 
 ```
 
-Gumdrop-SQL assumes we have a serial primary key. We just have to tell it about our name and age columns. Set up
-consists of just passing in both the name of our person table and our column collection. We only have to do this once
-per application. (And you're encouraged to subclass `Inserter` and do this setup in your subclass's constructor.)
+Gumdrop-SQL assumes we have a serial primary key, so in this case, we just have to tell it about our name and age
+columns. Once we have our colum collection defined, we just pass it in to the `Inserter` constructor along with the name
+of our table.
 
 Now that we have our `Inserter`, we can insert a row. Given an existing JDBC connection, we just say:
 
@@ -69,22 +69,22 @@ Now that we have our `Inserter`, we can insert a row. Given an existing JDBC con
 Person person = new Person();
 person.setName("Bilbo Baggins");
 person.setAge(50);
-inserter.insert(connection, person);
+inserter.insert(connection, person); // once this returns, the insert is done
 int id = person.getId();
 
 ```
 
-After insert is performed, our `person` object is populated with the primary key it received from Postgres, available
-via `person.getId()`.
+After insert is performed, our `person` object is populated with the primary key it received from the database,
+made available via `person.getId()`.
 
 ### Selecting
 
 To get data out of our database, we use a `Selector`. As with the `Inserter` case, we set up our columns, then give the
-selector those columns along with the name of our table.
+`Selector` constructor those columns along with the name of our table.
 
 ```java
 
-// Person::new tells the selector how to create Person objects
+// we also have to define how to create Person objects
 SelectColumns<Person> columns = new SelectColumns<>(Person::new);
 columns.add(new SelectIntegerColumn<>("id", Person::setId));
 columns.add(new SelectStringColumn<>("name", Person::setName));
@@ -93,7 +93,7 @@ Selector<Person> selector = new Selector<>("person", columns);
 
 ```
 
-Once we have our selector set up, we can perform arbitrary queries:
+Once we have our `Selector` set up, we can perform arbitrary queries:
 
 ```java
 
@@ -103,6 +103,8 @@ Optional<Person> person = selector.selectFirst(connection, new StringPredicate("
 
 ### Discussion
 
-Notice that Selectors and Inserters are set up separately. This because a `Selector` is a general purpose concept. A
-given Selector may not select all columns, it may not select from a real table, or it may select from multiple tables
-via a join.
+Notice that selectors and inserters are set up separately. This because inserting and selecting often have very
+different scopes. The scope of an insert is usually just that of a single table, whereas the scope of a select typically
+ranges from requiring multiple tables to just a column subset of a single table. A `Selector`, therefore, is defined
+independently so that it may either select from just a few columns, select from something other than a real table, or
+select from multiple tables via a join.
