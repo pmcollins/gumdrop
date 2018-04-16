@@ -106,5 +106,6 @@ Optional<Person> person = selector.selectFirst(connection, new StringPredicate("
 Notice that selectors and inserters are set up separately. This because inserting and selecting often have very
 different scopes. The scope of an insert is usually just that of a single table, whereas the scope of a select typically
 ranges from requiring multiple tables to just a column subset of a single table. A `Selector`, therefore, is defined
-independently so that it may either select from just a few columns, select from something other than a real table, or
-select from multiple tables via a join.
+independently so that it may have any combination of selecting from just a few columns, selecting from something other
+than a real table, selecting columns that are the result of SQL functions, or selecting from multiple tables via a
+join.
