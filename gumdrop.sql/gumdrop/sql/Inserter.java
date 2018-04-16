@@ -1,6 +1,6 @@
 package gumdrop.sql;
 
-import revlab.core.entities.Entity;
+import gumdrop.common.Entity;
 
 import java.sql.*;
 
