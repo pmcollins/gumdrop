@@ -41,7 +41,7 @@ public class JsonWriter<T> implements Function<T, String> {
   }
 
   public void setCatchallStringBinding(BiFunction<T, String, String> dynamicFieldGetter) {
-    setCatchallBinding(dynamicFieldGetter, Function.identity());
+    setCatchallBinding(dynamicFieldGetter, s -> '"' + s + '"');
   }
 
   public <U> void setCatchallBinding(BiFunction<T, String, U> catchallFieldGetter, Function<U, String> stringFunction) {
