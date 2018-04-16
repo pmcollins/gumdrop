@@ -5,7 +5,7 @@ now.
 
 ### Example
 
-Consider a Person class:
+Consider a Person class, which we necessarily derive from `Entity`.
 
 ```java
 
@@ -48,7 +48,7 @@ CREATE TABLE person (
 
 ```
 
-Now we have to set up an `Inserter` to be able to insert Person rows.
+The we set up an `Inserter` to be able to insert Person rows:
 
 ```java
 
@@ -59,10 +59,10 @@ Inserter<Person> inserter = new Inserter<>("person", columns);
 
 ```
 
-Gumdrop-SQL already assumes we have a serial primary key, so we don't have to tell it about that. We just have to tell
-it about our `name` and `age` columns. We the passin the name of the person table, `person` and our column collection
-into the inserter and we're done with setup. Of course, we only have to do this once per application, and you're
-encouraged to subclass `Inserter` and do the setup in the constructor.
+Gumdrop-SQL assumes we have a serial primary key, so we don't have to tell it about that. We just have to tell
+it about our `name` and `age` columns. We the pass in both the name of the person table, `"person"` and our column
+collection into the inserter and we're done with setup. Of course, we only have to do this once per application, and
+you're encouraged to subclass `Inserter` and do this setup in your subclass's constructor.
 
 Now that we have our inserter, we can insert a row. Given an existing JDBC connection, we just say:
 
@@ -75,5 +75,5 @@ inserter.insert(connection, person);
 
 ```
 
-After the insert is performed, our `person` object is populated with the primary key it received from Postgres.
-
+After the insert is performed, our `person` object is populated with the primary key it received from Postgres, in
+`person.getId()`. This is defined in the parent `Entity` class.
