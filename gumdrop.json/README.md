@@ -19,8 +19,6 @@ Consider a `Person` class:
 
 ```java
 
-package gumdrop.json;
-
 import java.time.Instant;
 import java.util.Objects;
 
