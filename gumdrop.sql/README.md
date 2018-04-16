@@ -35,7 +35,7 @@ class Person extends Entity {
 
 ```
 
-Given a `Person` table with at least these columns
+To hold our `Person` objects, we create a table like this
 
 ```sql
 
@@ -47,7 +47,7 @@ CREATE TABLE person (
 
 ```
 
-we set up an `Inserter`:
+and set up an `Inserter`:
 
 ```java
 
@@ -58,32 +58,32 @@ Inserter<Person> inserter = new Inserter<>("person", columns);
 
 ```
 
-Gumdrop-SQL assumes we have a serial primary key, so in this case, we just have to tell it about our name and age
-columns. Once we have our column collection defined, we just pass it in to the `Inserter` constructor along with the name
-of our table.
+Inserter assumes our table has a serial primary key, so in this case, we just have to tell it about our name and age
+columns. Once we have our column collection defined, we just pass it in to the `Inserter` constructor along with the
+name of the table.
 
-Now that we have our `Inserter`, we can insert a row. We call `insert`, passing in a db connection object and the
-entity we want to persist:
+With an `Inserter` instance (a singleton is fine because Inserter is thread safe) we can insert a row. We call `insert`,
+passing in a db connection object and the entity we want to persist:
 
 ```java
 
 Person person = new Person();
 person.setName("Bilbo Baggins");
 person.setAge(50);
-inserter.insert(connection, person); // once this returns, the insert is done
+inserter.insert(connection, person);
 int id = person.getId();
 
 ```
 
-After insert is performed, our `person` object is populated with the primary key it received from the database. We can
-read the primary key value by calling `getId` defined by the parent `Entity` class.
+After the insert is performed, our `person` object is populated with the primary key it received from the database. We can
+read the primary key value by calling `getId`, defined by the parent `Entity` class.
 
 ### Selecting
 
-To get data out of our database, we use a `Selector`. As with the `Inserter` case, we set up our columns, then give the
-`Selector` constructor those columns along with the name of our table. In this case, however, because we're asking
-the selector to create entity instances for each row, we also have to tell it how to construct `Person` objects, so we
-pass in a constructor reference, `Person::new`.
+To get data out of our database, we use a `Selector`. As with `Inserter`, we set up our columns, then give the
+`Selector` constructor those columns along with the name of our table. However, because `Selector` has to create entity
+instances for each row, we also have to tell it how to construct `Person` objects, so we pass in a constructor
+reference, `Person::new`.
 
 ```java
 
@@ -123,7 +123,8 @@ very different scopes and requirements. The scope of an insert is usually just t
 of a select typically ranges from requiring multiple tables to just a column subset of a single table. Also, we often
 need to perform SQL operations on our columns when we select them. And the scope of an update is also distinct --
 something which may not even lend itself to object relational mapping without a lot of complication. Which of an entity's
-attributes are to be explicitly updated? An `Updater`, therefore is a separate class which doesn't use O/R mapping. And
+attributes are to be explicitly updated? And if we want to update a huge number of values, why should we pre-construct
+entities for each of those rows? An `Updater`, therefore is a separate class which doesn't use O/R mapping. And
 a `Selector` is defined independently so that it may have any combination of selecting from just a few columns,
 selecting from something other than real tables, selecting columns that are the result of SQL operations/functions, or
 selecting from multiple tables via a join.
