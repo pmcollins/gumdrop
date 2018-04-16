@@ -80,11 +80,12 @@ made available via `person.getId()`.
 ### Selecting
 
 To get data out of our database, we use a `Selector`. As with the `Inserter` case, we set up our columns, then give the
-`Selector` constructor those columns along with the name of our table.
+`Selector` constructor those columns along with the name of our table. In this case, however, because we're asking
+the selector to create entity instances for each row, we also have to tell it how to construct `Person` objects. In
+our case, a reference to the constructor, `Person::new`, will do.
 
 ```java
 
-// we also have to define how to create Person objects
 SelectColumns<Person> columns = new SelectColumns<>(Person::new);
 columns.add(new SelectIntegerColumn<>("id", Person::setId));
 columns.add(new SelectStringColumn<>("name", Person::setName));
