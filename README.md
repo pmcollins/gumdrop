@@ -9,12 +9,17 @@ Gumdrop is a web framework under active development, written in Java, with no de
 * [SQL](gumdrop.sql): a thin wrapper around JDBC for ORM-like operations
 * [Test](gumdrop.test): unit tests
 
-Goals:
+### Motivations
+
+* Fun
+* An opportunity to implement concepts presented in Robert Martin's _Clean Architecture_
+* A source for code exercises for a software learning platform I'm working on
+
+### Goals
 
 * Non prescriptive
 * Compile-time dispositive
 * Dependency free
 * "Magic" free
-* Simple
 * [SOLID](https://en.wikipedia.org/wiki/SOLID_(object-oriented_design))
 * Test driven
