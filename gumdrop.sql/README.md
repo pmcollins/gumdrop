@@ -117,13 +117,25 @@ updater.execute(connection);
 
 ### Discussion
 
-Why are selectors, inserters, and updaters set up separately? This because selecting, inserting, and updating often have
-very different scopes and requirements. The scope of an insert is usually just that of a single table, whereas the scope
-of a select typically ranges from requiring multiple tables to just a column subset of a single table. Also, we often
-need to perform SQL operations on our columns when we select them. And the scope of an update is also distinct --
-something which may not even lend itself to object relational mapping without a lot of complication. Which of an entity's
-attributes are to be explicitly updated? And if we want to update a huge number of values, why should we pre-construct
-entities for each of those rows? An `Updater`, therefore is a separate class which doesn't use O/R mapping. And
-a `Selector` is defined independently so that it may have any combination of selecting from just a few columns,
-selecting from something other than real tables, selecting columns that are the result of SQL operations/functions, or
-selecting from multiple tables via a join.
+Why are selectors, inserters, and updaters set up separately? Because selecting, inserting, and updating often have
+very different scopes and requirements.
+
+##### Insert
+
+The scope of an insert is just that of a single table.
+
+##### Select
+
+The scope of a select ranges from requiring multiple tables to just a column subset of a single table. A select also
+often needs to perform SQL operations on its columns. A `Selector`, therefore, may select
+* from just a few columns
+* from something other than real tables
+* columns that are the result of SQL operations/functions
+* multiple tables via a join
+
+##### Update
+
+The scope of an update may not lend itself to object relational mapping (without a lot of complication): given an
+entity, which of its attributes are to be explicitly updated? And if we want to update a huge number of rows, should we
+require pre-constructing entities for each of those rows? Of course not. An `Updater`, therefore is a separate class
+which doesn't use O/R mapping.
