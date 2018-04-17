@@ -1,6 +1,7 @@
 # Gumdrop
 
-Gumdrop is a web framework under active development, written in Java, with no dependencies outside of the JDK.
+Gumdrop is an experimental web framework under active development, written in Java, with no dependencies outside of the
+JDK.
 
 * [Common](gumdrop.common): common classes (builder, http, validation, etc.)
 * [Json](gumdrop.json): a JSON serialization library
@@ -14,12 +15,3 @@ Gumdrop is a web framework under active development, written in Java, with no de
 * Fun
 * An opportunity to implement concepts presented in Robert Martin's _Clean Architecture_
 * A source for code exercises for a software learning platform I'm working on
-
-### Goals
-
-* Non prescriptive
-* Compile-time dispositive
-* Dependency free
-* "Magic" free
-* [SOLID](https://en.wikipedia.org/wiki/SOLID_(object-oriented_design))
-* Test driven
