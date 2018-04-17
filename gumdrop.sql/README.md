@@ -136,6 +136,6 @@ often needs to perform SQL operations on its columns. A `Selector`, therefore, m
 ##### Update
 
 The scope of an update may not lend itself to object relational mapping (without a lot of complication): given an
-entity, which of its attributes are to be explicitly updated? And if we want to update a huge number of rows, should we
-require pre-constructing entities for each of those rows? Of course not. An `Updater`, therefore is a separate class
-which doesn't use O/R mapping.
+entity, which of its attributes are to be explicitly updated? And if we want to update a huge number of rows, we don't
+want to pre-construct the entities we want to update. In Gumdrop, an `Updater`, therefore, is a separate class which
+doesn't use O/R mapping.
