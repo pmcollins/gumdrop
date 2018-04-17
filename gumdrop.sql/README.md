@@ -1,6 +1,6 @@
 # Gumdrop-SQL
 
-A thin wrapper around JDBC for ORM-like operations. Postgres only, for now.
+A thin, thread-safe wrapper around JDBC for ORM-like operations. Postgres only, for now.
 
 ### Inserting
 
@@ -62,8 +62,7 @@ Inserter assumes our table has a serial primary key, so in this case, we just ha
 columns. Once we have our column collection defined, we just pass it in to the `Inserter` constructor along with the
 name of the table.
 
-With an `Inserter` instance (a singleton is fine because Inserter is thread safe) we can insert a row. We call `insert`,
-passing in a db connection object and the entity we want to persist:
+To insert a row, we call `insert`, passing in a db connection object and the entity we want to persist:
 
 ```java
 
