@@ -1,6 +1,6 @@
 # Gumdrop-SQL
 
-A thin wrapper around JDBC for ORM-like operations.
+A thin wrapper around JDBC for ORM-like operations. Postgres only, for now.
 
 ### Inserting
 
