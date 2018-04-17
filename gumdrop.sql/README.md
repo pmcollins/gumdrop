@@ -1,6 +1,6 @@
 # Gumdrop-SQL
 
-A thin, thread-safe wrapper around JDBC for ORM-like operations. Postgres only, for now.
+A thin wrapper around JDBC for ORM-like operations. Postgres only, for now.
 
 ### Inserting
 
@@ -114,6 +114,9 @@ updater.setWhereClause(new IntegerPredicate("id = ?", 1));
 updater.execute(connection);
 
 ```
+
+Unlike `Inserter` and `Selector`, which are thread safe and can be global singletons, an `Updater` is intended to be
+used just once.
 
 ### Discussion
 
