@@ -9,7 +9,7 @@ public class Session<T> {
   private String id;
   private Flash flash;
   private T entity;
-  private final Map<String, String> map = new HashMap<>();
+  private Map<String, String> map = new HashMap<>();
 
   protected Session() {
   }
@@ -54,6 +54,14 @@ public class Session<T> {
 
   public String getString(String key) {
     return map.get(key);
+  }
+
+  public Map<String, String> getMap() {
+    return map;
+  }
+
+  public void setMap(Map<String, String> map) {
+    this.map = map;
   }
 
   @Override
