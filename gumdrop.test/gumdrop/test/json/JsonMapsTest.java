@@ -89,7 +89,7 @@ public class JsonMapsTest extends Test {
   }
 
   private void converter() {
-    JsonMapConverter mapConverter = new JsonMapConverter(HashMap::new);
+    JsonMapConverter mapConverter = new JsonMapConverter();
     Map<String, String> map = mkMap();
     assertEquals(map, mapConverter.fromString(mapConverter.toString(map)));
     JsonConverter<Thing> c = new JsonConverter<>(Thing::new);
