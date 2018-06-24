@@ -35,7 +35,10 @@ public class JsonReader {
   public void readObject() {
     delegate.objectStart();
     it.increment(); // '{'
-    readKVPairs();
+    skipWhiteSpace();
+    if (it.currentChar() != '}') {
+      readKVPairs();
+    }
     it.increment(); // '}'
     delegate.objectEnd();
   }
