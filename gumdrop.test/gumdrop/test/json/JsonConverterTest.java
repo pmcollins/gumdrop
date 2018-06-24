@@ -50,7 +50,6 @@ class JsonConverterTest extends Test {
     name.setLast("Baggins");
     p.setName(name);
     String json = personConverter.toString(p);
-    System.out.println(json);
     Person rebuilt = personConverter.fromString(json);
     Asserts.assertEquals(p, rebuilt);
   }

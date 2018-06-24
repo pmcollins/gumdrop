@@ -24,8 +24,8 @@ class BuilderDelegateTest extends Test {
   }
 
   private void manual() {
-    RoomBuilder creator = new RoomBuilder();
-    BuilderDelegate<Room> delegate = new BuilderDelegate<>(creator);
+    RoomBuilder roomBuilder = new RoomBuilder();
+    BuilderDelegate<Room> delegate = new BuilderDelegate<>(roomBuilder);
     delegate.objectStart();
     delegate.quotedString("name");
     delegate.quotedString("703");

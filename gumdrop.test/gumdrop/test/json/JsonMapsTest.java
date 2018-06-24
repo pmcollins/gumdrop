@@ -55,6 +55,7 @@ public class JsonMapsTest extends Test {
     builder();
     writer();
     converter();
+    nuthing();
   }
 
   private void builder() {
@@ -106,6 +107,12 @@ public class JsonMapsTest extends Test {
     map.put("a", "b");
     map.put("c", "d");
     return map;
+  }
+
+  private void nuthing() {
+    JsonMapConverter c = new JsonMapConverter();
+    Map<String, String> map = c.fromString("{}");
+    System.out.println("map = " + map);
   }
 
 }
