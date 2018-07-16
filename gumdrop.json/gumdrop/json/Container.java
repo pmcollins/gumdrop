@@ -1,6 +1,6 @@
 package gumdrop.json;
 
-class Holder<T> {
+class Container<T> {
 
   private T contents;
 

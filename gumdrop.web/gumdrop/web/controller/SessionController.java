@@ -1,5 +1,6 @@
 package gumdrop.web.controller;
 
+import gumdrop.common.Entity;
 import gumdrop.common.Flash;
 import gumdrop.common.Session;
 import gumdrop.common.SessionService;
@@ -11,7 +12,7 @@ import gumdrop.web.http.HttpResponseHeader;
 import java.util.Optional;
 import java.util.UUID;
 
-public abstract class SessionController<S extends Session<E>, E> implements Controller {
+public abstract class SessionController<S extends Session<E>, E extends Entity> implements Controller {
 
   private final SessionService<S> sessionService;
   private String[] pathArgs;
@@ -68,11 +69,11 @@ public abstract class SessionController<S extends Session<E>, E> implements Cont
     return session;
   }
 
-  protected void sessionPut(String key, String value) {
+  protected void putSessionValue(String key, String value) {
     session.put(key, value);
   }
 
-  protected String sessionGet(String key) {
+  protected String getSessionValue(String key) {
     return session.getString(key);
   }
 
@@ -111,7 +112,20 @@ public abstract class SessionController<S extends Session<E>, E> implements Cont
   @Override
   public final HttpResponse process(Request request) {
     this.request = request;
-    HttpResponseHeader responseHeader = handleSessionCookie(request);
+    String cookieString = request.getCookieString();
+    HttpResponseHeader responseHeader = new HttpResponseHeader();
+    String sessionId = cookieString == null ? createSessionId(responseHeader) : cookieString.substring(2);
+    Optional<S> currentSession = sessionService.getSession(sessionId);
+    if (currentSession.isPresent()) {
+      session = currentSession.get();
+    } else {
+      session = sessionService.createSessionObject(sessionId);
+      sessionService.persistSession(session);
+    }
+    return createResponse(responseHeader);
+  }
+
+  private HttpResponse createResponse(HttpResponseHeader responseHeader) {
     HttpResponse response = new HttpResponse(responseHeader);
     if (isAuthorized()) {
       process(response);
@@ -122,24 +136,12 @@ public abstract class SessionController<S extends Session<E>, E> implements Cont
     }
   }
 
-  private HttpResponseHeader handleSessionCookie(Request request) {
-    String cookieString = request.getCookieString();
-    HttpResponseHeader responseHeader = new HttpResponseHeader();
+  private String createSessionId(HttpResponseHeader responseHeader) {
     String sessionId;
-    if (cookieString == null) {
-      String uuid = UUID.randomUUID().toString();
-      responseHeader.setCookie("s", uuid);
-      sessionId = uuid;
-    } else {
-      sessionId = cookieString.substring(2);
-    }
-    Optional<S> sessionOptional = sessionService.getSession(sessionId);
-    if (sessionOptional.isPresent()) {
-      session = sessionOptional.get();
-    } else {
-      session = sessionService.createSession(sessionId);
-    }
-    return responseHeader;
+    String uuid = UUID.randomUUID().toString();
+    responseHeader.setCookie("s", uuid);
+    sessionId = uuid;
+    return sessionId;
   }
 
 }

@@ -19,4 +19,9 @@ public abstract class Entity {
       '}';
   }
 
+  @Override
+  public Object clone() throws CloneNotSupportedException {
+    return super.clone();
+  }
+
 }

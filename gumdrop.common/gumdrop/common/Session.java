@@ -4,18 +4,28 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Session<T> {
+public class Session<T extends Entity> {
 
   private String id;
   private Flash flash;
   private T entity;
   private Map<String, String> map = new HashMap<>();
 
-  protected Session() {
+  public Session() {
   }
 
-  protected Session(String id) {
+  public Session(String id) {
     this.id = id;
+  }
+
+  @SuppressWarnings("unchecked")
+  public Session(Session<T> other) throws CloneNotSupportedException {
+    id = other.id;
+    if (other.flash != null) {
+      flash = new Flash(other.flash);
+    }
+    entity = (T) other.entity.clone();
+    map = new HashMap<>(other.map);
   }
 
   public boolean isLoggedIn() {
@@ -69,10 +79,11 @@ public class Session<T> {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     Session<?> session = (Session<?>) o;
-    return Objects.equals(id, session.id) &&
-      Objects.equals(flash, session.flash) &&
-      Objects.equals(entity, session.entity) &&
-      Objects.equals(map, session.map);
+    boolean a = Objects.equals(id, session.id);
+    boolean b = Objects.equals(flash, session.flash);
+    boolean c = Objects.equals(entity, session.entity);
+    boolean d = Objects.equals(map, session.map);
+    return a && b && c && d;
   }
 
   @Override

@@ -4,9 +4,9 @@ import java.util.Optional;
 
 public interface SessionService<T extends Session> {
 
-  Optional<T> getSession(String sessionId);
+  T createSessionObject(String sessionId);
 
-  T createSession(String sessionId);
+  Optional<T> getSession(String sessionId);
 
   void persistSession(T session);
 

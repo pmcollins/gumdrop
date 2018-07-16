@@ -20,6 +20,11 @@ public class Flash {
     this.validationFailures = validationFailures;
   }
 
+  public Flash(Flash other) {
+    message = other.message;
+    validationFailures = new ValidationFailures(other.validationFailures);
+  }
+
   public String getMessage() {
     return message;
   }
@@ -28,4 +33,8 @@ public class Flash {
     return validationFailures;
   }
 
+  @Override
+  public boolean equals(Object obj) {
+    return super.equals(obj);
+  }
 }
