@@ -11,6 +11,8 @@ import gumdrop.test.util.Asserts;
 
 import java.util.List;
 
+import static gumdrop.test.util.Asserts.assertNull;
+
 class BuilderDelegateTest extends Test {
 
   public static void main(String[] args) {
@@ -20,7 +22,7 @@ class BuilderDelegateTest extends Test {
   @Override
   public void run() {
     manual();
-//    manualWithNull();
+    manualWithNull();
     json();
   }
 
@@ -70,6 +72,8 @@ class BuilderDelegateTest extends Test {
     delegate.quotedString("people");
     delegate.bareword("null");
     delegate.objectEnd();
+    Room room = delegate.getObject();
+    assertNull(room.getPeople());
   }
 
   private void json() {
