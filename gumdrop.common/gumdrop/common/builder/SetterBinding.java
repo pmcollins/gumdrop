@@ -26,4 +26,8 @@ class SetterBinding<T, U> {
     return builderNode;
   }
 
+  void setNull(T t, String key) {
+    fieldSetter.accept(t, key, null);
+  }
+
 }

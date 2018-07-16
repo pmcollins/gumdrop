@@ -52,11 +52,16 @@ public class Builder<T> {
   }
 
   public void apply(T t, String key, String value) {
-    TriConsumer<T, String> setter = setters.get(key);
-    if (setter != null) {
-      setter.accept(t, key, value);
+    if (value == null) {
+      SetterBinding<T, ?> binding = members.get(key);
+      binding.setNull(t, key);
     } else {
-      setters.get("*").accept(t, key, value);
+      TriConsumer<T, String> setter = setters.get(key);
+      if (setter != null) {
+        setter.accept(t, key, value);
+      } else {
+        setters.get("*").accept(t, key, value);
+      }
     }
   }
 
