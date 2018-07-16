@@ -5,7 +5,19 @@ import java.util.List;
 
 public class ValidationFailures {
 
-  private final List<ValidationFailure> list = new ArrayList<>();
+  private final List<ValidationFailure> list;
+
+  public ValidationFailures() {
+    this(new ArrayList<>());
+  }
+
+  public ValidationFailures(ValidationFailures other) {
+    list = new ArrayList<>(other.list);
+  }
+
+  public ValidationFailures(List<ValidationFailure> list) {
+    this.list = list;
+  }
 
   public void add(ValidationFailure validationFailure) {
     list.add(validationFailure);

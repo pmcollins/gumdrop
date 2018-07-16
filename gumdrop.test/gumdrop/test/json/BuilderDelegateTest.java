@@ -20,6 +20,7 @@ class BuilderDelegateTest extends Test {
   @Override
   public void run() {
     manual();
+//    manualWithNull();
     json();
   }
 
@@ -58,6 +59,17 @@ class BuilderDelegateTest extends Test {
 
     Room room = delegate.getObject();
     checkRoom(room);
+  }
+
+  private void manualWithNull() {
+    RoomBuilder roomBuilder = new RoomBuilder();
+    BuilderDelegate<Room> delegate = new BuilderDelegate<>(roomBuilder);
+    delegate.objectStart();
+    delegate.quotedString("name");
+    delegate.quotedString("703");
+    delegate.quotedString("people");
+    delegate.bareword("null");
+    delegate.objectEnd();
   }
 
   private void json() {

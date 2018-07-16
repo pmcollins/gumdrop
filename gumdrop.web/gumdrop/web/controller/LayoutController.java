@@ -1,5 +1,6 @@
 package gumdrop.web.controller;
 
+import gumdrop.common.Entity;
 import gumdrop.common.Session;
 import gumdrop.common.SessionService;
 import gumdrop.web.html.Buildable;
@@ -13,7 +14,7 @@ import gumdrop.web.http.HttpResponse;
  * @param <L> Layout ViewModel
  * @param <E> Session Entity
  */
-public abstract class LayoutController<S extends Session<E>, M, L, E> extends SessionController<S, E> {
+public abstract class LayoutController<S extends Session<E>, M, L, E extends Entity> extends SessionController<S, E> {
 
   private static final int CAPACITY = 1024 * 128;
 

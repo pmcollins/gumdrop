@@ -50,6 +50,7 @@ public class JsonWriter<T> implements Function<T, String> {
 
   @Override
   public String apply(T t) {
+    if (t == null) return "null";
     StringBuilder sb = new StringBuilder("{");
     int i = 0;
     Iterable<String> keys = keyFunction == null ? getters.keySet() : keyFunction.apply(t);
