@@ -81,6 +81,11 @@ public abstract class SessionController<S extends Session<E>, E extends Entity> 
     sessionService.persistSession(session);
   }
 
+  protected void clearSessionEntity() {
+    session.setEntity(null);
+    sessionService.persistSession(session);
+  }
+
   protected void setFlash(Flash flash) {
     session.setFlash(flash);
   }
