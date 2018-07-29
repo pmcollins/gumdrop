@@ -108,8 +108,8 @@ public class TagLib {
     return tag("footer", children);
   }
 
-  public static Tag footer(String text) {
-    return tag("footer", text(text));
+  public static Tag unsafeFooter(String text) {
+    return tag("footer", new UnsafeText(text));
   }
 
   private static Tag h1(Buildable... children) {
