@@ -7,7 +7,7 @@ import gumdrop.web.controller.PathBuilderIndex;
 public class FakePathBuilderIndex implements PathBuilderIndex {
 
   @Override
-  public PathBuilder get(Class<? extends Controller> klass) {
+  public PathBuilder getPathBuilder(Class<? extends Controller> klass) {
     return new PathBuilder(klass.toString());
   }
 

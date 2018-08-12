@@ -58,7 +58,7 @@ public abstract class SessionController<S extends Session<E>, E extends Entity> 
   }
 
   public PathBuilder getPathBuilder(Class<? extends Controller> controllerClass) {
-    return pathBuilderIndex.get(controllerClass);
+    return pathBuilderIndex.getPathBuilder(controllerClass);
   }
 
   protected PathBuilderIndex getPathBuilderIndex() {
