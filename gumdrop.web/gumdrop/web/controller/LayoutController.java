@@ -4,7 +4,7 @@ import gumdrop.common.Entity;
 import gumdrop.common.Session;
 import gumdrop.common.SessionService;
 import gumdrop.web.html.Buildable;
-import gumdrop.web.html.View;
+import gumdrop.web.html.IView;
 import gumdrop.web.http.HeaderUtil;
 import gumdrop.web.http.HttpResponse;
 
@@ -18,10 +18,10 @@ public abstract class LayoutController<S extends Session<E>, M, L, E extends Ent
 
   private static final int CAPACITY = 1024 * 128;
 
-  private final View<M> view;
+  private final IView<M> view;
   private final WrapperView<L> wrapperView;
 
-  protected LayoutController(SessionService<S> sessionService, View<M> view, WrapperView<L> wrapperView) {
+  protected LayoutController(SessionService<S> sessionService, IView<M> view, WrapperView<L> wrapperView) {
     super(sessionService);
     this.view = view;
     this.wrapperView = wrapperView;
@@ -39,14 +39,14 @@ public abstract class LayoutController<S extends Session<E>, M, L, E extends Ent
   abstract protected M getViewModel();
 
   // we can't put this in a call to super so we set it up this way
-  abstract protected Presenter<L> getLayoutPresenter();
+  abstract protected IPresenter<L> getLayoutPresenter();
 
   private static class BuildableView<M> implements Buildable {
 
-    private final View<M> view;
+    private final IView<M> view;
     private final M viewModel;
 
-    BuildableView(View<M> view, M viewModel) {
+    BuildableView(IView<M> view, M viewModel) {
       this.view = view;
       this.viewModel = viewModel;
     }
