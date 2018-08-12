@@ -1,6 +1,6 @@
 package gumdrop.web.html;
 
-public abstract class SimpleView<T> implements View<T> {
+public abstract class SimpleView<T> implements IView<T> {
 
   protected abstract Buildable getBuildable(T t);
 

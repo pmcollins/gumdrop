@@ -1,6 +1,6 @@
 package gumdrop.web.controller;
 
-public interface Presenter<T> {
+public interface IPresenter<T> {
 
   T populateViewModel();
 
