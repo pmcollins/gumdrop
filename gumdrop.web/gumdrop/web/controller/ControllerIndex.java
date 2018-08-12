@@ -12,7 +12,7 @@ public class ControllerIndex implements PathBuilderIndex {
   }
 
   @Override
-  public PathBuilder get(Class<? extends Controller> klass) {
+  public PathBuilder getPathBuilder(Class<? extends Controller> klass) {
     return map.get(klass);
   }
 

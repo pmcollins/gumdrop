@@ -24,14 +24,12 @@ public class WebFunction implements Function<HttpRequest, byte[]> {
   }
 
   private HttpResponse getHttpResponse(HttpRequest request) {
-    HttpResponse response;
     try {
-      response = dispatcher.processRequest(request);
+      return dispatcher.processRequest(request);
     } catch (Exception e) {
       e.printStackTrace();
-      response = dispatcher.processError(request);
+      return dispatcher.processError(request);
     }
-    return response;
   }
 
   private static byte[] getResponseBytes(HttpResponse response) {

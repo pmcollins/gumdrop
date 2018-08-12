@@ -37,7 +37,6 @@ public class Dispatcher {
 
   private HttpResponse processController(Controller controller, HttpRequest request) {
     controller.setControllerIndex(controllerIndex);
-    System.out.println(controller);
     return controller.process(request);
   }
 
@@ -62,7 +61,7 @@ public class Dispatcher {
   }
 
   public PathBuilder getBuilder(Class<? extends Controller> klass) {
-    return controllerIndex.get(klass);
+    return controllerIndex.getPathBuilder(klass);
   }
 
 }
