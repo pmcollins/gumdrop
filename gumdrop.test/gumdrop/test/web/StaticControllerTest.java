@@ -25,7 +25,7 @@ public class StaticControllerTest extends Test {
 
   private void ok() {
     StaticController staticController = new StaticController("closed/static", Set.of("css"));
-    staticController.setPathArgs(new String[] {"main.css"});
+    staticController.setPathArgs(new String[] {"grid.css"});
     HttpResponse response = staticController.process(new FakeHttpRequest());
     HttpResponseHeader header = response.getHeader();
     String status = header.getStatus();
@@ -34,7 +34,7 @@ public class StaticControllerTest extends Test {
 
   private void invalidExtension() {
     StaticController staticController = new StaticController("closed/static", Set.of("xyz"));
-    staticController.setPathArgs(new String[] {"main.css"});
+    staticController.setPathArgs(new String[] {"grid.css"});
     assertThrows(() -> staticController.process(new FakeHttpRequest()), RuntimeException.class);
   }
 
