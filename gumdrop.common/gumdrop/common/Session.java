@@ -91,4 +91,13 @@ public class Session<T extends Entity> {
     return Objects.hash(id, flash, entity, map);
   }
 
+  @Override
+  public String toString() {
+    return "Session{" +
+      "id='" + id + '\'' +
+      ", flash=" + flash +
+      ", entity=" + entity +
+      ", map=" + map +
+      '}';
+  }
 }

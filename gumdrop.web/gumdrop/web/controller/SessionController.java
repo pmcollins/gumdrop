@@ -9,6 +9,7 @@ import gumdrop.web.http.HeaderUtil;
 import gumdrop.web.http.HttpResponse;
 import gumdrop.web.http.HttpResponseHeader;
 
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -122,11 +123,14 @@ public abstract class SessionController<S extends Session<E>, E extends Entity> 
     String sessionId = cookieString == null ? createSessionId(responseHeader) : cookieString.substring(2);
     Optional<S> currentSession = sessionService.getSession(sessionId);
     if (currentSession.isPresent()) {
+      System.out.println("session exists");
       session = currentSession.get();
     } else {
+      System.out.println("creating new session");
       session = sessionService.createSessionObject(sessionId);
       sessionService.persistSession(session);
     }
+    System.out.println(session);
     return createResponse(responseHeader);
   }
 
@@ -147,6 +151,11 @@ public abstract class SessionController<S extends Session<E>, E extends Entity> 
     responseHeader.setCookie("s", uuid);
     sessionId = uuid;
     return sessionId;
+  }
+
+  @Override
+  public String toString() {
+    return getClass().getSimpleName() + "{pathArgs=" + Arrays.toString(pathArgs) + '}';
   }
 
 }
