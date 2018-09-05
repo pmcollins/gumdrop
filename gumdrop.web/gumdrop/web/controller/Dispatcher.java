@@ -27,7 +27,10 @@ public class Dispatcher {
   }
 
   public HttpResponse processRequest(HttpRequest httpRequest) {
+    System.out.println("\n\n********************************************************************************");
+    System.out.println(httpRequest);
     Controller controller = dispatch(httpRequest);
+    System.out.println(controller);
     return processController(controller, httpRequest);
   }
 

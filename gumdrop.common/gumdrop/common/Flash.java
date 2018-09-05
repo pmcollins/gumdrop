@@ -37,4 +37,13 @@ public class Flash {
   public boolean equals(Object obj) {
     return super.equals(obj);
   }
+
+  @Override
+  public String toString() {
+    return "Flash{" +
+      "message='" + message + '\'' +
+      ", validationFailures=" + validationFailures +
+      '}';
+  }
+
 }
