@@ -76,7 +76,7 @@ public class Selector<T> {
         sql.append(predicate.getSql());
       }
     }
-    System.out.println(sql);
+    System.out.println(">" + sql);
     return sql.toString();
   }
 
