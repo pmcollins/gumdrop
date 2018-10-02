@@ -32,7 +32,7 @@ public abstract class LayoutController<S extends Session<E>, M, L, E extends Ent
     StringBuilder sb = new StringBuilder(CAPACITY);
     L layoutModel = getLayoutPresenter().populateViewModel();
     wrapperView.wrap(sb, layoutModel, new BuildableView<>(view, getViewModel()));
-    HeaderUtil.setHtmlResponseType(response.getHeader(), sb.length());
+    HeaderUtil.setHtmlResponseHeaders(response.getHeader(), sb.length());
     response.setBytes(sb.toString().getBytes());
   }
 

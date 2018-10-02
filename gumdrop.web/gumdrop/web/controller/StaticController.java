@@ -16,6 +16,7 @@ import static gumdrop.common.ExceptionUtil.get;
 public class StaticController implements Controller {
 
   private static final FileSystem FILE_SYSTEM = FileSystems.getDefault();
+  private static final int MAX_AGE_SECONDS = 600;
 
   private final String dir;
   private final Set<String> extensions;
@@ -53,7 +54,9 @@ public class StaticController implements Controller {
     checkExtension();
 
     // TODO expand
-    HeaderUtil.setTextCss(h, bytes.length);
+    HeaderUtil.setTextCssHeaders(h, bytes.length);
+
+    h.putAttr("Cache-Control", "public, max-age=" + MAX_AGE_SECONDS);
 
     HttpResponse response = new HttpResponse(h);
     response.setBytes(bytes);

@@ -140,7 +140,7 @@ public abstract class SessionController<S extends Session<E>, E extends Entity> 
       process(response);
       return response;
     } else {
-      HeaderUtil.setRedirect(responseHeader, unauthorizedPath);
+      HeaderUtil.setRedirectHeaders(responseHeader, unauthorizedPath);
       return response;
     }
   }
