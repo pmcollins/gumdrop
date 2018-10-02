@@ -30,6 +30,8 @@ public class StaticControllerTest extends Test {
     HttpResponseHeader header = response.getHeader();
     String status = header.getStatus();
     assertEquals("200 OK", status);
+    String cacheControl = header.getAttrs().get("Cache-Control");// Cache-Control: public, max-age=31536000
+    assertEquals("public, max-age=60", cacheControl);
   }
 
   private void invalidExtension() {

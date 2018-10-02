@@ -17,7 +17,7 @@ public class MethodDispatcher {
     register(new Route(regexPattern, controllerSupplier));
   }
 
-  public void register(Route route) {
+  private void register(Route route) {
     routes.add(route);
   }
 

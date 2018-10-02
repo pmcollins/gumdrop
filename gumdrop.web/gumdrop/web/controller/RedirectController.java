@@ -28,7 +28,7 @@ public abstract class RedirectController<T extends Session<E>, E extends Entity>
 
   @Override
   protected void process(HttpResponse response) {
-    HeaderUtil.setRedirect(response.getHeader(), getRedirectTarget());
+    HeaderUtil.setRedirectHeaders(response.getHeader(), getRedirectTarget());
   }
 
 }
