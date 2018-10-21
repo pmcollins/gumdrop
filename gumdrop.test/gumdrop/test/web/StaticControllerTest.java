@@ -24,18 +24,19 @@ public class StaticControllerTest extends Test {
   }
 
   private void ok() {
-    StaticController staticController = new StaticController("closed/static", Set.of("css"));
+    int maxAgeSeconds = 600;
+    StaticController staticController = new StaticController("closed/static", Set.of("css"), maxAgeSeconds);
     staticController.setPathArgs(new String[] {"grid.css"});
     HttpResponse response = staticController.process(new FakeHttpRequest());
     HttpResponseHeader header = response.getHeader();
     String status = header.getStatus();
     assertEquals("200 OK", status);
-    String cacheControl = header.getAttrs().get("Cache-Control");// Cache-Control: public, max-age=31536000
-    assertEquals("public, max-age=60", cacheControl);
+    String cacheControl = header.getAttrs().get("Cache-Control"); // Cache-Control: public, max-age=12345
+    assertEquals("public, max-age=" + maxAgeSeconds, cacheControl);
   }
 
   private void invalidExtension() {
-    StaticController staticController = new StaticController("closed/static", Set.of("xyz"));
+    StaticController staticController = new StaticController("closed/static", Set.of("xyz"), 600);
     staticController.setPathArgs(new String[] {"grid.css"});
     assertThrows(() -> staticController.process(new FakeHttpRequest()), RuntimeException.class);
   }
