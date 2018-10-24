@@ -31,14 +31,16 @@ public class HttpFormReaderTest extends Test {
     reader.addSetter("first", UserFormData::setFirst);
     reader.addSetter("last", UserFormData::setLast);
     reader.addSetter("email", UserFormData::setEmail);
+    reader.addBooleanSetter("likesPeaches", UserFormData::setLikesPeaches);
 
-    FormReadResult<UserFormData> result = reader.read("first=fff&last=lll&email=foo%40bar");
+    FormReadResult<UserFormData> result = reader.read("first=fff&last=lll&email=foo%40bar&likesPeaches=true");
 
     UserFormData userFormData = result.getFormObject();
 
     assertEquals("fff", userFormData.getFirst());
     assertEquals("lll", userFormData.getLast());
     assertEquals("foo@bar", userFormData.getEmail());
+    assertTrue(userFormData.likesPeaches());
   }
 
   private void invalid() {
@@ -58,6 +60,7 @@ public class HttpFormReaderTest extends Test {
     private String first;
     private String last;
     private String email;
+    private boolean likesPeaches;
 
     String getFirst() {
       return first;
@@ -81,6 +84,14 @@ public class HttpFormReaderTest extends Test {
 
     void setEmail(String email) {
       this.email = email;
+    }
+
+    boolean likesPeaches() {
+      return likesPeaches;
+    }
+
+    void setLikesPeaches(boolean likesPeaches) {
+      this.likesPeaches = likesPeaches;
     }
 
   }
