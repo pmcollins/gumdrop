@@ -1,5 +1,7 @@
 package gumdrop.sql;
 
+import gumdrop.common.Logger;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,7 +15,7 @@ public class BoundInsertColumns<T> {
     list.add(bc);
   }
 
-  public String getColSql() {
+  String getColSql() {
     StringBuilder cols = new StringBuilder();
     StringBuilder bind = new StringBuilder();
     int i = 0;
@@ -30,8 +32,9 @@ public class BoundInsertColumns<T> {
     return "(" + cols + ") VALUES (" + bind + ")";
   }
 
-  public void prepare(PreparedStatement ps) throws SQLException {
+  void prepare(PreparedStatement ps, Logger logger) throws SQLException {
     for (BoundInsertColumn<T, ?> col : list) {
+      logger.tok(String.valueOf(col.getU()));
       col.prepare(ps);
     }
   }

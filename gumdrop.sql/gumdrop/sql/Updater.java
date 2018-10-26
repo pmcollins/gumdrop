@@ -1,5 +1,8 @@
 package gumdrop.sql;
 
+import gumdrop.common.Logger;
+import gumdrop.common.StdoutLogger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -7,11 +10,17 @@ import java.sql.SQLException;
 public class Updater {
 
   private final String table;
+  private final Logger logger;
   private Predicate<?>[] set;
   private Predicate<?>[] where;
 
   public Updater(String table) {
+    this(table, new StdoutLogger(table + " updater"));
+  }
+
+  public Updater(String table, Logger logger) {
     this.table = table;
+    this.logger = logger;
   }
 
   public void setSetClause(Predicate<?>... set) {
@@ -20,6 +29,27 @@ public class Updater {
 
   public void setWhereClause(Predicate<?>... where) {
     this.where = where;
+  }
+
+  public void execute(Connection connection) throws SQLException {
+    String sql = buildSql();
+    logger.line(sql);
+    PreparedStatement ps = connection.prepareStatement(sql);
+    int i = 1;
+    for (Predicate<?> p : set) {
+      log(p);
+      i = p.bind(ps, i);
+    }
+    for (Predicate<?> p : where) {
+      log(p);
+      i = p.bind(ps, i);
+    }
+    logger.line();
+    ps.executeUpdate();
+  }
+
+  private void log(Predicate<?> p) {
+    logger.tok(String.valueOf(p.getT()));
   }
 
   public String buildSql() {
@@ -35,18 +65,6 @@ public class Updater {
       sb.append(where[i].getSql());
     }
     return sb.toString();
-  }
-
-  public void execute(Connection connection) throws SQLException {
-    PreparedStatement ps = connection.prepareStatement(buildSql());
-    int i = 1;
-    for (Predicate<?> p : set) {
-      i = p.bind(ps, i);
-    }
-    for (Predicate<?> p : where) {
-      i = p.bind(ps, i);
-    }
-    ps.executeUpdate();
   }
 
 }

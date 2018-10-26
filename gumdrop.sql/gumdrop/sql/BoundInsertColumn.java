@@ -30,4 +30,8 @@ public class BoundInsertColumn<T, U> {
     this.idx = idx;
   }
 
+  public U getU() {
+    return u;
+  }
+
 }

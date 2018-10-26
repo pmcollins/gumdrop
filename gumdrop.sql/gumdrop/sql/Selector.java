@@ -1,5 +1,8 @@
 package gumdrop.sql;
 
+import gumdrop.common.Logger;
+import gumdrop.common.StdoutLogger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,10 +15,16 @@ public class Selector<T> {
 
   private final String tableName;
   private final SelectColumns<T> columns;
+  private final Logger logger;
 
   public Selector(String tableName, SelectColumns<T> columns) {
+    this(tableName, columns, new StdoutLogger(tableName + " selector"));
+  }
+
+  public Selector(String tableName, SelectColumns<T> columns, Logger logger) {
     this.tableName = tableName;
     this.columns = columns;
+    this.logger = logger;
   }
 
   public Optional<T> selectFirst(Connection connection, Predicate<?>... predicates) throws SQLException {
@@ -39,11 +48,15 @@ public class Selector<T> {
   }
 
   private ResultSet getResultSet(Connection connection, Predicate<?>[] predicates) throws SQLException {
-    PreparedStatement ps = connection.prepareStatement(getSql(predicates));
+    String sql = getSql(predicates);
+    logger.line(sql);
+    PreparedStatement ps = connection.prepareStatement(sql);
     int i = 1;
     for (Predicate<?> predicate : predicates) {
+      logger.tok("[" + predicate.getT() + "]");
       predicate.bind(ps, i++);
     }
+    logger.line();
     return ps.executeQuery();
   }
 
@@ -76,7 +89,6 @@ public class Selector<T> {
         sql.append(predicate.getSql());
       }
     }
-    System.out.println(">" + sql);
     return sql.toString();
   }
 
