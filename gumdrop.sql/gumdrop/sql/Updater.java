@@ -15,7 +15,7 @@ public class Updater {
   private Predicate<?>[] where;
 
   public Updater(String table) {
-    this(table, new StdoutLogger(table + " updater"));
+    this(table, new StdoutLogger("Updater"));
   }
 
   public Updater(String table, Logger logger) {
@@ -49,7 +49,7 @@ public class Updater {
   }
 
   private void log(Predicate<?> p) {
-    logger.tok(String.valueOf(p.getT()));
+    logger.tok(p.getT());
   }
 
   public String buildSql() {

@@ -34,7 +34,7 @@ public class BoundInsertColumns<T> {
 
   void prepare(PreparedStatement ps, Logger logger) throws SQLException {
     for (BoundInsertColumn<T, ?> col : list) {
-      logger.tok(String.valueOf(col.getU()));
+      logger.tok(col.getU());
       col.prepare(ps);
     }
   }
