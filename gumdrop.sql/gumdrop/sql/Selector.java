@@ -18,7 +18,7 @@ public class Selector<T> {
   private final Logger logger;
 
   public Selector(String tableName, SelectColumns<T> columns) {
-    this(tableName, columns, new StdoutLogger(tableName + " selector"));
+    this(tableName, columns, new StdoutLogger("Selector"));
   }
 
   public Selector(String tableName, SelectColumns<T> columns, Logger logger) {
@@ -53,7 +53,7 @@ public class Selector<T> {
     PreparedStatement ps = connection.prepareStatement(sql);
     int i = 1;
     for (Predicate<?> predicate : predicates) {
-      logger.tok("[" + predicate.getT() + "]");
+      logger.tok(predicate.getT());
       predicate.bind(ps, i++);
     }
     logger.line();

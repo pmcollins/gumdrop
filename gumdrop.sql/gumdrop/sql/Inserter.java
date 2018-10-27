@@ -13,7 +13,7 @@ public class Inserter<T extends Entity> {
   private final Logger logger;
 
   public Inserter(String tableName, InsertColumnCollection<T> columns) {
-    this(tableName, columns, new StdoutLogger(tableName + " inserter"));
+    this(tableName, columns, new StdoutLogger("Inserter"));
   }
 
   public Inserter(String tableName, InsertColumnCollection<T> columns, Logger logger) {

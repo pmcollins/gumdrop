@@ -9,7 +9,7 @@ public class StdoutLogger implements Logger {
   }
 
   @Override
-  public void tok(String tok) {
+  public void tok(Object tok) {
     System.out.print("[" + tok + "]");
   }
 
