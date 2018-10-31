@@ -95,7 +95,7 @@ public class NioServer {
     }
   }
 
-  private void handleWrite(SelectionKey selectionKey) throws IOException {
+  private static void handleWrite(SelectionKey selectionKey) throws IOException {
     RawExchange exchange = (RawExchange) selectionKey.attachment();
     if (exchange == null) {
       throw new IllegalStateException("exchange attachment null for key [" + selectionKey + "]");
