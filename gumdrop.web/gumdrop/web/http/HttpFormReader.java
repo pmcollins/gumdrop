@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 
-public class HttpFormReader<T> implements FormReader<T> {
+public class HttpFormReader<T> implements IFormReader<T> {
 
   private final Builder<T> builder;
   private final QueryValidatorMap validators = new QueryValidatorMap();
@@ -26,12 +26,20 @@ public class HttpFormReader<T> implements FormReader<T> {
     addSetter(e.toString().toLowerCase(), setter, validator);
   }
 
-  public void addBooleanSetter(Enum<?> e, BiConsumer<T, Boolean> setter) {
+  protected void addBooleanSetter(Enum<?> e, BiConsumer<T, Boolean> setter) {
     addBooleanSetter(e.toString().toLowerCase(), setter);
   }
 
   public void addBooleanSetter(String key, BiConsumer<T, Boolean> setter) {
     addSetter(key, (t, s) -> setter.accept(t, Boolean.valueOf(s)));
+  }
+
+  public void addIntSetter(Enum<?> e, BiConsumer<T, Integer> setter) {
+    addIntSetter(e.toString().toLowerCase(), setter);
+  }
+
+  public void addIntSetter(String key, BiConsumer<T, Integer> setter) {
+    addSetter(key, (t, s) -> setter.accept(t, Integer.valueOf(s)));
   }
 
   public void addSetter(String key, BiConsumer<T, String> setter) {
@@ -59,7 +67,7 @@ public class HttpFormReader<T> implements FormReader<T> {
   private Optional<ValidationFailure> parsePair(BuilderNode<T> builderNode, String pair) {
     int idx = pair.indexOf('=');
     String key = HttpStringUtil.unescape(pair.substring(0, idx));
-    String value = HttpStringUtil.unescape(pair.substring(idx + 1, pair.length()));
+    String value = HttpStringUtil.unescape(pair.substring(idx + 1));
     builderNode.applyString(key, value);
     Validator<String> validator = validators.get(key);
     return validator == null ? Optional.empty() : validator.validate(value);
