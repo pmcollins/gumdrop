@@ -54,11 +54,11 @@ public class Tag implements Buildable {
     return this;
   }
 
-  public Tag setClass(String cssClass) {
+  public Tag withClass(String cssClass) {
     return attr("class", cssClass);
   }
 
-  public void setNonAutoClosing() {
+  void setNonAutoClosing() {
     nonAutoClosing = true;
   }
 

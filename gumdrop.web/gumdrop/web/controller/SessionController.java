@@ -20,7 +20,6 @@ public abstract class SessionController<S extends Session<E>, E extends Entity> 
   private PathBuilderIndex pathBuilderIndex;
   private S session;
   private Request request;
-  private String unauthorizedPath;
 
   SessionController(SessionService<S> sessionService) {
     this.sessionService = sessionService;
@@ -111,10 +110,6 @@ public abstract class SessionController<S extends Session<E>, E extends Entity> 
     return Integer.parseInt(getStringArg(i));
   }
 
-  protected <C extends Controller> void setUnauthorizedController(Class<C> klass) {
-    unauthorizedPath = getPathBuilder(klass).build();
-  }
-
   @Override
   public final HttpResponse process(Request request) {
     this.request = request;
@@ -134,18 +129,20 @@ public abstract class SessionController<S extends Session<E>, E extends Entity> 
     return createResponse(responseHeader);
   }
 
+  protected abstract String getUnauthorizedPath();
+
   private HttpResponse createResponse(HttpResponseHeader responseHeader) {
     HttpResponse response = new HttpResponse(responseHeader);
     if (isAuthorized()) {
       process(response);
       return response;
     } else {
-      HeaderUtil.setRedirectHeaders(responseHeader, unauthorizedPath);
+      HeaderUtil.setRedirectHeaders(responseHeader, getUnauthorizedPath());
       return response;
     }
   }
 
-  private String createSessionId(HttpResponseHeader responseHeader) {
+  private static String createSessionId(HttpResponseHeader responseHeader) {
     String sessionId;
     String uuid = UUID.randomUUID().toString();
     responseHeader.setCookie("s", uuid);

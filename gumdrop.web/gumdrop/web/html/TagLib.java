@@ -112,7 +112,7 @@ public class TagLib {
     return tag("footer", new UnsafeText(text));
   }
 
-  private static Tag h1(Buildable... children) {
+  public static Tag h1(Buildable... children) {
     return tag("h1", children);
   }
 

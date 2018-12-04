@@ -6,6 +6,7 @@ import gumdrop.web.controller.PathBuilder;
 import java.util.UUID;
 
 import static gumdrop.test.util.Asserts.assertEquals;
+import static gumdrop.test.util.Asserts.assertThrows;
 
 public class PathBuilderTest extends Test {
 
@@ -23,6 +24,7 @@ public class PathBuilderTest extends Test {
     three();
     wildcard();
     onePlusWildcard();
+    runtimeException();
   }
 
   private void zero() {
@@ -73,6 +75,11 @@ public class PathBuilderTest extends Test {
     String uuid = UUID.randomUUID().toString();
     String path = pathBuilder.build("42", uuid);
     assertEquals("/prompts/42/private/" + uuid, path);
+  }
+
+  private void runtimeException() {
+    PathBuilder pathBuilder = new PathBuilder("/person/#");
+    assertThrows(() -> pathBuilder.build(), RuntimeException.class);
   }
 
 }
