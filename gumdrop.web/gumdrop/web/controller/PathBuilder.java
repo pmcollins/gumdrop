@@ -20,7 +20,11 @@ public class PathBuilder {
       if (parts.length == i+1) break;
       sb.append(parts[i+1]);
     }
-    return sb.toString();
+    String out = sb.toString();
+    if (out.endsWith("/")) {
+      throw new RuntimeException("missing pathbuilder args " + parts);
+    }
+    return out;
   }
 
 }
