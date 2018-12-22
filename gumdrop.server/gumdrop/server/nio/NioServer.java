@@ -82,7 +82,7 @@ public class NioServer {
     int bytesRead = socketChannel.read(bb);
     if (bytesRead == -1) {
       socketChannel.close();
-      System.err.println("premature end of stream reached on socket read");
+      System.err.println("end of stream reached on socket channel read");
     } else {
       bb.flip();
       exchange.addRequestChunk(bb);
@@ -101,6 +101,7 @@ public class NioServer {
       throw new IllegalStateException("exchange attachment null for key [" + selectionKey + "]");
     }
     SocketChannel socketChannel = (SocketChannel) selectionKey.channel();
+    //  TODO throws `java.io.IOException: Broken pipe` on interrupting a large page
     socketChannel.write(exchange.getResponse());
     if (!exchange.hasResponseRemaining()) {
       socketChannel.close();
