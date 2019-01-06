@@ -1,19 +1,14 @@
 package gumdrop.common;
 
+import java.util.concurrent.Callable;
+
 public final class ExceptionUtil {
 
-  private ExceptionUtil() {
-  }
+  private ExceptionUtil() {}
 
   public interface XRunnable {
 
     void run() throws Exception;
-
-  }
-
-  public interface XSupplier<T> {
-
-    T get() throws Exception;
 
   }
 
@@ -25,9 +20,9 @@ public final class ExceptionUtil {
     }
   }
 
-  public static <T> T get(XSupplier<T> XSupplier) {
+  public static <T> T get(Callable<T> callable) {
     try {
-      return XSupplier.get();
+      return callable.call();
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
