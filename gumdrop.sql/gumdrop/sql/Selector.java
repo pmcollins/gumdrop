@@ -13,16 +13,16 @@ import java.util.Optional;
 
 public class Selector<T> {
 
-  private final String selectClause;
+  private final String fromClause;
   private final SelectColumns<T> columns;
   private final Logger logger;
 
-  public Selector(String selectClause, SelectColumns<T> columns) {
-    this(selectClause, columns, new StdoutLogger("Selector"));
+  public Selector(String fromClause, SelectColumns<T> columns) {
+    this(fromClause, columns, new StdoutLogger("Selector"));
   }
 
-  public Selector(String selectClause, SelectColumns<T> columns, Logger logger) {
-    this.selectClause = selectClause;
+  public Selector(String fromClause, SelectColumns<T> columns, Logger logger) {
+    this.fromClause = fromClause;
     this.columns = columns;
     this.logger = logger;
   }
@@ -78,7 +78,7 @@ public class Selector<T> {
       }
       sb.append(column.getName());
     }
-    StringBuilder sql = new StringBuilder("SELECT " + sb + " FROM " + selectClause);
+    StringBuilder sql = new StringBuilder("SELECT " + sb + " FROM " + fromClause);
     if (predicates != null && predicates.length > 0) {
       sql.append(" WHERE ");
       int j = 0;
