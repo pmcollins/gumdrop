@@ -14,43 +14,61 @@ public class HtmlStringUtilTest extends Test {
 
   @Override
   public void run() {
-    parseNumericEntity();
-    parseHexEntity();
     parseString();
+    parseHexEntity();
+    parseNumericEntity();
     parseMultiEntityString();
     parseSpaces();
-
+    nuthing();
+    dolla();
+    end();
     stripTags();
   }
 
-  private void parseNumericEntity() {
+  private static void parseNumericEntity() {
     String entity = "%40";
     String c = HttpStringUtil.parseEntity(entity);
     assertEquals("@", c);
   }
 
-  private void parseHexEntity() {
+  private static void parseHexEntity() {
     String c = HttpStringUtil.parseEntity("%2A");
     assertEquals("*", c);
   }
 
-  private void parseString() {
+  private static void parseString() {
     String s = "foo%40bar";
     String parsed = HttpStringUtil.unescape(s);
     assertEquals("foo@bar", parsed);
   }
 
-  private void parseMultiEntityString() {
+  private static void parseMultiEntityString() {
     String parsed = HttpStringUtil.unescape("aaa%3dbbb%26ccc%3Dddd");
     assertEquals("aaa=bbb&ccc=ddd", parsed);
   }
 
-  private void parseSpaces() {
+  private static void parseSpaces() {
     String unescaped = HttpStringUtil.unescape("aaa+bbb");
     assertEquals("aaa bbb", unescaped);
   }
 
-  private void stripTags() {
+  private static void nuthing() {
+    assertEquals("hello", HttpStringUtil.unescape("hello"));
+  }
+
+  private static void dolla() {
+    String s = "x%24x";
+    String unescaped = HttpStringUtil.unescape(s);
+    System.out.println(unescaped);
+    assertEquals("x$x", unescaped);
+  }
+
+  private static void end() {
+    assertEquals("hello%", HttpStringUtil.unescape("hello%"));
+    assertEquals("hell%o", HttpStringUtil.unescape("hell%o"));
+  }
+
+  private static void stripTags() {
     String replaced = HttpStringUtil.sanitizeHtml("<hello>");
     assertEquals("&lt;hello&gt;", replaced);
     assertNull(HttpStringUtil.sanitizeHtml(null));
