@@ -118,10 +118,8 @@ public abstract class SessionController<S extends Session<E>, E extends Entity> 
     String sessionId = cookieString == null ? createSessionId(responseHeader) : cookieString.substring(2);
     Optional<S> currentSession = sessionService.getSession(sessionId);
     if (currentSession.isPresent()) {
-      System.out.println("session exists");
       session = currentSession.get();
     } else {
-      System.out.println("creating new session");
       session = sessionService.createSessionObject(sessionId);
       sessionService.persistSession(session);
     }

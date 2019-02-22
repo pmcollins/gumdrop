@@ -31,12 +31,12 @@ public abstract class LayoutController<S extends Session<E>, M, L, E extends Ent
   protected void process(HttpResponse response) {
     StringBuilder sb = new StringBuilder(CAPACITY);
     L layoutModel = getLayoutPresenter().populateViewModel();
-    wrapperView.wrap(sb, layoutModel, new BuildableView<>(view, getViewModel()));
+    wrapperView.wrap(sb, layoutModel, new BuildableView<>(view, populateViewModel()), getClass().getSimpleName());
     HeaderUtil.setHtmlResponseHeaders(response.getHeader(), sb.length());
     response.setBytes(sb.toString().getBytes());
   }
 
-  abstract protected M getViewModel();
+  abstract protected M populateViewModel();
 
   // we can't put this in a call to super so we set it up this way
   abstract protected IPresenter<L> getLayoutPresenter();
