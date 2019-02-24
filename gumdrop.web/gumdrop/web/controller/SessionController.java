@@ -98,6 +98,10 @@ public abstract class SessionController<S extends Session<E>, E extends Entity> 
     return session.getEntity();
   }
 
+  protected int getLoggedInId() {
+    return session.getEntity().getId();
+  }
+
   Request getRequest() {
     return request;
   }
