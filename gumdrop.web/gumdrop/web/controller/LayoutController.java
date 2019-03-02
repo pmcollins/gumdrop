@@ -30,15 +30,14 @@ public abstract class LayoutController<S extends Session<E>, M, L, E extends Ent
   @Override
   protected void process(HttpResponse response) {
     StringBuilder sb = new StringBuilder(CAPACITY);
-    L layoutModel = getLayoutPresenter().populateViewModel();
-    wrapperView.wrap(sb, layoutModel, new BuildableView<>(view, populateViewModel()), getClass().getSimpleName());
+    L layoutModel = getLayoutPresenter().run();
+    wrapperView.wrap(sb, layoutModel, new BuildableView<>(view, run()), getClass().getSimpleName());
     HeaderUtil.setHtmlResponseHeaders(response.getHeader(), sb.length());
     response.setBytes(sb.toString().getBytes());
   }
 
-  abstract protected M populateViewModel();
+  abstract protected M run();
 
-  // we can't put this in a call to super so we set it up this way
   abstract protected IPresenter<L> getLayoutPresenter();
 
   private static class BuildableView<M> implements Buildable {
