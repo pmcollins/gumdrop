@@ -8,20 +8,14 @@ import gumdrop.web.html.IView;
 import gumdrop.web.http.HeaderUtil;
 import gumdrop.web.http.HttpResponse;
 
-/**
- * @param <S> Session
- * @param <M> ViewModel
- * @param <L> Layout ViewModel
- * @param <E> Session Entity
- */
-public abstract class LayoutController<S extends Session<E>, M, L, E extends Entity> extends SessionController<S, E> {
+public abstract class LayoutController<SessionT extends Session<EntityT>, ViewModelT, LayoutViewModelT, EntityT extends Entity> extends SessionController<SessionT, EntityT> {
 
   private static final int CAPACITY = 1024 * 128;
 
-  private final IView<M> view;
-  private final WrapperView<L> wrapperView;
+  private final IView<ViewModelT> view;
+  private final WrapperView<LayoutViewModelT> wrapperView;
 
-  protected LayoutController(SessionService<S> sessionService, IView<M> view, WrapperView<L> wrapperView) {
+  protected LayoutController(SessionService<SessionT> sessionService, IView<ViewModelT> view, WrapperView<LayoutViewModelT> wrapperView) {
     super(sessionService);
     this.view = view;
     this.wrapperView = wrapperView;
@@ -30,22 +24,24 @@ public abstract class LayoutController<S extends Session<E>, M, L, E extends Ent
   @Override
   protected void process(HttpResponse response) {
     StringBuilder sb = new StringBuilder(CAPACITY);
-    L layoutModel = getLayoutPresenter().run();
-    wrapperView.wrap(sb, layoutModel, new BuildableView<>(view, run()), getClass().getSimpleName());
+    LayoutViewModelT layoutModel = getLayoutPresenter().run();
+    ViewModelT viewModel = run();
+    BuildableView buildableView = new BuildableView(view, viewModel);
+    wrapperView.wrap(sb, layoutModel, buildableView, getClass().getSimpleName());
     HeaderUtil.setHtmlResponseHeaders(response.getHeader(), sb.length());
     response.setBytes(sb.toString().getBytes());
   }
 
-  abstract protected M run();
+  abstract protected ViewModelT run();
 
-  abstract protected IPresenter<L> getLayoutPresenter();
+  abstract protected IPresenter<LayoutViewModelT> getLayoutPresenter();
 
-  private static class BuildableView<M> implements Buildable {
+  private class BuildableView implements Buildable {
 
-    private final IView<M> view;
-    private final M viewModel;
+    private final IView<ViewModelT> view;
+    private final ViewModelT viewModel;
 
-    BuildableView(IView<M> view, M viewModel) {
+    BuildableView(IView<ViewModelT> view, ViewModelT viewModel) {
       this.view = view;
       this.viewModel = viewModel;
     }
