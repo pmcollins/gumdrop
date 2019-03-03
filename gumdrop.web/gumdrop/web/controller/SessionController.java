@@ -13,15 +13,15 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 
-public abstract class SessionController<S extends Session<E>, E extends Entity> implements Controller {
+public abstract class SessionController<SessionT extends Session<EntityT>, EntityT extends Entity> implements Controller {
 
-  private final SessionService<S> sessionService;
+  private final SessionService<SessionT> sessionService;
   private String[] pathArgs;
   private PathBuilderIndex pathBuilderIndex;
-  private S session;
+  private SessionT session;
   private Request request;
 
-  SessionController(SessionService<S> sessionService) {
+  SessionController(SessionService<SessionT> sessionService) {
     this.sessionService = sessionService;
   }
 
@@ -65,7 +65,7 @@ public abstract class SessionController<S extends Session<E>, E extends Entity> 
     return pathBuilderIndex;
   }
 
-  public final S getSession() {
+  public final SessionT getSession() {
     return session;
   }
 
@@ -94,7 +94,7 @@ public abstract class SessionController<S extends Session<E>, E extends Entity> 
     return session.isLoggedIn();
   }
 
-  protected E getSessionEntity() {
+  protected EntityT getSessionEntity() {
     return session.getEntity();
   }
 
@@ -120,7 +120,7 @@ public abstract class SessionController<S extends Session<E>, E extends Entity> 
     String cookieString = request.getCookieString();
     HttpResponseHeader responseHeader = new HttpResponseHeader();
     String sessionId = cookieString == null ? createSessionId(responseHeader) : cookieString.substring(2);
-    Optional<S> currentSession = sessionService.getSession(sessionId);
+    Optional<SessionT> currentSession = sessionService.getSession(sessionId);
     if (currentSession.isPresent()) {
       session = currentSession.get();
     } else {
