@@ -7,7 +7,7 @@ public class RoomBuilder extends Builder<Room> {
   public RoomBuilder() {
     super(Room::new);
     addSetter("name", Room::setName);
-    addMember("people", Room::setPeople, new FullNamePersonListBuilder());
+    addBuilder("people", Room::setPeople, new FullNamePersonListBuilder());
   }
 
 }

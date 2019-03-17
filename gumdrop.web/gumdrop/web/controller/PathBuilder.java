@@ -1,5 +1,7 @@
 package gumdrop.web.controller;
 
+import java.util.Arrays;
+
 public class PathBuilder {
 
   private final String[] parts;
@@ -22,7 +24,7 @@ public class PathBuilder {
     }
     String out = sb.toString();
     if (out.endsWith("/")) {
-      throw new RuntimeException("missing pathbuilder args " + parts);
+      throw new RuntimeException("missing pathbuilder args " + Arrays.toString(parts));
     }
     return out;
   }
