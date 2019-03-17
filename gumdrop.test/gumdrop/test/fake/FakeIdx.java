@@ -2,9 +2,9 @@ package gumdrop.test.fake;
 
 import gumdrop.web.controller.Controller;
 import gumdrop.web.controller.PathBuilder;
-import gumdrop.web.controller.PathBuilderIndex;
+import gumdrop.web.controller.Idx;
 
-public class FakePathBuilderIndex implements PathBuilderIndex {
+public class FakeIdx implements Idx {
 
   @Override
   public PathBuilder getPathBuilder(Class<? extends Controller> klass) {

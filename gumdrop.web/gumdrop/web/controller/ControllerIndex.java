@@ -3,7 +3,7 @@ package gumdrop.web.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ControllerIndex implements PathBuilderIndex {
+public class ControllerIndex implements Idx {
 
   private final Map<Class<? extends Controller>, PathBuilder> map = new HashMap<>();
 

@@ -36,13 +36,13 @@ class BuilderTests extends Test {
   private void simple() {
     Builder<Y> y3Builder = new Builder<>(Y::new);
     Builder<Y> y2Builder = new Builder<>(Y::new);
-    y2Builder.addMember("y", Y::setY, y3Builder);
+    y2Builder.addBuilder("y", Y::setY, y3Builder);
     Builder<Y> y1Builder = new Builder<>(Y::new);
-    y1Builder.addMember("y", Y::setY, y2Builder);
+    y1Builder.addBuilder("y", Y::setY, y2Builder);
     Builder<Z> zBuilder = new Builder<>(Z::new);
     Builder<X> xBuilder = new Builder<>(X::new);
-    xBuilder.addMember("y", X::setY, y1Builder);
-    xBuilder.addMember("z", X::setZ, zBuilder);
+    xBuilder.addBuilder("y", X::setY, y1Builder);
+    xBuilder.addBuilder("z", X::setZ, zBuilder);
 
     BuilderNode<X> xNode = new BuilderNode<>(xBuilder);
     BuilderNode<?> zNode = xNode.create("z");
@@ -70,7 +70,7 @@ class BuilderTests extends Test {
     nameBuilder.addSetter("first", Name::setFirst);
     nameBuilder.addSetter("last", Name::setLast);
     Builder<List<Name>> listBuilder = new Builder<>(ArrayList::new);
-    listBuilder.addMember("name", List::add, nameBuilder);
+    listBuilder.addBuilder("name", List::add, nameBuilder);
     BuilderNode<List<Name>> listNode = new BuilderNode<>(listBuilder);
     BuilderNode<?> nb1 = listNode.create("name");
     nb1.applyString("first", "foo");
@@ -108,7 +108,7 @@ class BuilderTests extends Test {
     nameBuilder.addSetter("last", Name::setLast);
 
     Builder<Map<String, Name>> mapBuilder = new Builder<>(HashMap::new);
-    mapBuilder.addMapMember("name", Map::put, nameBuilder);
+    mapBuilder.addMapBuilder("name", Map::put, nameBuilder);
 
     BuilderNode<Map<String, Name>> builderNode = new BuilderNode<>(mapBuilder);
 
@@ -128,7 +128,7 @@ class BuilderTests extends Test {
     nameBuilder.addSetter("last", Name::setLast);
 
     Builder<Map<String, Name>> mapBuilder = new Builder<>(HashMap::new);
-    mapBuilder.addMapMember("*", Map::put, nameBuilder);
+    mapBuilder.addMapBuilder("*", Map::put, nameBuilder);
 
     BuilderNode<Map<String, Name>> builderNode = new BuilderNode<>(mapBuilder);
 

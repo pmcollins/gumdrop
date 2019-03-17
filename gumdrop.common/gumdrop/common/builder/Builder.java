@@ -34,12 +34,12 @@ public class Builder<T> {
     setters.put("*", setter);
   }
 
-  public <U> void addMember(String name, BiConsumer<T, U> fieldSetter, Builder<U> subSetters) {
-    members.put(name, new SetterBinding<>(fieldSetter, subSetters));
+  public <U> void addBuilder(String name, BiConsumer<T, U> fieldSetter, Builder<U> subBuilder) {
+    members.put(name, new SetterBinding<>(fieldSetter, subBuilder));
   }
 
-  public <U> void addMapMember(String name, TriConsumer<T, U> fieldSetter, Builder<U> subSetters) {
-    members.put(name, new SetterBinding<>(fieldSetter, subSetters));
+  public <U> void addMapBuilder(String name, TriConsumer<T, U> fieldSetter, Builder<U> subBuilder) {
+    members.put(name, new SetterBinding<>(fieldSetter, subBuilder));
   }
 
   SetterBinding<T, ?> getMember(String name) {

@@ -64,7 +64,7 @@ public class JsonMapsTest extends Test {
 
     JsonBuilder<Thing> thingBuilder = new JsonBuilder<>(Thing::new);
     thingBuilder.addSetter("name", Thing::setName);
-    thingBuilder.addMember("map", Thing::setMap, mapBuilder);
+    thingBuilder.addBuilder("map", Thing::setMap, mapBuilder);
 
     Thing thing = thingBuilder.fromJson("{\"name\" : \"foo\", \"map\" : {\"aaa\" : \"bbb\"}}");
     assertEquals("foo", thing.getName());

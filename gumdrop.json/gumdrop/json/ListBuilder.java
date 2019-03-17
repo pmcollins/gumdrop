@@ -11,7 +11,7 @@ public class ListBuilder<T> extends Builder<List<T>> {
 
   protected ListBuilder(Builder<T> refs) {
     super(ArrayList::new);
-    addMember(ARRAY_ADD_KEY, List::add, refs);
+    addBuilder(ARRAY_ADD_KEY, List::add, refs);
   }
 
 }

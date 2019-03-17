@@ -8,7 +8,7 @@ class ContainerBuilder<T> extends Builder<Container<T>> {
 
   ContainerBuilder(Builder<T> subBuilder) {
     super(Container::new);
-    addMember(CONTAINER_SET_KEY, Container::setContents, subBuilder);
+    addBuilder(CONTAINER_SET_KEY, Container::setContents, subBuilder);
   }
 
 }

@@ -7,7 +7,7 @@ class FullNamePersonBuilder extends Builder<Person> {
   FullNamePersonBuilder() {
     super(Person::new);
     addIntSetter("age", Person::setAge);
-    addMember("name", Person::setName, new NameBuilder());
+    addBuilder("name", Person::setName, new NameBuilder());
   }
 
 }

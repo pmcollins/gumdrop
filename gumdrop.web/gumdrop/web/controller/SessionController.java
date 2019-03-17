@@ -17,7 +17,7 @@ public abstract class SessionController<SessionT extends Session<EntityT>, Entit
 
   private final SessionService<SessionT> sessionService;
   private String[] pathArgs;
-  private PathBuilderIndex pathBuilderIndex;
+  private Idx idx;
   private SessionT session;
   private Request request;
 
@@ -35,7 +35,7 @@ public abstract class SessionController<SessionT extends Session<EntityT>, Entit
 
   @Override
   public void setControllerIndex(ControllerIndex controllerIndex) {
-    setPathBuilderIndex(controllerIndex);
+    setIdx(controllerIndex);
   }
 
   @Override
@@ -53,16 +53,16 @@ public abstract class SessionController<SessionT extends Session<EntityT>, Entit
     this.pathArgs = pathArgs;
   }
 
-  public void setPathBuilderIndex(PathBuilderIndex pathBuilderIndex) {
-    this.pathBuilderIndex = pathBuilderIndex;
+  public void setIdx(Idx idx) {
+    this.idx = idx;
   }
 
   public PathBuilder getPathBuilder(Class<? extends Controller> controllerClass) {
-    return pathBuilderIndex.getPathBuilder(controllerClass);
+    return idx.getPathBuilder(controllerClass);
   }
 
-  protected PathBuilderIndex getPathBuilderIndex() {
-    return pathBuilderIndex;
+  protected Idx idx() {
+    return idx;
   }
 
   public final SessionT getSession() {
