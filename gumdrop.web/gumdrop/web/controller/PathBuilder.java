@@ -23,7 +23,7 @@ public class PathBuilder {
       sb.append(parts[i+1]);
     }
     String out = sb.toString();
-    if (out.endsWith("/")) {
+    if (out.endsWith("/") && !out.equals("/")) {
       throw new RuntimeException("missing pathbuilder args " + Arrays.toString(parts));
     }
     return out;
