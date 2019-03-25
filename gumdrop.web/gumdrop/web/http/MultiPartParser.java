@@ -27,7 +27,7 @@ public class MultiPartParser {
   public static String parseMultipartHeader(String header) {
     // e.g. Content-Type: multipart/form-data; boundary=----WebKitFormBoundarynwAxopXoFg6rtPYX
     int i = header.indexOf('=');
-    return header.substring(i + 1, header.length());
+    return header.substring(i + 1);
   }
 
   private static class KvAccumulator implements Accumulator {

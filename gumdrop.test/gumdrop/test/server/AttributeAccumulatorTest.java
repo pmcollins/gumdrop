@@ -43,7 +43,7 @@ public class AttributeAccumulatorTest extends Test {
     String line = "Host: localhost:8080\r\n";
     int splitPt = 2;
     String head = line.substring(0, splitPt);
-    String tail = line.substring(splitPt, line.length());
+    String tail = line.substring(splitPt);
     ByteIterator it = new ByteIterator(head);
     assertFalse(accumulator.match(it));
     it.append(tail);
@@ -72,7 +72,7 @@ public class AttributeAccumulatorTest extends Test {
 
   private void assertSplitGet(String lines, int splitPt) {
     String head = lines.substring(0, splitPt);
-    String tail = lines.substring(splitPt, lines.length());
+    String tail = lines.substring(splitPt);
     AttributeCollectionAccumulator accumulator = new AttributeCollectionAccumulator();
     ByteIterator it = new ByteIterator(head);
     assertFalse(accumulator.match(it));

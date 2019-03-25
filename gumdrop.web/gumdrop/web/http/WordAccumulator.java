@@ -30,7 +30,7 @@ public class WordAccumulator implements Accumulator {
     return false;
   }
 
-  public byte[] getSubArray() {
+  byte[] getSubArray() {
     return subArray;
   }
 
