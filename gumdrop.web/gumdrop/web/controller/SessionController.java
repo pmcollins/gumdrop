@@ -21,7 +21,7 @@ public abstract class SessionController<SessionT extends Session<EntityT>, Entit
   private SessionT session;
   private Request request;
 
-  SessionController(SessionService<SessionT> sessionService) {
+  protected SessionController(SessionService<SessionT> sessionService) {
     this.sessionService = sessionService;
   }
 
