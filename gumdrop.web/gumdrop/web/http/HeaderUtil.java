@@ -27,7 +27,7 @@ public class HeaderUtil {
     setOkHeaders(responseHeader, contentLength, "text/css");
   }
 
-  private static void setOkHeaders(HttpResponseHeader responseHeader, int contentLength, String type) {
+  public static void setOkHeaders(HttpResponseHeader responseHeader, int contentLength, String type) {
     setHttp11ProtocolHeaders(responseHeader);
     responseHeader.setStatus("200 OK");
     responseHeader.putAttr("Content-Type", type);
