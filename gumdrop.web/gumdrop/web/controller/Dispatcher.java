@@ -21,7 +21,6 @@ public class Dispatcher {
   }
 
   public void register(HttpMethod method, String path, Supplier<Controller> controllerSupplier) {
-    System.out.println(path);
     controllerIndex.put(controllerSupplier.get().getClass(), new PathBuilder(path));
     getMethodDispatcher(method).register(path, controllerSupplier);
   }
