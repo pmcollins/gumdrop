@@ -48,10 +48,14 @@ public class Session<T extends Entity> {
     this.entity = entity;
   }
 
-  public Flash getFlash() {
+  public Flash clearFlash() {
     Flash out = flash;
     flash = null;
     return out;
+  }
+
+  public Flash getFlash() {
+    return flash;
   }
 
   public void setFlash(Flash flash) {
