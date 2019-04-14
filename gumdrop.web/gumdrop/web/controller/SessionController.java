@@ -86,6 +86,12 @@ public abstract class SessionController<SessionT extends Session<EntityT>, Entit
     sessionService.persistSession(session);
   }
 
+  protected void persistFlash(Flash flash) {
+    setFlash(flash);
+    persistSession();
+  }
+
+  @SuppressWarnings("WeakerAccess")
   protected void setFlash(Flash flash) {
     session.setFlash(flash);
   }

@@ -2,10 +2,15 @@ package gumdrop.common;
 
 import gumdrop.common.validation.ValidationFailures;
 
+import java.util.Objects;
+
 public class Flash {
 
-  private final String message;
-  private final ValidationFailures validationFailures;
+  private String message;
+  private ValidationFailures validationFailures;
+
+  public Flash() {
+  }
 
   public Flash(String message) {
     this(message, null);
@@ -25,17 +30,34 @@ public class Flash {
     validationFailures = new ValidationFailures(other.validationFailures);
   }
 
-  public String getMessage() {
-    return message;
-  }
-
   public ValidationFailures getValidationFailures() {
     return validationFailures;
   }
 
+  public void setValidationFailures(ValidationFailures validationFailures) {
+    this.validationFailures = validationFailures;
+  }
+
+  public String getMessage() {
+    return message;
+  }
+
+  public void setMessage(String message) {
+    this.message = message;
+  }
+
   @Override
-  public boolean equals(Object obj) {
-    return super.equals(obj);
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Flash flash = (Flash) o;
+    return Objects.equals(message, flash.message) &&
+      Objects.equals(validationFailures, flash.validationFailures);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(message, validationFailures);
   }
 
   @Override

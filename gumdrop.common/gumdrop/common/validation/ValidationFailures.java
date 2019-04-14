@@ -2,6 +2,7 @@ package gumdrop.common.validation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ValidationFailures {
 
@@ -33,6 +34,19 @@ public class ValidationFailures {
 
   public boolean isEmpty() {
     return list.isEmpty();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    ValidationFailures that = (ValidationFailures) o;
+    return list.equals(that.list);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(list);
   }
 
   @Override
