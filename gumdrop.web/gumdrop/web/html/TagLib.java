@@ -128,7 +128,7 @@ public class TagLib {
     return h2(text(text));
   }
 
-  private static Tag h3(Buildable... children) {
+  public static Tag h3(Buildable... children) {
     return tag("h3", children);
   }
 
