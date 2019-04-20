@@ -51,7 +51,7 @@ public class Asserts {
   }
 
   private static void print() {
-    System.out.print(".");
+    //System.out.print(".");
   }
 
 }

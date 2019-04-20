@@ -99,7 +99,8 @@ public class InterruptibleRequestParser implements RequestParser {
     request.setHeaders(map);
     request.setPost(getPostBytes());
     if (isFormPost(request)) {
-      request.setParameterMap(StringUtil.parseQueryString(request.getPostString()));
+      Map<String, String> parameterMap = StringUtil.parseQueryString(request.getPostString());
+      request.setParameterMap(parameterMap);
     }
     return request;
   }
