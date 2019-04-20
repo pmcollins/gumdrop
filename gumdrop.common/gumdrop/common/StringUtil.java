@@ -35,8 +35,9 @@ public class StringUtil {
       String[] pairs = q.split("&");
       for (String pair : pairs) {
         int idx = pair.indexOf('=');
+        if (idx == -1) continue;
         String key = pair.substring(0, idx);
-        String value = pair.substring(idx + 1, pair.length());
+        String value = pair.substring(idx + 1);
         out.put(key, value);
       }
     }
