@@ -53,10 +53,18 @@ public class StaticController implements Controller {
     Path fullPath = FILE_SYSTEM.getPath(dir, path);
     byte[] bytes = get(() -> Files.readAllBytes(fullPath));
     HttpResponseHeader h = new HttpResponseHeader();
-    checkExtension();
 
-    // TODO expand
-    HeaderUtil.setTextCssHeaders(h, bytes.length);
+    String extension = getExtension();
+    checkExtension(extension);
+
+    switch (extension) {
+      case "css":
+        HeaderUtil.setTextCssHeaders(h, bytes.length);
+        break;
+      case "svg":
+        HeaderUtil.setImageSvgHeaders(h, bytes.length);
+        break;
+    }
 
     h.putAttr("Cache-Control", "public, max-age=" + maxAgeSeconds);
 
@@ -65,12 +73,15 @@ public class StaticController implements Controller {
     return response;
   }
 
-  private void checkExtension() {
-    int idx = path.lastIndexOf('.');
-    String extension = path.substring(idx + 1);
+  private void checkExtension(String extension) {
     if (!extensions.contains(extension)) {
       throw new RuntimeException("Invalid extension for path: [" + path + "]");
     }
+  }
+
+  private String getExtension() {
+    int idx = path.lastIndexOf('.');
+    return path.substring(idx + 1);
   }
 
 }

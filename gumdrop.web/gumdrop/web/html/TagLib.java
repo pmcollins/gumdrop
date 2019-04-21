@@ -244,4 +244,8 @@ public class TagLib {
     return tag("hr");
   }
 
+  public static Tag img() {
+    return tag("img");
+  }
+
 }
