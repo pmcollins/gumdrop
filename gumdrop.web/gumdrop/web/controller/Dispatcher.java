@@ -51,6 +51,7 @@ public class Dispatcher {
   private MethodDispatcher getMethodDispatcher(HttpMethod method) {
     switch (method) {
       case GET:
+      case HEAD:
         return get;
       case POST:
         return post;
