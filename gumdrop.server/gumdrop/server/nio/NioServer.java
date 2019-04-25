@@ -50,9 +50,17 @@ public class NioServer {
         SelectionKey selectionKey = it.next();
         it.remove();
         if (selectionKey.isValid()) {
-          handleSelectionKey(selectionKey);
+          tryHandleSelect(selectionKey);
         }
       }
+    }
+  }
+
+  private void tryHandleSelect(SelectionKey selectionKey) {
+    try {
+      handleSelectionKey(selectionKey);
+    } catch (Exception e) {
+      e.printStackTrace();
     }
   }
 
