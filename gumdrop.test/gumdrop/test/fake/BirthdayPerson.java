@@ -3,7 +3,7 @@ package gumdrop.test.fake;
 import java.time.Instant;
 import java.util.Objects;
 
-public class SimplePerson {
+public class BirthdayPerson {
 
   private String name;
   private int age;
@@ -17,12 +17,22 @@ public class SimplePerson {
     this.name = name;
   }
 
+  public BirthdayPerson withName(String name) {
+    setName(name);
+    return this;
+  }
+
   public int getAge() {
     return age;
   }
 
   public void setAge(int age) {
     this.age = age;
+  }
+
+  public BirthdayPerson withAge(int age) {
+    setAge(age);
+    return this;
   }
 
   public Instant getBirthday() {
@@ -33,11 +43,16 @@ public class SimplePerson {
     this.birthday = birthday;
   }
 
+  public BirthdayPerson withBirthday(Instant birthday) {
+    setBirthday(birthday);
+    return this;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    SimplePerson person = (SimplePerson) o;
+    BirthdayPerson person = (BirthdayPerson) o;
     return age == person.age &&
       Objects.equals(name, person.name) &&
       Objects.equals(birthday, person.birthday);
@@ -50,7 +65,7 @@ public class SimplePerson {
 
   @Override
   public String toString() {
-    return "Person{" +
+    return "BirthdayPerson{" +
       "name='" + name + '\'' +
       ", age=" + age +
       ", birthday=" + birthday +

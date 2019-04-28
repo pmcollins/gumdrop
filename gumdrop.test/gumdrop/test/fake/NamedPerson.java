@@ -2,7 +2,7 @@ package gumdrop.test.fake;
 
 import java.util.Objects;
 
-public class Person {
+public class NamedPerson {
 
   private Name name;
   private int age;
@@ -25,7 +25,7 @@ public class Person {
 
   @Override
   public String toString() {
-    return "ComplexPerson{" +
+    return "NamedPerson{" +
       "name=" + name +
       ", age=" + age +
       '}';
@@ -35,7 +35,7 @@ public class Person {
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    Person that = (Person) o;
+    NamedPerson that = (NamedPerson) o;
     return age == that.age &&
       Objects.equals(name, that.name);
   }

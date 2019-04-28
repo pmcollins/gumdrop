@@ -3,7 +3,7 @@ package gumdrop.test.common;
 import gumdrop.common.builder.Builder;
 import gumdrop.common.builder.BuilderNode;
 import gumdrop.test.fake.RoomBuilder;
-import gumdrop.test.fake.Person;
+import gumdrop.test.fake.NamedPerson;
 import gumdrop.test.fake.Name;
 import gumdrop.test.fake.Room;
 import gumdrop.test.util.Test;
@@ -93,11 +93,11 @@ class BuilderTests extends Test {
     nameNode.applyString("last", "collins");
     Room room = roomNode.getObject();
     assertEquals("702", room.getName());
-    List<Person> people = room.getPeople();
+    List<NamedPerson> people = room.getPeople();
     assertEquals(1, people.size());
-    Person person = people.get(0);
-    assertEquals(42, person.getAge());
-    Name name = person.getName();
+    NamedPerson namedPerson = people.get(0);
+    assertEquals(42, namedPerson.getAge());
+    Name name = namedPerson.getName();
     assertEquals("pablo", name.getFirst());
     assertEquals("collins", name.getLast());
   }

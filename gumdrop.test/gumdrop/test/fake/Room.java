@@ -6,7 +6,7 @@ import java.util.List;
 public class Room {
 
   private String name;
-  private List<Person> people = new ArrayList<>();
+  private List<NamedPerson> people = new ArrayList<>();
 
   public String getName() {
     return name;
@@ -16,11 +16,11 @@ public class Room {
     this.name = name;
   }
 
-  public List<Person> getPeople() {
+  public List<NamedPerson> getPeople() {
     return people;
   }
 
-  public void setPeople(List<Person> people) {
+  public void setPeople(List<NamedPerson> people) {
     this.people = people;
   }
 

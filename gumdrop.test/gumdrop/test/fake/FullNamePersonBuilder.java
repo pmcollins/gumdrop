@@ -2,12 +2,12 @@ package gumdrop.test.fake;
 
 import gumdrop.common.builder.Builder;
 
-class FullNamePersonBuilder extends Builder<Person> {
+class FullNamePersonBuilder extends Builder<NamedPerson> {
 
   FullNamePersonBuilder() {
-    super(Person::new);
-    addIntSetter("age", Person::setAge);
-    addBuilder("name", Person::setName, new NameBuilder());
+    super(NamedPerson::new);
+    addIntSetter("age", NamedPerson::setAge);
+    addBuilder("name", NamedPerson::setName, new NameBuilder());
   }
 
 }

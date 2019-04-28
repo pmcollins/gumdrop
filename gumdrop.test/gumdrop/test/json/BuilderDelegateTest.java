@@ -2,7 +2,7 @@ package gumdrop.test.json;
 
 import gumdrop.json.BuilderDelegate;
 import gumdrop.json.JsonReader;
-import gumdrop.test.fake.Person;
+import gumdrop.test.fake.NamedPerson;
 import gumdrop.test.fake.Name;
 import gumdrop.test.fake.Room;
 import gumdrop.test.fake.RoomBuilder;
@@ -91,14 +91,14 @@ class BuilderDelegateTest extends Test {
 
   private void checkRoom(Room room) {
     Asserts.assertEquals("703", room.getName());
-    List<Person> people = room.getPeople();
+    List<NamedPerson> people = room.getPeople();
     Asserts.assertEquals(2, people.size());
 
-    Person p1 = people.get(0);
+    NamedPerson p1 = people.get(0);
     Asserts.assertEquals(42, p1.getAge());
     Asserts.assertEquals(new Name("foo", "bar"), p1.getName());
 
-    Person p2 = people.get(1);
+    NamedPerson p2 = people.get(1);
     Asserts.assertEquals(110, p2.getAge());
     Asserts.assertEquals(new Name("bilbo", "baggins"), p2.getName());
   }
