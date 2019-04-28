@@ -70,7 +70,7 @@ public class HttpFormReader<T> implements IFormReader<T> {
     String value = HttpStringUtil.unescape(pair.substring(idx + 1));
     builderNode.applyString(key, value);
     Validator<String> validator = validators.get(key);
-    return validator == null ? Optional.empty() : validator.validate(value);
+    return validator == null ? Optional.empty() : validator.validate(key, value);
   }
 
 }

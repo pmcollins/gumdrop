@@ -80,7 +80,7 @@ public class JsonMapsTest extends Test {
 
     JsonWriter<Thing> thingWriter = new JsonWriter<>();
     thingWriter.addStringGetter("name", Thing::getName);
-    thingWriter.addMember("map", Thing::getMap, mapWriter);
+    thingWriter.addSubWriter("map", Thing::getMap, mapWriter);
 
     Thing thing = new Thing();
     thing.setName("bilbo");

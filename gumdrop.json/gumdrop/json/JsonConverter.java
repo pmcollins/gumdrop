@@ -38,7 +38,7 @@ public class JsonConverter<T> implements StringConverter<T> {
 
   public <U> void addSubConverter(String name, Function<T, U> fieldGetter, BiConsumer<T, U> fieldSetter, JsonConverter<U> jsonConverter) {
     builder.addBuilder(name, fieldSetter, jsonConverter.builder);
-    jsonWriter.addMember(name, fieldGetter, jsonConverter.jsonWriter);
+    jsonWriter.addSubWriter(name, fieldGetter, jsonConverter.jsonWriter);
   }
 
   public void addMapFunctions(

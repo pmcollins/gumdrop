@@ -13,8 +13,8 @@ public class Validator<T> {
     this.message = message;
   }
 
-  public Optional<ValidationFailure> validate(T value) {
-    return fcn.apply(value) ? Optional.empty() : Optional.of(new ValidationFailure(message, String.valueOf(value)));
+  public Optional<ValidationFailure> validate(String key, T value) {
+    return fcn.apply(value) ? Optional.empty() : Optional.of(new ValidationFailure(key, String.valueOf(value), message));
   }
 
 }

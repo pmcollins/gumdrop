@@ -1,6 +1,7 @@
 package gumdrop.common.validation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,6 +19,10 @@ public class ValidationFailures {
 
   public ValidationFailures(List<ValidationFailure> list) {
     this.list = list;
+  }
+
+  public ValidationFailures(ValidationFailure... validationFailures) {
+    this(Arrays.asList(validationFailures));
   }
 
   public void add(ValidationFailure validationFailure) {

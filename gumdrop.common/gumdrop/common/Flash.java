@@ -20,7 +20,7 @@ public class Flash {
     this(null, validationFailures);
   }
 
-  private Flash(String message, ValidationFailures validationFailures) {
+  public Flash(String message, ValidationFailures validationFailures) {
     this.message = message;
     this.validationFailures = validationFailures;
   }
@@ -34,8 +34,8 @@ public class Flash {
     return validationFailures;
   }
 
-  public void setValidationFailures(ValidationFailures validationFailures) {
-    this.validationFailures = validationFailures;
+  public boolean hasValidationFailures() {
+    return validationFailures != null && !validationFailures.isEmpty();
   }
 
   public String getMessage() {
