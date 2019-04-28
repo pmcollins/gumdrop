@@ -4,19 +4,26 @@ import java.util.Objects;
 
 public class ValidationFailure {
 
-  private final String message, value;
+  private final String key;
+  private final String value;
+  private final String message;
 
-  ValidationFailure(String message, String value) {
-    this.message = message;
+  public ValidationFailure(String key, String value, String message) {
+    this.key = key;
     this.value = value;
+    this.message = message;
   }
 
-  public String getMessage() {
-    return message;
+  public String getKey() {
+    return key;
   }
 
   public String getValue() {
     return value;
+  }
+
+  public String getMessage() {
+    return message;
   }
 
   @Override
@@ -36,8 +43,9 @@ public class ValidationFailure {
   @Override
   public String toString() {
     return "ValidationFailure{" +
-      "message='" + message + '\'' +
+      "key='" + key + '\'' +
       ", value='" + value + '\'' +
+      ", message='" + message + '\'' +
       '}';
   }
 

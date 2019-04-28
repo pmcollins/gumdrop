@@ -23,7 +23,7 @@ public class JsonWriter<T> implements Function<T, String> {
     addBarewordGetter(name, t -> '"' + getter.apply(t) + '"');
   }
 
-  public <U> void addMember(String name, Function<T, U> fieldGetter, JsonWriter<U> subJsonWriter) {
+  public <U> void addSubWriter(String name, Function<T, U> fieldGetter, JsonWriter<U> subJsonWriter) {
     getters.put(name, new GetterBinding<>(fieldGetter, subJsonWriter));
   }
 
@@ -67,4 +67,5 @@ public class JsonWriter<T> implements Function<T, String> {
     sb.append('}');
     return sb.toString();
   }
+
 }
