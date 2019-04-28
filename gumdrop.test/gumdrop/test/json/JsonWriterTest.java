@@ -2,8 +2,8 @@ package gumdrop.test.json;
 
 import gumdrop.json.JsonWriter;
 import gumdrop.test.fake.Name;
-import gumdrop.test.fake.Person;
-import gumdrop.test.fake.SimplePerson;
+import gumdrop.test.fake.NamedPerson;
+import gumdrop.test.fake.BirthdayPerson;
 import gumdrop.test.util.Test;
 
 import java.time.Instant;
@@ -14,8 +14,8 @@ import static gumdrop.test.util.Asserts.assertEquals;
 
 class JsonWriterTest extends Test {
 
-  private final JsonWriter<Person> complexPersonJsonJsonWriter;
-  private final JsonWriter<SimplePerson> simplePersonJsonWriter;
+  private final JsonWriter<NamedPerson> complexPersonJsonJsonWriter;
+  private final JsonWriter<BirthdayPerson> simplePersonJsonWriter;
 
   public static void main(String[] args) {
     new JsonWriterTest().run();
@@ -26,14 +26,14 @@ class JsonWriterTest extends Test {
     complexPersonJsonJsonWriter = setupComplexPerson();
   }
 
-  private static JsonWriter<Person> setupComplexPerson() {
-    JsonWriter<Person> personJsonWriter;
+  private static JsonWriter<NamedPerson> setupComplexPerson() {
+    JsonWriter<NamedPerson> personJsonWriter;
     JsonWriter<Name> nameJsonWriter = new JsonWriter<>();
     nameJsonWriter.addStringGetter("first", Name::getFirst);
     nameJsonWriter.addStringGetter("last", Name::getLast);
     personJsonWriter = new JsonWriter<>();
-    personJsonWriter.addNumericGetter("age", Person::getAge);
-    personJsonWriter.addSubWriter("name", Person::getName, nameJsonWriter);
+    personJsonWriter.addNumericGetter("age", NamedPerson::getAge);
+    personJsonWriter.addSubWriter("name", NamedPerson::getName, nameJsonWriter);
     return personJsonWriter;
   }
 
@@ -46,7 +46,7 @@ class JsonWriterTest extends Test {
   }
 
   private void personToJson() {
-    SimplePerson person = new SimplePerson();
+    BirthdayPerson person = new BirthdayPerson();
     person.setName("bobo");
     person.setAge(25);
     person.setBirthday(Instant.ofEpochMilli(700_000_000_000L));
@@ -57,13 +57,13 @@ class JsonWriterTest extends Test {
   }
 
   private void complexPersonToJson() {
-    Person complexPerson = new Person();
-    complexPerson.setAge(42);
+    NamedPerson complexNamedPerson = new NamedPerson();
+    complexNamedPerson.setAge(42);
     Name name = new Name();
     name.setFirst("lile");
     name.setLast("collinson");
-    complexPerson.setName(name);
-    String json = complexPersonJsonJsonWriter.apply(complexPerson);
+    complexNamedPerson.setName(name);
+    String json = complexPersonJsonJsonWriter.apply(complexNamedPerson);
     assertEquals("{\"age\":42,\"name\":{\"first\":\"lile\",\"last\":\"collinson\"}}", json);
   }
 
