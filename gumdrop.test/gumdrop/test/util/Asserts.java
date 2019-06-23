@@ -1,5 +1,8 @@
 package gumdrop.test.util;
 
+import java.util.List;
+import java.util.Objects;
+
 public class Asserts {
 
   public static void assertNotNull(Object o) {
@@ -34,6 +37,21 @@ public class Asserts {
     print();
     if (!expected.equals(actual)) {
       throw new FailedTestException("assertEquals expected [" + expected + "], got [" + actual + "]");
+    }
+  }
+
+  public static <T> void assertListEquals(List<T> l1, List<T> l2) {
+    int s1 = l1.size();
+    int s2 = l2.size();
+    if (s1 != s2) {
+      throw new FailedTestException("list lengths not equal: [" + s1 + "] vs [" + s2 + "]");
+    }
+    for (int i = 0; i < s1; i++) {
+      T t1 = l1.get(i);
+      T t2 = l2.get(i);
+      if (!Objects.equals(t1, t2)) {
+        throw new FailedTestException("items not equal: [" + t1 + "] vs [" + t2 + "]");
+      }
     }
   }
 
