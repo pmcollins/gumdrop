@@ -1,6 +1,6 @@
 package gumdrop.test.fake;
 
-import gumdrop.json.JsonDelegate;
+import gumdrop.json.v1.JsonDelegate;
 
 import java.util.ArrayList;
 import java.util.List;

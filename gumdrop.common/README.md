@@ -7,7 +7,7 @@ Creates Java objects from strings without using reflection or annotations. Used 
 
 ##### Basic Builder
 
-The [Builder](gumdrop/common/builder/Builder.java) class is very simple: it binds strings to setters and uses those
+The [Builder](gumdrop/common/builder/v1/v1/Builder.java) class is very simple: it binds strings to setters and uses those
 bindings to populate instances.
 
 Consider a `Name` class:
@@ -84,7 +84,7 @@ safety (and as a side-benefit, excellent performance), and `Builder` creates and
 ##### Building an Object Graph
 
 When building objects (for example from JSON), we often don't just build simple objects, but rather trees or graphs of
-nested objects. To handle object graphs, Gumdrop provides [BuilderNode](gumdrop/common/builder/BuilderNode.java).
+nested objects. To handle object graphs, Gumdrop provides [BuilderNode](gumdrop/common/builder/v1/v1/BuilderNode.java).
 
 Let's look at an example where we populate a `List` of `Name` objects:
 

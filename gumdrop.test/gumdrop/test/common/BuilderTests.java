@@ -1,7 +1,7 @@
 package gumdrop.test.common;
 
-import gumdrop.common.builder.Builder;
-import gumdrop.common.builder.BuilderNode;
+import gumdrop.common.builder.v1.Builder;
+import gumdrop.common.builder.v1.BuilderNode;
 import gumdrop.test.fake.RoomBuilder;
 import gumdrop.test.fake.NamedPerson;
 import gumdrop.test.fake.Name;
