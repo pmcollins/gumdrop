@@ -1,6 +1,6 @@
 package gumdrop.test.fake;
 
-import gumdrop.json.StringConverter;
+import gumdrop.json.v1.StringConverter;
 
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;

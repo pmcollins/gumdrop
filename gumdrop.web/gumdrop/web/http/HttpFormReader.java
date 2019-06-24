@@ -1,7 +1,7 @@
 package gumdrop.web.http;
 
-import gumdrop.common.builder.Builder;
-import gumdrop.common.builder.BuilderNode;
+import gumdrop.common.builder.v1.Builder;
+import gumdrop.common.builder.v1.BuilderNode;
 import gumdrop.common.validation.ValidationFailure;
 import gumdrop.common.validation.Validator;
 

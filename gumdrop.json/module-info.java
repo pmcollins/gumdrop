@@ -1,5 +1,5 @@
 module gumdrop.json {
   requires gumdrop.common;
-  exports gumdrop.json;
-  exports gumdrop.json2;
+  exports gumdrop.json.v1;
+  exports gumdrop.json.v2;
 }
