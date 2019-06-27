@@ -1,13 +1,13 @@
 package gumdrop.test.json.v2;
 
-import gumdrop.json.v2.UniCreatorNode;
+import gumdrop.json.v2.UniNode;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class ListOfIntUniCreatorNode extends UniCreatorNode<List<Integer>> {
+class ListOfIntUniNode extends UniNode<List<Integer>> {
 
-  ListOfIntUniCreatorNode() {
+  ListOfIntUniNode() {
     super(
       new ArrayList<>(),
       (list, s) -> list.add(Integer.valueOf(s))

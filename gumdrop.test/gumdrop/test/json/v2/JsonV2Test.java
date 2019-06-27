@@ -1,6 +1,6 @@
 package gumdrop.test.json.v2;
 
-import gumdrop.json.v2.CreatorNode;
+import gumdrop.json.v2.Node;
 import gumdrop.json.v2.JsonDelegate;
 import gumdrop.json.v2.JsonParser;
 import gumdrop.json.v2.StandardJsonDelegate;
@@ -45,7 +45,7 @@ public class JsonV2Test extends Test {
   }
 
   private static void intArray() {
-    ListOfIntUniCreatorNode creator = new ListOfIntUniCreatorNode();
+    ListOfIntUniNode creator = new ListOfIntUniNode();
     creator.next().accept("1");
     creator.next().accept("2");
 
@@ -53,20 +53,23 @@ public class JsonV2Test extends Test {
   }
 
   private static void intArrayDelegate() {
-    ListOfIntUniCreatorNode creator = new ListOfIntUniCreatorNode();
+    ListOfIntUniNode creator = new ListOfIntUniNode();
     JsonDelegate d = new StandardJsonDelegate(creator);
     d.push();
+
     d.push();
     d.pop("1");
+
     d.push();
     d.pop("2");
+
     d.pop();
 
     assertIntArray(creator.get());
   }
 
   private static void intArrayParser() {
-    ListOfIntUniCreatorNode creator = new ListOfIntUniCreatorNode();
+    ListOfIntUniNode creator = new ListOfIntUniNode();
     JsonDelegate d = new StandardJsonDelegate(creator);
     JsonParser p = new JsonParser("[1,2]", d);
     p.readValue();
@@ -75,7 +78,7 @@ public class JsonV2Test extends Test {
   }
 
   private static void stringArray() {
-    StringListUniCreatorNode creator = new StringListUniCreatorNode();
+    StringListUniNode creator = new StringListUniNode();
     creator.next().accept("a");
 
     List<String> list = creator.get();
@@ -83,7 +86,7 @@ public class JsonV2Test extends Test {
   }
 
   private static void stringStringMap() {
-    StringMapKeyedCreatorNode creator = new StringMapKeyedCreatorNode();
+    StringMapKeyedNode creator = new StringMapKeyedNode();
     creator.next("key").accept("value");
     creator.next("key2").accept("value2");
 
@@ -91,7 +94,7 @@ public class JsonV2Test extends Test {
   }
 
   private static void stringStringMapDelegate() {
-    StringMapKeyedCreatorNode creator = new StringMapKeyedCreatorNode();
+    StringMapKeyedNode creator = new StringMapKeyedNode();
     JsonDelegate d = new StandardJsonDelegate(creator);
     d.push();
 
@@ -106,16 +109,15 @@ public class JsonV2Test extends Test {
   }
 
   private static void stringStringMapParser() {
-    StringMapKeyedCreatorNode creator = new StringMapKeyedCreatorNode();
+    StringMapKeyedNode creator = new StringMapKeyedNode();
     JsonDelegate d = new StandardJsonDelegate(creator);
     JsonParser p = new JsonParser("{\"key\":\"value\",\"key2\",\"value2\"}", d);
     p.readValue();
-    Map<String, String> stringStringMap = creator.get();
     assertStringStringMap(creator);
   }
 
   private static void arrayOfMaps() {
-    ListOfMapsCreatorNode creator = new ListOfMapsCreatorNode();
+    ListOfMapsNode creator = new ListOfMapsNode();
     creator.next().next("foo").accept("bar");
     creator.next().next("baz").accept("glarch");
 
@@ -123,7 +125,7 @@ public class JsonV2Test extends Test {
   }
 
   private static void arrayOfMapsDelegate() {
-    ListOfMapsCreatorNode creator = new ListOfMapsCreatorNode();
+    ListOfMapsNode creator = new ListOfMapsNode();
     JsonDelegate d = new StandardJsonDelegate(creator);
     d.push();
 
@@ -143,12 +145,12 @@ public class JsonV2Test extends Test {
   }
 
   private static void mapOfArrays() {
-    MapOfArraysCreatorNode creator = new MapOfArraysCreatorNode();
-    CreatorNode foo = creator.next("foo");
+    MapOfArraysNode creator = new MapOfArraysNode();
+    Node foo = creator.next("foo");
     foo.next().accept("aaa");
     foo.next().accept("bbb");
 
-    CreatorNode bar = creator.next("bar");
+    Node bar = creator.next("bar");
     bar.next().accept("ccc");
     bar.next().accept("ddd");
 
@@ -156,7 +158,7 @@ public class JsonV2Test extends Test {
   }
 
   private static void mapOfArraysDelegate() {
-    MapOfArraysCreatorNode creator = new MapOfArraysCreatorNode();
+    MapOfArraysNode creator = new MapOfArraysNode();
     JsonDelegate d = new StandardJsonDelegate(creator);
 
     d.push();
@@ -181,12 +183,12 @@ public class JsonV2Test extends Test {
   }
 
   private static void arrayOfPeople() {
-    ListOfPersonCreatorNode listCreatorNode = new ListOfPersonCreatorNode();
-    CreatorNode bilboNode = listCreatorNode.next();
+    ListOfPersonNode listCreatorNode = new ListOfPersonNode();
+    Node bilboNode = listCreatorNode.next();
     bilboNode.next("first").accept("bilbo");
     bilboNode.next("last").accept("baggins");
 
-    CreatorNode gandalfNode = listCreatorNode.next();
+    Node gandalfNode = listCreatorNode.next();
     gandalfNode.next("first").accept("gandalf");
     gandalfNode.next("last").accept("the grey");
 
@@ -194,7 +196,7 @@ public class JsonV2Test extends Test {
   }
 
   private static void arrayOfPeopleDelegate() {
-    ListOfPersonCreatorNode creator = new ListOfPersonCreatorNode();
+    ListOfPersonNode creator = new ListOfPersonNode();
     JsonDelegate d = new StandardJsonDelegate(creator);
 
     d.push();
@@ -219,12 +221,12 @@ public class JsonV2Test extends Test {
   }
 
   private static void room() {
-    RoomCreatorNode creator = new RoomCreatorNode();
-    CreatorNode pabloCreator = creator.next();
+    RoomNode creator = new RoomNode();
+    Node pabloCreator = creator.next();
     pabloCreator.next("first").accept("pablo");
     pabloCreator.next("last").accept("collins");
 
-    CreatorNode zoeyCreator = creator.next();
+    Node zoeyCreator = creator.next();
     zoeyCreator.next("first").accept("zoey");
     zoeyCreator.next("last").accept("rose");
 
@@ -232,7 +234,7 @@ public class JsonV2Test extends Test {
   }
 
   private static void roomDelegate() {
-    RoomCreatorNode creator = new RoomCreatorNode();
+    RoomNode creator = new RoomNode();
     JsonDelegate d = new StandardJsonDelegate(creator);
 
     d.push();
@@ -256,17 +258,17 @@ public class JsonV2Test extends Test {
   }
 
   private static void arrayOfRooms() {
-    ListOfRoomsCreatorNode creator = new ListOfRoomsCreatorNode();
-    CreatorNode room1Creator = creator.next();
-    CreatorNode person1Creator = room1Creator.next();
+    ListOfRoomsNode creator = new ListOfRoomsNode();
+    Node room1Creator = creator.next();
+    Node person1Creator = room1Creator.next();
     person1Creator.next("first").accept("f1");
     person1Creator.next("last").accept("l1");
-    CreatorNode person2Creator = room1Creator.next();
+    Node person2Creator = room1Creator.next();
     person2Creator.next("first").accept("f2");
     person2Creator.next("last").accept("l2");
 
-    CreatorNode room2Creator = creator.next();
-    CreatorNode person3Creator = room2Creator.next();
+    Node room2Creator = creator.next();
+    Node person3Creator = room2Creator.next();
     person3Creator.next("first").accept("f3");
     person3Creator.next("last").accept("l3");
 
@@ -274,7 +276,7 @@ public class JsonV2Test extends Test {
   }
 
   private static void arrayOfRoomsDelegate() {
-    ListOfRoomsCreatorNode creator = new ListOfRoomsCreatorNode();
+    ListOfRoomsNode creator = new ListOfRoomsNode();
     JsonDelegate d = new StandardJsonDelegate(creator);
 
     d.push();
@@ -310,14 +312,14 @@ public class JsonV2Test extends Test {
 
   /*______*/
 
-  private static void assertArrayOfMaps(ListOfMapsCreatorNode creator) {
+  private static void assertArrayOfMaps(ListOfMapsNode creator) {
     List<Map<String, String>> list = creator.get();
     Asserts.assertEquals(2, list.size());
     Asserts.assertEquals("bar", list.get(0).get("foo"));
     Asserts.assertEquals("glarch", list.get(1).get("baz"));
   }
 
-  private static void assertMapOfArrays(MapOfArraysCreatorNode creator) {
+  private static void assertMapOfArrays(MapOfArraysNode creator) {
     Map<String, List<String>> map = creator.get();
     List<String> fooList = map.get("foo");
     Asserts.assertEquals("aaa", fooList.get(0));
@@ -332,13 +334,13 @@ public class JsonV2Test extends Test {
     Asserts.assertListEquals(List.of(1, 2), list);
   }
 
-  private static void assertStringStringMap(StringMapKeyedCreatorNode creator) {
+  private static void assertStringStringMap(StringMapKeyedNode creator) {
     Map<String, String> map = creator.get();
     Asserts.assertEquals("value", map.get("key"));
     Asserts.assertEquals("value2", map.get("key2"));
   }
 
-  private static void assertArrayOfPeople(ListOfPersonCreatorNode creator) {
+  private static void assertArrayOfPeople(ListOfPersonNode creator) {
     List<Person> list = creator.get();
     Asserts.assertEquals(2, list.size());
     Person bilbo = list.get(0);
@@ -349,7 +351,7 @@ public class JsonV2Test extends Test {
     Asserts.assertEquals("the grey", gandalf.getLast());
   }
 
-  private static void assertRoom(RoomCreatorNode creator) {
+  private static void assertRoom(RoomNode creator) {
     Room room = creator.get();
     List<Person> people = room.getPeople();
     Asserts.assertEquals(2, people.size());
@@ -361,7 +363,7 @@ public class JsonV2Test extends Test {
     Asserts.assertEquals("rose", zoey.getLast());
   }
 
-  private static void assertArrayOfRooms(ListOfRoomsCreatorNode creator) {
+  private static void assertArrayOfRooms(ListOfRoomsNode creator) {
     List<Room> rooms = creator.get();
     Asserts.assertEquals(2, rooms.size());
     Room room1 = rooms.get(0);

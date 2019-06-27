@@ -1,10 +1,10 @@
 package gumdrop.test.json.v2;
 
-import gumdrop.json.v2.PojoCreatorNode;
+import gumdrop.json.v2.PojoNode;
 
-class PersonCreatorNode extends PojoCreatorNode<Person> {
+class PersonNode extends PojoNode<Person> {
 
-  PersonCreatorNode() {
+  PersonNode() {
     super(new Person(), key -> {
       if ("first".equals(key)) {
         return Person::setFirst;
