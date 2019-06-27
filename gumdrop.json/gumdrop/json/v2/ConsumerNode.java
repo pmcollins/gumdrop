@@ -2,7 +2,7 @@ package gumdrop.json.v2;
 
 import java.util.function.BiConsumer;
 
-class ConsumerNode<T> extends AbstractCreatorNode {
+class ConsumerNode<T> extends AbstractNode {
 
   private final T t;
   private final BiConsumer<T, String> biConsumer;

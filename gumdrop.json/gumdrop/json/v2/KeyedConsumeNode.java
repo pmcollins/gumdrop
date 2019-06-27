@@ -1,6 +1,6 @@
 package gumdrop.json.v2;
 
-public class KeyedConsumeNode<T> extends AbstractCreatorNode {
+public class KeyedConsumeNode<T> extends AbstractNode {
 
   private final T t;
   private final String key;

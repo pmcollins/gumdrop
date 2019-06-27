@@ -1,14 +1,14 @@
 package gumdrop.json.v2;
 
-public class AbstractCreatorNode implements CreatorNode {
+public class AbstractNode implements Node {
 
   @Override
-  public CreatorNode next() {
+  public Node next() {
     throw new NotImplementedException();
   }
 
   @Override
-  public CreatorNode next(String key) {
+  public Node next(String key) {
     throw new NotImplementedException();
   }
 

@@ -4,9 +4,9 @@ import java.util.Stack;
 
 public class StandardJsonDelegate implements JsonDelegate {
 
-  private final Stack<CreatorNode> stack = new Stack<>();
+  private final Stack<Node> stack = new Stack<>();
 
-  public StandardJsonDelegate(CreatorNode root) {
+  public StandardJsonDelegate(Node root) {
     stack.push(new HolderNode(root));
   }
 
@@ -30,17 +30,17 @@ public class StandardJsonDelegate implements JsonDelegate {
     stack.pop();
   }
 
-  private static class HolderNode extends AbstractCreatorNode {
+  private static class HolderNode extends AbstractNode {
 
-    private final CreatorNode creatorNode;
+    private final Node node;
 
-    HolderNode(CreatorNode creatorNode) {
-      this.creatorNode = creatorNode;
+    HolderNode(Node node) {
+      this.node = node;
     }
 
     @Override
-    public CreatorNode next() {
-      return creatorNode;
+    public Node next() {
+      return node;
     }
 
   }
