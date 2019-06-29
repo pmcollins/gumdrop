@@ -1,4 +1,4 @@
-package gumdrop.json.v2;
+package gumdrop.json.v2.common;
 
 public interface Node {
 

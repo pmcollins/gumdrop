@@ -1,13 +1,13 @@
 package gumdrop.test.json.v2;
 
-import gumdrop.json.v2.UniNode;
+import gumdrop.json.v2.StringArrayNode;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class StringListUniNode extends UniNode<List<String>> {
+class StringArrayListNode extends StringArrayNode<List<String>> {
 
-  StringListUniNode() {
+  StringArrayListNode() {
     super(new ArrayList<>(), List::add);
   }
 
