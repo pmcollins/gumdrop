@@ -1,19 +1,24 @@
 package gumdrop.json.v2;
 
+import gumdrop.json.v2.common.Node;
+import gumdrop.json.v2.common.SupplierNode;
+
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
-public class Binding<T, U> {
+public class Binding<T, U> implements Function<T, Node> {
 
-  private final Supplier<SupplierNode<U>> creatorNodeSupplier;
   private final BiConsumer<T, U> setter;
+  private final Supplier<SupplierNode<U>> creatorNodeSupplier;
 
-  public Binding(Supplier<SupplierNode<U>> creatorNodeSupplier, BiConsumer<T, U> setter) {
-    this.creatorNodeSupplier = creatorNodeSupplier;
+  public Binding(BiConsumer<T, U> setter, Supplier<SupplierNode<U>> creatorNodeSupplier) {
     this.setter = setter;
+    this.creatorNodeSupplier = creatorNodeSupplier;
   }
 
-  Node bind(T t) {
+  @Override
+  public Node apply(T t) {
     SupplierNode<U> creatorNode = creatorNodeSupplier.get();
     U u = creatorNode.get();
     setter.accept(t, u);
@@ -21,4 +26,3 @@ public class Binding<T, U> {
   }
 
 }
-

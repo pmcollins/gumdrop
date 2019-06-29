@@ -1,15 +1,15 @@
 package gumdrop.test.json.v2;
 
 import gumdrop.json.v2.Binding;
-import gumdrop.json.v2.CollectionNode;
+import gumdrop.json.v2.ArrayNode;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class ListOfRoomsNode extends CollectionNode<List<Room>> {
+class ListOfRoomsNode extends ArrayNode<List<Room>> {
 
   ListOfRoomsNode() {
-    super(new ArrayList<>(), new Binding<>(RoomNode::new, List::add));
+    super(new ArrayList<>(), new Binding<>(List::add, RoomNode::new));
   }
 
 }

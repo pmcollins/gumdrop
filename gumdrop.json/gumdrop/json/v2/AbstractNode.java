@@ -1,5 +1,7 @@
 package gumdrop.json.v2;
 
+import gumdrop.json.v2.common.Node;
+
 public class AbstractNode implements Node {
 
   @Override
