@@ -1,9 +1,9 @@
 package gumdrop.json.v2;
 
+import gumdrop.json.v2.common.Chainable;
 import gumdrop.json.v2.common.Node;
-import gumdrop.json.v2.common.SupplierNode;
 
-public class DictionaryNode<T> extends SupplierNode<T> {
+public class DictionaryNode<T> extends Node<T> {
 
   private final DictionaryBinding<T, ?> dictionaryBinding;
 
@@ -13,7 +13,7 @@ public class DictionaryNode<T> extends SupplierNode<T> {
   }
 
   @Override
-  public Node next(String key) {
+  public Chainable next(String key) {
     return dictionaryBinding.bind(get(), key);
   }
 

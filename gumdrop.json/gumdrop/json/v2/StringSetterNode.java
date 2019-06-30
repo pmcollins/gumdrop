@@ -2,7 +2,7 @@ package gumdrop.json.v2;
 
 import java.util.function.BiConsumer;
 
-public class StringSetterNode<T> extends AbstractNode {
+public class StringSetterNode<T> extends AbstractChainable {
 
   private final T t;
   private final BiConsumer<T, String> setter;

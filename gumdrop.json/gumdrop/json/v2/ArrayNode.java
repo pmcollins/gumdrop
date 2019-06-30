@@ -1,9 +1,9 @@
 package gumdrop.json.v2;
 
+import gumdrop.json.v2.common.Chainable;
 import gumdrop.json.v2.common.Node;
-import gumdrop.json.v2.common.SupplierNode;
 
-public class ArrayNode<T> extends SupplierNode<T> {
+public class ArrayNode<T> extends Node<T> {
 
   private final Binding<T, ?> binding;
 
@@ -13,7 +13,7 @@ public class ArrayNode<T> extends SupplierNode<T> {
   }
 
   @Override
-  public final Node next() {
+  public final Chainable next() {
     return binding.apply(get());
   }
 

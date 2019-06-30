@@ -1,14 +1,14 @@
 package gumdrop.json.v2;
 
-import gumdrop.json.v2.common.Node;
+import gumdrop.json.v2.common.Chainable;
 
 import java.util.Stack;
 
 public class StandardJsonDelegate implements JsonDelegate {
 
-  private final Stack<Node> stack = new Stack<>();
+  private final Stack<Chainable> stack = new Stack<>();
 
-  public StandardJsonDelegate(Node root) {
+  public StandardJsonDelegate(Chainable root) {
     stack.push(new HolderNode(root));
   }
 
@@ -32,16 +32,16 @@ public class StandardJsonDelegate implements JsonDelegate {
     stack.pop();
   }
 
-  private static class HolderNode extends AbstractNode {
+  private static class HolderNode extends AbstractChainable {
 
-    private final Node node;
+    private final Chainable node;
 
-    HolderNode(Node node) {
+    HolderNode(Chainable node) {
       this.node = node;
     }
 
     @Override
-    public Node next() {
+    public Chainable next() {
       return node;
     }
 

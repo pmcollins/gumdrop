@@ -1,12 +1,12 @@
 package gumdrop.json.v2;
 
 import gumdrop.json.v2.common.StringAcceptorNode;
+import gumdrop.json.v2.common.Chainable;
 import gumdrop.json.v2.common.Node;
-import gumdrop.json.v2.common.SupplierNode;
 
 import java.util.function.BiConsumer;
 
-public class StringArrayNode<T> extends SupplierNode<T> {
+public class StringArrayNode<T> extends Node<T> {
 
   private final BiConsumer<T, String> method;
 
@@ -16,7 +16,7 @@ public class StringArrayNode<T> extends SupplierNode<T> {
   }
 
   @Override
-  public final Node next() {
+  public final Chainable next() {
     return new StringAcceptorNode<>(get(), method);
   }
 

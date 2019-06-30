@@ -1,11 +1,20 @@
 package gumdrop.json.v2.common;
 
-public interface Node {
+import gumdrop.json.v2.AbstractChainable;
 
-  Node next();
+import java.util.function.Supplier;
 
-  Node next(String key);
+public abstract class Node<T> extends AbstractChainable implements Supplier<T> {
 
-  void accept(String value);
+  private final T t;
+
+  public Node(T t) {
+    this.t = t;
+  }
+
+  @Override
+  public T get() {
+    return t;
+  }
 
 }

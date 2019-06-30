@@ -1,10 +1,10 @@
 package gumdrop.json.v2.common;
 
-import gumdrop.json.v2.AbstractNode;
+import gumdrop.json.v2.AbstractChainable;
 
 import java.util.function.BiConsumer;
 
-public class StringAcceptorNode<T> extends AbstractNode {
+public class StringAcceptorNode<T> extends AbstractChainable {
 
   private final T t;
   private final BiConsumer<T, String> method;
