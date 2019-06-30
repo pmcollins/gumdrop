@@ -14,7 +14,7 @@ public class DictionaryBinding<T, U> {
 
   Chainable bind(T t, String key) {
     Node<U> node = creatorNodeSupplier.get();
-    U u = node.get();
+    U u = node.instance();
     putMethod.accept(t, key, u);
     return node;
   }

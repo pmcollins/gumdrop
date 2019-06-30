@@ -17,7 +17,7 @@ public class Binding<T, U> implements Function<T, Chainable> {
   @Override
   public Chainable apply(T t) {
     Node<U> node = nodeSupplier.get();
-    U u = node.get();
+    U u = node.instance();
     setter.accept(t, u);
     return node;
   }

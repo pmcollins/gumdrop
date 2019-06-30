@@ -1,8 +1,9 @@
 package gumdrop.test.json.v2;
 
-import gumdrop.json.v2.PojoNode;
+import gumdrop.json.v2.SimplePojoNode;
+import gumdrop.test.fake.Person;
 
-class PersonNode extends PojoNode<Person> {
+class PersonNode extends SimplePojoNode<Person> {
 
   PersonNode() {
     super(new Person(), key -> {

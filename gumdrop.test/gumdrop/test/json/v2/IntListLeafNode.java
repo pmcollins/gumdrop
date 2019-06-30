@@ -1,13 +1,13 @@
 package gumdrop.test.json.v2;
 
-import gumdrop.json.v2.StringArrayNode;
+import gumdrop.json.v2.ArrayLeafNode;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class IntListNode extends StringArrayNode<List<Integer>> {
+class IntListLeafNode extends ArrayLeafNode<List<Integer>> {
 
-  IntListNode() {
+  IntListLeafNode() {
     super(new ArrayList<>(), (list, s) -> list.add(Integer.valueOf(s)));
   }
 

@@ -1,4 +1,4 @@
-package gumdrop.test.json.v2;
+package gumdrop.test.fake;
 
 public class Person {
 
