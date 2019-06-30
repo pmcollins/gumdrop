@@ -3,12 +3,14 @@ package gumdrop.test.json.v2;
 import gumdrop.json.v2.*;
 import gumdrop.json.v2.Chainable;
 import gumdrop.json.v2.Node;
-import gumdrop.test.util.Asserts;
+import gumdrop.test.fake.*;
 import gumdrop.test.util.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static gumdrop.test.util.Asserts.*;
 
 public class JsonV2Test extends Test {
 
@@ -39,23 +41,26 @@ public class JsonV2Test extends Test {
     arrayOfPeople();
     arrayOfPeopleDelegate();
 
-    room();
-    roomDelegate();
+    simpleRoom();
+    simpleRoomDelegate();
 
-    arrayOfRooms();
-    arrayOfRoomsDelegate();
+    arrayOfSimpleRooms();
+    arrayOfSimpleRoomsDelegate();
+
+    namedPerson();
+    namedPersonDelegate();
   }
 
   private static void intArray() {
-    IntListNode node = new IntListNode();
+    IntListLeafNode node = new IntListLeafNode();
     node.next().accept("1");
     node.next().accept("2");
 
-    assertIntArray(node.get());
+    assertIntArray(node.instance());
   }
 
   private static void intArrayDelegate() {
-    IntListNode node = new IntListNode();
+    IntListLeafNode node = new IntListLeafNode();
     JsonDelegate d = new StandardJsonDelegate(node);
     d.push();
 
@@ -67,15 +72,15 @@ public class JsonV2Test extends Test {
 
     d.pop();
 
-    assertIntArray(node.get());
+    assertIntArray(node.instance());
   }
 
   private static void intArrayParser() {
-    IntListNode node = new IntListNode();
+    IntListLeafNode node = new IntListLeafNode();
     JsonDelegate d = new StandardJsonDelegate(node);
     JsonParser p = new JsonParser("[1,2]", d);
     p.readValue();
-    List<Integer> integers = node.get();
+    List<Integer> integers = node.instance();
     assertIntArray(integers);
   }
 
@@ -83,12 +88,12 @@ public class JsonV2Test extends Test {
     Node<List<String>> node = new StringArrayListNodeFactory().get();
     node.next().accept("a");
 
-    List<String> list = node.get();
+    List<String> list = node.instance();
     assertStringList(list);
   }
 
   private static void assertStringList(List<String> list) {
-    Asserts.assertListEquals(List.of("a"), list);
+    assertListEquals(List.of("a"), list);
   }
 
   private static void stringStringMap() {
@@ -118,17 +123,15 @@ public class JsonV2Test extends Test {
     Binding<List<List<String>>, List<String>> b = new Binding<>(List::add, new StringArrayListNodeFactory());
     ArrayNode<List<List<String>>> node = new ArrayNode<>(new ArrayList<>(), b);
     node.next().next().accept("a");
-    List<List<String>> list = node.get();
+    List<List<String>> list = node.instance();
     assertStringList(list.get(0));
   }
 
   private static void stringStringMapParser() {
     StringMapNode node = new StringMapNode();
     JsonDelegate d = new StandardJsonDelegate(node);
-    JsonParser p = new JsonParser(
-      "{\"key\":\"value\",\"key2\",\"value2\"}",
-      d
-    );
+    String json = "{\"key\":\"value\",\"key2\",\"value2\"}";
+    JsonParser p = new JsonParser(json, d);
     p.readValue();
     assertStringStringMap(node);
   }
@@ -237,8 +240,8 @@ public class JsonV2Test extends Test {
     assertArrayOfPeople(node);
   }
 
-  private static void room() {
-    RoomNode node = new RoomNode();
+  private static void simpleRoom() {
+    SimpleRoomNode node = new SimpleRoomNode();
     Chainable pablonode = node.next();
     pablonode.next("first").accept("pablo");
     pablonode.next("last").accept("collins");
@@ -250,8 +253,8 @@ public class JsonV2Test extends Test {
     assertRoom(node);
   }
 
-  private static void roomDelegate() {
-    RoomNode node = new RoomNode();
+  private static void simpleRoomDelegate() {
+    SimpleRoomNode node = new SimpleRoomNode();
     JsonDelegate d = new StandardJsonDelegate(node);
 
     d.push();
@@ -274,7 +277,7 @@ public class JsonV2Test extends Test {
     assertRoom(node);
   }
 
-  private static void arrayOfRooms() {
+  private static void arrayOfSimpleRooms() {
     ListOfRoomsNode node = new ListOfRoomsNode();
     Chainable room1Node = node.next();
     Chainable person1Node = room1Node.next();
@@ -292,7 +295,7 @@ public class JsonV2Test extends Test {
     assertArrayOfRooms(node);
   }
 
-  private static void arrayOfRoomsDelegate() {
+  private static void arrayOfSimpleRoomsDelegate() {
     ListOfRoomsNode node = new ListOfRoomsNode();
     JsonDelegate d = new StandardJsonDelegate(node);
 
@@ -327,81 +330,114 @@ public class JsonV2Test extends Test {
     assertArrayOfRooms(node);
   }
 
-  /*______*/
+  private static void namedPerson() {
+    NamedPersonNode n = new NamedPersonNode();
+    n.next("age").accept("111");
+    Chainable nameNode = n.next("name");
+    nameNode.next("first").accept("aaa");
+    nameNode.next("last").accept("bbb");
+    assertNamedPerson(n);
+  }
+
+  private static void assertNamedPerson(NamedPersonNode n) {
+    NamedPerson p = n.instance();
+    assertEquals(111, p.getAge());
+    Name name = p.getName();
+    assertEquals("aaa", name.getFirst());
+    assertEquals("bbb", name.getLast());
+  }
+
+  private static void namedPersonDelegate() {
+    NamedPersonNode node = new NamedPersonNode();
+    StandardJsonDelegate d = new StandardJsonDelegate(node);
+
+    d.push();
+    d.push("age");
+    d.pop("111");
+    d.push("name");
+    d.push("first");
+    d.pop("aaa");
+    d.push("last");
+    d.pop("bbb");
+    d.pop();
+    d.pop();
+
+    assertNamedPerson(node);
+  }
+
+  //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
   private static void assertArrayOfMaps(ListOfMapsNode node) {
-    List<Map<String, String>> list = node.get();
-    Asserts.assertEquals(2, list.size());
-    Asserts.assertEquals("bar", list.get(0).get("foo"));
-    Asserts.assertEquals("glarch", list.get(1).get("baz"));
+    List<Map<String, String>> list = node.instance();
+    assertEquals(2, list.size());
+    assertEquals("bar", list.get(0).get("foo"));
+    assertEquals("glarch", list.get(1).get("baz"));
   }
 
   private static void assertMapOfArrays(MapOfArraysNode node) {
-    Map<String, List<String>> map = node.get();
+    Map<String, List<String>> map = node.instance();
     List<String> fooList = map.get("foo");
-    Asserts.assertEquals("aaa", fooList.get(0));
-    Asserts.assertEquals("bbb", fooList.get(1));
+    assertEquals("aaa", fooList.get(0));
+    assertEquals("bbb", fooList.get(1));
 
     List<String> barList = map.get("bar");
-    Asserts.assertEquals("ccc", barList.get(0));
-    Asserts.assertEquals("ddd", barList.get(1));
+    assertEquals("ccc", barList.get(0));
+    assertEquals("ddd", barList.get(1));
   }
 
   private static void assertIntArray(List<Integer> list) {
-    Asserts.assertListEquals(List.of(1, 2), list);
+    assertListEquals(List.of(1, 2), list);
   }
 
   private static void assertStringStringMap(
     StringMapNode node
   ) {
-    Map<String, String> map = node.get();
-    Asserts.assertEquals("value", map.get("key"));
-    Asserts.assertEquals("value2", map.get("key2"));
+    Map<String, String> map = node.instance();
+    assertEquals("value", map.get("key"));
+    assertEquals("value2", map.get("key2"));
   }
 
   private static void assertArrayOfPeople(ListOfPersonNode node) {
-    List<Person> list = node.get();
-    Asserts.assertEquals(2, list.size());
+    List<Person> list = node.instance();
+    assertEquals(2, list.size());
     Person bilbo = list.get(0);
-    Asserts.assertEquals("bilbo", bilbo.getFirst());
-    Asserts.assertEquals("baggins", bilbo.getLast());
+    assertEquals("bilbo", bilbo.getFirst());
+    assertEquals("baggins", bilbo.getLast());
     Person gandalf = list.get(1);
-    Asserts.assertEquals("gandalf", gandalf.getFirst());
-    Asserts.assertEquals("the grey", gandalf.getLast());
+    assertEquals("gandalf", gandalf.getFirst());
+    assertEquals("the grey", gandalf.getLast());
   }
 
-  private static void assertRoom(RoomNode node) {
-    Room room = node.get();
-    List<Person> people = room.getPeople();
-    Asserts.assertEquals(2, people.size());
+  private static void assertRoom(SimpleRoomNode node) {
+    SimpleRoom simpleRoom = node.instance();
+    List<Person> people = simpleRoom.getPeople();
+    assertEquals(2, people.size());
     Person pablo = people.get(0);
-    Asserts.assertEquals("pablo", pablo.getFirst());
-    Asserts.assertEquals("collins", pablo.getLast());
+    assertEquals("pablo", pablo.getFirst());
+    assertEquals("collins", pablo.getLast());
     Person zoey = people.get(1);
-    Asserts.assertEquals("zoey", zoey.getFirst());
-    Asserts.assertEquals("rose", zoey.getLast());
+    assertEquals("zoey", zoey.getFirst());
+    assertEquals("rose", zoey.getLast());
   }
 
   private static void assertArrayOfRooms(ListOfRoomsNode node) {
-    List<Room> rooms = node.get();
-    Asserts.assertEquals(2, rooms.size());
-    Room room1 = rooms.get(0);
-    List<Person> people1 = room1.getPeople();
-    Asserts.assertEquals(2, people1.size());
+    List<SimpleRoom> simpleRooms = node.instance();
+    assertEquals(2, simpleRooms.size());
+    SimpleRoom simpleRoom1 = simpleRooms.get(0);
+    List<Person> people1 = simpleRoom1.getPeople();
+    assertEquals(2, people1.size());
     Person person1 = people1.get(0);
-    Asserts.assertEquals("f1", person1.getFirst());
-    Asserts.assertEquals("l1", person1.getLast());
+    assertEquals("f1", person1.getFirst());
+    assertEquals("l1", person1.getLast());
     Person person2 = people1.get(1);
-    Asserts.assertEquals("f2", person2.getFirst());
-    Asserts.assertEquals("l2", person2.getLast());
-    Room room2 = rooms.get(1);
-    List<Person> people2 = room2.getPeople();
-    Asserts.assertEquals(1, people2.size());
+    assertEquals("f2", person2.getFirst());
+    assertEquals("l2", person2.getLast());
+    SimpleRoom simpleRoom2 = simpleRooms.get(1);
+    List<Person> people2 = simpleRoom2.getPeople();
+    assertEquals(1, people2.size());
     Person person3 = people2.get(0);
-    Asserts.assertEquals("f3", person3.getFirst());
-    Asserts.assertEquals("l3", person3.getLast());
+    assertEquals("f3", person3.getFirst());
+    assertEquals("l3", person3.getLast());
   }
 
 }
-
-

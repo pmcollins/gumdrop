@@ -11,7 +11,7 @@ public class DictionaryNode<T> extends Node<T> {
 
   @Override
   public Chainable next(String key) {
-    return dictionaryBinding.bind(get(), key);
+    return dictionaryBinding.bind(instance(), key);
   }
 
 }

@@ -11,7 +11,7 @@ public class ArrayNode<T> extends Node<T> {
 
   @Override
   public final Chainable next() {
-    return binding.apply(get());
+    return binding.apply(instance());
   }
 
 }

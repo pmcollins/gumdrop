@@ -1,8 +1,6 @@
 package gumdrop.json.v2;
 
-import java.util.function.Supplier;
-
-public abstract class Node<T> extends AbstractChainable implements Supplier<T> {
+public abstract class Node<T> extends AbstractChainable {
 
   private final T t;
 
@@ -10,8 +8,7 @@ public abstract class Node<T> extends AbstractChainable implements Supplier<T> {
     this.t = t;
   }
 
-  @Override
-  public T get() {
+  public T instance() {
     return t;
   }
 

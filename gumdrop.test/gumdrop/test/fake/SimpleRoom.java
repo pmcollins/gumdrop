@@ -1,9 +1,11 @@
-package gumdrop.test.json.v2;
+package gumdrop.test.fake;
+
+import gumdrop.test.fake.Person;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Room {
+public class SimpleRoom {
 
   private final List<Person> people = new ArrayList<>();
 

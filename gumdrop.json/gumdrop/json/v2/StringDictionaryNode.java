@@ -11,7 +11,7 @@ public class StringDictionaryNode<T> extends Node<T> {
 
   @Override
   public final Chainable next(String key) {
-    return new StringDictionaryAcceptorNode<>(get(), key, triConsumer);
+    return new StringDictionaryAcceptorNode<>(instance(), key, triConsumer);
   }
 
 }
