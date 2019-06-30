@@ -1,9 +1,9 @@
 package gumdrop.json.v2.common;
 
-import gumdrop.json.v2.AbstractNode;
+import gumdrop.json.v2.AbstractChainable;
 import gumdrop.json.v2.TriConsumer;
 
-public class StringDictionaryAcceptorNode<T> extends AbstractNode {
+public class StringDictionaryAcceptorNode<T> extends AbstractChainable {
 
   private final T t;
   private final String key;

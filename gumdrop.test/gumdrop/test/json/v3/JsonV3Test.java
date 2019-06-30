@@ -3,8 +3,8 @@ package gumdrop.test.json.v3;
 import gumdrop.json.v2.common.StringDictionaryAcceptorNode;
 import gumdrop.json.v2.TriConsumer;
 import gumdrop.json.v2.common.StringAcceptorNode;
+import gumdrop.json.v2.common.Chainable;
 import gumdrop.json.v2.common.Node;
-import gumdrop.json.v2.common.SupplierNode;
 import gumdrop.test.util.Test;
 
 import java.util.ArrayList;
@@ -104,7 +104,7 @@ class ArrayMaker<T> {
 
 }
 
-class ArrayNode<T> extends SupplierNode<T> {
+class ArrayNode<T> extends Node<T> {
 
   private BiConsumer<T, String> method;
 
@@ -118,7 +118,7 @@ class ArrayNode<T> extends SupplierNode<T> {
   }
 
   @Override
-  public Node next() {
+  public Chainable next() {
     return new StringAcceptorNode<>(get(), method);
   }
 
@@ -126,7 +126,7 @@ class ArrayNode<T> extends SupplierNode<T> {
 
 //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
-class ArraySubObjectNode<T> extends SupplierNode<T> {
+class ArraySubObjectNode<T> extends Node<T> {
 
   private final ArraySubObjectMaker<T> maker;
 
@@ -136,7 +136,7 @@ class ArraySubObjectNode<T> extends SupplierNode<T> {
   }
 
   @Override
-  public Node next() {
+  public Chainable next() {
     ArraySetterBinding<T, ?> binding = maker.arraySetterBinding;
     return binding.bind(get());
   }
@@ -187,7 +187,7 @@ class DictionaryMaker<T> {
 
 }
 
-class DictionaryNode<T> extends SupplierNode<T> {
+class DictionaryNode<T> extends Node<T> {
 
   private final TriConsumer<T, String, String> method;
 
@@ -201,7 +201,7 @@ class DictionaryNode<T> extends SupplierNode<T> {
   }
 
   @Override
-  public Node next(String key) {
+  public Chainable next(String key) {
     return new StringDictionaryAcceptorNode<>(get(), key, method);
   }
 
@@ -209,7 +209,7 @@ class DictionaryNode<T> extends SupplierNode<T> {
 
 //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
 
-class DictionarySubObjectNode<T> extends SupplierNode<T> {
+class DictionarySubObjectNode<T> extends Node<T> {
 
   private final DictionarySetterBinding<T, ?> binding;
 
@@ -219,7 +219,7 @@ class DictionarySubObjectNode<T> extends SupplierNode<T> {
   }
 
   @Override
-  public Node next(String key) {
+  public Chainable next(String key) {
     return binding.bind(get());
   }
 

@@ -1,10 +1,10 @@
 package gumdrop.json.v2;
 
 import gumdrop.json.v2.common.StringDictionaryAcceptorNode;
+import gumdrop.json.v2.common.Chainable;
 import gumdrop.json.v2.common.Node;
-import gumdrop.json.v2.common.SupplierNode;
 
-public class StringDictionaryNode<T> extends SupplierNode<T> {
+public class StringDictionaryNode<T> extends Node<T> {
 
   private final TriConsumer<T, String, String> triConsumer;
 
@@ -14,7 +14,7 @@ public class StringDictionaryNode<T> extends SupplierNode<T> {
   }
 
   @Override
-  public final Node next(String key) {
+  public final Chainable next(String key) {
     return new StringDictionaryAcceptorNode<>(get(), key, triConsumer);
   }
 

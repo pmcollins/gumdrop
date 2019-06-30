@@ -1,12 +1,12 @@
 package gumdrop.json.v2;
 
+import gumdrop.json.v2.common.Chainable;
 import gumdrop.json.v2.common.Node;
-import gumdrop.json.v2.common.SupplierNode;
 
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
-public class PojoNode<T> extends SupplierNode<T> {
+public class PojoNode<T> extends Node<T> {
 
   private final Function<String, BiConsumer<T, String>> setterFcn;
 
@@ -16,7 +16,7 @@ public class PojoNode<T> extends SupplierNode<T> {
   }
 
   @Override
-  public final Node next(String key) {
+  public final Chainable next(String key) {
     BiConsumer<T, String> setter = setterFcn.apply(key);
     T t = get();
     return new StringSetterNode<>(t, setter);

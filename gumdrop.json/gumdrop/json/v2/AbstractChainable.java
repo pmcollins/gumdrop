@@ -1,16 +1,16 @@
 package gumdrop.json.v2;
 
-import gumdrop.json.v2.common.Node;
+import gumdrop.json.v2.common.Chainable;
 
-public class AbstractNode implements Node {
+public class AbstractChainable implements Chainable {
 
   @Override
-  public Node next() {
+  public Chainable next() {
     throw new NotImplementedException();
   }
 
   @Override
-  public Node next(String key) {
+  public Chainable next(String key) {
     throw new NotImplementedException();
   }
 

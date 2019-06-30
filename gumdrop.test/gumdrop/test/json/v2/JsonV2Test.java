@@ -1,6 +1,7 @@
 package gumdrop.test.json.v2;
 
 import gumdrop.json.v2.*;
+import gumdrop.json.v2.common.Chainable;
 import gumdrop.json.v2.common.Node;
 import gumdrop.test.util.Asserts;
 import gumdrop.test.util.Test;
@@ -8,6 +9,7 @@ import gumdrop.test.util.Test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class JsonV2Test extends Test {
 
@@ -114,9 +116,7 @@ public class JsonV2Test extends Test {
   }
 
   private static void arrayOfArrays() {
-    Binding<List<List<String>>, List<String>> b = new Binding<>(
-      List::add, StringArrayListNode::new
-    );
+    Binding<List<List<String>>, List<String>> b = new Binding<>(List::add, StringArrayListNode::new);
     ArrayNode<List<List<String>>> node = new ArrayNode<>(new ArrayList<>(), b);
     node.next().next().accept("a");
     List<List<String>> list = node.get();
@@ -164,11 +164,11 @@ public class JsonV2Test extends Test {
 
   private static void mapOfArrays() {
     MapOfArraysNode node = new MapOfArraysNode();
-    Node foo = node.next("foo");
+    Chainable foo = node.next("foo");
     foo.next().accept("aaa");
     foo.next().accept("bbb");
 
-    Node bar = node.next("bar");
+    Chainable bar = node.next("bar");
     bar.next().accept("ccc");
     bar.next().accept("ddd");
 
@@ -202,11 +202,11 @@ public class JsonV2Test extends Test {
 
   private static void arrayOfPeople() {
     ListOfPersonNode listnodeNode = new ListOfPersonNode();
-    Node bilboNode = listnodeNode.next();
+    Chainable bilboNode = listnodeNode.next();
     bilboNode.next("first").accept("bilbo");
     bilboNode.next("last").accept("baggins");
 
-    Node gandalfNode = listnodeNode.next();
+    Chainable gandalfNode = listnodeNode.next();
     gandalfNode.next("first").accept("gandalf");
     gandalfNode.next("last").accept("the grey");
 
@@ -240,11 +240,11 @@ public class JsonV2Test extends Test {
 
   private static void room() {
     RoomNode node = new RoomNode();
-    Node pablonode = node.next();
+    Chainable pablonode = node.next();
     pablonode.next("first").accept("pablo");
     pablonode.next("last").accept("collins");
 
-    Node zoeynode = node.next();
+    Chainable zoeynode = node.next();
     zoeynode.next("first").accept("zoey");
     zoeynode.next("last").accept("rose");
 
@@ -277,18 +277,18 @@ public class JsonV2Test extends Test {
 
   private static void arrayOfRooms() {
     ListOfRoomsNode node = new ListOfRoomsNode();
-    Node room1node = node.next();
-    Node person1node = room1node.next();
-    person1node.next("first").accept("f1");
-    person1node.next("last").accept("l1");
-    Node person2node = room1node.next();
-    person2node.next("first").accept("f2");
-    person2node.next("last").accept("l2");
+    Chainable room1Node = node.next();
+    Chainable person1Node = room1Node.next();
+    person1Node.next("first").accept("f1");
+    person1Node.next("last").accept("l1");
+    Chainable person2Node = room1Node.next();
+    person2Node.next("first").accept("f2");
+    person2Node.next("last").accept("l2");
 
-    Node room2node = node.next();
-    Node person3node = room2node.next();
-    person3node.next("first").accept("f3");
-    person3node.next("last").accept("l3");
+    Chainable room2Node = node.next();
+    Chainable person3Node = room2Node.next();
+    person3Node.next("first").accept("f3");
+    person3Node.next("last").accept("l3");
 
     assertArrayOfRooms(node);
   }
