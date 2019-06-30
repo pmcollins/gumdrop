@@ -1,8 +1,5 @@
 package gumdrop.json.v2;
 
-import gumdrop.json.v2.common.Chainable;
-import gumdrop.json.v2.common.Node;
-
 import java.util.function.Supplier;
 
 public class DictionaryBinding<T, U> {

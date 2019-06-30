@@ -1,9 +1,5 @@
 package gumdrop.json.v2;
 
-import gumdrop.json.v2.common.StringDictionaryAcceptorNode;
-import gumdrop.json.v2.common.Chainable;
-import gumdrop.json.v2.common.Node;
-
 public class StringDictionaryNode<T> extends Node<T> {
 
   private final TriConsumer<T, String, String> triConsumer;

@@ -1,4 +1,4 @@
-package gumdrop.json.v2.common;
+package gumdrop.json.v2;
 
 public interface Chainable {
 

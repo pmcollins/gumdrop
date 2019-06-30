@@ -1,6 +1,4 @@
-package gumdrop.json.v2.common;
-
-import gumdrop.json.v2.AbstractChainable;
+package gumdrop.json.v2;
 
 import java.util.function.Supplier;
 

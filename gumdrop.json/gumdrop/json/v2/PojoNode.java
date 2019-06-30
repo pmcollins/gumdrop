@@ -1,8 +1,5 @@
 package gumdrop.json.v2;
 
-import gumdrop.json.v2.common.Chainable;
-import gumdrop.json.v2.common.Node;
-
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 

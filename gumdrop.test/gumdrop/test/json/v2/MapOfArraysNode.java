@@ -10,7 +10,7 @@ import java.util.Map;
 class MapOfArraysNode extends DictionaryNode<Map<String, List<String>>> {
 
   MapOfArraysNode() {
-    super(new HashMap<>(), new DictionaryBinding<>(StringArrayListNode::new, Map::put));
+    super(new HashMap<>(), new DictionaryBinding<>(new StringArrayListNodeFactory(), Map::put));
   }
 
 }

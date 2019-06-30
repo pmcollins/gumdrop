@@ -1,7 +1,5 @@
 package gumdrop.json.v2;
 
-import gumdrop.json.v2.common.Chainable;
-
 import java.util.Stack;
 
 public class StandardJsonDelegate implements JsonDelegate {
