@@ -1,15 +1,14 @@
 package gumdrop.test.json.v2;
 
 import gumdrop.json.v2.*;
-import gumdrop.json.v2.common.Chainable;
-import gumdrop.json.v2.common.Node;
+import gumdrop.json.v2.Chainable;
+import gumdrop.json.v2.Node;
 import gumdrop.test.util.Asserts;
 import gumdrop.test.util.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Supplier;
 
 public class JsonV2Test extends Test {
 
@@ -81,7 +80,7 @@ public class JsonV2Test extends Test {
   }
 
   private static void stringArray() {
-    StringArrayListNode node = new StringArrayListNode();
+    Node<List<String>> node = new StringArrayListNodeFactory().get();
     node.next().accept("a");
 
     List<String> list = node.get();
@@ -116,7 +115,7 @@ public class JsonV2Test extends Test {
   }
 
   private static void arrayOfArrays() {
-    Binding<List<List<String>>, List<String>> b = new Binding<>(List::add, StringArrayListNode::new);
+    Binding<List<List<String>>, List<String>> b = new Binding<>(List::add, new StringArrayListNodeFactory());
     ArrayNode<List<List<String>>> node = new ArrayNode<>(new ArrayList<>(), b);
     node.next().next().accept("a");
     List<List<String>> list = node.get();
@@ -404,3 +403,5 @@ public class JsonV2Test extends Test {
   }
 
 }
+
+

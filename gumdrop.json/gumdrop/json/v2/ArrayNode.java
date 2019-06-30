@@ -1,8 +1,5 @@
 package gumdrop.json.v2;
 
-import gumdrop.json.v2.common.Chainable;
-import gumdrop.json.v2.common.Node;
-
 public class ArrayNode<T> extends Node<T> {
 
   private final Binding<T, ?> binding;

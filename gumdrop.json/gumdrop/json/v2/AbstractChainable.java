@@ -1,7 +1,5 @@
 package gumdrop.json.v2;
 
-import gumdrop.json.v2.common.Chainable;
-
 public class AbstractChainable implements Chainable {
 
   @Override
