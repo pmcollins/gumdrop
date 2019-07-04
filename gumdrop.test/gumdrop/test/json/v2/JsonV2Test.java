@@ -1,6 +1,10 @@
 package gumdrop.test.json.v2;
 
 import gumdrop.json.v2.*;
+import gumdrop.json.v2.print.ArrayPrinter;
+import gumdrop.json.v2.print.IntPrinter;
+import gumdrop.json.v2.print.MapPrinter;
+import gumdrop.json.v2.print.StringPrinter;
 import gumdrop.test.fake.Name;
 import gumdrop.test.fake.NamedPerson;
 import gumdrop.test.fake.Person;

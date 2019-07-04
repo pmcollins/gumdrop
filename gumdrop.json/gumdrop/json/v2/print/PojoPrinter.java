@@ -1,26 +1,31 @@
-package gumdrop.test.json.v2;
+package gumdrop.json.v2.print;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class PojoPrinter<T> implements JsonPrinter<T> {
+public class PojoPrinter<T> implements JsonPrinter<T> {
 
-  static class Builder<T> {
+  public static class Builder<T> {
+
     private final List<MethodPrinter<T, ?>> methods = new ArrayList<>();
-    void addMethodPrinter(MethodPrinter<T, ?> methodPrinter) {
+
+    public void addMethodPrinter(MethodPrinter<T, ?> methodPrinter) {
       methods.add(methodPrinter);
     }
-    List<MethodPrinter<T, ?>> getMethods() {
+
+    protected List<MethodPrinter<T, ?>> getMethods() {
       return methods;
     }
-    PojoPrinter<T> build() {
+
+    public  PojoPrinter<T> build() {
       return new PojoPrinter<>(methods);
     }
+
   }
 
   private final List<MethodPrinter<T, ?>> methods;
 
-  PojoPrinter(List<MethodPrinter<T, ?>> methods) {
+  protected PojoPrinter(List<MethodPrinter<T, ?>> methods) {
     this.methods = methods;
   }
 

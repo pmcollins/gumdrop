@@ -1,12 +1,12 @@
-package gumdrop.test.json.v2;
+package gumdrop.json.v2.print;
 
 import java.util.Map;
 
-class MapPrinter<T> implements JsonPrinter<Map<String, T>> {
+public class MapPrinter<T> implements JsonPrinter<Map<String, T>> {
 
   private final JsonPrinter<T> valuePrinter;
 
-  MapPrinter(JsonPrinter<T> valuePrinter) {
+  public MapPrinter(JsonPrinter<T> valuePrinter) {
     this.valuePrinter = valuePrinter;
   }
 
