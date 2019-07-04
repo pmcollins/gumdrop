@@ -1,6 +1,6 @@
-package gumdrop.test.json.v2;
+package gumdrop.json.v2.print;
 
-class IntPrinter implements JsonPrinter<Integer> {
+public class IntPrinter implements JsonPrinter<Integer> {
 
   @Override
   public void print(StringBuilder sb, Integer integer) {

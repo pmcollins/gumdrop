@@ -1,12 +1,12 @@
-package gumdrop.test.json.v2;
+package gumdrop.json.v2.print;
 
 import java.util.List;
 
-class ArrayPrinter<T> implements JsonPrinter<List<T>> {
+public class ArrayPrinter<T> implements JsonPrinter<List<T>> {
 
   private final JsonPrinter<T> valuePrinter;
 
-  ArrayPrinter(JsonPrinter<T> valuePrinter) {
+  public ArrayPrinter(JsonPrinter<T> valuePrinter) {
     this.valuePrinter = valuePrinter;
   }
 
