@@ -30,19 +30,4 @@ public class StandardJsonDelegate implements JsonDelegate {
     stack.pop();
   }
 
-  private static class HolderNode extends AbstractChainable {
-
-    private final Chainable node;
-
-    HolderNode(Chainable node) {
-      this.node = node;
-    }
-
-    @Override
-    public Chainable next() {
-      return node;
-    }
-
-  }
-
 }

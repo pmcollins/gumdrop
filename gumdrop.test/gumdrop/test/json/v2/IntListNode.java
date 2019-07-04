@@ -5,9 +5,9 @@ import gumdrop.json.v2.ArrayLeafNode;
 import java.util.ArrayList;
 import java.util.List;
 
-class IntListLeafNode extends ArrayLeafNode<List<Integer>> {
+class IntListNode extends ArrayLeafNode<List<Integer>> {
 
-  IntListLeafNode() {
+  IntListNode() {
     super(new ArrayList<>(), (list, s) -> list.add(Integer.valueOf(s)));
   }
 
