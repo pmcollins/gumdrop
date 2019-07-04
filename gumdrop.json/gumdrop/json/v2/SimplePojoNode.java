@@ -15,8 +15,7 @@ public class SimplePojoNode<T> extends Node<T> {
   @Override
   public final Chainable next(String key) {
     BiConsumer<T, String> setter = setterMapping.apply(key);
-    T t = instance();
-    return new StringAcceptorNode<>(t, setter);
+    return new StringAcceptorNode<>(instance(), setter);
   }
 
 }

@@ -1,6 +1,7 @@
 package gumdrop.test.json.v2;
 
 import gumdrop.json.v2.Chainable;
+import gumdrop.json.v2.HolderNode;
 import gumdrop.json.v2.Node;
 import gumdrop.json.v2.StringAcceptorNode;
 import gumdrop.test.fake.Name;
@@ -18,7 +19,7 @@ class NamedPersonNode extends Node<NamedPerson> {
       NameNode nameNode = new NameNode();
       Name name = nameNode.instance();
       instance().setName(name);
-      return nameNode;
+      return new HolderNode(nameNode);
     } else if ("age".equals(key)) {
       return new StringAcceptorNode<>(
         instance(),

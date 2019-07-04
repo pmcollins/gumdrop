@@ -14,7 +14,7 @@ import static gumdrop.test.util.Asserts.assertEquals;
 
 class JsonWriterTest extends Test {
 
-  private final JsonWriter<NamedPerson> complexPersonJsonJsonWriter;
+  private final JsonWriter<NamedPerson> complexPersonJsonWriter;
   private final JsonWriter<BirthdayPerson> simplePersonJsonWriter;
 
   public static void main(String[] args) {
@@ -23,7 +23,7 @@ class JsonWriterTest extends Test {
 
   JsonWriterTest() {
     simplePersonJsonWriter = new SimplePersonJsonWriter();
-    complexPersonJsonJsonWriter = setupComplexPerson();
+    complexPersonJsonWriter = setupComplexPerson();
   }
 
   private static JsonWriter<NamedPerson> setupComplexPerson() {
@@ -63,7 +63,7 @@ class JsonWriterTest extends Test {
     name.setFirst("lile");
     name.setLast("collinson");
     complexNamedPerson.setName(name);
-    String json = complexPersonJsonJsonWriter.apply(complexNamedPerson);
+    String json = complexPersonJsonWriter.apply(complexNamedPerson);
     assertEquals("{\"age\":42,\"name\":{\"first\":\"lile\",\"last\":\"collinson\"}}", json);
   }
 

@@ -1,16 +1,19 @@
 package gumdrop.test.json.v2;
 
 import gumdrop.json.v2.*;
-import gumdrop.json.v2.Chainable;
-import gumdrop.json.v2.Node;
-import gumdrop.test.fake.*;
+import gumdrop.test.fake.Name;
+import gumdrop.test.fake.NamedPerson;
+import gumdrop.test.fake.Person;
+import gumdrop.test.fake.SimpleRoom;
 import gumdrop.test.util.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
-import static gumdrop.test.util.Asserts.*;
+import static gumdrop.test.util.Asserts.assertEquals;
+import static gumdrop.test.util.Asserts.assertListEquals;
 
 public class JsonV2Test extends Test {
 
@@ -20,26 +23,35 @@ public class JsonV2Test extends Test {
 
   @Override
   public void run() throws Exception {
+    stringArray();
+    stringArrayPrinter();
+
     intArray();
     intArrayParser();
     intArrayDelegate();
-
-    stringArray();
+    intArrayPrinter();
 
     stringStringMap();
     stringStringMapDelegate();
     stringStringMapParser();
+    stringStringMapPrinter();
 
     arrayOfArrays();
+    arrayOfArraysPrinter();
 
     arrayOfMaps();
     arrayOfMapsDelegate();
+    arrayOfMapsPrinter();
 
     mapOfArrays();
     mapOfArraysDelegate();
+    mapOfArraysPrinter();
+
+    personPrinter();
 
     arrayOfPeople();
     arrayOfPeopleDelegate();
+    arrayOfPeoplePrinter();
 
     simpleRoom();
     simpleRoomDelegate();
@@ -49,18 +61,34 @@ public class JsonV2Test extends Test {
 
     namedPerson();
     namedPersonDelegate();
+    namedPersonParser();
+  }
+
+  private static void stringArray() {
+    Node<List<String>> node = new StringArrayListNodeFactory().get();
+    node.next().accept("a");
+
+    List<String> list = node.instance();
+    assertStringList(list);
   }
 
   private static void intArray() {
-    IntListLeafNode node = new IntListLeafNode();
+    IntListNode node = new IntListNode();
     node.next().accept("1");
     node.next().accept("2");
 
     assertIntArray(node.instance());
   }
 
+  private static void stringArrayPrinter() {
+    ArrayPrinter<String> p = new ArrayPrinter<>(new StringPrinter());
+    StringBuilder sb = new StringBuilder();
+    p.print(sb, List.of("a", "b"));
+    assertEquals("[\"a\",\"b\"]", sb.toString());
+  }
+
   private static void intArrayDelegate() {
-    IntListLeafNode node = new IntListLeafNode();
+    IntListNode node = new IntListNode();
     JsonDelegate d = new StandardJsonDelegate(node);
     d.push();
 
@@ -76,7 +104,7 @@ public class JsonV2Test extends Test {
   }
 
   private static void intArrayParser() {
-    IntListLeafNode node = new IntListLeafNode();
+    IntListNode node = new IntListNode();
     JsonDelegate d = new StandardJsonDelegate(node);
     JsonParser p = new JsonParser("[1,2]", d);
     p.readValue();
@@ -84,16 +112,11 @@ public class JsonV2Test extends Test {
     assertIntArray(integers);
   }
 
-  private static void stringArray() {
-    Node<List<String>> node = new StringArrayListNodeFactory().get();
-    node.next().accept("a");
-
-    List<String> list = node.instance();
-    assertStringList(list);
-  }
-
-  private static void assertStringList(List<String> list) {
-    assertListEquals(List.of("a"), list);
+  private static void intArrayPrinter() {
+    ArrayPrinter<Integer> p = new ArrayPrinter<>(new IntPrinter());
+    StringBuilder sb = new StringBuilder();
+    p.print(sb, List.of(1, 2));
+    assertEquals("[1,2]", sb.toString());
   }
 
   private static void stringStringMap() {
@@ -119,6 +142,25 @@ public class JsonV2Test extends Test {
     assertStringStringMap(node);
   }
 
+  private static void stringStringMapParser() {
+    StringMapNode node = new StringMapNode();
+    JsonDelegate d = new StandardJsonDelegate(node);
+    String json = "{\"key\":\"value\",\"key2\",\"value2\"}";
+    JsonParser p = new JsonParser(json, d);
+    p.readValue();
+    assertStringStringMap(node);
+  }
+
+  private static void stringStringMapPrinter() {
+    Map<String, String> m = new TreeMap<>();
+    m.put("a", "yyy");
+    m.put("b", "zzz");
+    MapPrinter<String> p = new MapPrinter<>(new StringPrinter());
+    StringBuilder sb = new StringBuilder();
+    p.print(sb, m);
+    assertEquals("{\"a\":\"yyy\",\"b\":\"zzz\"}", sb.toString());
+  }
+
   private static void arrayOfArrays() {
     Binding<List<List<String>>, List<String>> b = new Binding<>(List::add, new StringArrayListNodeFactory());
     ArrayNode<List<List<String>>> node = new ArrayNode<>(new ArrayList<>(), b);
@@ -127,13 +169,12 @@ public class JsonV2Test extends Test {
     assertStringList(list.get(0));
   }
 
-  private static void stringStringMapParser() {
-    StringMapNode node = new StringMapNode();
-    JsonDelegate d = new StandardJsonDelegate(node);
-    String json = "{\"key\":\"value\",\"key2\",\"value2\"}";
-    JsonParser p = new JsonParser(json, d);
-    p.readValue();
-    assertStringStringMap(node);
+  private static void arrayOfArraysPrinter() {
+    ArrayPrinter<List<String>> p = new ArrayPrinter<>(new ArrayPrinter<>(new StringPrinter()));
+    StringBuilder sb = new StringBuilder();
+    List<String> ary = List.of("aaa", "bbb");
+    p.print(sb, List.of(ary, ary));
+    assertEquals("[[\"aaa\",\"bbb\"],[\"aaa\",\"bbb\"]]", sb.toString());
   }
 
   private static void arrayOfMaps() {
@@ -162,6 +203,21 @@ public class JsonV2Test extends Test {
     d.pop();
 
     assertArrayOfMaps(node);
+  }
+
+  private static void arrayOfMapsPrinter() {
+    ArrayPrinter<Map<String, String>> p = new ArrayPrinter<>(
+      new MapPrinter<>(
+        new StringPrinter()
+      )
+    );
+    StringBuilder sb = new StringBuilder();
+    Map<String, String> map = Map.of("a", "xxx");
+    p.print(sb, List.of(map, map));
+    assertEquals(
+      "[{\"a\":\"xxx\"},{\"a\":\"xxx\"}]",
+      sb.toString()
+    );
   }
 
   private static void mapOfArrays() {
@@ -202,6 +258,24 @@ public class JsonV2Test extends Test {
     assertMapOfArrays(node);
   }
 
+  private static void mapOfArraysPrinter() {
+    MapPrinter<List<String>> m = new MapPrinter<>(
+      new ArrayPrinter<>(
+        new StringPrinter()
+      )
+    );
+    StringBuilder sb = new StringBuilder();
+    m.print(sb, Map.of("foo", List.of("hello")));
+    assertEquals("{\"foo\":[\"hello\"]}", sb.toString());
+  }
+
+  private static void personPrinter() {
+    PersonPrinter p = PersonPrinter.build();
+    StringBuilder sb = new StringBuilder();
+    p.print(sb, new Person("bilbo", "baggins"));
+    assertEquals("{\"first\":\"bilbo\",\"last\":\"baggins\"}", sb.toString());
+  }
+
   private static void arrayOfPeople() {
     ListOfPersonNode listnodeNode = new ListOfPersonNode();
     Chainable bilboNode = listnodeNode.next();
@@ -238,6 +312,13 @@ public class JsonV2Test extends Test {
     d.pop();
 
     assertArrayOfPeople(node);
+  }
+
+  private void arrayOfPeoplePrinter() {
+    ArrayPrinter<Person> p = new ArrayPrinter<>(PersonPrinter.build());
+    StringBuilder sb = new StringBuilder();
+    p.print(sb, List.of(new Person("bilbo", "baggins")));
+    assertEquals("[{\"first\":\"bilbo\",\"last\":\"baggins\"}]", sb.toString());
   }
 
   private static void simpleRoom() {
@@ -333,18 +414,11 @@ public class JsonV2Test extends Test {
   private static void namedPerson() {
     NamedPersonNode n = new NamedPersonNode();
     n.next("age").accept("111");
-    Chainable nameNode = n.next("name");
+    Chainable holderNode = n.next("name");
+    Chainable nameNode = holderNode.next();
     nameNode.next("first").accept("aaa");
     nameNode.next("last").accept("bbb");
     assertNamedPerson(n);
-  }
-
-  private static void assertNamedPerson(NamedPersonNode n) {
-    NamedPerson p = n.instance();
-    assertEquals(111, p.getAge());
-    Name name = p.getName();
-    assertEquals("aaa", name.getFirst());
-    assertEquals("bbb", name.getLast());
   }
 
   private static void namedPersonDelegate() {
@@ -355,17 +429,41 @@ public class JsonV2Test extends Test {
     d.push("age");
     d.pop("111");
     d.push("name");
+    d.push();
     d.push("first");
     d.pop("aaa");
     d.push("last");
     d.pop("bbb");
     d.pop();
     d.pop();
+    d.pop();
 
     assertNamedPerson(node);
   }
 
-  //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
+  private static void namedPersonParser() {
+    String json = "{\"age\":111,\"name\":{\"first\":\"aaa\",\"last\":\"bbb\"}}";
+    NamedPersonNode node = new NamedPersonNode();
+    JsonDelegate d = new StandardJsonDelegate(node);
+    JsonParser parser = new JsonParser(json, d);
+    parser.readValue();
+    assertNamedPerson(node);
+  }
+
+  //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
+  //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//
+
+  private static void assertStringList(List<String> list) {
+    assertListEquals(List.of("a"), list);
+  }
+
+  private static void assertNamedPerson(NamedPersonNode n) {
+    NamedPerson p = n.instance();
+    assertEquals(111, p.getAge());
+    Name name = p.getName();
+    assertEquals("aaa", name.getFirst());
+    assertEquals("bbb", name.getLast());
+  }
 
   private static void assertArrayOfMaps(ListOfMapsNode node) {
     List<Map<String, String>> list = node.instance();
@@ -389,9 +487,7 @@ public class JsonV2Test extends Test {
     assertListEquals(List.of(1, 2), list);
   }
 
-  private static void assertStringStringMap(
-    StringMapNode node
-  ) {
+  private static void assertStringStringMap(StringMapNode node) {
     Map<String, String> map = node.instance();
     assertEquals("value", map.get("key"));
     assertEquals("value2", map.get("key2"));
