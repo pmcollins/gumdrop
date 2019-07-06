@@ -38,6 +38,10 @@ public class Flash {
     return validationFailures != null && !validationFailures.isEmpty();
   }
 
+  public void setValidationFailures(ValidationFailures validationFailures) {
+    this.validationFailures = validationFailures;
+  }
+
   public String getMessage() {
     return message;
   }

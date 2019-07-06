@@ -2,7 +2,7 @@ package gumdrop.json.v2.print;
 
 import java.util.Map;
 
-public class MapPrinter<T> implements JsonPrinter<Map<String, T>> {
+public class MapPrinter<T> extends JsonPrinter<Map<String, T>> {
 
   private final JsonPrinter<T> valuePrinter;
 
