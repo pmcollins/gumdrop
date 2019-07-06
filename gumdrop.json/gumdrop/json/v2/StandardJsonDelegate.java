@@ -7,7 +7,7 @@ public class StandardJsonDelegate implements JsonDelegate {
   private final Stack<Chainable> stack = new Stack<>();
 
   public StandardJsonDelegate(Chainable root) {
-    stack.push(new HolderNode(root));
+    stack.push(root);
   }
 
   @Override

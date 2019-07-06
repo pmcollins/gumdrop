@@ -1,5 +1,7 @@
 package gumdrop.test.fake;
 
+import java.util.Objects;
+
 public class Person {
 
   private String first, last;
@@ -26,6 +28,20 @@ public class Person {
 
   public void setLast(String last) {
     this.last = last;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Person person = (Person) o;
+    return Objects.equals(first, person.first) &&
+      Objects.equals(last, person.last);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(first, last);
   }
 
 }

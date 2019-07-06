@@ -94,15 +94,12 @@ public class JsonV2Test extends Test {
   private static void intArrayDelegate() {
     IntListNode node = new IntListNode();
     JsonDelegate d = new StandardJsonDelegate(node);
-    d.push();
 
     d.push();
     d.pop("1");
 
     d.push();
     d.pop("2");
-
-    d.pop();
 
     assertIntArray(node.instance());
   }
@@ -134,14 +131,11 @@ public class JsonV2Test extends Test {
   private static void stringStringMapDelegate() {
     StringMapNode node = new StringMapNode();
     JsonDelegate d = new StandardJsonDelegate(node);
-    d.push();
 
     d.push("key");
     d.pop("value");
     d.push("key2");
     d.pop("value2");
-
-    d.pop();
 
     assertStringStringMap(node);
   }
@@ -192,7 +186,6 @@ public class JsonV2Test extends Test {
   private static void arrayOfMapsDelegate() {
     ListOfMapsNode node = new ListOfMapsNode();
     JsonDelegate d = new StandardJsonDelegate(node);
-    d.push();
 
     d.push();
     d.push("foo");
@@ -202,8 +195,6 @@ public class JsonV2Test extends Test {
     d.push();
     d.push("baz");
     d.pop("glarch");
-    d.pop();
-
     d.pop();
 
     assertArrayOfMaps(node);
@@ -241,8 +232,6 @@ public class JsonV2Test extends Test {
     MapOfArraysNode node = new MapOfArraysNode();
     JsonDelegate d = new StandardJsonDelegate(node);
 
-    d.push();
-
     d.push("foo");
     d.push();
     d.pop("aaa");
@@ -255,8 +244,6 @@ public class JsonV2Test extends Test {
     d.pop("ccc");
     d.push();
     d.pop("ddd");
-    d.pop();
-
     d.pop();
 
     assertMapOfArrays(node);
@@ -298,8 +285,6 @@ public class JsonV2Test extends Test {
     JsonDelegate d = new StandardJsonDelegate(node);
 
     d.push();
-
-    d.push();
     d.push("first");
     d.pop("bilbo");
     d.push("last");
@@ -313,22 +298,21 @@ public class JsonV2Test extends Test {
     d.pop("the grey");
     d.pop();
 
-    d.pop();
-
     assertArrayOfPeople(node);
   }
 
   private void arrayOfPeoplePrinter() {
     ArrayPrinter<Person> p = new ArrayPrinter<>(PersonPrinter.build());
     StringBuilder sb = new StringBuilder();
-    p.print(sb, List.of(new Person("bilbo", "baggins")));
+    List<Person> orig = List.of(new Person("bilbo", "baggins"));
+    p.print(sb, orig);
     String json = sb.toString();
     assertEquals("[{\"first\":\"bilbo\",\"last\":\"baggins\"}]", json);
 
     ListOfPersonNode node = new ListOfPersonNode();
     JsonReader<List<Person>> reader = new JsonReader<>(node);
     List<Person> rebuilt = reader.read(json);
-    System.out.println(rebuilt);
+    assertListEquals(orig, rebuilt);
   }
 
   private static void simpleRoom() {
@@ -349,8 +333,6 @@ public class JsonV2Test extends Test {
     JsonDelegate d = new StandardJsonDelegate(node);
 
     d.push();
-
-    d.push();
     d.push("first");
     d.pop("pablo");
     d.push("last");
@@ -361,8 +343,6 @@ public class JsonV2Test extends Test {
     d.pop("zoey");
     d.push("last");
     d.pop("rose");
-    d.pop();
-
     d.pop();
 
     assertRoom(node);
@@ -390,8 +370,6 @@ public class JsonV2Test extends Test {
     ListOfRoomsNode node = new ListOfRoomsNode();
     JsonDelegate d = new StandardJsonDelegate(node);
 
-    d.push();
-
     d.push(); // room 1
     d.push(); // person 1
     d.push("first");
@@ -416,16 +394,13 @@ public class JsonV2Test extends Test {
     d.pop();
     d.pop();
 
-    d.pop();
-
     assertArrayOfRooms(node);
   }
 
   private static void namedPerson() {
     NamedPersonNode n = new NamedPersonNode();
     n.next("age").accept("111");
-    Chainable holderNode = n.next("name");
-    Chainable nameNode = holderNode.next();
+    Chainable nameNode = n.next("name");
     nameNode.next("first").accept("aaa");
     nameNode.next("last").accept("bbb");
     assertNamedPerson(n);
@@ -435,17 +410,14 @@ public class JsonV2Test extends Test {
     NamedPersonNode node = new NamedPersonNode();
     StandardJsonDelegate d = new StandardJsonDelegate(node);
 
-    d.push();
     d.push("age");
-    d.pop("111");
+      d.pop("111");
     d.push("name");
-    d.push();
-    d.push("first");
-    d.pop("aaa");
-    d.push("last");
-    d.pop("bbb");
-    d.pop();
-    d.pop();
+      d.push("first");
+        d.pop("aaa");
+      d.push("last");
+        d.pop("bbb");
+      d.pop();
     d.pop();
 
     assertNamedPerson(node);
