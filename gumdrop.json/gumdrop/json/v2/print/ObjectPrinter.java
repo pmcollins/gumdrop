@@ -4,17 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-public class PojoPrinter<T> extends JsonPrinter<T> {
+public class ObjectPrinter<T> extends JsonPrinter<T> {
 
   public static class Builder<T> {
 
     private final List<MethodPrinter<T, ?>> methods = new ArrayList<>();
 
-    public <U> void addMethodPrinter(String name, Function<T, U> method, JsonPrinter<U> jsonPrinter) {
-      addMethodPrinter(new MethodPrinter<>(name, method, jsonPrinter));
+    public <U> void addPrinter(String name, Function<T, U> method, JsonPrinter<U> jsonPrinter) {
+      addPrinter(new MethodPrinter<>(name, method, jsonPrinter));
     }
 
-    public void addMethodPrinter(MethodPrinter<T, ?> methodPrinter) {
+    public void addPrinter(MethodPrinter<T, ?> methodPrinter) {
       methods.add(methodPrinter);
     }
 
@@ -22,15 +22,15 @@ public class PojoPrinter<T> extends JsonPrinter<T> {
       return methods;
     }
 
-    public PojoPrinter<T> build() {
-      return new PojoPrinter<>(methods);
+    public ObjectPrinter<T> build() {
+      return new ObjectPrinter<>(methods);
     }
 
   }
 
   private final List<MethodPrinter<T, ?>> methods;
 
-  protected PojoPrinter(List<MethodPrinter<T, ?>> methods) {
+  protected ObjectPrinter(List<MethodPrinter<T, ?>> methods) {
     this.methods = methods;
   }
 
