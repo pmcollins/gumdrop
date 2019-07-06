@@ -1,23 +1,23 @@
 package gumdrop.test.json.v2;
 
 import gumdrop.json.v2.print.MethodPrinter;
-import gumdrop.json.v2.print.PojoPrinter;
+import gumdrop.json.v2.print.ObjectPrinter;
 import gumdrop.json.v2.print.StringPrinter;
 import gumdrop.test.fake.Person;
 
 import java.util.List;
 
-class PersonPrinter extends PojoPrinter<Person> {
+class PersonPrinter extends ObjectPrinter<Person> {
 
   static PersonPrinter build() {
     Builder b = new Builder();
     StringPrinter stringPrinter = new StringPrinter();
-    b.addMethodPrinter(new MethodPrinter<>("first", Person::getFirst, stringPrinter));
-    b.addMethodPrinter(new MethodPrinter<>("last", Person::getLast, stringPrinter));
+    b.addPrinter(new MethodPrinter<>("first", Person::getFirst, stringPrinter));
+    b.addPrinter(new MethodPrinter<>("last", Person::getLast, stringPrinter));
     return b.build();
   }
 
-  static class Builder extends PojoPrinter.Builder<Person> {
+  static class Builder extends ObjectPrinter.Builder<Person> {
 
     @Override
     public PersonPrinter build() {
