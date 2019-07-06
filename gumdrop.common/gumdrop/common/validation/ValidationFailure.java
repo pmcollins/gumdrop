@@ -4,13 +4,28 @@ import java.util.Objects;
 
 public class ValidationFailure {
 
-  private final String key;
-  private final String value;
-  private final String message;
+  private String key;
+  private String value;
+  private String message;
+
+  public ValidationFailure() {
+  }
 
   public ValidationFailure(String key, String value, String message) {
     this.key = key;
     this.value = value;
+    this.message = message;
+  }
+
+  public void setKey(String key) {
+    this.key = key;
+  }
+
+  public void setValue(String value) {
+    this.value = value;
+  }
+
+  public void setMessage(String message) {
     this.message = message;
   }
 

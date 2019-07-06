@@ -110,7 +110,7 @@ public class JsonV2Test extends Test {
   private static void intArrayParser() {
     IntListNode node = new IntListNode();
     JsonDelegate d = new StandardJsonDelegate(node);
-    JsonParser p = new JsonParser("[1,2]", d);
+    JsonParser p = new JsonParser(d, "[1,2]");
     p.readValue();
     List<Integer> integers = node.instance();
     assertIntArray(integers);
@@ -150,7 +150,7 @@ public class JsonV2Test extends Test {
     StringMapNode node = new StringMapNode();
     JsonDelegate d = new StandardJsonDelegate(node);
     String json = "{\"key\":\"value\",\"key2\",\"value2\"}";
-    JsonParser p = new JsonParser(json, d);
+    JsonParser p = new JsonParser(d, json);
     p.readValue();
     assertStringStringMap(node);
   }
@@ -322,7 +322,13 @@ public class JsonV2Test extends Test {
     ArrayPrinter<Person> p = new ArrayPrinter<>(PersonPrinter.build());
     StringBuilder sb = new StringBuilder();
     p.print(sb, List.of(new Person("bilbo", "baggins")));
-    assertEquals("[{\"first\":\"bilbo\",\"last\":\"baggins\"}]", sb.toString());
+    String json = sb.toString();
+    assertEquals("[{\"first\":\"bilbo\",\"last\":\"baggins\"}]", json);
+
+    ListOfPersonNode node = new ListOfPersonNode();
+    JsonReader<List<Person>> reader = new JsonReader<>(node);
+    List<Person> rebuilt = reader.read(json);
+    System.out.println(rebuilt);
   }
 
   private static void simpleRoom() {
@@ -449,7 +455,7 @@ public class JsonV2Test extends Test {
     String json = "{\"age\":111,\"name\":{\"first\":\"aaa\",\"last\":\"bbb\"}}";
     NamedPersonNode node = new NamedPersonNode();
     JsonDelegate d = new StandardJsonDelegate(node);
-    JsonParser parser = new JsonParser(json, d);
+    JsonParser parser = new JsonParser(d, json);
     parser.readValue();
     assertNamedPerson(node);
   }

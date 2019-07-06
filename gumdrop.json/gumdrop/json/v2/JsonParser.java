@@ -7,7 +7,7 @@ public class JsonParser {
   private final ByteIterator it;
   private final JsonDelegate delegate;
 
-  public JsonParser(String json, JsonDelegate delegate) {
+  public JsonParser(JsonDelegate delegate, String json) {
     it = new ByteIterator(json);
     this.delegate = delegate;
   }

@@ -6,6 +6,8 @@ public interface JsonDelegate {
 
   void pop(String string);
 
+  void accept(String val);
+
   void push();
 
   void pop();
