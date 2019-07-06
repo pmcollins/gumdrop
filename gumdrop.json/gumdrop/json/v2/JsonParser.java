@@ -17,7 +17,8 @@ public class JsonParser {
     char curr = it.currentChar();
     switch (curr) {
       case '"':
-        delegate.pop(readQuotedString());
+        String quotedString = readQuotedString();
+        delegate.accept(quotedString);
         break;
       case '{':
         readObject();
@@ -26,21 +27,19 @@ public class JsonParser {
         readArray();
         break;
       default:
-        delegate.pop(readBareword());
+        delegate.accept(readBareword());
         break;
     }
     skipWhiteSpace();
   }
 
   private void readObject() {
-    delegate.push();
     it.increment(); // '{'
     skipWhiteSpace();
     if (it.currentChar() != '}') {
       readKVPairs();
     }
     it.increment(); // '}'
-    delegate.pop();
   }
 
   private String readQuotedString() {
@@ -79,24 +78,27 @@ public class JsonParser {
     skipWhiteSpace();
     it.increment(); // ':'
     readValue();
-  }
-
-  private void readArray() {
-    delegate.push();
-    it.increment();
-    readCommaList();
-    it.increment();
     delegate.pop();
   }
 
+  private void readArray() {
+    it.increment();
+    readCommaList();
+    it.increment();
+  }
+
   private void readCommaList() {
+    if (it.currentChar() == ']') return;
     delegate.push();
     readValue();
+    delegate.pop();
     while (it.currentChar() == ',') {
       it.increment();
       delegate.push();
       readValue();
+      delegate.pop();
     }
+
   }
 
   private void skipWhiteSpace() {

@@ -9,7 +9,7 @@ public class JsonReader<T> {
   }
 
   public T read(String json) {
-    JsonDelegate d = new LoggingJsonDelegate(node);
+    JsonDelegate d = new StandardJsonDelegate(node);
     JsonParser p = new JsonParser(d, json);
     p.readValue();
     return node.instance();

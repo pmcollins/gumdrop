@@ -44,15 +44,19 @@ public class Asserts {
     int s1 = l1.size();
     int s2 = l2.size();
     if (s1 != s2) {
-      throw new FailedTestException("list lengths not equal: [" + s1 + "] vs [" + s2 + "]");
+      failLists(l1, l2);
     }
     for (int i = 0; i < s1; i++) {
       T t1 = l1.get(i);
       T t2 = l2.get(i);
       if (!Objects.equals(t1, t2)) {
-        throw new FailedTestException("items not equal: [" + t1 + "] vs [" + t2 + "]");
+        failLists(l1, l2);
       }
     }
+  }
+
+  private static void failLists(List<?> l1, List<?> l2) {
+    throw new FailedTestException(l1 + " vs " + l2);
   }
 
   public static void assertThrows(Runnable r, Class klass) {

@@ -19,7 +19,7 @@ class NamedPersonNode extends Node<NamedPerson> {
       NameNode nameNode = new NameNode();
       Name name = nameNode.instance();
       instance().setName(name);
-      return new HolderNode(nameNode);
+      return nameNode;
     } else if ("age".equals(key)) {
       return new StringAcceptorNode<>(
         instance(),
