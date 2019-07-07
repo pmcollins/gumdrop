@@ -11,7 +11,7 @@ public class ArrayPrinter<T> extends JsonPrinter<List<T>> {
   }
 
   @Override
-  public void print(StringBuilder sb, List<T> list) {
+  public void printNonNull(StringBuilder sb, List<T> list) {
     printList(sb, list, valuePrinter);
   }
 

@@ -35,7 +35,7 @@ public class ObjectPrinter<T> extends JsonPrinter<T> {
   }
 
   @Override
-  public void print(StringBuilder sb, T t) {
+  public void printNonNull(StringBuilder sb, T t) {
     sb.append('{');
     for (int i = 0; i < methods.size(); i++) {
       if (i > 0) {

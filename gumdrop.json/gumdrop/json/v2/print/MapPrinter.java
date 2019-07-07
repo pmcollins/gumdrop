@@ -11,7 +11,7 @@ public class MapPrinter<T> extends JsonPrinter<Map<String, T>> {
   }
 
   @Override
-  public void print(StringBuilder sb, Map<String, T> map) {
+  public void printNonNull(StringBuilder sb, Map<String, T> map) {
     sb.append('{');
     int i = 0;
     for (String key : map.keySet()) {
