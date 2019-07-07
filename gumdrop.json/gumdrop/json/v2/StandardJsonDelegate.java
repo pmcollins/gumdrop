@@ -35,4 +35,9 @@ public class StandardJsonDelegate implements JsonDelegate {
     stack.pop();
   }
 
+  @Override
+  public void nullValue() {
+    stack.peek().nullValue();
+  }
+
 }

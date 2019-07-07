@@ -39,42 +39,42 @@ public class JsonParserV2Test extends Test {
     FakeJsonDelegate d = new FakeJsonDelegate();
     JsonParser jsonParser = new JsonParser(d, "[]");
     jsonParser.readValue();
-    assertCommands(d);
+    assertCommands(d, "push", "pop");
   }
 
   private void strArray1() {
     FakeJsonDelegate d = new FakeJsonDelegate();
     JsonParser jsonParser = new JsonParser(d, "[\"x\"]");
     jsonParser.readValue();
-    assertCommands(d, "push", "accept [x]", "pop");
+    assertCommands(d, "push", "push", "accept [x]", "pop", "pop");
   }
 
   private void strArray2() {
     FakeJsonDelegate d = new FakeJsonDelegate();
     JsonParser jsonParser = new JsonParser(d, "[\"x\",\"y\"]");
     jsonParser.readValue();
-    assertCommands(d, "push", "accept [x]", "pop", "push", "accept [y]", "pop");
+    assertCommands(d, "push", "push", "accept [x]", "pop", "push", "accept [y]", "pop", "pop");
   }
 
   private void map1() {
     FakeJsonDelegate d = new FakeJsonDelegate();
     JsonParser jsonParser = new JsonParser(d, "{\"a\":\"x\",\"b\":\"y\"}");
     jsonParser.readValue();
-    assertCommands(d, "push [a]", "accept [x]", "pop", "push [b]", "accept [y]", "pop");
+    assertCommands(d, "push", "push [a]", "accept [x]", "pop", "push [b]", "accept [y]", "pop", "pop");
   }
 
   private void mapOfArray() {
     FakeJsonDelegate d = new FakeJsonDelegate();
     JsonParser jsonParser = new JsonParser(d, "{\"a\":[\"b\"]}");
     jsonParser.readValue();
-    assertCommands(d, "push [a]", "push", "accept [b]", "pop", "pop");
+    assertCommands(d, "push", "push [a]", "push", "push", "accept [b]", "pop", "pop", "pop", "pop");
   }
 
   private void arrayOfMap() {
     FakeJsonDelegate d = new FakeJsonDelegate();
     JsonParser jsonParser = new JsonParser(d, "[{\"a\":\"x\"}]");
     jsonParser.readValue();
-    assertCommands(d, "push", "push [a]", "accept [x]", "pop", "pop");
+    assertCommands(d, "push", "push", "push", "push [a]", "accept [x]", "pop", "pop", "pop", "pop");
   }
 
   private static void assertCommands(FakeJsonDelegate d, String... cmds) {
@@ -114,6 +114,11 @@ public class JsonParserV2Test extends Test {
     public void pop() {
       level--;
       commands.add("pop");
+    }
+
+    @Override
+    public void nullValue() {
+      commands.add("nullValue");
     }
 
     List<String> getCommands() {

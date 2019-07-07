@@ -27,7 +27,12 @@ public class JsonParser {
         readArray();
         break;
       default:
-        delegate.accept(readBareword());
+        String bareword = readBareword();
+        if ("null".equals(bareword)) {
+          delegate.nullValue();
+        } else {
+          delegate.accept(bareword);
+        }
         break;
     }
     skipWhiteSpace();

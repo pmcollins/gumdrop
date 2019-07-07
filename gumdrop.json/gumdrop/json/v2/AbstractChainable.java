@@ -17,4 +17,9 @@ public class AbstractChainable implements Chainable {
     throw new BadCommandException(this.getClass() + ".accept(\"" + value + "\")");
   }
 
+  @Override
+  public void nullValue() {
+    throw new BadCommandException(this.getClass() + ".nullValue()");
+  }
+
 }

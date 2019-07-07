@@ -8,4 +8,6 @@ public interface Chainable {
 
   void accept(String value);
 
+  void nullValue();
+
 }
