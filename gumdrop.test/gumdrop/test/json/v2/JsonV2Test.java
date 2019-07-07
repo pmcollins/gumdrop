@@ -32,6 +32,7 @@ public class JsonV2Test extends Test {
 
     intArray();
     intArrayParser();
+/*
     intArrayDelegate();
     intArrayPrinter();
 
@@ -66,6 +67,8 @@ public class JsonV2Test extends Test {
     namedPerson();
     namedPersonDelegate();
     namedPersonParser();
+    namedPersonParserNull();
+*/
   }
 
   private static void stringArray() {
@@ -427,6 +430,15 @@ public class JsonV2Test extends Test {
     String json = "{\"age\":111,\"name\":{\"first\":\"aaa\",\"last\":\"bbb\"}}";
     NamedPersonNode node = new NamedPersonNode();
     JsonDelegate d = new StandardJsonDelegate(node);
+    JsonParser parser = new JsonParser(d, json);
+    parser.readValue();
+    assertNamedPerson(node);
+  }
+
+  private static void namedPersonParserNull() {
+    String json = "{\"age\":111,\"name\":null}";
+    NamedPersonNode node = new NamedPersonNode();
+    JsonDelegate d = new LoggingJsonDelegate(node);
     JsonParser parser = new JsonParser(d, json);
     parser.readValue();
     assertNamedPerson(node);
