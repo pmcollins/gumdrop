@@ -34,12 +34,14 @@ public class JsonParser {
   }
 
   private void readObject() {
+    delegate.push();
     it.increment(); // '{'
     skipWhiteSpace();
     if (it.currentChar() != '}') {
       readKVPairs();
     }
     it.increment(); // '}'
+    delegate.pop();
   }
 
   private String readQuotedString() {
@@ -82,9 +84,11 @@ public class JsonParser {
   }
 
   private void readArray() {
+    delegate.push();
     it.increment();
     readCommaList();
     it.increment();
+    delegate.pop();
   }
 
   private void readCommaList() {
