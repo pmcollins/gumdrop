@@ -8,6 +8,14 @@ public abstract class JsonPrinter<T> {
     return sb.toString();
   }
 
-  protected abstract void print(StringBuilder sb, T t);
+  public final void print(StringBuilder sb, T t) {
+    if (t == null) {
+      sb.append("null");
+    } else {
+      printNonNull(sb, t);
+    }
+  }
+
+  protected abstract void printNonNull(StringBuilder sb, T t);
 
 }
