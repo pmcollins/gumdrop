@@ -36,7 +36,7 @@ public class Asserts {
   public static void assertEquals(Object expected, Object actual) {
     print();
     if (!expected.equals(actual)) {
-      throw new FailedTestException("assertEquals expected [" + expected + "], got [" + actual + "]");
+      throw new FailedTestException("assertEquals expected " + expected + ", got " + actual + "");
     }
   }
 

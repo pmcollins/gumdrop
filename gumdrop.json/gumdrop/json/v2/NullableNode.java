@@ -2,7 +2,7 @@ package gumdrop.json.v2;
 
 import java.util.function.BiConsumer;
 
-public class NullableNode<T, U> extends AbstractChainable {
+public class NullableNode<T, U> extends Node<T> {
 
   private final Node<T> node;
   private final U u;
@@ -21,7 +21,8 @@ public class NullableNode<T, U> extends AbstractChainable {
   }
 
   @Override
-  public void nullValue() {
+  public void acceptString(String value) {
+    // should be null
   }
 
 }

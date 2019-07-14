@@ -12,7 +12,7 @@ public class StringDictionaryAcceptorNode<T> extends Node<T> {
   }
 
   @Override
-  public void accept(String value) {
+  public void acceptString(String value) {
     triConsumer.accept(instance(), key, value);
   }
 

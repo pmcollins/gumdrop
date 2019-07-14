@@ -6,8 +6,8 @@ public interface Chainable {
 
   Chainable next(String key);
 
-  void accept(String value);
+  void acceptString(String value);
 
-  void nullValue();
+  void acceptBareword(String bareword);
 
 }

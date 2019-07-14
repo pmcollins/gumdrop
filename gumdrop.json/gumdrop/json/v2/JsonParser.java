@@ -18,7 +18,7 @@ public class JsonParser {
     switch (curr) {
       case '"':
         String quotedString = readQuotedString();
-        delegate.accept(quotedString);
+        delegate.acceptString(quotedString);
         break;
       case '{':
         readObject();
@@ -28,11 +28,7 @@ public class JsonParser {
         break;
       default:
         String bareword = readBareword();
-        if ("null".equals(bareword)) {
-          delegate.nullValue();
-        } else {
-          delegate.accept(bareword);
-        }
+        delegate.acceptBareword(bareword);
         break;
     }
     skipWhiteSpace();

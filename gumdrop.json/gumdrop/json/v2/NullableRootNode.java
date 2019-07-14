@@ -16,8 +16,8 @@ public class NullableRootNode<T> extends Node<T> {
   }
 
   @Override
-  public void nullValue() {
-    this.nullValue = true;
+  public void acceptString(String value) {
+    nullValue = true;
   }
 
   @Override

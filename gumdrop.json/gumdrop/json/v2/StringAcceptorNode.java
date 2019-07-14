@@ -12,7 +12,7 @@ public class StringAcceptorNode<T> extends Node<T> {
   }
 
   @Override
-  public void accept(String value) {
+  public void acceptString(String value) {
     method.accept(instance(), value);
   }
 

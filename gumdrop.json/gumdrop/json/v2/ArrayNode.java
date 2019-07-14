@@ -2,10 +2,17 @@ package gumdrop.json.v2;
 
 public class ArrayNode<T> extends Node<T> {
 
-  private final Binding<T, ?> binding;
+  private Binding<T, ?> binding;
 
   public ArrayNode(T t, Binding<T, ?> binding) {
     super(t);
+    this.binding = binding;
+  }
+
+  public ArrayNode() {
+  }
+
+  protected void setBinding(Binding<T, ?> binding) {
     this.binding = binding;
   }
 
