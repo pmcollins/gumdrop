@@ -79,7 +79,7 @@ public class JsonParserV2Test extends Test {
 
   private static void assertCommands(FakeJsonDelegate d, String... cmds) {
     assertTrue(d.isZeroLevel());
-    assertListEquals(Arrays.asList(cmds), d.getCommands());
+    assertListEquals(List.of(cmds), d.getCommands());
   }
 
   private static class FakeJsonDelegate implements JsonDelegate {

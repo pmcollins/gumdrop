@@ -9,7 +9,7 @@ public class Buildables implements Buildable {
   private final List<Buildable> buildables = new ArrayList<>();
 
   public Buildables(Buildable... buildables) {
-    this.buildables.addAll(Arrays.asList(buildables));
+    this.buildables.addAll(List.of(buildables));
   }
 
   public void add(Buildable buildable) {

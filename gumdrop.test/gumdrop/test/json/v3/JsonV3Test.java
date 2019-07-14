@@ -42,6 +42,9 @@ public class JsonV3Test extends Test {
     nullMapValue();
     emptyMapValue();
     mapMultiValue();
+    listOfMap();
+    listOfNullMap();
+    listOfTwoMaps();
   }
 
   private void nullInt() {
@@ -71,21 +74,21 @@ public class JsonV3Test extends Test {
     IntListNode n = new IntListNode();
     JsonDelegate d = new StandardJsonDelegate(n);
     new JsonParser(d, "[]").readValue();
-    assertListEquals(Collections.emptyList(), n.getValue());
+    assertListEquals(List.of(), n.getValue());
   }
 
   private void singleElementArray() {
     IntListNode n = new IntListNode();
     JsonDelegate d = new StandardJsonDelegate(n);
     new JsonParser(d, "[42]").readValue();
-    assertListEquals(Collections.singletonList(42), n.getValue());
+    assertListEquals(List.of(42), n.getValue());
   }
 
   private void multiElementArray() {
     IntListNode n = new IntListNode();
     JsonDelegate d = new StandardJsonDelegate(n);
     new JsonParser(d, "[42, 111]").readValue();
-    assertListEquals(Arrays.asList(42, 111), n.getValue());
+    assertListEquals(List.of(42, 111), n.getValue());
   }
 
   private void nullElementArray() {
@@ -113,46 +116,46 @@ public class JsonV3Test extends Test {
     IntListListNode n = new IntListListNode();
     JsonDelegate d = new StandardJsonDelegate(n);
     new JsonParser(d, "[[]]").readValue();
-    assertListEquals(Collections.singletonList(Collections.emptyList()), n.getValue());
+    assertListEquals(List.of(List.of()), n.getValue());
   }
 
   private void singleNestedIntArray() {
     IntListListNode n = new IntListListNode();
     JsonDelegate d = new StandardJsonDelegate(n);
     new JsonParser(d, "[[42]]").readValue();
-    assertListEquals(Collections.singletonList(Collections.singletonList(42)), n.getValue());
+    assertListEquals(List.of(List.of(42)), n.getValue());
   }
 
   private void doubleNestedIntArray() {
     IntListListNode n = new IntListListNode();
     JsonDelegate d = new StandardJsonDelegate(n);
     new JsonParser(d, "[[42], [111]]").readValue();
-    assertListEquals(Arrays.asList(Collections.singletonList(42), Collections.singletonList(111)), n.getValue());
+    assertListEquals(List.of(List.of(42), List.of(111)), n.getValue());
   }
 
   private void doubleDoubleNestedIntArray() {
     IntListListNode n = new IntListListNode();
     JsonDelegate d = new StandardJsonDelegate(n);
     new JsonParser(d, "[[42, 43], [111, 112]]").readValue();
-    assertListEquals(Arrays.asList(Arrays.asList(42, 43), Arrays.asList(111, 112)), n.getValue());
+    assertListEquals(List.of(List.of(42, 43), List.of(111, 112)), n.getValue());
   }
 
   private void nullStringStringMap() {
-    StringStringMapNode n = new StringStringMapNode();
+    StringIntMapNode n = new StringIntMapNode();
     JsonDelegate d = new StandardJsonDelegate(n);
     new JsonParser(d, "null").readValue();
     assertNull(n.getValue());
   }
 
   private void emptyStringStringMap() {
-    StringStringMapNode n = new StringStringMapNode();
+    StringIntMapNode n = new StringIntMapNode();
     JsonDelegate d = new StandardJsonDelegate(n);
     new JsonParser(d, "{}").readValue();
-    assertEquals(Collections.emptyMap(), n.getValue());
+    assertEquals(Map.of(), n.getValue());
   }
 
   private void singleStringStringMap() {
-    StringStringMapNode n = new StringStringMapNode();
+    StringIntMapNode n = new StringIntMapNode();
     JsonDelegate d = new StandardJsonDelegate(n);
     new JsonParser(d, "{\"foo\":42}").readValue();
     Map<String, Integer> map = n.getValue();
@@ -160,7 +163,7 @@ public class JsonV3Test extends Test {
   }
 
   private void doubleStringStringMap() {
-    StringStringMapNode n = new StringStringMapNode();
+    StringIntMapNode n = new StringIntMapNode();
     JsonDelegate d = new StandardJsonDelegate(n);
     new JsonParser(d, "{\"foo\":42,\"bar\":111}").readValue();
     Map<String, Integer> map = n.getValue();
@@ -180,7 +183,7 @@ public class JsonV3Test extends Test {
     JsonDelegate d = new StandardJsonDelegate(n);
     new JsonParser(d, "{}").readValue();
     Map<String, List<Integer>> map = n.getValue();
-    assertEquals(Collections.emptyMap(), map);
+    assertEquals(Map.of(), map);
   }
 
   private void nullMapValue() {
@@ -198,7 +201,7 @@ public class JsonV3Test extends Test {
     new JsonParser(d, "{\"foo\":[]}").readValue();
     Map<String, List<Integer>> map = n.getValue();
     assertEquals(1, map.size());
-    assertEquals(Collections.emptyList(), map.get("foo"));
+    assertEquals(List.of(), map.get("foo"));
   }
 
   private void mapMultiValue() {
@@ -207,8 +210,58 @@ public class JsonV3Test extends Test {
     new JsonParser(d, "{\"foo\":[],\"bar\":[42]}").readValue();
     Map<String, List<Integer>> map = n.getValue();
     assertEquals(2, map.size());
-    assertEquals(Collections.emptyList(), map.get("foo"));
+    assertEquals(List.of(), map.get("foo"));
     assertEquals(List.of(42), map.get("bar"));
+  }
+
+  private void listOfMap() {
+    ListOfMapNode n = new ListOfMapNode();
+    JsonDelegate d = new StandardJsonDelegate(n);
+    new JsonParser(d, "[{}]").readValue();
+    List<Map<String, Integer>> list = n.getValue();
+    assertEquals(List.of(Map.of()), list);
+  }
+
+  private void listOfNullMap() {
+    ListOfMapNode n = new ListOfMapNode();
+    JsonDelegate d = new StandardJsonDelegate(n);
+    new JsonParser(d, "[null]").readValue();
+    List<Map<String, Integer>> list = n.getValue();
+    assertEquals(Collections.singletonList(null), list);
+  }
+
+  private void listOfTwoMaps() {
+    ListOfMapNode n = new ListOfMapNode();
+    JsonDelegate d = new StandardJsonDelegate(n);
+    new JsonParser(d, "[{\"aaa\":111},{\"bbb\":222}]").readValue();
+    List<Map<String, Integer>> list = n.getValue();
+    assertEquals(List.of(Map.of("aaa", 111), Map.of("bbb", 222)), list);
+  }
+
+}
+
+//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
+
+class ListOfMapElementNode extends Node<List<Map<String, Integer>>> {
+
+  ListOfMapElementNode(List<Map<String, Integer>> list) {
+    super(list);
+  }
+
+  @Override
+  public Chainable next() {
+    return new StringIntMapNode(map -> getValue().add(map));
+  }
+
+}
+
+class ListOfMapNode extends Node<List<Map<String, Integer>>> {
+
+  @Override
+  public Chainable next() {
+    ArrayList<Map<String, Integer>> list = new ArrayList<>();
+    setValue(list);
+    return new ListOfMapElementNode(list);
   }
 
 }
@@ -254,7 +307,14 @@ class StringStringMapElementNode extends Node<Map<String, Integer>> {
 
 }
 
-class StringStringMapNode extends NullableNode<Map<String, Integer>> {
+class StringIntMapNode extends NullableNode<Map<String, Integer>> {
+
+  StringIntMapNode() {
+  }
+
+  StringIntMapNode(Consumer<Map<String, Integer>> listener) {
+    super(listener);
+  }
 
   @Override
   public Chainable next() {
@@ -355,10 +415,6 @@ class IntNode extends NullableNode<Integer> {
 class NullableNode<T> extends Node<T> {
 
   NullableNode() {
-  }
-
-  NullableNode(T value) {
-    super(value);
   }
 
   NullableNode(Consumer<T> listener) {
