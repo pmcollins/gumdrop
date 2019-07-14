@@ -100,8 +100,8 @@ public class JsonParserV2Test extends Test {
     }
 
     @Override
-    public void accept(String val) {
-      commands.add("accept [" + val + "]");
+    public void acceptString(String val) {
+      commands.add("acceptString [" + val + "]");
     }
 
     @Override
@@ -117,8 +117,8 @@ public class JsonParserV2Test extends Test {
     }
 
     @Override
-    public void nullValue() {
-      commands.add("nullValue");
+    public void acceptBareword(String bareword) {
+      commands.add("acceptBareword [" + bareword + "]");
     }
 
     List<String> getCommands() {

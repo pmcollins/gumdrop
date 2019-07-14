@@ -21,23 +21,23 @@ public class StandardJsonDelegate implements JsonDelegate {
   }
 
   @Override
-  public void accept(String val) {
-    stack.peek().accept(val);
+  public void acceptString(String val) {
+    stack.peek().acceptString(val);
+  }
+
+  @Override
+  public void acceptBareword(String bareword) {
+    stack.peek().acceptBareword(bareword);
   }
 
   @Override
   public void pop(String val) {
-    stack.pop().accept(val);
+    stack.pop().acceptString(val);
   }
 
   @Override
   public void pop() {
     stack.pop();
-  }
-
-  @Override
-  public void nullValue() {
-    stack.peek().nullValue();
   }
 
 }

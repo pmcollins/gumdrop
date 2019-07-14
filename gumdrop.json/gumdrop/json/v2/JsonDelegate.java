@@ -6,12 +6,12 @@ public interface JsonDelegate {
 
   void pop(String string);
 
-  void accept(String val);
+  void acceptString(String val);
+
+  void acceptBareword(String bareword);
 
   void push();
 
   void pop();
-
-  void nullValue();
 
 }

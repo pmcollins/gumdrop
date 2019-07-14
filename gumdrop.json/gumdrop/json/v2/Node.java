@@ -1,10 +1,17 @@
 package gumdrop.json.v2;
 
-public abstract class Node<T> extends AbstractChainable {
+public abstract class Node<T> extends BaseChainable {
 
-  private final T t;
+  private T t;
 
   public Node(T t) {
+    this.t = t;
+  }
+
+  public Node() {
+  }
+
+  public void setInstance(T t) {
     this.t = t;
   }
 
