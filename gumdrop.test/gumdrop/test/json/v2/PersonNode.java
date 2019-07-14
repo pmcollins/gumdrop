@@ -1,19 +1,16 @@
 package gumdrop.test.json.v2;
 
-import gumdrop.json.v2.SimplePojoNode;
+import gumdrop.json.v2.Chainable;
+import gumdrop.json.v2.NullableNode;
 import gumdrop.test.fake.Person;
 
-class PersonNode extends SimplePojoNode<Person> {
+class PersonNode extends NullableNode<Person> {
 
-  PersonNode() {
-    super(new Person(), key -> {
-      if ("first".equals(key)) {
-        return Person::setFirst;
-      } else if ("last".equals(key)) {
-        return Person::setLast;
-      }
-      return null;
-    });
+  @Override
+  public Chainable next() {
+    Person person = new Person();
+    setValue(person);
+    return new PersonAttributesNode(person);
   }
 
 }

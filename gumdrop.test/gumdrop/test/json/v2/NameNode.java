@@ -1,23 +1,22 @@
 package gumdrop.test.json.v2;
 
-import gumdrop.json.v2.SimplePojoNode;
+import gumdrop.json.v2.Chainable;
+import gumdrop.json.v2.NullableNode;
 import gumdrop.test.fake.Name;
 
-import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
-class NameNode extends SimplePojoNode<Name> {
+class NameNode extends NullableNode<Name> {
 
-  NameNode() {
-    super(new Name(), NameNode::setterMapping);
+  NameNode(Consumer<Name> listener) {
+    super(listener);
   }
 
-  private static BiConsumer<Name, String> setterMapping(String key) {
-    if ("first".equals(key)) {
-      return Name::setFirst;
-    } else if ("last".equals(key)) {
-      return Name::setLast;
-    }
-    return null;
+  @Override
+  public Chainable next() {
+    Name name = new Name();
+    setValue(name);
+    return new NameAttributesNode(name);
   }
 
 }
