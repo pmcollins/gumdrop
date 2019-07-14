@@ -35,7 +35,7 @@ public class StringUtilTest extends Test {
   private static void testParseQueryString() {
     assertEquals(Map.of("a", "b"), StringUtil.parseQueryString("a=b"));
     assertEquals(Map.of("a", "b", "c", "d"), StringUtil.parseQueryString("a=b&c=d"));
-    assertEquals(Collections.emptyMap(), StringUtil.parseQueryString("hello"));
+    assertEquals(Map.of(), StringUtil.parseQueryString("hello"));
     assertEquals(Map.of("a", "b", "c", "d"), StringUtil.parseQueryString("a=b&c=d&foo"));
   }
 

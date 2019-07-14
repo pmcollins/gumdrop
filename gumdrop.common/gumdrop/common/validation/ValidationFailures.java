@@ -22,7 +22,7 @@ public class ValidationFailures {
   }
 
   public ValidationFailures(ValidationFailure... validationFailures) {
-    this(Arrays.asList(validationFailures));
+    this(List.of(validationFailures));
   }
 
   public void add(ValidationFailure validationFailure) {
