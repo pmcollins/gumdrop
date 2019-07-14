@@ -1,28 +1,27 @@
 package gumdrop.json.v2;
 
-import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
-public class NullableNode<T, U> extends Node<T> {
+public class NullableNode<T> extends Node<T> {
 
-  private final Node<T> node;
-  private final U u;
-  private final BiConsumer<U, T> setter;
+  public NullableNode() {
+  }
 
-  public NullableNode(Node<T> node, U u, BiConsumer<U, T> setter) {
-    this.node = node;
-    this.u = u;
-    this.setter = setter;
+  public NullableNode(Consumer<T> listener) {
+    super(listener);
   }
 
   @Override
-  public Chainable next() {
-    setter.accept(u, node.instance());
-    return node;
+  public final void acceptBareword(String bareword) {
+    if ("null".equals(bareword)) {
+      setValue(null);
+    } else {
+      acceptNonNullBareword(bareword);
+    }
   }
 
-  @Override
-  public void acceptString(String value) {
-    // should be null
+  void acceptNonNullBareword(String bareword) {
+    super.acceptBareword(bareword);
   }
 
 }

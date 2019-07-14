@@ -1,22 +1,34 @@
 package gumdrop.json.v2;
 
-public abstract class Node<T> extends BaseChainable {
+import gumdrop.json.v2.BaseChainable;
 
-  private T t;
+import java.util.function.Consumer;
 
-  public Node(T t) {
-    this.t = t;
-  }
+public class Node<T> extends BaseChainable {
+
+  private T value;
+  private Consumer<T> listener;
 
   public Node() {
   }
 
-  public void setInstance(T t) {
-    this.t = t;
+  public Node(T value) {
+    this.value = value;
   }
 
-  public T instance() {
-    return t;
+  Node(Consumer<T> listener) {
+    this.listener = listener;
+  }
+
+  public T getValue() {
+    return value;
+  }
+
+  public void setValue(T value) {
+    if (listener != null) {
+      listener.accept(value);
+    }
+    this.value = value;
   }
 
 }
