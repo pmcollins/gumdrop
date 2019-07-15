@@ -1,7 +1,5 @@
 package gumdrop.json.v2;
 
-import gumdrop.json.v2.BaseChainable;
-
 import java.util.function.Consumer;
 
 public class Node<T> extends BaseChainable {

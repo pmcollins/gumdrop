@@ -12,8 +12,8 @@ public class FieldBinding<T, U> {
 
   public FieldBinding(String name, BiConsumer<T, U> setter, Function<Consumer<U>, Node<U>> nodeConstructor) {
     this.name = name;
-    this.nodeConstructor = nodeConstructor;
     this.setter = setter;
+    this.nodeConstructor = nodeConstructor;
   }
 
   String getName() {
