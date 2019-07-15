@@ -29,11 +29,8 @@ public class JsonV2NodeTest extends Test {
     singleElementArray();
     multiElementArray();
     nullElementArray();
-
     intListListNodeTests();
-
     stringIntMapTests();
-
     nullMapOfList();
     emptyMapOfList();
     nullMapValue();
@@ -47,7 +44,8 @@ public class JsonV2NodeTest extends Test {
     simplePojoWithExplicitNulls();
     simplePojo();
     complexPojo();
-    listNode();
+    listNodeofIntList();
+    listNodeOfInt();
     mapNode();
     namePojoNode();
     namedPersonPojoNode();
@@ -307,9 +305,16 @@ public class JsonV2NodeTest extends Test {
     assertEquals(expected, person);
   }
 
-  private void listNode() {
+  private void listNodeofIntList() {
     ListNode<List<Integer>> n = new ListNode<>(IntListNode::new);
     intListListNodeTests(n);
+  }
+
+  private void listNodeOfInt() {
+    ListNode<Integer> n = new ListNode<>(IntNode::new);
+    new JsonParser(new StandardJsonDelegate(n), "[1, 2, 3]").readValue();
+    List<Integer> list = n.getValue();
+    assertListEquals(List.of(1, 2, 3), list);
   }
 
   private void mapNode() {

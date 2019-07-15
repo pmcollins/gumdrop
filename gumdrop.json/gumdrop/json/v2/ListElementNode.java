@@ -15,9 +15,9 @@ class ListElementNode<T> extends Node<List<T>> {
 
   @Override
   public Chainable next() {
-    return nodeConstructor.apply(list -> {
+    return nodeConstructor.apply(t -> {
       List<T> value = getValue();
-      value.add(list);
+      value.add(t);
     });
   }
 
