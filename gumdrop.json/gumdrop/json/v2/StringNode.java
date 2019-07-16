@@ -4,6 +4,9 @@ import java.util.function.Consumer;
 
 public class StringNode extends NullableNode<String> {
 
+  public StringNode() {
+  }
+
   public StringNode(Consumer<String> listener) {
     super(listener);
   }

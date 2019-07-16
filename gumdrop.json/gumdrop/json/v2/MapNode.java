@@ -2,22 +2,21 @@ package gumdrop.json.v2;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
-import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class MapNode<T> extends NullableNode<Map<String, T>> {
 
-  private final Function<Consumer<T>, Node<T>> nodeConstructor;
+  private final Supplier<Node<T>> constructor;
 
-  public MapNode(Function<Consumer<T>, Node<T>> nodeConstructor) {
-    this.nodeConstructor = nodeConstructor;
+  public MapNode(Supplier<Node<T>> constructor) {
+    this.constructor = constructor;
   }
 
   @Override
   public Chainable next() {
     Map<String, T> map = new HashMap<>();
     setValue(map);
-    return new MapElementNode<>(map, nodeConstructor);
+    return new MapElementNode<>(map, constructor);
   }
 
 }
