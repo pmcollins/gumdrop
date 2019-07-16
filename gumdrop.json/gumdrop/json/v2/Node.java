@@ -29,4 +29,8 @@ public class Node<T> extends BaseChainable {
     this.value = value;
   }
 
+  public void setListener(Consumer<T> listener) {
+    this.listener = listener;
+  }
+
 }
