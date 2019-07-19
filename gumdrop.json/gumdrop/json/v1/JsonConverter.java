@@ -12,6 +12,7 @@ import java.util.function.Supplier;
  * just deserialize, use one of those instead.
  * @param <T> The type of object to serialize/deserialize to/from JSON
  */
+@Deprecated
 public class JsonConverter<T> implements StringConverter<T> {
 
   private final JsonWriter<T> jsonWriter = new JsonWriter<>();
@@ -41,7 +42,7 @@ public class JsonConverter<T> implements StringConverter<T> {
     jsonWriter.addSubWriter(name, fieldGetter, jsonConverter.jsonWriter);
   }
 
-  public void addMapFunctions(
+  void addMapFunctions(
     TriConsumer<T, String> tc,
     Function<T, Iterable<String>> keyFunction,
     BiFunction<T, String, String> dynamicFieldGetter
