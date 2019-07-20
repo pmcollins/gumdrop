@@ -12,7 +12,6 @@ public class WebTests extends TestSuite {
   public void run() throws Exception {
     test(
       new HtmlStringUtilTest(),
-      new HttpFormReaderTest(),
       new DispatcherTest(),
       new MethodDispatcherTest(),
       new PathBuilderTest(),

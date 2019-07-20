@@ -3,7 +3,7 @@ package gumdrop.test.web;
 import gumdrop.json.v2.*;
 import gumdrop.test.util.Test;
 import gumdrop.web.controller.ReadResult;
-import gumdrop.web.http.HttpFormReader2;
+import gumdrop.web.http.HttpFormReader;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class HttpFormReader2Test extends Test {
   }
 
   private void simple() {
-    HttpFormReader2<UserFormData> r = new HttpFormReader2<>(UserFormDataNode::new);
+    HttpFormReader<UserFormData> r = new HttpFormReader<>(UserFormDataNode::new);
     String q = "first=fff&last=lll&email=foo%40bar&likesPeaches=true";
     ReadResult<UserFormData> res = r.read(q);
     UserFormData userFormData = res.getFormObject();
@@ -45,7 +45,7 @@ public class HttpFormReader2Test extends Test {
       "f=rh%2Fsql%2Fcreate-player-teams.sql&f=rh%2Fsql%2Fcreate-master.sql&f=rh%2Fsql%2Fcreate-points-summary.sql&" +
       "f=rh%2Fsql%2Fcreate-view-top-coach-wins.sql&f=rh%2Fsql%2Fcreate-proc-player-rankings.sql&" +
       "f=rh%2Fsql%2Fcoach-ranking.sql";
-    HttpFormReader2<FileFormData> r = new HttpFormReader2<>(FileFormDataNode::new);
+    HttpFormReader<FileFormData> r = new HttpFormReader<>(FileFormDataNode::new);
     ReadResult<FileFormData> res = r.read(post);
     FileFormData formData = res.getFormObject();
     assertEquals(25, formData.getFileNames().size());
