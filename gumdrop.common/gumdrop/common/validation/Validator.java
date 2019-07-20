@@ -14,7 +14,9 @@ public class Validator<T> {
   }
 
   public Optional<ValidationFailure> validate(String key, T value) {
-    return fcn.apply(value) ? Optional.empty() : Optional.of(new ValidationFailure(key, String.valueOf(value), message));
+    return fcn.apply(value)
+      ? Optional.empty()
+      : Optional.of(new ValidationFailure(key, String.valueOf(value), message));
   }
 
 }
