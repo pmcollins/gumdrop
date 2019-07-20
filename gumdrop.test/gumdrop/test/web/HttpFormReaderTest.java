@@ -7,7 +7,6 @@ import gumdrop.test.util.Test;
 import gumdrop.web.http.FormReadResult;
 import gumdrop.web.http.HttpFormReader;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static gumdrop.test.util.Asserts.assertEquals;
@@ -55,47 +54,6 @@ public class HttpFormReaderTest extends Test {
     assertEquals("f", validationFailure.getValue());
   }
 
-  private static class UserFormData {
-
-    private String first;
-    private String last;
-    private String email;
-    private boolean likesPeaches;
-
-    String getFirst() {
-      return first;
-    }
-
-    void setFirst(String first) {
-      this.first = first;
-    }
-
-    String getLast() {
-      return last;
-    }
-
-    void setLast(String last) {
-      this.last = last;
-    }
-
-    String getEmail() {
-      return email;
-    }
-
-    void setEmail(String email) {
-      this.email = email;
-    }
-
-    boolean likesPeaches() {
-      return likesPeaches;
-    }
-
-    void setLikesPeaches(boolean likesPeaches) {
-      this.likesPeaches = likesPeaches;
-    }
-
-  }
-
   private void multi() {
     String post = "f=rh%2Fpython%2Ftransformation.py&f=rh%2Fpython%2Fdbutil.py&f=rh%2Fpython%2Finserter.py&" +
       "f=rh%2Fpython%2Ftests.py&f=rh%2Fpython%2Fmain.py&f=rh%2FREADME.md&f=rh%2Fcsv%2FScoring.csv&" +
@@ -114,16 +72,6 @@ public class HttpFormReaderTest extends Test {
     List<String> fileNames = formObject.getFileNames();
     assertTrue(fileNames.size() > 1);
     System.out.println("fileNames = [" + fileNames + "]");
-  }
-
-  private static class FileFormData {
-    private final List<String> fileNames = new ArrayList<>();
-    void addFileName(String fileName) {
-      fileNames.add(fileName);
-    }
-    List<String> getFileNames() {
-      return fileNames;
-    }
   }
 
 }
