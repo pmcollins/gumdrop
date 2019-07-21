@@ -1,8 +1,7 @@
 package gumdrop.web.http;
 
-import gumdrop.json.v2.Chainable;
-import gumdrop.json.v2.Node;
-import gumdrop.web.controller.ReadResult;
+import gumdrop.json.Chainable;
+import gumdrop.json.Node;
 
 import java.util.function.Supplier;
 

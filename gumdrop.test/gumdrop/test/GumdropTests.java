@@ -1,6 +1,7 @@
 package gumdrop.test;
 
 import gumdrop.test.common.CommonTests;
+import gumdrop.test.json.JsonTests;
 import gumdrop.test.server.ServerTests;
 import gumdrop.test.util.TestSuite;
 import gumdrop.test.web.WebTests;
@@ -16,7 +17,8 @@ public class GumdropTests extends TestSuite {
     test(
       new CommonTests(),
       new ServerTests(),
-      new WebTests()
+      new WebTests(),
+      new JsonTests()
     );
   }
 
