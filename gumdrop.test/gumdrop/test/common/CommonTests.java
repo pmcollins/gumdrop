@@ -13,7 +13,7 @@ public class CommonTests extends TestSuite {
     test(
       new ByteBuilderTests(),
       new ByteIteratorTests(),
-      new BuilderTests()
+      new SessionTests()
     );
   }
 

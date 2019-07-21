@@ -17,7 +17,8 @@ public class WebTests extends TestSuite {
       new PathBuilderTest(),
       new PatternTest(),
       new StaticControllerTest(),
-      new StringUtilTest()
+      new StringUtilTest(),
+      new HttpFormReaderTest()
     );
   }
 
