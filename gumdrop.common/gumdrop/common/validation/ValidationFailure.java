@@ -5,24 +5,18 @@ import java.util.Objects;
 public class ValidationFailure {
 
   private String key;
-  private String value;
   private String message;
 
   public ValidationFailure() {
   }
 
-  public ValidationFailure(String key, String value, String message) {
+  public ValidationFailure(String key, String message) {
     this.key = key;
-    this.value = value;
     this.message = message;
   }
 
   public void setKey(String key) {
     this.key = key;
-  }
-
-  public void setValue(String value) {
-    this.value = value;
   }
 
   public void setMessage(String message) {
@@ -31,10 +25,6 @@ public class ValidationFailure {
 
   public String getKey() {
     return key;
-  }
-
-  public String getValue() {
-    return value;
   }
 
   public String getMessage() {
@@ -46,20 +36,19 @@ public class ValidationFailure {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     ValidationFailure that = (ValidationFailure) o;
-    return Objects.equals(message, that.message) &&
-      Objects.equals(value, that.value);
+    return Objects.equals(key, that.key) &&
+      Objects.equals(message, that.message);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(message, value);
+    return Objects.hash(key, message);
   }
 
   @Override
   public String toString() {
     return "ValidationFailure{" +
       "key='" + key + '\'' +
-      ", value='" + value + '\'' +
       ", message='" + message + '\'' +
       '}';
   }
