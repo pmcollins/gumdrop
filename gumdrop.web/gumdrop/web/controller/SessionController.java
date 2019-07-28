@@ -21,7 +21,7 @@ public abstract class SessionController<SessionT extends Session<EntityT>, Entit
   private SessionT session;
   private Request request;
 
-  protected SessionController(SessionService<SessionT> sessionService) {
+  SessionController(SessionService<SessionT> sessionService) {
     this.sessionService = sessionService;
   }
 
@@ -45,7 +45,7 @@ public abstract class SessionController<SessionT extends Session<EntityT>, Entit
 
   protected int getIntArg() {
     String[] pathArgs = getPathArgs();
-    return Integer.valueOf(pathArgs[0]);
+    return Integer.parseInt(pathArgs[0]);
   }
 
   @Override
