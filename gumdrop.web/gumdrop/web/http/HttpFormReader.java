@@ -14,10 +14,13 @@ public class HttpFormReader<T> implements IFormReader<T> {
   }
 
   @Override
-  public FormReadResult<T> read(String q) {
+  public T read(String q) {
+    return deserialize(q);
+  }
+
+  private T deserialize(String q) {
     Node<T> node = nodeConstructor.get();
     Chainable attributesNode = node.next();
-    FormReadResult<T> out = new FormReadResult<>();
     String[] pairs = q.split("&");
     for (String pair : pairs) {
       int idx = pair.indexOf('=');
@@ -26,8 +29,7 @@ public class HttpFormReader<T> implements IFormReader<T> {
       Chainable fieldNode = attributesNode.next(key);
       fieldNode.acceptString(value);
     }
-    out.setT(node.getValue());
-    return out;
+    return node.getValue();
   }
 
 }

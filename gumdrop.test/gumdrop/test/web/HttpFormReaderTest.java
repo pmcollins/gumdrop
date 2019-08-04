@@ -26,8 +26,7 @@ public class HttpFormReaderTest extends Test {
   private void simple() {
     HttpFormReader<UserFormData> r = new HttpFormReader<>(UserFormDataNode::new);
     String q = "first=fff&last=lll&email=foo%40bar&likesPeaches=true";
-    ReadResult<UserFormData> res = r.read(q);
-    UserFormData userFormData = res.getFormObject();
+    UserFormData userFormData = r.read(q);
     assertNotNull(userFormData);
     assertEquals("fff", userFormData.getFirst());
     assertEquals("lll", userFormData.getLast());
@@ -47,8 +46,7 @@ public class HttpFormReaderTest extends Test {
       "f=rh%2Fsql%2Fcreate-view-top-coach-wins.sql&f=rh%2Fsql%2Fcreate-proc-player-rankings.sql&" +
       "f=rh%2Fsql%2Fcoach-ranking.sql";
     HttpFormReader<FileFormData> r = new HttpFormReader<>(FileFormDataNode::new);
-    ReadResult<FileFormData> res = r.read(post);
-    FileFormData formData = res.getFormObject();
+    FileFormData formData = r.read(post);
     assertEquals(25, formData.getFileNames().size());
   }
 
