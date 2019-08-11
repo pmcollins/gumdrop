@@ -31,6 +31,10 @@ public class HeaderUtil {
     setOkHeaders(responseHeader, contentLength, "image/svg+xml");
   }
 
+  public static void setImagePngHeaders(HttpResponseHeader responseHeader, int contentLength) {
+    setOkHeaders(responseHeader, contentLength, "image/png");
+  }
+
   public static void setOkHeaders(HttpResponseHeader responseHeader, int contentLength, String type) {
     setHttp11ProtocolHeaders(responseHeader);
     responseHeader.setStatus("200 OK");

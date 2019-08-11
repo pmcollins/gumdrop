@@ -64,6 +64,9 @@ public class StaticController implements Controller {
       case "svg":
         HeaderUtil.setImageSvgHeaders(h, bytes.length);
         break;
+      case "png":
+        HeaderUtil.setImagePngHeaders(h, bytes.length);
+        break;
     }
 
     h.putAttr("Cache-Control", "public, max-age=" + maxAgeSeconds);
