@@ -2,9 +2,9 @@ package gumdrop.json;
 
 public class JsonReader<T> {
 
-  private final Node<T> root;
+  private final Deserializer<T> root;
 
-  public JsonReader(Node<T> root) {
+  public JsonReader(Deserializer<T> root) {
     this.root = root;
   }
 

@@ -1,23 +1,23 @@
 package gumdrop.test.json;
 
 import gumdrop.json.Chainable;
-import gumdrop.json.Node;
-import gumdrop.json.StringNode;
+import gumdrop.json.Deserializer;
+import gumdrop.json.StringDeserializer;
 import gumdrop.json.UnknownKeyException;
 import gumdrop.test.fake.Name;
 
-class NameAttributesNode extends Node<Name> {
+class NameAttributesDeserializer extends Deserializer<Name> {
 
-  NameAttributesNode(Name name) {
+  NameAttributesDeserializer(Name name) {
     super(name);
   }
 
   @Override
   public Chainable next(String key) {
     if ("first".equals(key)) {
-      return new StringNode(s -> getValue().setFirst(s));
+      return new StringDeserializer(s -> getValue().setFirst(s));
     } else if ("last".equals(key)) {
-      return new StringNode(s -> getValue().setLast(s));
+      return new StringDeserializer(s -> getValue().setLast(s));
     }
     throw new UnknownKeyException(key);
   }

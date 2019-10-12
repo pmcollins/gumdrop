@@ -1,14 +1,14 @@
 package gumdrop.test.json;
 
 import gumdrop.json.Chainable;
-import gumdrop.json.NullableNode;
+import gumdrop.json.NullableDeserializer;
 import gumdrop.test.fake.Name;
 
 import java.util.function.Consumer;
 
-class NameNode extends NullableNode<Name> {
+class NameDeserializer extends NullableDeserializer<Name> {
 
-  NameNode(Consumer<Name> listener) {
+  NameDeserializer(Consumer<Name> listener) {
     super(listener);
   }
 
@@ -16,7 +16,7 @@ class NameNode extends NullableNode<Name> {
   public Chainable next() {
     Name name = new Name();
     setValue(name);
-    return new NameAttributesNode(name);
+    return new NameAttributesDeserializer(name);
   }
 
 }

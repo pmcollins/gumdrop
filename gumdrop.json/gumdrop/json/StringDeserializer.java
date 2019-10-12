@@ -2,12 +2,12 @@ package gumdrop.json;
 
 import java.util.function.Consumer;
 
-public class StringNode extends NullableNode<String> {
+public class StringDeserializer extends NullableDeserializer<String> {
 
-  public StringNode() {
+  public StringDeserializer() {
   }
 
-  public StringNode(Consumer<String> listener) {
+  public StringDeserializer(Consumer<String> listener) {
     super(listener);
   }
 

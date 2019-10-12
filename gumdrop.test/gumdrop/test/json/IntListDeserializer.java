@@ -1,18 +1,18 @@
 package gumdrop.test.json;
 
 import gumdrop.json.Chainable;
-import gumdrop.json.NullableNode;
+import gumdrop.json.NullableDeserializer;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-class IntListNode extends NullableNode<List<Integer>> {
+class IntListDeserializer extends NullableDeserializer<List<Integer>> {
 
-  IntListNode() {
+  IntListDeserializer() {
   }
 
-  IntListNode(Consumer<List<Integer>> listener) {
+  IntListDeserializer(Consumer<List<Integer>> listener) {
     super(listener);
   }
 
@@ -20,7 +20,7 @@ class IntListNode extends NullableNode<List<Integer>> {
   public Chainable next() {
     List<Integer> list = new ArrayList<>();
     setValue(list);
-    return new IntListElementNode(list);
+    return new IntListElementDeserializer(list);
   }
 
 }

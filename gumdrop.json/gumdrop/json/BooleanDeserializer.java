@@ -1,6 +1,6 @@
 package gumdrop.json;
 
-class BooleanNode extends Node<Boolean> {
+class BooleanDeserializer extends Deserializer<Boolean> {
 
   @Override
   public void acceptBareword(String bareword) {

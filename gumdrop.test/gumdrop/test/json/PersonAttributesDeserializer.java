@@ -1,19 +1,19 @@
 package gumdrop.test.json;
 
 import gumdrop.json.Chainable;
-import gumdrop.json.Node;
-import gumdrop.json.StringNode;
+import gumdrop.json.Deserializer;
+import gumdrop.json.StringDeserializer;
 import gumdrop.test.fake.Person;
 
-class PersonAttributesNode extends Node<Person> {
+class PersonAttributesDeserializer extends Deserializer<Person> {
 
-  PersonAttributesNode(Person person) {
+  PersonAttributesDeserializer(Person person) {
     super(person);
   }
 
   @Override
   public Chainable next(String key) {
-    return new StringNode(s -> {
+    return new StringDeserializer(s -> {
       if ("first".equals(key)) {
         getValue().setFirst(s);
       } else if ("last".equals(key)) {

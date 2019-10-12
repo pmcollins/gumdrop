@@ -1,9 +1,8 @@
 package gumdrop.test.web;
 
-import gumdrop.json.PojoNode;
+import gumdrop.json.PojoDeserializer;
 import gumdrop.json.StringFieldBinding;
 import gumdrop.test.util.Test;
-import gumdrop.web.controller.ReadResult;
 import gumdrop.web.http.HttpFormReader;
 
 import java.util.List;
@@ -24,7 +23,7 @@ public class HttpFormReaderTest extends Test {
   }
 
   private void simple() {
-    HttpFormReader<UserFormData> r = new HttpFormReader<>(UserFormDataNode::new);
+    HttpFormReader<UserFormData> r = new HttpFormReader<>(UserFormDataDeserializer::new);
     String q = "first=fff&last=lll&email=foo%40bar&likesPeaches=true";
     UserFormData userFormData = r.read(q);
     assertNotNull(userFormData);
@@ -45,14 +44,14 @@ public class HttpFormReaderTest extends Test {
       "f=rh%2Fsql%2Fcreate-player-teams.sql&f=rh%2Fsql%2Fcreate-master.sql&f=rh%2Fsql%2Fcreate-points-summary.sql&" +
       "f=rh%2Fsql%2Fcreate-view-top-coach-wins.sql&f=rh%2Fsql%2Fcreate-proc-player-rankings.sql&" +
       "f=rh%2Fsql%2Fcoach-ranking.sql";
-    HttpFormReader<FileFormData> r = new HttpFormReader<>(FileFormDataNode::new);
+    HttpFormReader<FileFormData> r = new HttpFormReader<>(FileFormDataDeserializer::new);
     FileFormData formData = r.read(post);
     assertEquals(25, formData.getFileNames().size());
   }
 
-  private static class FileFormDataNode extends PojoNode<FileFormData> {
+  private static class FileFormDataDeserializer extends PojoDeserializer<FileFormData> {
 
-    FileFormDataNode() {
+    FileFormDataDeserializer() {
       super(FileFormData::new, List.of(
         new StringFieldBinding<>("f", FileFormData::addFileName)
       ));
@@ -60,9 +59,9 @@ public class HttpFormReaderTest extends Test {
 
   }
 
-  private static class UserFormDataNode extends PojoNode<UserFormData> {
+  private static class UserFormDataDeserializer extends PojoDeserializer<UserFormData> {
 
-    UserFormDataNode() {
+    UserFormDataDeserializer() {
       super(UserFormData::new, List.of(
         new StringFieldBinding<>("first", UserFormData::setFirst),
         new StringFieldBinding<>("last", UserFormData::setLast),

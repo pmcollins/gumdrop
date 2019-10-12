@@ -1,15 +1,15 @@
 package gumdrop.web.http;
 
 import gumdrop.json.Chainable;
-import gumdrop.json.Node;
+import gumdrop.json.Deserializer;
 
 import java.util.function.Supplier;
 
 public class HttpFormReader<T> implements IFormReader<T> {
 
-  private final Supplier<Node<T>> nodeConstructor;
+  private final Supplier<Deserializer<T>> nodeConstructor;
 
-  public HttpFormReader(Supplier<Node<T>> nodeConstructor) {
+  public HttpFormReader(Supplier<Deserializer<T>> nodeConstructor) {
     this.nodeConstructor = nodeConstructor;
   }
 
@@ -19,8 +19,8 @@ public class HttpFormReader<T> implements IFormReader<T> {
   }
 
   private T deserialize(String q) {
-    Node<T> node = nodeConstructor.get();
-    Chainable attributesNode = node.next();
+    Deserializer<T> deserializer = nodeConstructor.get();
+    Chainable attributesNode = deserializer.next();
     String[] pairs = q.split("&");
     for (String pair : pairs) {
       int idx = pair.indexOf('=');
@@ -29,7 +29,7 @@ public class HttpFormReader<T> implements IFormReader<T> {
       Chainable fieldNode = attributesNode.next(key);
       fieldNode.acceptString(value);
     }
-    return node.getValue();
+    return deserializer.getValue();
   }
 
 }

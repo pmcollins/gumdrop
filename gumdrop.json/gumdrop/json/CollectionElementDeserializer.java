@@ -5,20 +5,20 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-class CollectionElementNode<T, U> extends Node<T> {
+class CollectionElementDeserializer<T, U> extends Deserializer<T> {
 
   private final BiConsumer<T, U> method;
-  private final Function<Consumer<U>, Node<U>> constructorWithCallback;
-  private final Supplier<Node<U>> constructor;
+  private final Function<Consumer<U>, Deserializer<U>> constructorWithCallback;
+  private final Supplier<Deserializer<U>> constructor;
 
-  CollectionElementNode(T t, BiConsumer<T, U> method, Function<Consumer<U>, Node<U>> constructorWithCallback) {
+  CollectionElementDeserializer(T t, BiConsumer<T, U> method, Function<Consumer<U>, Deserializer<U>> constructorWithCallback) {
     super(t);
     this.method = method;
     this.constructorWithCallback = constructorWithCallback;
     constructor = null;
   }
 
-  CollectionElementNode(T t, BiConsumer<T, U> method, Supplier<Node<U>> constructor) {
+  CollectionElementDeserializer(T t, BiConsumer<T, U> method, Supplier<Deserializer<U>> constructor) {
     super(t);
     this.method = method;
     this.constructor = constructor;
@@ -34,9 +34,9 @@ class CollectionElementNode<T, U> extends Node<T> {
     if (constructorWithCallback != null) {
       return constructorWithCallback.apply(listener);
     } else if (constructor != null) {
-      Node<U> node = constructor.get();
-      node.setListener(listener);
-      return node;
+      Deserializer<U> deserializer = constructor.get();
+      deserializer.setListener(listener);
+      return deserializer;
     }
     return null;
   }

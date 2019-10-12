@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class MapNode<T> extends NullableNode<Map<String, T>> {
+public class MapDeserializer<T> extends NullableDeserializer<Map<String, T>> {
 
-  private final Supplier<Node<T>> constructor;
+  private final Supplier<Deserializer<T>> constructor;
 
-  public MapNode(Supplier<Node<T>> constructor) {
+  public MapDeserializer(Supplier<Deserializer<T>> constructor) {
     this.constructor = constructor;
   }
 
@@ -16,7 +16,7 @@ public class MapNode<T> extends NullableNode<Map<String, T>> {
   public Chainable next() {
     Map<String, T> map = new HashMap<>();
     setValue(map);
-    return new MapElementNode<>(map, constructor);
+    return new MapElementDeserializer<>(map, constructor);
   }
 
 }

@@ -1,18 +1,18 @@
 package gumdrop.test.json;
 
 import gumdrop.json.Chainable;
-import gumdrop.json.NullableNode;
+import gumdrop.json.NullableDeserializer;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-class StringIntMapNode extends NullableNode<Map<String, Integer>> {
+class StringIntMapDeserializer extends NullableDeserializer<Map<String, Integer>> {
 
-  StringIntMapNode() {
+  StringIntMapDeserializer() {
   }
 
-  StringIntMapNode(Consumer<Map<String, Integer>> listener) {
+  StringIntMapDeserializer(Consumer<Map<String, Integer>> listener) {
     super(listener);
   }
 
@@ -20,7 +20,7 @@ class StringIntMapNode extends NullableNode<Map<String, Integer>> {
   public Chainable next() {
     HashMap<String, Integer> value = new HashMap<>();
     setValue(value);
-    return new StringIntMapElementNode(value);
+    return new StringIntMapElementDeserializer(value);
   }
 
 }
