@@ -51,44 +51,38 @@ public class JsonNodeTest extends Test {
     namedPersonPojoNode();
   }
 
-  private static <T> T deserialize(Deserializer<T> deserializer, String json) {
-    JsonDelegate delegate = new StandardJsonDelegate(deserializer);
-    new JsonParser(delegate, json).readValue();
-    return deserializer.getValue();
-  }
-
   private void nullInt() {
-    Integer integer = deserialize(new IntDeserializer(), "null");
+    Integer integer = Json.deserialize(new IntDeserializer(), "null");
     assertNull(integer);
   }
 
   private void int42() {
-    Integer integer = deserialize(new IntDeserializer(), "42");
+    Integer integer = Json.deserialize(new IntDeserializer(), "42");
     assertEquals(42, integer);
   }
 
   private void nullArray() {
-    List<Integer> list = deserialize(new IntListDeserializer(), "null");
+    List<Integer> list = Json.deserialize(new IntListDeserializer(), "null");
     assertNull(list);
   }
 
   private void emptyArray() {
-    List<Integer> list = deserialize(new IntListDeserializer(), "[]");
+    List<Integer> list = Json.deserialize(new IntListDeserializer(), "[]");
     assertListEquals(List.of(), list);
   }
 
   private void singleElementArray() {
-    List<Integer> list = deserialize(new IntListDeserializer(), "[42]");
+    List<Integer> list = Json.deserialize(new IntListDeserializer(), "[42]");
     assertListEquals(List.of(42), list);
   }
 
   private void multiElementArray() {
-    List<Integer> list = deserialize(new IntListDeserializer(), "[42, 111]");
+    List<Integer> list = Json.deserialize(new IntListDeserializer(), "[42, 111]");
     assertListEquals(List.of(42, 111), list);
   }
 
   private void nullElementArray() {
-    List<Integer> list = deserialize(new IntListDeserializer(), "[null]");
+    List<Integer> list = Json.deserialize(new IntListDeserializer(), "[null]");
     assertListEquals(Collections.singletonList(null), list);
   }
 
@@ -107,32 +101,32 @@ public class JsonNodeTest extends Test {
   }
 
   private void nullNestedIntArray(Deserializer<List<List<Integer>>> deserializer) {
-    List<List<Integer>> list = deserialize(deserializer, "[null]");
+    List<List<Integer>> list = Json.deserialize(deserializer, "[null]");
     assertListEquals(Collections.singletonList(null), list);
   }
 
   private void nestedIntNullArray(Deserializer<List<List<Integer>>> deserializer) {
-    List<List<Integer>> list = deserialize(deserializer, "null");
+    List<List<Integer>> list = Json.deserialize(deserializer, "null");
     assertNull(list);
   }
 
   private void nestedIntEmptyArray(Deserializer<List<List<Integer>>> deserializer) {
-    List<List<Integer>> list = deserialize(deserializer, "[[]]");
+    List<List<Integer>> list = Json.deserialize(deserializer, "[[]]");
     assertListEquals(List.of(List.of()), list);
   }
 
   private void singleNestedIntArray(Deserializer<List<List<Integer>>> deserializer) {
-    List<List<Integer>> list = deserialize(deserializer, "[[42]]");
+    List<List<Integer>> list = Json.deserialize(deserializer, "[[42]]");
     assertListEquals(List.of(List.of(42)), list);
   }
 
   private void doubleNestedIntArray(Deserializer<List<List<Integer>>> deserializer) {
-    List<List<Integer>> list = deserialize(deserializer, "[[42], [111]]");
+    List<List<Integer>> list = Json.deserialize(deserializer, "[[42], [111]]");
     assertListEquals(List.of(List.of(42), List.of(111)), list);
   }
 
   private void doubleDoubleNestedIntArray(Deserializer<List<List<Integer>>> deserializer) {
-    List<List<Integer>> list = deserialize(deserializer, "[[42, 43], [111, 112]]");
+    List<List<Integer>> list = Json.deserialize(deserializer, "[[42, 43], [111, 112]]");
     assertListEquals(List.of(List.of(42, 43), List.of(111, 112)), list);
   }
 
@@ -149,17 +143,17 @@ public class JsonNodeTest extends Test {
   }
 
   private void nullStringIntMap(Deserializer<Map<String, Integer>> deserializer) {
-    Map<String, Integer> map = deserialize(deserializer, "null");
+    Map<String, Integer> map = Json.deserialize(deserializer, "null");
     assertNull(map);
   }
 
   private void emptyStringIntMap(Deserializer<Map<String, Integer>> deserializer) {
-    Map<String, Integer> map = deserialize(deserializer, "{}");
+    Map<String, Integer> map = Json.deserialize(deserializer, "{}");
     assertEquals(Map.of(), map);
   }
 
   private void singleStringIntMap(Deserializer<Map<String, Integer>> deserializer) {
-    Map<String, Integer> map = deserialize(deserializer, "{\"foo\":42}");
+    Map<String, Integer> map = Json.deserialize(deserializer, "{\"foo\":42}");
     assertEquals(Map.of("foo", 42), map);
   }
 
@@ -171,23 +165,23 @@ public class JsonNodeTest extends Test {
   }
 
   private void nullMapOfList() {
-    Map<String, List<Integer>> map = deserialize(new ListMapDeserializer(), "null");
+    Map<String, List<Integer>> map = Json.deserialize(new ListMapDeserializer(), "null");
     assertNull(map);
   }
 
   private void emptyMapOfList() {
-    Map<String, List<Integer>> map = deserialize(new ListMapDeserializer(), "{}");
+    Map<String, List<Integer>> map = Json.deserialize(new ListMapDeserializer(), "{}");
     assertEquals(Map.of(), map);
   }
 
   private void nullMapValue() {
-    Map<String, List<Integer>> map = deserialize(new ListMapDeserializer(), "{\"foo\":null}");
+    Map<String, List<Integer>> map = Json.deserialize(new ListMapDeserializer(), "{\"foo\":null}");
     assertEquals(1, map.size());
     assertNull(map.get("foo"));
   }
 
   private void emptyMapValue() {
-    Map<String, List<Integer>> map = deserialize(new ListMapDeserializer(), "{\"foo\":[]}");
+    Map<String, List<Integer>> map = Json.deserialize(new ListMapDeserializer(), "{\"foo\":[]}");
     assertEquals(1, map.size());
     assertEquals(List.of(), map.get("foo"));
   }
@@ -195,7 +189,7 @@ public class JsonNodeTest extends Test {
   private void mapMultiValue() {
     ListMapDeserializer deserializer = new ListMapDeserializer();
     String json = "{\"foo\":[],\"bar\":[42]}";
-    Map<String, List<Integer>> map = deserialize(deserializer, json);
+    Map<String, List<Integer>> map = Json.deserialize(deserializer, json);
     assertEquals(2, map.size());
     assertEquals(List.of(), map.get("foo"));
     assertEquals(List.of(42), map.get("bar"));
@@ -203,46 +197,46 @@ public class JsonNodeTest extends Test {
 
   private void listOfMap() {
     ListOfMapDeserializer deserializer = new ListOfMapDeserializer();
-    List<Map<String, Integer>> list = deserialize(deserializer, "[{}]");
+    List<Map<String, Integer>> list = Json.deserialize(deserializer, "[{}]");
     assertEquals(List.of(Map.of()), list);
   }
 
   private void listOfNullMap() {
     ListOfMapDeserializer deserializer = new ListOfMapDeserializer();
-    List<Map<String, Integer>> list = deserialize(deserializer, "[null]");
+    List<Map<String, Integer>> list = Json.deserialize(deserializer, "[null]");
     assertEquals(Collections.singletonList(null), list);
   }
 
   private void listOfTwoMaps() {
     ListOfMapDeserializer deserializer = new ListOfMapDeserializer();
     String json = "[{\"aaa\":111},{\"bbb\":222}]";
-    List<Map<String, Integer>> list = deserialize(deserializer, json);
+    List<Map<String, Integer>> list = Json.deserialize(deserializer, json);
     assertEquals(List.of(Map.of("aaa", 111), Map.of("bbb", 222)), list);
   }
 
   private void simpleNullPojo() {
     PersonDeserializer deserializer = new PersonDeserializer();
-    Person person = deserialize(deserializer, "null");
+    Person person = Json.deserialize(deserializer, "null");
     assertNull(person);
   }
 
   private void simpleNoParamsPojo() {
     PersonDeserializer deserializer = new PersonDeserializer();
-    Person person = deserialize(deserializer, "{}");
+    Person person = Json.deserialize(deserializer, "{}");
     assertEquals(new Person(), person);
   }
 
   private void simplePojoWithExplicitNulls() {
     PersonDeserializer deserializer = new PersonDeserializer();
     String json = "{\"first\":null,\"last\":null}";
-    Person person = deserialize(deserializer, json);
+    Person person = Json.deserialize(deserializer, json);
     assertEquals(new Person(), person);
   }
 
   private void simplePojo() {
     PersonDeserializer deserializer = new PersonDeserializer();
     String json = "{\"first\":\"aaa\",\"last\":\"bbb\"}";
-    Person person = deserialize(deserializer, json);
+    Person person = Json.deserialize(deserializer, json);
     assertEquals(new Person("aaa", "bbb"), person);
   }
 
@@ -253,7 +247,7 @@ public class JsonNodeTest extends Test {
 
   private void complexPojo(Deserializer<NamedPerson> deserializer) {
     String json = "{\"age\":42,\"name\":{\"first\":\"aaa\",\"last\":\"bbb\"}}";
-    NamedPerson person = deserialize(deserializer, json);
+    NamedPerson person = Json.deserialize(deserializer, json);
     NamedPerson expected = new NamedPerson();
     expected.setAge(42);
     expected.setName(new Name("aaa", "bbb"));
@@ -268,7 +262,7 @@ public class JsonNodeTest extends Test {
   private void listNodeOfInt() {
     String json = "[1, 2, 3]";
     ListDeserializer<Integer> deserializer = new ListDeserializer<>(IntDeserializer::new);
-    List<Integer> list = deserialize(deserializer, json);
+    List<Integer> list = Json.deserialize(deserializer, json);
     assertListEquals(List.of(1, 2, 3), list);
   }
 
@@ -280,7 +274,7 @@ public class JsonNodeTest extends Test {
   private void namePojoNode() {
     PojoDeserializer<Name> deserializer = new NamePojoDeserializer();
     String json = "{\"first\":\"aaa\",\"last\":\"bbb\"}";
-    Name name = deserialize(deserializer, json);
+    Name name = Json.deserialize(deserializer, json);
     assertEquals(new Name("aaa", "bbb"), name);
   }
 
