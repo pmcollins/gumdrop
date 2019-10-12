@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class ListNode<T> extends CollectionNode<List<T>, T> {
+public class ListDeserializer<T> extends CollectionDeserializer<List<T>, T> {
 
-  public ListNode(Function<Consumer<T>, Node<T>> nodeConstructor) {
+  public ListDeserializer(Function<Consumer<T>, Deserializer<T>> nodeConstructor) {
     super(ArrayList::new, List::add, nodeConstructor);
   }
 

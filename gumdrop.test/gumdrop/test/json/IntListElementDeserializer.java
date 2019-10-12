@@ -1,21 +1,21 @@
 package gumdrop.test.json;
 
 import gumdrop.json.Chainable;
-import gumdrop.json.IntNode;
-import gumdrop.json.Node;
+import gumdrop.json.IntDeserializer;
+import gumdrop.json.Deserializer;
 
 import java.util.List;
 import java.util.function.Consumer;
 
-class IntListElementNode extends Node<List<Integer>> implements Consumer<Integer> {
+class IntListElementDeserializer extends Deserializer<List<Integer>> implements Consumer<Integer> {
 
-  IntListElementNode(List<Integer> list) {
+  IntListElementDeserializer(List<Integer> list) {
     super(list);
   }
 
   @Override
   public Chainable next() {
-    return new IntNode(this);
+    return new IntDeserializer(this);
   }
 
   @Override

@@ -9,7 +9,7 @@ public class StringFieldBinding<T> extends FieldBinding<T, String> {
   }
 
   public StringFieldBinding(String name, BiConsumer<T, String> setter) {
-    super(name, setter, StringNode::new);
+    super(name, setter, StringDeserializer::new);
   }
 
 }

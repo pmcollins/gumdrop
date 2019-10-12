@@ -2,19 +2,19 @@ package gumdrop.json;
 
 import java.util.function.Consumer;
 
-public class Node<T> extends BaseChainable {
+public class Deserializer<T> extends BaseChainable {
 
   private T value;
   private Consumer<T> listener;
 
-  public Node() {
+  public Deserializer() {
   }
 
-  public Node(T value) {
+  public Deserializer(T value) {
     this.value = value;
   }
 
-  Node(Consumer<T> listener) {
+  Deserializer(Consumer<T> listener) {
     this.listener = listener;
   }
 
