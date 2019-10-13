@@ -5,13 +5,13 @@ import java.util.List;
 
 public class SimpleRoom {
 
-  private final List<SimplePerson> people = new ArrayList<>();
+  private final List<Name> people = new ArrayList<>();
 
-  public void add(SimplePerson person) {
+  public void add(Name person) {
     people.add(person);
   }
 
-  public List<SimplePerson> getPeople() {
+  public List<Name> getNames() {
     return people;
   }
 

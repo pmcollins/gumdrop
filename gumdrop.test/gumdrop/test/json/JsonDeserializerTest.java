@@ -3,7 +3,6 @@ package gumdrop.test.json;
 import gumdrop.json.*;
 import gumdrop.test.fake.Name;
 import gumdrop.test.fake.Person;
-import gumdrop.test.fake.SimplePerson;
 import gumdrop.test.util.Test;
 
 import java.util.*;
@@ -216,29 +215,29 @@ public class JsonDeserializerTest extends Test {
   }
 
   private void simpleNullPojo() {
-    PersonNullableDeserializer deserializer = new PersonNullableDeserializer();
-    SimplePerson person = deserializer.toObject("null");
+    NameDeserializer deserializer = new NameDeserializer();
+    Name person = deserializer.toObject("null");
     assertNull(person);
   }
 
   private void simpleNoParamsPojo() {
     PersonNullableDeserializer deserializer = new PersonNullableDeserializer();
-    SimplePerson person = deserializer.toObject("{}");
-    assertEquals(new SimplePerson(), person);
+    Name person = deserializer.toObject("{}");
+    assertEquals(new Name(), person);
   }
 
   private void simplePojoWithExplicitNulls() {
     PersonNullableDeserializer deserializer = new PersonNullableDeserializer();
     String json = "{\"first\":null,\"last\":null}";
-    SimplePerson person = deserializer.toObject(json);
-    assertEquals(new SimplePerson(), person);
+    Name person = deserializer.toObject(json);
+    assertEquals(new Name(), person);
   }
 
   private void simplePojo() {
     PersonNullableDeserializer deserializer = new PersonNullableDeserializer();
     String json = "{\"first\":\"aaa\",\"last\":\"bbb\"}";
-    SimplePerson person = deserializer.toObject(json);
-    assertEquals(new SimplePerson("aaa", "bbb"), person);
+    Name person = deserializer.toObject(json);
+    assertEquals(new Name("aaa", "bbb"), person);
   }
 
   private void complexPojo() {
