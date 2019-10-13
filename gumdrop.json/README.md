@@ -5,11 +5,11 @@ JSON <--> Java (de)serialization.
 ### Overview
 
 Gumdrop's JSON deserializer is a fast, imperative way to turn JSON into objects and vice versa that doesn't use refection or
-annotations that can give you surprises at runtime.
+annotations.
 
 ### Examples
 
-#### Deserialization:
+#### JSON to Object
 
 Given a `Name` class with a `first` and `last` attribute, define a deserializer
 
@@ -53,7 +53,7 @@ class PersonDeserializer extends ObjectDeserializer<Person> {
 Notice the `FieldBinding` of the name attribute to the `NameDeserializer` we created above. And notice the
 built-in `IntDeserializer` that binds to the `age` field.
 
-#### Serialization
+#### Objects to JSON
 
 Serialization is equally straightforward.
 
@@ -62,8 +62,8 @@ class NameSerializer extends ObjectSerializer<Name> {
 
   NameSerializer() {
     StringSerializer stringSerializer = new StringSerializer();
-    addMethodSerializer(new MethodSerializer<>("first", Name::getFirst, stringSerializer));
-    addMethodSerializer(new MethodSerializer<>("last", Name::getLast, stringSerializer));
+    addMethodSerializer("first", Name::getFirst, stringSerializer);
+    addMethodSerializer("last", Name::getLast, stringSerializer);
   }
 
 }
@@ -77,7 +77,21 @@ String json = p.toJson(new Name("bilbo", "baggins"));
 // {"first":"bilbo","last":"baggins"}
 ```
 
-In a manner similar to the deserializer, serializers can be composed
+In a manner similar to the deserializer, serializers can be composed.
+
+```java
+class PersonSerializer extends ObjectSerializer<Person> {
+
+  PersonSerializer() {
+    addMethodSerializer("age", Person::getAge, new IntSerializer());
+    addMethodSerializer("name", Person::getName, new NameSerializer());
+  }
+
+}
+```
+
+Above we reuse the `NameSerializer` and bind it to the name field. To turn `Person` objects to JSON, call the
+`toJson` method.
 
 ```java
 Name name = new Name("bilbo", "baggins");
@@ -87,13 +101,4 @@ person.setAge(111);
 PersonSerializer s = new PersonSerializer();
 String json = s.toJson(person);
 // {"age":111,"name":{"first":"bilbo","last":"baggins"}}
-``` 
-
-
-
-
-
-
-
-
-
+```
