@@ -9,19 +9,19 @@ public class CollectionDeserializer<T, U> extends NullableDeserializer<T> {
 
   private final Supplier<T> constructor;
   private final BiConsumer<T, U> method;
-  private final Function<Consumer<U>, Deserializer<U>> nodeConstructor;
+  private final Function<Consumer<U>, Deserializer<U>> deserializerConstructor;
 
-  public CollectionDeserializer(Supplier<T> constructor, BiConsumer<T, U> method, Function<Consumer<U>, Deserializer<U>> nodeConstructor) {
+  public CollectionDeserializer(Supplier<T> constructor, BiConsumer<T, U> method, Function<Consumer<U>, Deserializer<U>> deserializerConstructor) {
     this.constructor = constructor;
     this.method = method;
-    this.nodeConstructor = nodeConstructor;
+    this.deserializerConstructor = deserializerConstructor;
   }
 
   @Override
   public Chainable next() {
     T t = constructor.get();
     setValue(t);
-    return new CollectionElementDeserializer<>(t, method, nodeConstructor);
+    return new CollectionElementDeserializer<>(t, method, deserializerConstructor);
   }
 
 }

@@ -1,6 +1,6 @@
 package gumdrop.test.web;
 
-import gumdrop.json.PojoDeserializer;
+import gumdrop.json.ObjectDeserializer;
 import gumdrop.json.StringFieldBinding;
 import gumdrop.test.util.Test;
 import gumdrop.web.http.HttpFormReader;
@@ -49,7 +49,7 @@ public class HttpFormReaderTest extends Test {
     assertEquals(25, formData.getFileNames().size());
   }
 
-  private static class FileFormDataDeserializer extends PojoDeserializer<FileFormData> {
+  private static class FileFormDataDeserializer extends ObjectDeserializer<FileFormData> {
 
     FileFormDataDeserializer() {
       super(FileFormData::new, List.of(
@@ -59,7 +59,7 @@ public class HttpFormReaderTest extends Test {
 
   }
 
-  private static class UserFormDataDeserializer extends PojoDeserializer<UserFormData> {
+  private static class UserFormDataDeserializer extends ObjectDeserializer<UserFormData> {
 
     UserFormDataDeserializer() {
       super(UserFormData::new, List.of(

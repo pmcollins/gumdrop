@@ -4,44 +4,45 @@ import java.util.Objects;
 
 public class Person {
 
-  private String first, last;
+  private Name name;
+  private int age;
 
-  public Person() {
+  public Name getName() {
+    return name;
   }
 
-  public Person(String first, String last) {
-    this.first = first;
-    this.last = last;
+  public void setName(Name name) {
+    this.name = name;
   }
 
-  public String getFirst() {
-    return first;
+  public int getAge() {
+    return age;
   }
 
-  public void setFirst(String first) {
-    this.first = first;
+  public void setAge(int age) {
+    this.age = age;
   }
 
-  public String getLast() {
-    return last;
-  }
-
-  public void setLast(String last) {
-    this.last = last;
+  @Override
+  public String toString() {
+    return "NamedPerson{" +
+      "name=" + name +
+      ", age=" + age +
+      '}';
   }
 
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
-    Person person = (Person) o;
-    return Objects.equals(first, person.first) &&
-      Objects.equals(last, person.last);
+    Person that = (Person) o;
+    return age == that.age &&
+      Objects.equals(name, that.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(first, last);
+    return Objects.hash(name, age);
   }
 
 }

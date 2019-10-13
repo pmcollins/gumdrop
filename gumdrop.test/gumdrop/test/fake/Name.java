@@ -2,33 +2,33 @@ package gumdrop.test.fake;
 
 import java.util.Objects;
 
-public class Name {
+  public class Name {
 
-  private String first, last;
+    private String first, last;
 
-  public Name() {
-  }
+    public Name() {
+    }
 
-  public Name(String first, String last) {
-    this.first = first;
-    this.last = last;
-  }
+    public Name(String first, String last) {
+      this.first = first;
+      this.last = last;
+    }
 
-  public String getFirst() {
-    return first;
-  }
+    public String getFirst() {
+      return first;
+    }
 
-  public void setFirst(String first) {
-    this.first = first;
-  }
+    public void setFirst(String first) {
+      this.first = first;
+    }
 
-  public String getLast() {
-    return last;
-  }
+    public String getLast() {
+      return last;
+    }
 
-  public void setLast(String last) {
-    this.last = last;
-  }
+    public void setLast(String last) {
+      this.last = last;
+    }
 
   @Override
   public String toString() {

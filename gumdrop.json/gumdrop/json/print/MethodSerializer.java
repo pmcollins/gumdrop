@@ -2,16 +2,16 @@ package gumdrop.json.print;
 
 import java.util.function.Function;
 
-public class MethodPrinter<T, U> {
+public class MethodSerializer<T, U> {
 
   private final String name;
   private final Function<T, U> method;
-  private final JsonPrinter<U> jsonPrinter;
+  private final JsonSerializer<U> jsonSerializer;
 
-  public MethodPrinter(String name, Function<T, U> method, JsonPrinter<U> jsonPrinter) {
+  public MethodSerializer(String name, Function<T, U> method, JsonSerializer<U> jsonSerializer) {
     this.name = name;
     this.method = method;
-    this.jsonPrinter = jsonPrinter;
+    this.jsonSerializer = jsonSerializer;
   }
 
   String getName() {
@@ -20,7 +20,7 @@ public class MethodPrinter<T, U> {
 
   void print(StringBuilder sb, T t) {
     U u = method.apply(t);
-    jsonPrinter.print(sb, u);
+    jsonSerializer.toJson(u, sb);
   }
 
 }

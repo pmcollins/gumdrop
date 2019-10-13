@@ -20,7 +20,7 @@ public class FieldBinding<T, U> {
     return name;
   }
 
-  Deserializer<U> buildNode(T t) {
+  Deserializer<U> buildDeserializer(T t) {
     Consumer<U> listener = value -> setter.accept(t, value);
     Deserializer<U> deserializer = nodeConstructor.get();
     deserializer.setListener(listener);

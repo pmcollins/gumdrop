@@ -33,4 +33,10 @@ public class Deserializer<T> extends BaseChainable {
     this.listener = listener;
   }
 
+  public final T toObject(String json) {
+    JsonDelegate delegate = new StandardJsonDelegate(this);
+    new JsonParser(delegate, json).readValue();
+    return getValue();
+  }
+
 }
