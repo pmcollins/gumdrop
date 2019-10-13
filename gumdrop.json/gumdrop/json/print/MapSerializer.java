@@ -2,16 +2,16 @@ package gumdrop.json.print;
 
 import java.util.Map;
 
-public class MapPrinter<T> extends JsonPrinter<Map<String, T>> {
+public class MapSerializer<T> extends JsonSerializer<Map<String, T>> {
 
-  private final JsonPrinter<T> valuePrinter;
+  private final JsonSerializer<T> valuePrinter;
 
-  public MapPrinter(JsonPrinter<T> valuePrinter) {
+  public MapSerializer(JsonSerializer<T> valuePrinter) {
     this.valuePrinter = valuePrinter;
   }
 
   @Override
-  public void printNonNull(StringBuilder sb, Map<String, T> map) {
+  public void nonNullToJson(Map<String, T> map, StringBuilder sb) {
     sb.append('{');
     int i = 0;
     for (String key : map.keySet()) {
@@ -19,7 +19,7 @@ public class MapPrinter<T> extends JsonPrinter<Map<String, T>> {
         sb.append(',');
       }
       sb.append('"').append(key).append("\":");
-      valuePrinter.print(sb, map.get(key));
+      valuePrinter.toJson(map.get(key), sb);
     }
     sb.append('}');
   }

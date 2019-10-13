@@ -1,16 +1,19 @@
 package gumdrop.test.json;
 
-import gumdrop.json.Chainable;
-import gumdrop.json.NullableDeserializer;
+import gumdrop.json.FieldBinding;
+import gumdrop.json.IntDeserializer;
+import gumdrop.json.ObjectDeserializer;
 import gumdrop.test.fake.Person;
 
-class PersonDeserializer extends NullableDeserializer<Person> {
+import java.util.List;
 
-  @Override
-  public Chainable next() {
-    Person person = new Person();
-    setValue(person);
-    return new PersonAttributesDeserializer(person);
+class PersonDeserializer extends ObjectDeserializer<Person> {
+
+  PersonDeserializer() {
+    super(Person::new, List.of(
+      new FieldBinding<>("age", Person::setAge, IntDeserializer::new),
+      new FieldBinding<>("name", Person::setName, NameDeserializer::new)
+    ));
   }
 
 }

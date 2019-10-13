@@ -1,19 +1,17 @@
 package gumdrop.test.fake;
 
-import gumdrop.test.fake.Person;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleRoom {
 
-  private final List<Person> people = new ArrayList<>();
+  private final List<SimplePerson> people = new ArrayList<>();
 
-  public void add(Person person) {
+  public void add(SimplePerson person) {
     people.add(person);
   }
 
-  public List<Person> getPeople() {
+  public List<SimplePerson> getPeople() {
     return people;
   }
 

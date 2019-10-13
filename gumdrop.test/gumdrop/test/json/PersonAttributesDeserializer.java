@@ -3,11 +3,11 @@ package gumdrop.test.json;
 import gumdrop.json.Chainable;
 import gumdrop.json.Deserializer;
 import gumdrop.json.StringDeserializer;
-import gumdrop.test.fake.Person;
+import gumdrop.test.fake.SimplePerson;
 
-class PersonAttributesDeserializer extends Deserializer<Person> {
+class PersonAttributesDeserializer extends Deserializer<SimplePerson> {
 
-  PersonAttributesDeserializer(Person person) {
+  PersonAttributesDeserializer(SimplePerson person) {
     super(person);
   }
 

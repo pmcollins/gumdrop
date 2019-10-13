@@ -18,7 +18,7 @@ class PojoAttributesDeserializer<T> extends Deserializer<T> {
   @Override
   public Chainable next(String key) {
     FieldBinding<T, ?> binding = map.get(key);
-    return binding.buildNode(getValue());
+    return binding.buildDeserializer(getValue());
   }
 
 }

@@ -2,30 +2,30 @@ package gumdrop.json.print;
 
 import java.util.List;
 
-public class ArrayPrinter<T> extends JsonPrinter<List<T>> {
+public class ArraySerializer<T> extends JsonSerializer<List<T>> {
 
-  private final JsonPrinter<T> valuePrinter;
+  private final JsonSerializer<T> valuePrinter;
 
-  public ArrayPrinter(JsonPrinter<T> valuePrinter) {
+  public ArraySerializer(JsonSerializer<T> valuePrinter) {
     this.valuePrinter = valuePrinter;
   }
 
   @Override
-  public void printNonNull(StringBuilder sb, List<T> list) {
+  public void nonNullToJson(List<T> list, StringBuilder sb) {
     printList(sb, list, valuePrinter);
   }
 
   public static <T> void printList(
     StringBuilder sb,
     List<T> list,
-    JsonPrinter<T> valuePrinter
+    JsonSerializer<T> valuePrinter
   ) {
     sb.append('[');
     for (int i = 0; i < list.size(); i++) {
       if (i > 0) {
         sb.append(',');
       }
-      valuePrinter.print(sb, list.get(i));
+      valuePrinter.toJson(list.get(i), sb);
     }
     sb.append(']');
   }
