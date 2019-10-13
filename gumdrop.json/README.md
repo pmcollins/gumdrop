@@ -11,7 +11,7 @@ annotations that can give you surprises at runtime.
 
 #### Deserialization:
 
-Let's say you have a `Name` class with a `first` and `last` attribute. Define deserializer
+Given a `Name` class with a `first` and `last` attribute, define a deserializer
 
 ```java
 class NameDeserializer extends ObjectDeserializer<Name> {
@@ -26,7 +26,7 @@ class NameDeserializer extends ObjectDeserializer<Name> {
 }
 ```
 
-and deserialize
+and call `toObject` to turn JSON into an object
 
 ```java
 NameDeserializer deserializer = new NameDeserializer();
@@ -34,8 +34,8 @@ String json = "{\"first\":\"Bilbo\",\"last\":\"Baggins\"}";
 Name name = deserializer.toObject(json);
 ```
 
-Deserializers can be composed to support more complex object graphs. For example, if our `Name` class above were an
-attibute of a `Person` class, we could use it to deserialize our `Person`'s name.
+Deserializers can be *composed* to support more complex object graphs. For example, if our `Name` class above were an
+attibute of a `Person` class, we could use `NameDeserializer` to deserialize our `Person`'s name.
 
 ```java
 class PersonDeserializer extends ObjectDeserializer<Person> {
@@ -58,5 +58,42 @@ built-in `IntDeserializer` that binds to the `age` field.
 Serialization is equally straightforward.
 
 ```java
+class NameSerializer extends ObjectSerializer<Name> {
 
+  NameSerializer() {
+    StringSerializer stringSerializer = new StringSerializer();
+    addMethodSerializer(new MethodSerializer<>("first", Name::getFirst, stringSerializer));
+    addMethodSerializer(new MethodSerializer<>("last", Name::getLast, stringSerializer));
+  }
+
+}
 ```
+
+Define a serializer for a type by binding its fields to their respective serializers and call the `toJson` method.
+
+```java
+NameSerializer p = new NameSerializer();
+String json = p.toJson(new Name("bilbo", "baggins"));
+// {"first":"bilbo","last":"baggins"}
+```
+
+In a manner similar to the deserializer, serializers can be composed
+
+```java
+Name name = new Name("bilbo", "baggins");
+Person person = new Person();
+person.setName(name);
+person.setAge(111);
+PersonSerializer s = new PersonSerializer();
+String json = s.toJson(person);
+// {"age":111,"name":{"first":"bilbo","last":"baggins"}}
+``` 
+
+
+
+
+
+
+
+
+
