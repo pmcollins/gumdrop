@@ -4,8 +4,7 @@ JSON <--> Java (de)serialization.
 
 ### Overview
 
-Gumdrop's JSON deserializer is a fast, imperative way to turn JSON into objects and vice versa that doesn't use refection or
-annotations.
+Gumdrop's JSON deserializer is a fast, imperative way to turn JSON into objects and vice versa.
 
 ### Examples
 
