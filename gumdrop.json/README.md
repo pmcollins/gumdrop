@@ -49,7 +49,7 @@ class PersonDeserializer extends ObjectDeserializer<Person> {
 }
 ```
 
-Using a `FieldBinding` we bind a `Person`'s `age` field to an `IntDeserializer` (which is build in) an the `name` field
+Using a `FieldBinding` we bind a `Person`'s `age` field to an `IntDeserializer` (which is built in), and the `name` field
 to the `NameDeserializer` we created above.
 
 #### Objects to JSON
@@ -71,8 +71,8 @@ class NameSerializer extends ObjectSerializer<Name> {
 Define a serializer for a type by binding its fields to their respective serializers and call the `toJson` method.
 
 ```java
-NameSerializer p = new NameSerializer();
-String json = p.toJson(new Name("bilbo", "baggins"));
+NameSerializer d = new NameSerializer();
+String json = d.toJson(new Name("bilbo", "baggins"));
 // {"first":"bilbo","last":"baggins"}
 ```
 
@@ -89,7 +89,7 @@ class PersonSerializer extends ObjectSerializer<Person> {
 }
 ```
 
-Then just call the `toJson` method on the deserializer you created.
+Once you've created your deserializer, you can call `toJson`.
 
 ```java
 Name name = new Name("bilbo", "baggins");
