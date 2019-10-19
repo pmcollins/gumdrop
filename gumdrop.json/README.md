@@ -76,7 +76,7 @@ String json = p.toJson(new Name("bilbo", "baggins"));
 // {"first":"bilbo","last":"baggins"}
 ```
 
-In a manner similar to the deserializer, serializers can be composed.
+And *compose* deserializers for more complex objects.
 
 ```java
 class PersonSerializer extends ObjectSerializer<Person> {
@@ -89,8 +89,7 @@ class PersonSerializer extends ObjectSerializer<Person> {
 }
 ```
 
-Above we reuse the `NameSerializer` and bind it to the name field. To turn `Person` objects to JSON, call the
-`toJson` method.
+Then just call the `toJson` method on the deserializer you created.
 
 ```java
 Name name = new Name("bilbo", "baggins");
