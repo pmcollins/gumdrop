@@ -73,11 +73,13 @@ And call the `toJson` method.
 
 ```java
 NameSerializer d = new NameSerializer();
-String json = d.toJson(new Name("bilbo", "baggins"));
+Name name = new Name("bilbo", "baggins");
+String json = d.toJson(name);
 // {"first":"bilbo","last":"baggins"}
 ```
 
-To deserialize more complex objects, deserializers can be *composed*.
+To deserialize more complex objects, deserializers can also be composed. We'll use the `NameSerializer`
+we just created to create a `PersonSerializer`
 
 ```java
 class PersonSerializer extends ObjectSerializer<Person> {
@@ -90,7 +92,7 @@ class PersonSerializer extends ObjectSerializer<Person> {
 }
 ```
 
-Once we've created our deserializer, we can call `toJson` to turn an object into JSON.
+and turn a `Person` into JSON.
 
 ```java
 Name name = new Name("bilbo", "baggins");
