@@ -25,7 +25,7 @@ class NameDeserializer extends ObjectDeserializer<Name> {
 }
 ```
 
-and call `toObject` to turn JSON into an object
+and call `toObject` on your `NameDeserializer` to create an object
 
 ```java
 NameDeserializer deserializer = new NameDeserializer();
@@ -49,8 +49,8 @@ class PersonDeserializer extends ObjectDeserializer<Person> {
 }
 ```
 
-Notice the `FieldBinding` of the name attribute to the `NameDeserializer` we created above. And notice the
-built-in `IntDeserializer` that binds to the `age` field.
+Using a `FieldBinding` we bind a `Person`'s `age` field to an `IntDeserializer` (which is build in) an the `name` field
+to the `NameDeserializer` we created above.
 
 #### Objects to JSON
 
