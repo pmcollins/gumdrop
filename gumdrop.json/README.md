@@ -8,9 +8,9 @@ Gumdrop's JSON deserializer is a fast, imperative way to turn JSON into objects 
 
 ### Examples
 
-#### JSON to Object
+#### JSON to Objects
 
-Given a `Name` class with a `first` and `last` attribute, define a deserializer
+Given a `Name` class with a `first` and `last` attribute, we define a deserializer
 
 ```java
 class NameDeserializer extends ObjectDeserializer<Name> {
@@ -25,7 +25,7 @@ class NameDeserializer extends ObjectDeserializer<Name> {
 }
 ```
 
-and call `toObject` on your `NameDeserializer` to create an object
+and call `toObject` on it to create an object
 
 ```java
 NameDeserializer deserializer = new NameDeserializer();
@@ -34,7 +34,7 @@ Name name = deserializer.toObject(json);
 ```
 
 Deserializers can be *composed* to support more complex object graphs. For example, if our `Name` class above were an
-attibute of a `Person` class, we could use `NameDeserializer` to deserialize our `Person`'s name.
+attibute of a `Person` class, we could use our `NameDeserializer` to deserialize our `Person`'s name.
 
 ```java
 class PersonDeserializer extends ObjectDeserializer<Person> {
@@ -49,13 +49,13 @@ class PersonDeserializer extends ObjectDeserializer<Person> {
 }
 ```
 
-Using a `FieldBinding` we bind a `Person`'s `age` field to an `IntDeserializer`, and the `name` field to the
-`NameDeserializer` we created above.
+Using a `FieldBinding` above, we bind the `age` field to an `IntDeserializer`, and the `name` field to our
+`NameDeserializer`.
 
 #### Objects to JSON
 
-Serialization is equally straightforward. Define a serializer for a type by binding each of its fields to the
-appropriate deserializer.
+Serialization is equally straightforward. We can define a serializer for a type by binding each of its fields to an
+appropriate deserializer
 
 ```java
 class NameSerializer extends ObjectSerializer<Name> {
@@ -69,7 +69,7 @@ class NameSerializer extends ObjectSerializer<Name> {
 }
 ```
 
-And call the `toJson` method.
+and call the `toJson` method.
 
 ```java
 NameSerializer d = new NameSerializer();
@@ -79,7 +79,7 @@ String json = d.toJson(name);
 ```
 
 To deserialize more complex objects, deserializers can also be composed. We'll use the `NameSerializer`
-we just created to create a `PersonSerializer`
+we just defined to define a `PersonSerializer`
 
 ```java
 class PersonSerializer extends ObjectSerializer<Person> {
@@ -92,7 +92,7 @@ class PersonSerializer extends ObjectSerializer<Person> {
 }
 ```
 
-and turn a `Person` into JSON.
+and call the `toJson` method.
 
 ```java
 Name name = new Name("bilbo", "baggins");
