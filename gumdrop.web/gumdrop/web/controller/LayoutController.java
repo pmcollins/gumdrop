@@ -24,7 +24,7 @@ public abstract class LayoutController<SessionT extends Session<EntityT>, ViewMo
   @Override
   protected void process(HttpResponse response) {
     StringBuilder sb = new StringBuilder(CAPACITY);
-    LayoutViewModelT layoutModel = getLayoutPresenter().run();
+    LayoutViewModelT layoutModel = getLayoutPresenter().getViewModel();
     ViewModelT viewModel = run();
     BuildableView buildableView = new BuildableView(view, viewModel);
     wrapperView.wrap(sb, layoutModel, buildableView, getClass().getSimpleName());
