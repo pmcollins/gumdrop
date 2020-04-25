@@ -1,5 +1,7 @@
 package gumdrop.web.html;
 
+import java.util.Objects;
+
 public class TagAttribute implements Buildable {
 
   private static final String EQUALS_QUOTE = "=\"";
@@ -9,7 +11,8 @@ public class TagAttribute implements Buildable {
   private final Buildable k;
   private final Buildable v;
 
-  TagAttribute(String key, String value) {
+  // visible for testing
+  public TagAttribute(String key, String value) {
     k = new Text(key);
     v = new Text(value);
   }
@@ -21,6 +24,25 @@ public class TagAttribute implements Buildable {
     sb.append(EQUALS_QUOTE);
     v.build(sb);
     sb.append(QUOTE);
+  }
+
+  @Override
+  public String toString() {
+    return "TagAttribute{k=" + k + ", v=" + v + '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    TagAttribute that = (TagAttribute) o;
+    return k.equals(that.k) &&
+      v.equals(that.v);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(k, v);
   }
 
 }

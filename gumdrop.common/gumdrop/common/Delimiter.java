@@ -1,8 +1,9 @@
-package gumdrop.web.http;
+package gumdrop.common;
 
-import gumdrop.common.ByteIterator;
-
-public class Delimiter implements Accumulator {
+/**
+ * Delimeter wraps a ByteIterator which wraps a ByteBuilder
+ */
+public class Delimiter implements Matcher {
 
   private final ByteIterator delim;
 
@@ -10,6 +11,9 @@ public class Delimiter implements Accumulator {
     delim = new ByteIterator(s);
   }
 
+  /**
+   * Returns true only if the current position of the passed-in iterator matches the delimiter.
+   */
   @Override
   public boolean match(ByteIterator it) {
     int itPos = it.position();

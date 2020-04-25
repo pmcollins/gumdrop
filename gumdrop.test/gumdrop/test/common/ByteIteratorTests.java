@@ -3,6 +3,7 @@ package gumdrop.test.common;
 import gumdrop.common.ByteIterator;
 import gumdrop.test.util.Test;
 import gumdrop.test.util.Asserts;
+import gumdrop.common.SubstringMatcher;
 
 import static gumdrop.test.util.Asserts.*;
 

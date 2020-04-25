@@ -1,17 +1,20 @@
-package gumdrop.web.http;
+package gumdrop.common;
 
-import gumdrop.common.ByteIterator;
-
-public class WordAccumulator implements Accumulator {
+/**
+ * SubstringMatcher wraps Delimiter which wraps ByteIterator which wraps ByteBuilder.
+ *
+ * Fast forwards the passed-in iterator to the match point if it exists.
+ */
+public class SubstringMatcher implements Matcher {
 
   private byte[] subArray;
   private final Delimiter delim;
 
-  public WordAccumulator(char stopChar) {
+  public SubstringMatcher(char stopChar) {
     this(String.valueOf(stopChar));
   }
 
-  public WordAccumulator(String s) {
+  public SubstringMatcher(String s) {
     delim = new Delimiter(s);
   }
 
@@ -30,7 +33,7 @@ public class WordAccumulator implements Accumulator {
     return false;
   }
 
-  byte[] getSubArray() {
+  public byte[] getSubArray() {
     return subArray;
   }
 
@@ -45,6 +48,10 @@ public class WordAccumulator implements Accumulator {
   @Override
   public void skip(ByteIterator it) {
     delim.skip(it);
+  }
+
+  public String getTailString() {
+    return null;
   }
 
 }

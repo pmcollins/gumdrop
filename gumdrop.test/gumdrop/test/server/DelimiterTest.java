@@ -1,7 +1,7 @@
 package gumdrop.test.server;
 
 import gumdrop.common.ByteIterator;
-import gumdrop.web.http.Delimiter;
+import gumdrop.common.Delimiter;
 import gumdrop.test.util.Test;
 
 import static gumdrop.test.util.Asserts.assertEquals;

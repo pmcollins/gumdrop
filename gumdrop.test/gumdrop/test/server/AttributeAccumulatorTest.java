@@ -1,8 +1,8 @@
 package gumdrop.test.server;
 
 import gumdrop.common.ByteIterator;
-import gumdrop.server.nio.AttributeAccumulator;
-import gumdrop.server.nio.AttributeCollectionAccumulator;
+import gumdrop.server.nio.AttributeMatcher;
+import gumdrop.server.nio.AttributeCollectionMatcher;
 import gumdrop.test.util.Test;
 
 import java.util.Map;
@@ -27,19 +27,19 @@ public class AttributeAccumulatorTest extends Test {
   }
 
   private void fullSingleAttribute() {
-    AttributeAccumulator accumulator = new AttributeAccumulator();
+    AttributeMatcher accumulator = new AttributeMatcher();
     boolean completed = accumulator.match(new ByteIterator("Host: localhost:8080\r\n"));
     assertTrue(completed);
   }
 
   private void emptyAttribute() {
-    AttributeAccumulator accumulator = new AttributeAccumulator();
+    AttributeMatcher accumulator = new AttributeMatcher();
     boolean complete = accumulator.match(new ByteIterator("\r\n"));
     assertFalse(complete);
   }
 
   private void singleAttributeInterrupted() {
-    AttributeAccumulator accumulator = new AttributeAccumulator();
+    AttributeMatcher accumulator = new AttributeMatcher();
     String line = "Host: localhost:8080\r\n";
     int splitPt = 2;
     String head = line.substring(0, splitPt);
@@ -54,7 +54,7 @@ public class AttributeAccumulatorTest extends Test {
 
   private void twoAttributes() {
     String lines = "Host: localhost:8080\r\nUser-Agent: Mozilla\r\n\r\n";
-    AttributeCollectionAccumulator accumulator = new AttributeCollectionAccumulator();
+    AttributeCollectionMatcher accumulator = new AttributeCollectionMatcher();
     boolean completed = accumulator.match(new ByteIterator(lines));
     assertTrue(completed);
     Map<String, String> map = accumulator.getMap();
@@ -73,7 +73,7 @@ public class AttributeAccumulatorTest extends Test {
   private void assertSplitGet(String lines, int splitPt) {
     String head = lines.substring(0, splitPt);
     String tail = lines.substring(splitPt);
-    AttributeCollectionAccumulator accumulator = new AttributeCollectionAccumulator();
+    AttributeCollectionMatcher accumulator = new AttributeCollectionMatcher();
     ByteIterator it = new ByteIterator(head);
     assertFalse(accumulator.match(it));
     it.append(tail);

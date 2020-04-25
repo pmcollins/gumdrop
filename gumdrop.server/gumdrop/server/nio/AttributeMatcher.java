@@ -1,13 +1,13 @@
 package gumdrop.server.nio;
 
 import gumdrop.common.ByteIterator;
-import gumdrop.web.http.Accumulator;
-import gumdrop.web.http.WordAccumulator;
+import gumdrop.common.Matcher;
+import gumdrop.common.SubstringMatcher;
 
-public class AttributeAccumulator implements Accumulator {
+public class AttributeMatcher implements Matcher {
 
-  private final WordAccumulator key = new WordAccumulator(": ");
-  private final WordAccumulator value = new WordAccumulator("\r\n");
+  private final SubstringMatcher key = new SubstringMatcher(": ");
+  private final SubstringMatcher value = new SubstringMatcher("\r\n");
 
   @Override
   public boolean match(ByteIterator it) {

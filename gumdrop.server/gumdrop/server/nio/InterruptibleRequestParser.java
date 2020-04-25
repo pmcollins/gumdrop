@@ -4,8 +4,8 @@ import gumdrop.common.ByteIterator;
 import gumdrop.common.StringUtil;
 import gumdrop.common.http.HttpMethod;
 import gumdrop.common.http.HttpRequest;
-import gumdrop.web.http.Accumulator;
-import gumdrop.web.http.WordAccumulator;
+import gumdrop.common.Matcher;
+import gumdrop.common.SubstringMatcher;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -15,24 +15,24 @@ import java.util.Map;
 
 public class InterruptibleRequestParser implements RequestParser {
 
-  private final WordAccumulator method = new WordAccumulator(' ');
-  private final WordAccumulator path = new WordAccumulator(' ');
-  private final WordAccumulator protocol = new WordAccumulator("\r\n");
-  private final AttributeCollectionAccumulator attributes = new AttributeCollectionAccumulator();
+  private final SubstringMatcher method = new SubstringMatcher(' ');
+  private final SubstringMatcher path = new SubstringMatcher(' ');
+  private final SubstringMatcher protocol = new SubstringMatcher("\r\n");
+  private final AttributeCollectionMatcher attributes = new AttributeCollectionMatcher();
   private final PostProcessor postProcessor = new PostProcessor(this);
-  private final Iterator<Accumulator> accumPtr;
+  private final Iterator<Matcher> accumPtr;
 
-  private Accumulator curr;
+  private Matcher curr;
   private final ByteIterator it = new ByteIterator();
 
   public InterruptibleRequestParser() {
-    List<Accumulator> accumulators = new ArrayList<>();
-    accumulators.add(method);
-    accumulators.add(path);
-    accumulators.add(protocol);
-    accumulators.add(attributes);
-    accumulators.add(postProcessor);
-    accumPtr = accumulators.iterator();
+    List<Matcher> matchers = new ArrayList<>();
+    matchers.add(method);
+    matchers.add(path);
+    matchers.add(protocol);
+    matchers.add(attributes);
+    matchers.add(postProcessor);
+    accumPtr = matchers.iterator();
     curr = accumPtr.next();
   }
 
