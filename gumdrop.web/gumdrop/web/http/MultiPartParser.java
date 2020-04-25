@@ -1,25 +1,28 @@
 package gumdrop.web.http;
 
 import gumdrop.common.ByteIterator;
+import gumdrop.common.Delimiter;
+import gumdrop.common.Matcher;
+import gumdrop.common.SubstringMatcher;
 
 public class MultiPartParser {
 
   public static byte[] parseSinglePart(String delimStr, ByteIterator it) {
     Delimiter crlf = new Delimiter("\r\n");
-    KvAccumulator cd = new KvAccumulator(": ", ";");
-    KvAccumulator name = new KvAccumulator("=", ";");
-    KvAccumulator fn = new KvAccumulator("=", "\r\n");
-    KvAccumulator type = new KvAccumulator(": ", "\r\n");
-    Accumulator[] q = new Accumulator[]{crlf, cd, name, fn, type, crlf};
+    KvMatcher cd = new KvMatcher(": ", ";");
+    KvMatcher name = new KvMatcher("=", ";");
+    KvMatcher fn = new KvMatcher("=", "\r\n");
+    KvMatcher type = new KvMatcher(": ", "\r\n");
+    Matcher[] q = new Matcher[]{crlf, cd, name, fn, type, crlf};
     Delimiter startBoundary = new Delimiter("--" + delimStr);
     if (!startBoundary.match(it)) throw new IllegalStateException("start boundary didn't match");
     startBoundary.skip(it);
-    for (Accumulator acc : q) {
+    for (Matcher acc : q) {
       if (!acc.match(it)) throw new IllegalStateException("accumulator didn't match");
       acc.skip(it);
       it.mark();
     }
-    WordAccumulator content = new WordAccumulator("\r\n--" + delimStr + "--");
+    SubstringMatcher content = new SubstringMatcher("\r\n--" + delimStr + "--");
     content.match(it);
     return content.getSubArray();
   }
@@ -30,14 +33,14 @@ public class MultiPartParser {
     return header.substring(i + 1);
   }
 
-  private static class KvAccumulator implements Accumulator {
+  private static class KvMatcher implements Matcher {
 
-    private final WordAccumulator key;
-    private final WordAccumulator value;
+    private final SubstringMatcher key;
+    private final SubstringMatcher value;
 
-    KvAccumulator(String delim1, String delim2) {
-      key = new WordAccumulator(delim1);
-      value = new WordAccumulator(delim2);
+    KvMatcher(String delim1, String delim2) {
+      key = new SubstringMatcher(delim1);
+      value = new SubstringMatcher(delim2);
     }
 
     @Override

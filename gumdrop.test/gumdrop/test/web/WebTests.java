@@ -18,7 +18,8 @@ public class WebTests extends TestSuite {
       new PatternTest(),
       new StaticControllerTest(),
       new StringUtilTest(),
-      new HttpFormReaderTest()
+      new HttpFormReaderTest(),
+      new BuildableEqualityTest()
     );
   }
 

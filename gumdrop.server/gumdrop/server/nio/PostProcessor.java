@@ -1,9 +1,9 @@
 package gumdrop.server.nio;
 
 import gumdrop.common.ByteIterator;
-import gumdrop.web.http.Accumulator;
+import gumdrop.common.Matcher;
 
-class PostProcessor implements Accumulator {
+class PostProcessor implements Matcher {
 
   private final RequestParser requestParser;
   private byte[] post;

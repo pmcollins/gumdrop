@@ -3,6 +3,7 @@ package gumdrop.web.html;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Tag implements Buildable {
 
@@ -78,6 +79,34 @@ public class Tag implements Buildable {
       children.forEach(child -> child.build(sb));
       sb.append(LT_SLASH).append(name).append(GT);
     }
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Tag tag = (Tag) o;
+    return nonAutoClosing == tag.nonAutoClosing &&
+      name.equals(tag.name) &&
+      Objects.equals(children, tag.children) &&
+      Objects.equals(tagAttributes, tag.tagAttributes) &&
+      Objects.equals(bareAttributes, tag.bareAttributes);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(name, children, tagAttributes, bareAttributes, nonAutoClosing);
+  }
+
+  @Override
+  public String toString() {
+    return "Tag{" +
+      "name='" + name + '\'' +
+      ", children=" + children +
+      ", tagAttributes=" + tagAttributes +
+      ", bareAttributes=" + bareAttributes +
+      ", nonAutoClosing=" + nonAutoClosing +
+      '}';
   }
 
 }

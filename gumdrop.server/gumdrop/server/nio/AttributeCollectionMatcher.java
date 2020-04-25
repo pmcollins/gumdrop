@@ -1,26 +1,26 @@
 package gumdrop.server.nio;
 
 import gumdrop.common.ByteIterator;
-import gumdrop.web.http.Accumulator;
-import gumdrop.web.http.Delimiter;
+import gumdrop.common.Matcher;
+import gumdrop.common.Delimiter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AttributeCollectionAccumulator implements Accumulator {
+public class AttributeCollectionMatcher implements Matcher {
 
-  private final List<AttributeAccumulator> accumulators = new ArrayList<>();
+  private final List<AttributeMatcher> accumulators = new ArrayList<>();
   private final Delimiter delimiter = new Delimiter("\r\n");
-  private AttributeAccumulator curr;
+  private AttributeMatcher curr;
   private Map<String, String> map;
 
   @Override
   public boolean match(ByteIterator it) {
     if (curr == null) {
       if (delimiter.match(it)) return true;
-      curr = new AttributeAccumulator();
+      curr = new AttributeMatcher();
     }
     while (true) {
       if (curr.match(it)) {
@@ -34,7 +34,7 @@ public class AttributeCollectionAccumulator implements Accumulator {
           curr = null;
           return false;
         } else {
-          curr = new AttributeAccumulator();
+          curr = new AttributeMatcher();
         }
       } else {
         return false;
@@ -50,7 +50,7 @@ public class AttributeCollectionAccumulator implements Accumulator {
   public Map<String, String> getMap() {
     if (map == null) {
       map = new HashMap<>();
-      for (AttributeAccumulator accumulator : accumulators) {
+      for (AttributeMatcher accumulator : accumulators) {
         String key = accumulator.getKey();
         String value = accumulator.getValue();
         map.put(key, value);

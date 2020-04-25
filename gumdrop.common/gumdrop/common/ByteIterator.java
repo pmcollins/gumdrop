@@ -1,5 +1,8 @@
 package gumdrop.common;
 
+/**
+ * Wraps a ByteBuilder
+ */
 public class ByteIterator {
 
   private final ByteBuilder bb;

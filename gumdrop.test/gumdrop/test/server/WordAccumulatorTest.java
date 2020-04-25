@@ -1,7 +1,7 @@
 package gumdrop.test.server;
 
 import gumdrop.common.ByteIterator;
-import gumdrop.web.http.WordAccumulator;
+import gumdrop.common.SubstringMatcher;
 import gumdrop.test.util.Test;
 
 import static gumdrop.test.util.Asserts.assertEquals;
@@ -22,7 +22,7 @@ public class WordAccumulatorTest extends Test {
   }
 
   private void wordAccumulator() {
-    WordAccumulator accumulator = new WordAccumulator("\r\n");
+    SubstringMatcher accumulator = new SubstringMatcher("\r\n");
     assertTrue(accumulator.match(new ByteIterator("XXX\r\nZZZ")));
     String val = accumulator.getSubstring();
     assertEquals("XXX", val);
@@ -33,7 +33,7 @@ public class WordAccumulatorTest extends Test {
   }
 
   private void wordAccumulator2() {
-    WordAccumulator accumulator = new WordAccumulator("\r\n");
+    SubstringMatcher accumulator = new SubstringMatcher("\r\n");
     ByteIterator it = new ByteIterator("XXX\r");
     assertFalse(accumulator.match(it));
     it.append("\n");
@@ -42,7 +42,7 @@ public class WordAccumulatorTest extends Test {
   }
 
   private void wordAccumulator3() {
-    WordAccumulator accumulator = new WordAccumulator("Hello");
+    SubstringMatcher accumulator = new SubstringMatcher("Hello");
     ByteIterator it = new ByteIterator("XXXHell");
     assertFalse(accumulator.match(it));
     it.append("xYYYHello");

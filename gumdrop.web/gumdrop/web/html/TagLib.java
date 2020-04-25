@@ -248,4 +248,8 @@ public class TagLib {
     return tag("img");
   }
 
+  public static Tag br() {
+    return tag("br");
+  }
+
 }
