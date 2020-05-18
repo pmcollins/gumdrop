@@ -143,11 +143,10 @@ public abstract class SessionController<SessionT extends Session<EntityT>, Entit
     HttpResponse response = new HttpResponse(responseHeader);
     if (isAuthorized()) {
       process(response);
-      return response;
     } else {
       HeaderUtil.setRedirectHeaders(responseHeader, getUnauthorizedPath());
-      return response;
     }
+    return response;
   }
 
   private static String createSessionId(HttpResponseHeader responseHeader) {
